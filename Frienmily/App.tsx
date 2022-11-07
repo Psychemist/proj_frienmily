@@ -27,12 +27,14 @@ const App = () => {
 
         <Stack.Screen name="Loading" component={LoadingScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+
         <Stack.Screen name="UserProfile" component={UserProfileScreen} />
 
       </Stack.Navigator>
       {/* </SafeAreaView> */}
     </NavigationContainer>
 
+    //TODO: The Tab bar is static (show when the current location is not loading/login/register page)
   );
 };
 
