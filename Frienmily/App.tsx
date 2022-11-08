@@ -13,6 +13,8 @@ import {
 import LoadingScreen from './components/LoadingScreen';
 import LoginScreen from './components/LoginScreen';
 import UserProfileScreen from './components/UserProfileScreen';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 
 
@@ -21,19 +23,19 @@ const Stack = createNativeStackNavigator();
 const App = () => {
 
   return (
-    <NavigationContainer>
+    <Provider store={store}>
       {/* <SafeAreaView> */}
-      <Stack.Navigator initialRouteName="Loading" screenOptions={{ headerShown: false, gestureEnabled: false }}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
 
-        <Stack.Screen name="Loading" component={LoadingScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Loading" component={LoadingScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="UserProfile" component={UserProfileScreen} />
 
-        <Stack.Screen name="UserProfile" component={UserProfileScreen} />
-
-      </Stack.Navigator>
+        </Stack.Navigator>
+      </NavigationContainer>
       {/* </SafeAreaView> */}
-    </NavigationContainer>
-
+    </Provider>
     //TODO: The Tab bar is static (show when the current location is not loading/login/register page)
   );
 };
