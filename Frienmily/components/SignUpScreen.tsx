@@ -9,7 +9,10 @@ import { useNavigation } from '@react-navigation/native'
 export default function SignUpScreen() {
 
   const [username, setUsername] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [mobileNumber, setMobileNumber] = React.useState("");
 
 
   // NOTE: Remember to add this line before using dispatch
@@ -91,10 +94,36 @@ export default function SignUpScreen() {
             margin: 5,
             fontSize: 20
           }} />
-
         </View>
+
         <View style={styles.inputFieldWrapper}>
           <TextInput placeholder="Password" value={password} onChangeText={setPassword} style={{
+            margin: 5,
+            fontSize: 20
+          }} />
+        </View>
+
+        <View style={{
+          display: 'flex',
+          flexDirection: 'row'
+        }}>
+          <View style={[styles.inputFieldWrapper, { width: 140 }]}>
+            <TextInput placeholder="First Name" value={firstName} onChangeText={setFirstName} style={{
+              margin: 5,
+              fontSize: 20
+            }} />
+          </View>
+          <View style={[styles.inputFieldWrapper, { width: 140 }]}>
+            <TextInput placeholder="Last Name" value={lastName} onChangeText={setLastName} style={{
+              margin: 5,
+              fontSize: 20
+            }} />
+          </View>
+
+        </View>
+
+        <View style={styles.inputFieldWrapper}>
+          <TextInput placeholder="Mobile Number" value={mobileNumber} onChangeText={setMobileNumber} style={{
             margin: 5,
             fontSize: 20
           }} />

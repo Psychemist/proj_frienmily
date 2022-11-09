@@ -64,3 +64,4 @@ buck-out/
 /vendor/bundle/
 .DS_Store
 yarn.lock
+NoteByMike.md

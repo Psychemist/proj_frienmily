@@ -20,13 +20,19 @@ export default function LoginScreen() {
 
     const onLogin = () => {
         dispatch(fetchLogin({ username, password }))
-
+        navigation.navigate('Groups')
     }
 
-    const onGoogleSignUp = () => {
+    const onGoogleLogin = () => {
 
+
+
+
+
+
+        navigation.navigate('Groups')
     }
-    const onFacebookSignUp = () => {
+    const onFacebookLogin = () => {
 
     }
 
@@ -103,13 +109,13 @@ export default function LoginScreen() {
                     }} onPress={onLogin}>Login</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={onGoogleSignUp} style={[styles.loginBtn, { backgroundColor: '#32519c' }]}>
+                <TouchableOpacity onPress={onGoogleLogin} style={[styles.loginBtn, { backgroundColor: '#32519c' }]}>
                     <Text style={{
                         fontSize: 20
                     }}>Continue with Google</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={onFacebookSignUp} style={[styles.loginBtn, { backgroundColor: '#d1463b' }]}>
+                <TouchableOpacity onPress={onFacebookLogin} style={[styles.loginBtn, { backgroundColor: '#d1463b' }]}>
                     <Text style={{
                         fontSize: 20
                     }}>Continue with Facebook</Text>
