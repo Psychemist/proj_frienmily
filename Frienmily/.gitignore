@@ -63,5 +63,6 @@ buck-out/
 /ios/Pods/
 /vendor/bundle/
 .DS_Store
+**/.DS_Store
 yarn.lock
 NoteByMike.md
