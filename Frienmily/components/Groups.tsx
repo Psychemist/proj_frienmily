@@ -1,11 +1,43 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import GroupItem from "./GroupItem";
 
 export default function Groups() {
+    const styles = StyleSheet.create({
+        floatButtonFontSize: {
+            fontSize:50,
+        },
+        circleButton: {
+            width: 70,
+            height: 70,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 100,
+            backgroundColor: '#59a758',
+            position: 'absolute',
+            right: 30,
+            bottom: 30,
+            
+        }
+    })
+    const navigation = useNavigation()
     return (
-        <View>
-            <Text>Groups</Text>
-            <Text>This is groups page</Text>
+        <View style={{ flex: 1 }}>
+            <ScrollView style={{ backgroundColor: 'white' }}>
+                <Text><GroupItem/></Text>
+                <Text><GroupItem/></Text>
+                <Text><GroupItem/></Text>
+                <Text><GroupItem/></Text>
+
+            </ScrollView>
+            <TouchableOpacity
+                style={styles.circleButton}
+                onPress={() => {
+                    navigation.navigate('Create Group')
+                }}>
+                <Text style={styles.floatButtonFontSize}>+</Text>
+            </TouchableOpacity>
         </View>
     )
 }

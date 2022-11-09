@@ -20,6 +20,8 @@ import Account from './components/Account';
 import Groceries from './components/Groceries';
 import Friends from './components/Friends';
 import Groups from './components/Groups';
+import AddFriends from './components/AddFriends';
+import CreateGroup from './components/CreateGroup';
 
 
 const Tab = createBottomTabNavigator()
@@ -50,7 +52,8 @@ const App = () => {
               headerShown: false,
             }}
             name="HomeTab" component={HomeTab} />
-          <Stack.Screen name="Detail" component={Account} />
+          <Stack.Screen name="Add friends" component={AddFriends} />
+          <Stack.Screen name="Create Group" component={CreateGroup} />
 
 
 
