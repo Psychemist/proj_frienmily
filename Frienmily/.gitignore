@@ -63,8 +63,4 @@ buck-out/
 /ios/Pods/
 /vendor/bundle/
 .DS_Store
-<<<<<<< HEAD
-=======
-
->>>>>>> e4e292ee9d5f6fd25cf3004a4c420a1480bb2239
 yarn.lock
