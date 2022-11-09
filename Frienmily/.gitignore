@@ -63,3 +63,5 @@ buck-out/
 /ios/Pods/
 /vendor/bundle/
 .DS_Store
+
+yarn.lock
