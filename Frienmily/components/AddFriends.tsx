@@ -9,6 +9,7 @@ export default function AddFriends() {
     return (
         <View>
             <Text>This is add friend page</Text>
+            <Text>Please enter username to add friends</Text>
         </View>
     )
 }

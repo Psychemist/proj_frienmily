@@ -14,10 +14,11 @@ export default function Groups() {
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: 100,
-            backgroundColor: '#59a758',
+            backgroundColor: '#907651',
             position: 'absolute',
             right: 30,
             bottom: 30,
+            opacity: 0.8
             
         }
     })
