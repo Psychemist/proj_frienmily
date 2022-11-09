@@ -35,7 +35,7 @@ export default function Groups() {
             <TouchableOpacity
                 style={styles.circleButton}
                 onPress={() => {
-                    navigation.navigate('Create Group')
+                    navigation.navigate('Create Group' as never)
                 }}>
                 <Text style={styles.floatButtonFontSize}>+</Text>
             </TouchableOpacity>

@@ -47,7 +47,7 @@ export default function Friends() {
             <TouchableOpacity
                 style={styles.circleButton}
                 onPress={() => {
-                    navigation.navigate('Add friends')
+                    navigation.navigate('Add friends' as never)
                 }}>
                 <Text style={styles.floatButtonFontSize}>+</Text>
             </TouchableOpacity>

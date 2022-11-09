@@ -12,7 +12,7 @@ export default function AddFriends() {
         if (groupName == "") {
             showAlert()
         } else {
-            navigation.navigate('Friends')
+            navigation.navigate('Friends' as never)
         }
 
     }
@@ -72,12 +72,12 @@ export default function AddFriends() {
             </TouchableOpacity>
 
             <View style={styles.resultContainer}>
-                <AddFriendSearchResult/>
-                <AddFriendSearchResult/>
-                <AddFriendSearchResult/>
-                <AddFriendSearchResult/>
-                <AddFriendSearchResult/>
-                <AddFriendSearchResult/>
+                <AddFriendSearchResult />
+                <AddFriendSearchResult />
+                <AddFriendSearchResult />
+                <AddFriendSearchResult />
+                <AddFriendSearchResult />
+                <AddFriendSearchResult />
             </View>
 
 

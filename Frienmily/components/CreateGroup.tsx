@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function CreateGroup() {
 
-    
+
 
     const [groupName, setGroupName] = React.useState("");
     const [groupType, setGroupType] = React.useState(null);
@@ -21,19 +21,19 @@ export default function CreateGroup() {
         } else if (groupName == "") {
             showAlert1()
         } else {
-            navigation.navigate('Groups')
+            navigation.navigate('Groups' as never)
         }
 
     }
     const friendsButton = () => {
-        setGroupType("friend")
+        setGroupType("friend" as never)
         setIsFriendsButtonSelected(true)
         if (isFamilyButtonSelected == true) {
             setIsFamilyButtonSelected(false)
         }
     }
     const familyButton = () => {
-        setGroupType("family")
+        setGroupType("family" as never)
         setIsFamilyButtonSelected(true)
         if (isFriendsButtonSelected == true) {
             setIsFriendsButtonSelected(false)
@@ -70,7 +70,7 @@ export default function CreateGroup() {
         );
     }
 
-const styles = StyleSheet.create({
+    const styles = StyleSheet.create({
         input: {
             height: 40,
             margin: 12,
@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
             margin: 5,
             fontSize: 20,
             backgroundColor: "#907651",
-            borderColor: isFriendsButtonSelected? "black" : "",
-            borderWidth: isFriendsButtonSelected? 3 : 0,
+            borderColor: isFriendsButtonSelected ? "black" : "",
+            borderWidth: isFriendsButtonSelected ? 3 : 0,
             width: 160,
             height: 100,
             borderRadius: 10,
@@ -114,21 +114,21 @@ const styles = StyleSheet.create({
             margin: 5,
             fontSize: 20,
             backgroundColor: "#907651",
-            borderColor: isFamilyButtonSelected? "black" : "",
-            borderWidth: isFamilyButtonSelected? 3 : 0,
+            borderColor: isFamilyButtonSelected ? "black" : "",
+            borderWidth: isFamilyButtonSelected ? 3 : 0,
             width: 160,
             height: 100,
             borderRadius: 10,
             justifyContent: 'center',
             alignItems: 'center',
-        },   
+        },
         buttonFontSize: {
             fontSize: 25,
-        }     
+        }
     });
 
     return (
-        <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: "#F4E9DF", flex: 1}}>
+        <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: "#F4E9DF", flex: 1 }}>
             <Text>1. Enter a group name:</Text>
             <TextInput placeholder="New Group Name" value={groupName} onChangeText={setGroupName} style={styles.input} />
             <Text>2. Select a group type:</Text>

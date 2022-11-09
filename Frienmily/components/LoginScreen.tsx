@@ -20,7 +20,7 @@ export default function LoginScreen() {
 
     const onLogin = () => {
         dispatch(fetchLogin({ username, password }))
-        navigation.navigate('Groups')
+        navigation.navigate('Groups' as never)
     }
 
     const onGoogleLogin = () => {
@@ -30,7 +30,7 @@ export default function LoginScreen() {
 
 
 
-        navigation.navigate('Groups')
+        navigation.navigate('Groups' as never)
     }
     const onFacebookLogin = () => {
 
