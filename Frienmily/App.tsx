@@ -22,20 +22,21 @@ import Friends from './components/Friends';
 import Groups from './components/Groups';
 import AddFriends from './components/AddFriends';
 import CreateGroup from './components/CreateGroup';
+import SignUpScreen from './components/SignUpScreen';
 
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator();
 
 const HomeTab = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name='Friends' component={Friends} />
-      <Tab.Screen name='Groups' component={Groups} />
-      <Tab.Screen name='Groceries' component={Groceries} />
-      <Tab.Screen name='Account' component={Account} />
-    </Tab.Navigator>
-  )
+  // return (
+  //   <Tab.Navigator>
+  //     <Tab.Screen name='Friends' component={Friends} />
+  //     <Tab.Screen name='Groups' component={Groups} />
+  //     <Tab.Screen name='Groceries' component={Groceries} />
+  //     <Tab.Screen name='Account' component={Account} />
+  //   </Tab.Navigator>
+  // )
 }
 
 const App = () => {
@@ -46,7 +47,7 @@ const App = () => {
       <NavigationContainer>
 
 
-        <Stack.Navigator>
+        {/* <Stack.Navigator>
           <Stack.Screen
             options={{
               headerShown: false,
@@ -55,22 +56,27 @@ const App = () => {
           <Stack.Screen name="Add friends" component={AddFriends} />
           <Stack.Screen name="Create Group" component={CreateGroup} />
 
+        </Stack.Navigator> */}
 
 
 
 
-
-          {/* <Stack.Navigator initialRouteName="Loading" screenOptions={{ headerShown: false, gestureEnabled: false }}>
+        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
 
           <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />
 
         </Stack.Navigator>
 
-          {/* </SafeAreaView> */}
-        </Stack.Navigator>
+
+
+
+
+
       </NavigationContainer>
+      {/* </SafeAreaView > */}
     </Provider>
     //TODO: The Tab bar is static (show when the current location is not loading/login/register page)
   );
