@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function AddFriendSearchResult() {
+export default function FriendItemInCreateGroup() {
     const styles = StyleSheet.create({
         itemContainer: {
             width: "100%",
@@ -9,8 +9,8 @@ export default function AddFriendSearchResult() {
             justifyContent: "space-between",
             flexDirection: "row",
             padding: 10,
-            paddingTop: 35,
-            paddingBottom: 32,
+            paddingTop: 20,
+            paddingBottom: 20,
             borderRadius: 15,
             marginTop: 5,
             marginBottom: 5,
@@ -19,7 +19,7 @@ export default function AddFriendSearchResult() {
     })
     return (
         <View style={styles.itemContainer}>
-            <Text>This is AddFriendSearchResult page</Text>
+            <Text>Username...</Text>
         </View>
     )
 }

@@ -1,6 +1,8 @@
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import AddFriendSearchResult from './AddFriendSearchResult';
+import FriendItemInCreateGroup from './FriendItemInCreateGroup';
 
 export default function CreateGroup() {
 
@@ -8,6 +10,7 @@ export default function CreateGroup() {
 
     const [groupName, setGroupName] = React.useState("");
     const [groupType, setGroupType] = React.useState(null);
+    const [friendSearchBar, setFriendSearchBar] = React.useState("");
     const [isFriendsButtonSelected, setIsFriendsButtonSelected] = React.useState(false);
     const [isFamilyButtonSelected, setIsFamilyButtonSelected] = React.useState(false);
 
@@ -105,7 +108,7 @@ export default function CreateGroup() {
             borderColor: isFriendsButtonSelected ? "black" : "",
             borderWidth: isFriendsButtonSelected ? 3 : 0,
             width: 160,
-            height: 100,
+            height: 50,
             borderRadius: 10,
             justifyContent: 'center',
             alignItems: 'center',
@@ -117,14 +120,22 @@ export default function CreateGroup() {
             borderColor: isFamilyButtonSelected ? "black" : "",
             borderWidth: isFamilyButtonSelected ? 3 : 0,
             width: 160,
-            height: 100,
+            height: 50,
             borderRadius: 10,
             justifyContent: 'center',
             alignItems: 'center',
         },
         buttonFontSize: {
             fontSize: 25,
-        }
+        },
+        resultContainer: {
+            minHeight: 300,
+            maxHeight: 300,
+            width: "100%",
+            flexGrow: 1,
+            paddingLeft: 40,
+            paddingRight: 40,
+        },
     });
 
     return (
@@ -140,6 +151,17 @@ export default function CreateGroup() {
                     <Text style={styles.buttonFontSize}>Family</Text>
                 </TouchableOpacity>
             </View>
+            <Text>3. Invite group members:</Text>
+            <TextInput placeholder="Search..." value={friendSearchBar} onChangeText={setFriendSearchBar} style={styles.input} />
+            <ScrollView style={styles.resultContainer}>
+                <FriendItemInCreateGroup />
+                <FriendItemInCreateGroup />
+                <FriendItemInCreateGroup />
+                <FriendItemInCreateGroup />
+                <FriendItemInCreateGroup />
+                <FriendItemInCreateGroup />
+                <FriendItemInCreateGroup />
+            </ScrollView>
 
             <TouchableOpacity style={styles.createButton} onPress={submitButton}>
                 <Text>Create Group</Text>
