@@ -121,35 +121,29 @@ const styles = StyleSheet.create({
             borderRadius: 10,
             justifyContent: 'center',
             alignItems: 'center',
-        },        
+        },   
+        buttonFontSize: {
+            fontSize: 25,
+        }     
     });
 
     return (
-        <View style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: "#F4E9DF",
-            flex: 1
-        }}>
+        <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: "#F4E9DF", flex: 1}}>
             <Text>1. Enter a group name:</Text>
             <TextInput placeholder="New Group Name" value={groupName} onChangeText={setGroupName} style={styles.input} />
             <Text>2. Select a group type:</Text>
             <View style={styles.groupTypeButtonContainer}>
                 <TouchableOpacity style={styles.friendButton} onPress={friendsButton}>
-                    <Text>Friends</Text>
+                    <Text style={styles.buttonFontSize}>Friends</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.familyButton} onPress={familyButton}>
-                    <Text>Family</Text>
+                    <Text style={styles.buttonFontSize}>Family</Text>
                 </TouchableOpacity>
             </View>
-
-
 
             <TouchableOpacity style={styles.createButton} onPress={submitButton}>
                 <Text>Create Group</Text>
             </TouchableOpacity>
-
-
 
         </View >
     )
