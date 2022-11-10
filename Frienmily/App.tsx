@@ -30,7 +30,7 @@ const Stack = createNativeStackNavigator();
 
 const HomeTab = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{ headerShown: false}}>
       <Tab.Screen name='Groups' component={Groups} />
       <Tab.Screen name='Friends' component={Friends} />
       <Tab.Screen name='Groceries' component={Groceries} />
@@ -47,7 +47,7 @@ const App = () => {
       <NavigationContainer>
 
 
-        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: true, gestureEnabled: false }}>
+        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
           <Stack.Screen
             options={{
               headerShown: false,

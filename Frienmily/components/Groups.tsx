@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import GroupItem from "./GroupItem";
 
 export default function Groups() {
@@ -20,11 +20,14 @@ export default function Groups() {
             bottom: 30,
             opacity: 0.8
 
-        }
+        },
     })
     const navigation = useNavigation()
     return (
-        <View style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={{alignItems: "center"}}>
+                <Text style={{fontSize: 25, paddingBottom: "1%"}}>Groups</Text> 
+            </View>
             <ScrollView style={{ backgroundColor: 'white' }}>
                 <Text><GroupItem /></Text>
                 <Text><GroupItem /></Text>
@@ -39,6 +42,6 @@ export default function Groups() {
                 }}>
                 <Text style={styles.floatButtonFontSize}>+</Text>
             </TouchableOpacity>
-        </View>
+        </SafeAreaView>
     )
 }
