@@ -20,7 +20,7 @@ export default function LoginScreen() {
 
     const onLogin = () => {
         dispatch(fetchLogin({ username, password }))
-        navigation.navigate('Groups' as never)
+        navigation.navigate('HomeTab' as never)
     }
 
     const onGoogleLogin = () => {
@@ -102,11 +102,11 @@ export default function LoginScreen() {
                     }} />
                 </View>
 
-                <TouchableOpacity style={[styles.loginBtn, { marginBottom: 30 }]}>
+                <TouchableOpacity onPress={onLogin} style={[styles.loginBtn, { marginBottom: 30 }]}>
                     <Text style={{
                         color: 'white',
                         fontSize: 20
-                    }} onPress={onLogin}>Login</Text>
+                    }} >Login</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={onGoogleLogin} style={[styles.loginBtn, { backgroundColor: '#32519c' }]}>
