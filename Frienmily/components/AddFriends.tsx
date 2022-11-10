@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AddFriendSearchResult from './AddFriendSearchResult';
 import GroupItem from './GroupItem';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function AddFriends() {
     const [groupName, setGroupName] = React.useState("");
@@ -69,7 +70,7 @@ export default function AddFriends() {
 
     return (
         <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: "#F4E9DF", flex: 1 }}>
-            <Text>Enter your friend's phone number:</Text>
+            <Text><FontAwesome name='mobile' size={50}/>   Enter your friend's phone number:</Text>
             <TextInput placeholder="Phone number or Email" value={groupName} onChangeText={setGroupName} style={styles.input} />
 
             <TouchableOpacity style={styles.searchButton} onPress={submitButton}>

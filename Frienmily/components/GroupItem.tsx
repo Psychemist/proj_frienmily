@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { Icon } from 'react-native-elements'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function GroupItem() {
     const styles = StyleSheet.create({
@@ -9,10 +10,11 @@ export default function GroupItem() {
         },
         container: {
             justifyContent: "space-between",
+            alignItems: "center",
             flexDirection: "row",
             width: "100%",
             padding: 10,
-            paddingTop: 40,
+            paddingTop: 32,
             paddingBottom: 32,
             backgroundColor: "#E2D8CF",
             //SHADOW
@@ -29,8 +31,10 @@ export default function GroupItem() {
 
     return (
         <View style={styles.container}>
+            <FontAwesome name='users' size={30}/>
             <View ><Text style={styles.text}>GROUP NAME</Text></View>
             <View><Text style={styles.text}>settled up</Text></View>
+            <FontAwesome name='angle-right' size={30}/>
         </View>
     )
 }

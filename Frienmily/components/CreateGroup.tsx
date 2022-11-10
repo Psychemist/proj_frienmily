@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AddFriendSearchResult from './AddFriendSearchResult';
 import FriendItemInCreateGroup from './FriendItemInCreateGroup';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function CreateGroup() {
 
@@ -97,9 +98,10 @@ export default function CreateGroup() {
             justifyContent: "space-between",
             flexDirection: "row",
             width: "100%",
-            padding: "8%",
+            padding: "3%",
             paddingTop: 20,
             paddingBottom: 22,
+            alignItems: "center",
         },
         friendButton: {
             margin: 5,
@@ -107,7 +109,7 @@ export default function CreateGroup() {
             backgroundColor: "#907651",
             borderColor: isFriendsButtonSelected ? "black" : "",
             borderWidth: isFriendsButtonSelected ? 3 : 0,
-            width: 160,
+            width: 150,
             height: 50,
             borderRadius: 10,
             justifyContent: 'center',
@@ -119,7 +121,7 @@ export default function CreateGroup() {
             backgroundColor: "#907651",
             borderColor: isFamilyButtonSelected ? "black" : "",
             borderWidth: isFamilyButtonSelected ? 3 : 0,
-            width: 160,
+            width: 150,
             height: 50,
             borderRadius: 10,
             justifyContent: 'center',
@@ -144,14 +146,16 @@ export default function CreateGroup() {
             <TextInput placeholder="New Group Name" value={groupName} onChangeText={setGroupName} style={styles.input} />
             <Text>2. Select a group type:</Text>
             <View style={styles.groupTypeButtonContainer}>
+                <FontAwesome name='group' size={40} />
                 <TouchableOpacity style={styles.friendButton} onPress={friendsButton}>
                     <Text style={styles.buttonFontSize}>Friends</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.familyButton} onPress={familyButton}>
                     <Text style={styles.buttonFontSize}>Family</Text>
                 </TouchableOpacity>
+                <FontAwesome name='home' size={40}/>
             </View>
-            <Text>3. Invite group members:</Text>
+            <Text>3. Invite group members: (members: 1)</Text>
             <TextInput placeholder="Search..." value={friendSearchBar} onChangeText={setFriendSearchBar} style={styles.input} />
             <ScrollView style={styles.resultContainer}>
                 <FriendItemInCreateGroup />
