@@ -1,5 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import FontAwesome5Pro from 'react-native-vector-icons/FontAwesome5Pro'
 
 export default function FriendItem() {
     const styles = StyleSheet.create({
@@ -8,10 +11,11 @@ export default function FriendItem() {
         },
         container: {
             justifyContent: "space-between",
+            alignItems: "center",
             flexDirection: "row",
             width: "100%",
             padding: 10,
-            paddingTop: 40,
+            paddingTop: 32,
             paddingBottom: 32,
             backgroundColor: "#E2D8CF",
             //SHADOW
@@ -27,8 +31,17 @@ export default function FriendItem() {
 
     return (
         <View style={styles.container}>
+            <FontAwesome name='user-circle-o' size={30}/>
             <View ><Text style={styles.text}>USER NAME</Text></View>
             <View><Text style={styles.text}>owns you HKD $200.00</Text></View>
+            <FontAwesome name='angle-right' size={30}/>
+
+
+            {/* // for icon testings */}
+            {/* <FontAwesome name='times' />
+            <FontAwesome5 name='times' />
+            <FontAwesome5Pro name='times' /> */}
+            
         </View>
     )
 }

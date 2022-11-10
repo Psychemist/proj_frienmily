@@ -1,7 +1,9 @@
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AddFriendSearchResult from './AddFriendSearchResult';
+import GroupItem from './GroupItem';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function AddFriends() {
     const [groupName, setGroupName] = React.useState("");
@@ -47,38 +49,44 @@ export default function AddFriends() {
             margin: 5,
             fontSize: 20,
             backgroundColor: "#907651",
-            width: 70,
-            height: 70,
+            width: 120,
+            height: 45,
             borderRadius: 100,
             justifyContent: 'center',
             alignItems: 'center',
+            marginBottom: 20
         },
         resultContainer: {
-            backgroundColor: "pink",
-            minHeight: 400,
+            // backgroundColor: "pink",
+            minHeight: 450,
+            maxHeight: 450,
             width: "100%",
-            alignItems: 'center',
-        }
+            flexGrow: 1,
+            paddingLeft: 40,
+            paddingRight: 40,
+        },
     });
 
 
     return (
         <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: "#F4E9DF", flex: 1 }}>
-            <Text>Enter your friend's phone number:</Text>
+            <Text><FontAwesome name='mobile' size={50}/>   Enter your friend's phone number:</Text>
             <TextInput placeholder="Phone number or Email" value={groupName} onChangeText={setGroupName} style={styles.input} />
 
             <TouchableOpacity style={styles.searchButton} onPress={submitButton}>
                 <Text>Search</Text>
             </TouchableOpacity>
 
-            <View style={styles.resultContainer}>
+            <ScrollView style={styles.resultContainer}>
                 <AddFriendSearchResult />
                 <AddFriendSearchResult />
                 <AddFriendSearchResult />
                 <AddFriendSearchResult />
                 <AddFriendSearchResult />
                 <AddFriendSearchResult />
-            </View>
+                <AddFriendSearchResult />
+                <AddFriendSearchResult />
+            </ScrollView>
 
 
         </View >

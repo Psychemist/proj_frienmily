@@ -31,8 +31,8 @@ const Stack = createNativeStackNavigator();
 const HomeTab = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name='Friends' component={Friends} />
       <Tab.Screen name='Groups' component={Groups} />
+      <Tab.Screen name='Friends' component={Friends} />
       <Tab.Screen name='Groceries' component={Groceries} />
       <Tab.Screen name='Account' component={Account} />
     </Tab.Navigator>
@@ -47,6 +47,7 @@ const App = () => {
       <NavigationContainer>
 
 
+<<<<<<< HEAD
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
           <Stack.Screen options={{ headerShown: false, }} name="HomeTab" component={HomeTab} />
 
@@ -56,6 +57,23 @@ const App = () => {
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />
+=======
+        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: true, gestureEnabled: false }}>
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="HomeTab" component={HomeTab} />
+          <Stack.Screen name="Add friends" component={AddFriends} />
+          <Stack.Screen name="Create Group" component={CreateGroup} />
+
+
+          {/* <Stack.Screen name="Loading" component={LoadingScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="UserProfile" component={UserProfileScreen} />
+          <Stack.Screen name='Groups' component={Groups} /> */}
+>>>>>>> c880d4b7d40c21ce94081d78aa6377aa9c56368a
         </Stack.Navigator>
 
 
