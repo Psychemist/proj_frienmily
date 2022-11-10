@@ -55,13 +55,10 @@ const App = () => {
             name="HomeTab" component={HomeTab} />
           <Stack.Screen name="Add friends" component={AddFriends} />
           <Stack.Screen name="Create Group" component={CreateGroup} />
-
-
-          {/* <Stack.Screen name="Loading" component={LoadingScreen} />
+          <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />
-          <Stack.Screen name='Groups' component={Groups} /> */}
         </Stack.Navigator>
 
 
