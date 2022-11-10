@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 export default function FriendItem() {
     const styles = StyleSheet.create({
@@ -27,8 +28,10 @@ export default function FriendItem() {
 
     return (
         <View style={styles.container}>
+            <FontAwesome name='user' />
             <View ><Text style={styles.text}>USER NAME</Text></View>
             <View><Text style={styles.text}>owns you HKD $200.00</Text></View>
+            <FontAwesome name='check' />
         </View>
     )
 }
