@@ -153,7 +153,7 @@ export default function CreateGroup() {
                 <TouchableOpacity style={styles.familyButton} onPress={familyButton}>
                     <Text style={styles.buttonFontSize}>Family</Text>
                 </TouchableOpacity>
-                <FontAwesome name='home' size={40}/>
+                <FontAwesome name='home' size={40} />
             </View>
             <Text>3. Invite group members: (members: 1)</Text>
             <TextInput placeholder="Search..." value={friendSearchBar} onChangeText={setFriendSearchBar} style={styles.input} />

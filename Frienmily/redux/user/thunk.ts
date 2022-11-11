@@ -6,7 +6,7 @@ export const fetchLogin: any = createAsyncThunk("user/fetchLogin", async (params
     password: string
 }, thunkAPI: any) => {
     try {
-        const res = await fetch("http://localhost:8000/user/test", {
+        const res = await fetch("http://localhost:8000/user/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -22,7 +22,7 @@ export const fetchLogin: any = createAsyncThunk("user/fetchLogin", async (params
         }
 
         return thunkAPI.fulfillWithValue({
-            displayName: data.displayName
+            username: data.username
         })
 
     } catch (e) {

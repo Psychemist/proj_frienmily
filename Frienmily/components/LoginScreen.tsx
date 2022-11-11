@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { RootState } from '../redux/store'
 import { fetchLogin } from '../redux/user/thunk'
 import { useNavigation } from '@react-navigation/native'
@@ -27,31 +27,28 @@ export default function LoginScreen() {
 
 
 
-
-
-
         navigation.navigate('Groups' as never)
     }
     const onFacebookLogin = () => {
 
     }
 
+    const onSignUp = () => {
+        navigation.navigate('SignUp' as never)
+
+    }
+
+
+
     const styles = StyleSheet.create({
         body: {
-            justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: '#F5F5F5',
             flex: 1,
         },
-        backBtn: {
-            position: "absolute",
-            top: 100,
-            left: 10,
-            backgroundColor: '#47b4b1'
-        },
         logoWrapper: {
-            position: 'absolute',
-            top: 150,
+            // position: 'absolute',
+            top: 80,
             height: 200,
             width: 300,
             backgroundColor: '#47b4b1'
@@ -78,17 +75,17 @@ export default function LoginScreen() {
     })
 
     return (
-        <View style={styles.body}>
+        <SafeAreaView style={styles.body}>
             <View style={styles.logoWrapper}>
                 <Text>LOGO here</Text>
             </View>
 
             <View style={{
                 position: 'absolute',
-                top: 330
+                marginTop: 350
             }}>
 
-                <View style={[styles.inputFieldWrapper, { marginTop: 80 }]}>
+                <View style={styles.inputFieldWrapper}>
                     <TextInput placeholder="Username" value={username} onChangeText={setUsername} style={{
                         margin: 5,
                         fontSize: 20
@@ -121,24 +118,16 @@ export default function LoginScreen() {
                     }}>Continue with Facebook</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{
-                    backgroundColor: '#47b4b1',
-                    height: 40,
-                    width: 300,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    margin: 10
-                }}>
+                <TouchableOpacity onPress={onSignUp} style={styles.loginBtn}>
                     <Text style={{
                         fontSize: 20
-                    }} onPress={onLogin}>Create a New Account</Text>
+                    }}>Create a New Account</Text>
                 </TouchableOpacity>
 
 
 
             </View>
-        </View >
+        </ SafeAreaView>
 
 
     )
