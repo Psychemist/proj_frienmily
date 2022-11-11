@@ -30,7 +30,7 @@ const Stack = createNativeStackNavigator();
 
 const HomeTab = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name='Groups' component={Groups} />
       <Tab.Screen name='Friends' component={Friends} />
       <Tab.Screen name='Groceries' component={Groceries} />

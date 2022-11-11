@@ -95,10 +95,9 @@ export default function CreateGroup() {
             alignItems: 'center',
         },
         groupTypeButtonContainer: {
-            justifyContent: "space-between",
+            justifyContent: "space-around",
             flexDirection: "row",
             width: "100%",
-            padding: "3%",
             paddingTop: 20,
             paddingBottom: 22,
             alignItems: "center",
@@ -109,7 +108,7 @@ export default function CreateGroup() {
             backgroundColor: "#907651",
             borderColor: isFriendsButtonSelected ? "black" : "",
             borderWidth: isFriendsButtonSelected ? 3 : 0,
-            width: 150,
+            width: "40%",
             height: 50,
             borderRadius: 10,
             justifyContent: 'center',
@@ -121,7 +120,7 @@ export default function CreateGroup() {
             backgroundColor: "#907651",
             borderColor: isFamilyButtonSelected ? "black" : "",
             borderWidth: isFamilyButtonSelected ? 3 : 0,
-            width: 150,
+            width: "40%",
             height: 50,
             borderRadius: 10,
             justifyContent: 'center',
@@ -129,6 +128,7 @@ export default function CreateGroup() {
         },
         buttonFontSize: {
             fontSize: 25,
+
         },
         resultContainer: {
             minHeight: 300,
@@ -138,22 +138,34 @@ export default function CreateGroup() {
             paddingLeft: 40,
             paddingRight: 40,
         },
+        header: {
+            height: "14%",
+            alignItems: "center",
+            paddingTop: "15%",
+            marginBottom: "10%"
+        },
+        text: {
+
+            fontSize: 30,
+        }
     });
 
     return (
-        <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: "#F4E9DF", flex: 1 }}>
+        <View style={{ alignItems: 'center', backgroundColor: "#F4E9DF", flex: 1 }}>
+            <View style={styles.header}>
+                <Text style={styles.text}>Groups</Text>
+            </View>
             <Text>1. Enter a group name:</Text>
             <TextInput placeholder="New Group Name" value={groupName} onChangeText={setGroupName} style={styles.input} />
             <Text>2. Select a group type:</Text>
             <View style={styles.groupTypeButtonContainer}>
-                <FontAwesome name='group' size={40} />
+
                 <TouchableOpacity style={styles.friendButton} onPress={friendsButton}>
-                    <Text style={styles.buttonFontSize}>Friends</Text>
+                    <Text style={styles.buttonFontSize}><FontAwesome name='group' size={35} />  Friends</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.familyButton} onPress={familyButton}>
-                    <Text style={styles.buttonFontSize}>Family</Text>
+                    <Text style={styles.buttonFontSize}>Family  <FontAwesome name='home' size={40} /></Text>
                 </TouchableOpacity>
-                <FontAwesome name='home' size={40} />
             </View>
             <Text>3. Invite group members: (members: 1)</Text>
             <TextInput placeholder="Search..." value={friendSearchBar} onChangeText={setFriendSearchBar} style={styles.input} />

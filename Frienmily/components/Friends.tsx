@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FriendItem from "./FriendItem";
 
 export default function Friends() {
@@ -20,12 +20,15 @@ export default function Friends() {
             bottom: 30,
             opacity: 0.8
 
-        }
+        },
     })
     const navigation = useNavigation()
 
     return (
-        <View style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={{alignItems: "center"}}>
+                <Text style={{fontSize: 25, paddingBottom: "1%"}}>Friends</Text> 
+            </View>
             <ScrollView style={{ backgroundColor: 'white' }}>
                 <Text><FriendItem /></Text>
                 <Text><FriendItem /></Text>
@@ -51,7 +54,7 @@ export default function Friends() {
                 }}>
                 <Text style={styles.floatButtonFontSize}>+</Text>
             </TouchableOpacity>
-        </View>
+        </SafeAreaView>
     )
 }
 
