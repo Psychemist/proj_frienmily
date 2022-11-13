@@ -1,7 +1,6 @@
 import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import AddFriendSearchResult from './AddFriendSearchResult';
 import FriendItemInCreateGroup from './FriendItemInCreateGroup';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { isAnyOf } from '@reduxjs/toolkit';
@@ -26,7 +25,7 @@ export default function CreateGroup() {
         } else if (groupName == "") {
             showAlert1()
         } else {
-            navigation.navigate('Groups' as never)
+            navigation.navigate('HomeTab' as never)
         }
 
     }
@@ -289,8 +288,8 @@ export default function CreateGroup() {
             justifyContent: "center",
             flexDirection: "row",
             width: "100%",
-            paddingTop: 20,
-            paddingBottom: 22,
+            paddingTop: 10,
+            paddingBottom: 10,
             alignItems: "center",
         },
         friendButton: {

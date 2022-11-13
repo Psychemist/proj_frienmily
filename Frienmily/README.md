@@ -31,3 +31,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
             <View><Text style={styles.text}>owns you HKD $200.00</Text></View>
             <FontAwesome name='trophy' />
         </View>
+
+
+Louie notes:
+all of them should add friends tgt when creating groups
