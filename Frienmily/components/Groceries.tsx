@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Pressable } from "react-native";
 import FriendItem from "./FriendItem";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -97,7 +97,9 @@ export default function Groceries() {
             </View>
             <View style={styles.container}>
                 <View><TextInput placeholder="Search Products" value={groupName} onChangeText={setGroupName} style={styles.input} /></View>
-                <View><FontAwesome name='shopping-cart' size={30}/></View>
+                <Pressable onPress={()=> navigation.navigate('Cart' as never)}> 
+                <FontAwesome name='shopping-cart' size={30}/>
+                </Pressable>
             <TouchableOpacity 
             onPress={() => navigation.navigate()}>
             </TouchableOpacity>
