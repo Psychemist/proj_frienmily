@@ -26,10 +26,12 @@ export default function FriendItemInCreateGroup(props: FriendItemInCreateGroupPr
             borderWidth: 3,
         },
     })
+    const boo = true
     return (
-        <TouchableOpacity style={styles.itemContainer} onPress={()=> {props.itemPress(props.arrayIndex)}}>
+        <View>{props.items.isShow ? <TouchableOpacity style={styles.itemContainer} onPress={()=> {props.itemPress(props.arrayIndex)}}>
             <FontAwesome name='user' size={30} />
             <Text>     {props.items.username}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> : null}</View>
+        
     )
 }

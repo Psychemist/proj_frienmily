@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import AddFriendSearchResult from './AddFriendSearchResult';
 import FriendItemInCreateGroup from './FriendItemInCreateGroup';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { isAnyOf } from '@reduxjs/toolkit';
 
 export default function CreateGroup() {
 
@@ -79,20 +80,44 @@ export default function CreateGroup() {
         let tempArray: any = [...friendItemList]
         tempArray[num]['isSelected'] = !tempArray[num]['isSelected']
         console.log(tempArray[num]['isSelected']);
-        
-
-
-
         setFriendItemList(tempArray)
+    }
 
+    const numOfMembers = () => {
+        let counter = 1
+        for (let i = 0; i < friendItemList.length; i++) {
+            if (friendItemList[i]['isSelected'] == true) {
+                counter++
+            }
+        }
+        return counter
+    }
 
+    const searchBarEnter = () => {
+        console.log(`${friendSearchBar}`);
+        let tempArray: any = [...friendItemList]
+        for(let tempItem of tempArray) {
+            tempItem['isShow'] = true
+            if (!tempItem.username.includes(`${friendSearchBar}`)) {
+                tempItem['isShow'] = false
+            }
+        }
+        setFriendItemList(tempArray)
+    }
 
+    const clearSearchBar = () => {
+        setFriendSearchBar("")
+        let tempArray: any = [...friendItemList]
+        for(let tempItem of tempArray) {
+            tempItem['isShow'] = true
+        }
+        setFriendItemList(tempArray)
 
     }
 
     const REACT_APP_API_SERVER = process.env.REACT_APP_API_SERVER
     let fetchResult: any
-    const [friendItemList, setFriendItemList] = useState([]);
+    const [friendItemList, setFriendItemList]: any = useState([]);
 
     useEffect(() => {
         console.log("useEffect")
@@ -188,10 +213,37 @@ export default function CreateGroup() {
                         "mobile": "777",
                         "password": "777",
                         "profile_picture": "777"
+                    },
+                    {
+                        "id": 8,
+                        "user_id": 1,
+                        "user_friend_id": 3,
+                        "created_at": "2022-11-11T08:20:32.326Z",
+                        "updated_at": "2022-11-11T08:20:32.326Z",
+                        "username": "123",
+                        "is_male": true,
+                        "email": "333",
+                        "mobile": "333",
+                        "password": "333",
+                        "profile_picture": "333"
+                    },
+                    {
+                        "id": 9,
+                        "user_id": 1,
+                        "user_friend_id": 3,
+                        "created_at": "2022-11-11T08:20:32.326Z",
+                        "updated_at": "2022-11-11T08:20:32.326Z",
+                        "username": "345",
+                        "is_male": true,
+                        "email": "333",
+                        "mobile": "333",
+                        "password": "333",
+                        "profile_picture": "333"
                     }
                 ]
                 for (let i = 0; i < fetchResult.length; i++) {
                     fetchResult[i].isSelected = false
+                    fetchResult[i].isShow = true
                 }
                 setFriendItemList(fetchResult)
 
@@ -286,7 +338,7 @@ export default function CreateGroup() {
                 <Text style={styles.text}>Groups</Text>
             </View>
             <Text>1. Enter a group name:</Text>
-            <TextInput placeholder="New Group Name" value={groupName} onChangeText={setGroupName} style={styles.input} />
+            <TextInput placeholder="New Group Name" autoCapitalize='none' value={groupName} onChangeText={setGroupName} style={styles.input} />
             <Text>2. Select a group type:</Text>
             <View style={styles.groupTypeButtonContainer}>
 
@@ -297,8 +349,16 @@ export default function CreateGroup() {
                     <Text style={styles.buttonFontSize}>Family  <FontAwesome name='home' size={40} /></Text>
                 </TouchableOpacity>
             </View>
-            <Text>3. Invite group members: (members: 1)</Text>
-            <TextInput placeholder="Search..." value={friendSearchBar} onChangeText={setFriendSearchBar} style={styles.input} />
+            <Text>3. Invite group members: (members: {numOfMembers()})</Text>
+            <TextInput placeholder="Search..." autoCapitalize='none' value={friendSearchBar} onChangeText={setFriendSearchBar} style={styles.input} />
+
+            <TouchableOpacity style={styles.friendButton} onPress={searchBarEnter}>
+                <Text style={styles.buttonFontSize}>Search</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.familyButton} onPress={clearSearchBar}>
+                <Text style={styles.buttonFontSize}>Clear</Text>
+            </TouchableOpacity>
+
             <ScrollView style={styles.resultContainer}>
                 {friendItemList.map((item: any, index: number) => (
                     <FriendItemInCreateGroup key={index} items={item} arrayIndex={index} itemPress={itemPress} />
