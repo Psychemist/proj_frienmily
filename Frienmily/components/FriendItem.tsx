@@ -3,8 +3,13 @@ import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import FontAwesome5Pro from 'react-native-vector-icons/FontAwesome5Pro'
+interface FriendItemProps {
+    items: any,
+    key: number
+};
 
-export default function FriendItem() {
+
+export default function FriendItem(props: FriendItemProps) {
     const styles = StyleSheet.create({
         text: {
             fontSize: 15,
@@ -32,7 +37,7 @@ export default function FriendItem() {
     return (
         <View style={styles.container}>
             <FontAwesome name='user-circle-o' size={30}/>
-            <View ><Text style={styles.text}>USER NAME</Text></View>
+            <View ><Text style={styles.text}>{props.items.username}</Text></View>
             <View><Text style={styles.text}>owns you HKD $200.00</Text></View>
             <FontAwesome name='angle-right' size={30}/>
 
