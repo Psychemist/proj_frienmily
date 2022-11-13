@@ -33,6 +33,7 @@ import ShoppingListItem from './components/ShoppingListItem';
 import GroceriesItems from './components/GroceriesItems';
 import ReceiptRecord from './components/ReceiptRecord';
 import ReceiptRecordItem from './components/ReceiptRecordItem';
+import GroceriesDetails from './components/GroceriesDetails';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator();
@@ -88,6 +89,7 @@ const App = () => {
           <Stack.Screen options={{ headerShown: false, gestureEnabled: true }} name="HomeTab" component={HomeTab} />
           <Stack.Screen name="Groceries" component={Groceries} />
           <Stack.Screen name="GroceriesItems" component={GroceriesItems} />
+          <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} />
           <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="CartItem" component={CartItem} />
           <Stack.Screen name="ShoppingList" component={ShoppingList} />
