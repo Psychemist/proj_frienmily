@@ -1,13 +1,19 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function FriendItemInCreateGroup() {
+interface FriendItemInCreateGroupProps {
+    items: any,
+    arrayIndex: number,
+    itemPress: (num: number) => void,
+};
+
+export default function FriendItemInCreateGroup(props: FriendItemInCreateGroupProps) {
+
     const styles = StyleSheet.create({
         itemContainer: {
             width: "100%",
             backgroundColor: "pink",
-            // justifyContent: "space-between",
             alignItems: "center",
             flexDirection: "row",
             padding: 10,
@@ -16,13 +22,14 @@ export default function FriendItemInCreateGroup() {
             borderRadius: 15,
             marginTop: 5,
             marginBottom: 5,
-
+            borderColor: props.items.isSelected ? "black" : "pink",
+            borderWidth: 3,
         },
     })
     return (
-        <View style={styles.itemContainer}>
-            <FontAwesome name='user' size={30}/>
-            <Text>   Username...</Text>
-        </View>
+        <TouchableOpacity style={styles.itemContainer} onPress={()=> {props.itemPress(props.arrayIndex)}}>
+            <FontAwesome name='user' size={30} />
+            <Text>     {props.items.username}</Text>
+        </TouchableOpacity>
     )
 }

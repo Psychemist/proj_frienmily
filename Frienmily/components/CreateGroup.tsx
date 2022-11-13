@@ -1,5 +1,5 @@
 import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AddFriendSearchResult from './AddFriendSearchResult';
 import FriendItemInCreateGroup from './FriendItemInCreateGroup';
@@ -73,6 +73,136 @@ export default function CreateGroup() {
             ]
         );
     }
+
+    const itemPress = (num: number) => {
+
+        let tempArray: any = [...friendItemList]
+        tempArray[num]['isSelected'] = !tempArray[num]['isSelected']
+        console.log(tempArray[num]['isSelected']);
+        
+
+
+
+        setFriendItemList(tempArray)
+
+
+
+
+    }
+
+    const REACT_APP_API_SERVER = process.env.REACT_APP_API_SERVER
+    let fetchResult: any
+    const [friendItemList, setFriendItemList] = useState([]);
+
+    useEffect(() => {
+        console.log("useEffect")
+
+        const loadFriendList = async () => {
+            try {
+                console.log("load Friend List when creating group...")
+                // console.log("cp2");
+                // console.log(`${REACT_APP_API_SERVER}/friends/`);
+
+                // console.log("cp3");
+                // const response = await fetch(`localhost:8000/friends/`);
+                // console.log("cp4");
+
+                // const json = await response.json();
+                // console.log(json);
+
+                fetchResult = [
+                    {
+                        "id": 2,
+                        "user_id": 1,
+                        "user_friend_id": 2,
+                        "created_at": "2022-11-11T08:20:32.326Z",
+                        "updated_at": "2022-11-11T08:20:32.326Z",
+                        "username": "222",
+                        "is_male": false,
+                        "email": "222",
+                        "mobile": "222",
+                        "password": "222",
+                        "profile_picture": "222"
+                    },
+                    {
+                        "id": 3,
+                        "user_id": 1,
+                        "user_friend_id": 3,
+                        "created_at": "2022-11-11T08:20:32.326Z",
+                        "updated_at": "2022-11-11T08:20:32.326Z",
+                        "username": "333",
+                        "is_male": true,
+                        "email": "333",
+                        "mobile": "333",
+                        "password": "333",
+                        "profile_picture": "333"
+                    },
+                    {
+                        "id": 4,
+                        "user_id": 1,
+                        "user_friend_id": 4,
+                        "created_at": "2022-11-11T08:20:32.326Z",
+                        "updated_at": "2022-11-11T08:20:32.326Z",
+                        "username": "444",
+                        "is_male": false,
+                        "email": "444",
+                        "mobile": "444",
+                        "password": "444",
+                        "profile_picture": "444"
+                    },
+                    {
+                        "id": 5,
+                        "user_id": 1,
+                        "user_friend_id": 5,
+                        "created_at": "2022-11-11T08:20:32.326Z",
+                        "updated_at": "2022-11-11T08:20:32.326Z",
+                        "username": "555",
+                        "is_male": true,
+                        "email": "555",
+                        "mobile": "555",
+                        "password": "555",
+                        "profile_picture": "555"
+                    },
+                    {
+                        "id": 6,
+                        "user_id": 1,
+                        "user_friend_id": 6,
+                        "created_at": "2022-11-11T08:20:32.326Z",
+                        "updated_at": "2022-11-11T08:20:32.326Z",
+                        "username": "666",
+                        "is_male": false,
+                        "email": "666",
+                        "mobile": "666",
+                        "password": "666",
+                        "profile_picture": "666"
+                    },
+                    {
+                        "id": 7,
+                        "user_id": 1,
+                        "user_friend_id": 7,
+                        "created_at": "2022-11-11T08:20:32.326Z",
+                        "updated_at": "2022-11-11T08:20:32.326Z",
+                        "username": "777",
+                        "is_male": true,
+                        "email": "777",
+                        "mobile": "777",
+                        "password": "777",
+                        "profile_picture": "777"
+                    }
+                ]
+                for (let i = 0; i < fetchResult.length; i++) {
+                    fetchResult[i].isSelected = false
+                }
+                setFriendItemList(fetchResult)
+
+            } catch (error) {
+                console.log("error", error);
+            }
+        };
+
+        loadFriendList();
+
+    }, [])
 
     const styles = StyleSheet.create({
         input: {
@@ -170,13 +300,9 @@ export default function CreateGroup() {
             <Text>3. Invite group members: (members: 1)</Text>
             <TextInput placeholder="Search..." value={friendSearchBar} onChangeText={setFriendSearchBar} style={styles.input} />
             <ScrollView style={styles.resultContainer}>
-                <FriendItemInCreateGroup />
-                <FriendItemInCreateGroup />
-                <FriendItemInCreateGroup />
-                <FriendItemInCreateGroup />
-                <FriendItemInCreateGroup />
-                <FriendItemInCreateGroup />
-                <FriendItemInCreateGroup />
+                {friendItemList.map((item: any, index: number) => (
+                    <FriendItemInCreateGroup key={index} items={item} arrayIndex={index} itemPress={itemPress} />
+                ))}
             </ScrollView>
 
             <TouchableOpacity style={styles.createButton} onPress={submitButton}>
