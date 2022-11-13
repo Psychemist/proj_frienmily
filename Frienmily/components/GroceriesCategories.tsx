@@ -16,10 +16,10 @@ export default function GroceriesCategories() {
             padding: 10,
             paddingTop: 30,
             paddingBottom: 30,
-            backgroundColor: "#E2D8CF",
+            // backgroundColor: "#E2D8CF",
             //SHADOW
-            shadowOpacity: 0.8,
-            shadowRadius: 3,
+            shadowOpacity: 0.1,
+            shadowRadius: 2,
             shadowOffset: {
                 height: 1,
                 width: 1

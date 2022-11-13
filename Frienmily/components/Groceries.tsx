@@ -19,14 +19,14 @@ export default function Groceries() {
             padding: 10,
             paddingTop: 2,
             paddingBottom: 2,
-            backgroundColor: "#E2D8CF",
+            backgroundColor: "#47b4b1",
             //SHADOW
-            shadowOpacity: 0.8,
-            shadowRadius: 3,
-            shadowOffset: {
-                height: 1,
-                width: 1
-            }
+            // shadowOpacity: 0.1,
+            // shadowRadius: 2,
+            // shadowOffset: {
+            //     height: 1,
+            //     width: 1
+            // }
         },
         input: {
             height: 40,
@@ -35,12 +35,13 @@ export default function Groceries() {
             padding: 10,
             minWidth: 300,
             maxWidth: 300,
-            borderRadius: 10
+            borderRadius: 10,
+            backgroundColor: "white",
         },
         searchButton: {
             margin: 5,
             fontSize: 20,
-            backgroundColor: "#907651",
+            backgroundColor: "white",
             width: 120,
             height: 45,
             borderRadius: 100,
@@ -92,7 +93,7 @@ export default function Groceries() {
     return (
  
         <SafeAreaView style={{ flex: 1 }}>
-            <View style={{alignItems: "center"}}>
+            <View style={styles.container}>
                 <Text style={{fontSize: 25, paddingBottom: "1%"}}>Groceries</Text> 
             </View>
             <View style={styles.container}>
