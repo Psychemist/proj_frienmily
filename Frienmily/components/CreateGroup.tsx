@@ -96,7 +96,7 @@ export default function CreateGroup() {
     const searchBarEnter = () => {
         console.log(`${friendSearchBar}`);
         let tempArray: any = [...friendItemList]
-        for(let tempItem of tempArray) {
+        for (let tempItem of tempArray) {
             tempItem['isShow'] = true
             if (!tempItem.username.includes(`${friendSearchBar}`)) {
                 tempItem['isShow'] = false
@@ -108,7 +108,7 @@ export default function CreateGroup() {
     const clearSearchBar = () => {
         setFriendSearchBar("")
         let tempArray: any = [...friendItemList]
-        for(let tempItem of tempArray) {
+        for (let tempItem of tempArray) {
             tempItem['isShow'] = true
         }
         setFriendItemList(tempArray)
@@ -258,12 +258,21 @@ export default function CreateGroup() {
 
     const styles = StyleSheet.create({
         input: {
-            height: 40,
+            height: "5%",
             margin: 12,
             borderWidth: 1,
             padding: 10,
             minWidth: 300,
             maxWidth: 300,
+            borderRadius: 10
+        },
+        input2: {
+            height: "60%",
+            margin: 12,
+            borderWidth: 1,
+            padding: 10,
+            minWidth: 200,
+            maxWidth: 200,
             borderRadius: 10
         },
         createButton: {
@@ -277,7 +286,7 @@ export default function CreateGroup() {
             alignItems: 'center',
         },
         groupTypeButtonContainer: {
-            justifyContent: "space-around",
+            justifyContent: "center",
             flexDirection: "row",
             width: "100%",
             paddingTop: 20,
@@ -324,18 +333,44 @@ export default function CreateGroup() {
             height: "14%",
             alignItems: "center",
             paddingTop: "15%",
-            marginBottom: "10%"
+            marginBottom: "10%",
+            width: "100%"
         },
         text: {
 
             fontSize: 30,
+        },
+        searchAndClearButton: {
+            margin: 5,
+            fontSize: 20,
+            backgroundColor: "#907651",
+            width: "12%",
+            height: 40,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        searchAndClearText: {
+            fontSize: 12
+        },
+        backButton: {
+            position: 'absolute',
+            left: 0,
+            paddingTop: "65%",
+            paddingLeft: "20%",
+            fontSize: 25
+            // top: "110%",
         }
     });
 
     return (
         <View style={{ alignItems: 'center', backgroundColor: "#F4E9DF", flex: 1 }}>
             <View style={styles.header}>
-                <Text style={styles.text}>Groups</Text>
+                <TouchableOpacity style={styles.backButton} onPress={()=> navigation.navigate('Groups' as never)}>
+                    <FontAwesome name='angle-left' size={35} />
+                </TouchableOpacity>
+
+                <Text style={styles.text}>Create Group</Text>
             </View>
             <Text>1. Enter a group name:</Text>
             <TextInput placeholder="New Group Name" autoCapitalize='none' value={groupName} onChangeText={setGroupName} style={styles.input} />
@@ -350,14 +385,16 @@ export default function CreateGroup() {
                 </TouchableOpacity>
             </View>
             <Text>3. Invite group members: (members: {numOfMembers()})</Text>
-            <TextInput placeholder="Search..." autoCapitalize='none' value={friendSearchBar} onChangeText={setFriendSearchBar} style={styles.input} />
+            <View style={styles.groupTypeButtonContainer}>
+                <TextInput placeholder="Search username..." maxLength={18} autoCapitalize='none' value={friendSearchBar} onChangeText={setFriendSearchBar} style={styles.input2} />
+                <TouchableOpacity style={styles.searchAndClearButton} onPress={searchBarEnter}>
+                    <Text style={styles.searchAndClearText}>Search</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.searchAndClearButton} onPress={clearSearchBar}>
+                    <Text style={styles.searchAndClearText}>Clear</Text>
+                </TouchableOpacity>
+            </View>
 
-            <TouchableOpacity style={styles.friendButton} onPress={searchBarEnter}>
-                <Text style={styles.buttonFontSize}>Search</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.familyButton} onPress={clearSearchBar}>
-                <Text style={styles.buttonFontSize}>Clear</Text>
-            </TouchableOpacity>
 
             <ScrollView style={styles.resultContainer}>
                 {friendItemList.map((item: any, index: number) => (
