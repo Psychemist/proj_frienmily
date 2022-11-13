@@ -69,13 +69,22 @@ export default function ShoppingList() {
                     </TouchableOpacity>
                 </View>
                 <View><Text style={styles.totalText}>Estimate Total: HKD$ 800</Text></View>
-                <View><TouchableOpacity
+                <View>
+                    <TouchableOpacity
                     style={styles.assignGroupButton}
                         onPress={() => {
                         navigation.navigate('UploadReceipt' as never)
                     }}>
                     <Text style={styles.buttonText}>Upload Receipt</Text>
-                </TouchableOpacity></View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    style={styles.assignGroupButton}
+                        onPress={() => {
+                        navigation.navigate('ReceiptRecord' as never)
+                    }}>
+                    <Text style={styles.buttonText}>Receipt Record</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             
         </SafeAreaView>

@@ -40,7 +40,7 @@ export default function ShoppingListItem() {
         },
         selectButton: {
             // margin: 5,
-            borderColor: isSelected ? "green" : "",
+            borderColor: isSelected ? "lightseagreen" : "",
             borderWidth: isSelected ? 10 : 0,
             width: 20,
             height: 20,
