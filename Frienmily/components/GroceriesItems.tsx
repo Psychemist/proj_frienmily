@@ -14,8 +14,8 @@ export default function GroceriesItems() {
             flexDirection: "column",
             width: "100%",
             padding: 10,
-            paddingTop: 30,
-            paddingBottom: 30,
+            paddingTop: 10,
+            paddingBottom: 20,
             // backgroundColor: "#E2D8CF",
             //SHADOW
             shadowOpacity: 0.1,
