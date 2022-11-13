@@ -28,6 +28,9 @@ import CartItem from './components/CartItem';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ShoppingList from './components/ShoppingList';
+import ShoppingListItem from './components/ShoppingListItem';
+import GroceriesItems from './components/GroceriesItems';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator();
@@ -81,8 +84,12 @@ const App = () => {
 
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
           <Stack.Screen options={{ headerShown: false, gestureEnabled: true }} name="HomeTab" component={HomeTab} />
+          <Stack.Screen name="Groceries" component={Groceries} />
+          <Stack.Screen name="GroceriesItems" component={GroceriesItems} />
           <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="CartItem" component={CartItem} />
+          <Stack.Screen name="ShoppingList" component={ShoppingList} />
+          <Stack.Screen name="ShoppingListItem" component={ShoppingListItem} />
           <Stack.Screen name="Groups" component={Groups} />
           <Stack.Screen name="Add friends" component={AddFriends} />
           <Stack.Screen name="Create Group" component={CreateGroup} />

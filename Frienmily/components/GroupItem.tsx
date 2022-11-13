@@ -39,7 +39,7 @@ export default function GroupItem() {
             <FontAwesome name='users' size={30}/>
             <View ><Text style={styles.text}>GROUP NAME</Text></View>
             <View><Text style={styles.text}>settled up</Text></View>
-            <Pressable onPress={()=> navigation.navigate('Groceries' as never)}> 
+            <Pressable onPress={()=> navigation.navigate('ShoppingList' as never)}> 
             {/* Dummy nav to Groceries first, going to change navigation to 'Group Detail' - Ronson 13Nov2022 17:48 */}
             <FontAwesome name='angle-right' size={30}/>
             </Pressable>
