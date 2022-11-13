@@ -366,7 +366,7 @@ export default function CreateGroup() {
     return (
         <View style={{ alignItems: 'center', backgroundColor: "#F4E9DF", flex: 1 }}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.backButton} onPress={()=> navigation.navigate('Groups' as never)}>
+                <TouchableOpacity style={styles.backButton} onPress={()=> navigation.navigate('HomeTab' as never)}>
                     <FontAwesome name='angle-left' size={35} />
                 </TouchableOpacity>
 
