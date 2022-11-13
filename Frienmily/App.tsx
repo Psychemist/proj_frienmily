@@ -23,7 +23,9 @@ import Groups from './components/Groups';
 import AddFriends from './components/AddFriends';
 import CreateGroup from './components/CreateGroup';
 import SignUpScreen from './components/SignUpScreen';
-
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator();
@@ -31,10 +33,38 @@ const Stack = createNativeStackNavigator();
 const HomeTab = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name='Groups' component={Groups} />
-      <Tab.Screen name='Friends' component={Friends} />
-      <Tab.Screen name='Groceries' component={Groceries} />
-      <Tab.Screen name='Account' component={Account} />
+      <Tab.Screen name='Groups' component={Groups} 
+      options={{
+        tabBarLabel: 'Groups',
+        tabBarIcon: ({ color, size }) => (
+          <FontAwesomeIcon name="spinner" color={color} size={23} />
+          // <MaterialCommunityIcons name="account-multiple" size={24} color="grey" />r
+        ),
+      }}
+      />
+      <Tab.Screen name='Friends' component={Friends}
+      options={{
+        tabBarLabel: 'Friends',
+        tabBarIcon: ({ color, size }) => (
+          <FontAwesomeIcon name="smile-o" color={color} size={25} />
+          // <MaterialCommunityIcons name="robot-happy-outline" size={24} color="grey" />
+        ),
+      }} />
+      <Tab.Screen name='Groceries' component={Groceries}
+      options={{
+        tabBarLabel: 'Groceries',
+        tabBarIcon: ({ color, size }) => (
+          // <FontAwesomeIcon name="braille" color={color} size={20} />
+          <FontAwesomeIcon name="cubes" color={color} size={20} />
+        ),
+      }} />
+      <Tab.Screen name='Account' component={Account}options={{
+        tabBarLabel: 'Account',
+        tabBarIcon: ({ color, size }) => (
+          <FontAwesomeIcon name="user-o" color={color} size={20} />
+          // <MaterialCommunityIcons name="account-multiple" size={24} color="black" />
+        ),
+      }} />
     </Tab.Navigator>
   )
 }
