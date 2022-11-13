@@ -7,7 +7,7 @@ export default function UserProfileScreen() {
 
     // NOTE: use the states in store
     const isLoggedIn = useSelector((state: RootState) => { return state.user.isLoggedIn })
-    const displayName = useSelector((state: RootState) => { return state.user.displayName })
+    const displayName = useSelector((state: RootState) => { return state.user.fullname })
     const errMsg = useSelector((state: RootState) => { return state.user.errMsg })
 
     return (

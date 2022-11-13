@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { RootState } from '../redux/store'
 import { fetchLogin } from '../redux/user/thunk'
 import { useNavigation } from '@react-navigation/native'
@@ -21,8 +21,9 @@ export default function SignUpScreen() {
 
 
   const onClickBackBtn = () => {
-
+    navigation.navigate('Login' as never)
   }
+
   const onSignUp = () => {
 
   }
@@ -31,7 +32,6 @@ export default function SignUpScreen() {
 
   const styles = StyleSheet.create({
     body: {
-      justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#F5F5F5',
       flex: 1,
@@ -45,8 +45,7 @@ export default function SignUpScreen() {
       backgroundColor: '#47b4b1'
     },
     logoWrapper: {
-      position: 'absolute',
-      top: 150,
+      top: 80,
       height: 200,
       width: 300,
       backgroundColor: '#47b4b1'
@@ -73,7 +72,7 @@ export default function SignUpScreen() {
   })
 
   return (
-    <View style={styles.body}>
+    <SafeAreaView style={styles.body}>
 
       <TouchableOpacity onPress={onClickBackBtn} style={styles.backBtn} >
         <Text style={{
@@ -87,7 +86,7 @@ export default function SignUpScreen() {
 
       <View style={{
         position: 'absolute',
-        top: 330
+        marginTop: 330
       }}>
         <View style={[styles.inputFieldWrapper, { marginTop: 80 }]}>
           <TextInput placeholder="Username" value={username} onChangeText={setUsername} style={{
@@ -103,7 +102,7 @@ export default function SignUpScreen() {
           }} />
         </View>
 
-        <View style={{
+        {/* <View style={{
           display: 'flex',
           flexDirection: 'row'
         }}>
@@ -120,7 +119,7 @@ export default function SignUpScreen() {
             }} />
           </View>
 
-        </View>
+        </View> */}
 
         <View style={styles.inputFieldWrapper}>
           <TextInput placeholder="Mobile Number" value={mobileNumber} onChangeText={setMobileNumber} style={{
@@ -137,7 +136,7 @@ export default function SignUpScreen() {
 
       </View>
 
-    </View >
+    </SafeAreaView >
 
 
   )

@@ -30,7 +30,7 @@ const Stack = createNativeStackNavigator();
 
 const HomeTab = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false}}>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name='Groups' component={Groups} />
       <Tab.Screen name='Friends' component={Friends} />
       <Tab.Screen name='Groceries' component={Groceries} />
@@ -48,11 +48,8 @@ const App = () => {
 
 
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
-          <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
-            name="HomeTab" component={HomeTab} />
+          <Stack.Screen options={{ headerShown: false, gestureEnabled: true }} name="HomeTab" component={HomeTab} />
+
           <Stack.Screen name="Add friends" component={AddFriends} />
           <Stack.Screen name="Create Group" component={CreateGroup} />
           <Stack.Screen name="Loading" component={LoadingScreen} />
@@ -62,27 +59,9 @@ const App = () => {
         </Stack.Navigator>
 
 
-
-
-        {/* 
-        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
-
-          <Stack.Screen name="Loading" component={LoadingScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
-          <Stack.Screen name="UserProfile" component={UserProfileScreen} />
-
-        </Stack.Navigator> */}
-
-
-
-
-
-
       </NavigationContainer>
       {/* </SafeAreaView > */}
     </Provider>
-    //TODO: The Tab bar is static (show when the current location is not loading/login/register page)
   );
 };
 
