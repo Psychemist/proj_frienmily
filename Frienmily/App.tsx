@@ -31,6 +31,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ShoppingList from './components/ShoppingList';
 import ShoppingListItem from './components/ShoppingListItem';
 import GroceriesItems from './components/GroceriesItems';
+import ReceiptRecord from './components/ReceiptRecord';
+import ReceiptRecordItem from './components/ReceiptRecordItem';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator();
@@ -90,6 +92,8 @@ const App = () => {
           <Stack.Screen name="CartItem" component={CartItem} />
           <Stack.Screen name="ShoppingList" component={ShoppingList} />
           <Stack.Screen name="ShoppingListItem" component={ShoppingListItem} />
+          <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} />
+          <Stack.Screen name="ReceiptRecordItem" component={ReceiptRecordItem} />
           <Stack.Screen name="Groups" component={Groups} />
           <Stack.Screen name="Add friends" component={AddFriends} />
           <Stack.Screen name="Create Group" component={CreateGroup} />
@@ -99,7 +103,7 @@ const App = () => {
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />
         </Stack.Navigator>
 
-
+        
       </NavigationContainer>
       {/* </SafeAreaView > */}
     </Provider>
