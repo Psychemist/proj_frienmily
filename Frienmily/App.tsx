@@ -41,32 +41,34 @@ const Stack = createNativeStackNavigator();
 const HomeTab = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name='Groups' component={Groups} 
-      options={{
-        tabBarLabel: 'Groups',
-        tabBarIcon: ({ color, size }) => (
-          <FontAwesomeIcon name="spinner" color={color} size={23} />
-          // <MaterialCommunityIcons name="account-multiple" size={24} color="grey" />r
-        ),
-      }}
+      <Tab.Screen name='Groups' component={Groups}
+        options={{
+          tabBarLabel: 'Groups',
+          unmountOnBlur: true,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesomeIcon name="spinner" color={color} size={23} />
+            // <MaterialCommunityIcons name="account-multiple" size={24} color="grey" />r
+          ),
+        }}
       />
       <Tab.Screen name='Friends' component={Friends}
-      options={{
-        tabBarLabel: 'Friends',
-        tabBarIcon: ({ color, size }) => (
-          <FontAwesomeIcon name="smile-o" color={color} size={25} />
-          // <MaterialCommunityIcons name="robot-happy-outline" size={24} color="grey" />
-        ),
-      }} />
+        options={{
+          tabBarLabel: 'Friends',
+          unmountOnBlur: true,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesomeIcon name="smile-o" color={color} size={25} />
+            // <MaterialCommunityIcons name="robot-happy-outline" size={24} color="grey" />
+          ),
+        }} />
       <Tab.Screen name='Groceries' component={Groceries}
-      options={{
-        tabBarLabel: 'Groceries',
-        tabBarIcon: ({ color, size }) => (
-          // <FontAwesomeIcon name="braille" color={color} size={20} />
-          <FontAwesomeIcon name="cubes" color={color} size={20} />
-        ),
-      }} />
-      <Tab.Screen name='Account' component={Account}options={{
+        options={{
+          tabBarLabel: 'Groceries',
+          tabBarIcon: ({ color, size }) => (
+            // <FontAwesomeIcon name="braille" color={color} size={20} />
+            <FontAwesomeIcon name="cubes" color={color} size={20} />
+          ),
+        }} />
+      <Tab.Screen name='Account' component={Account} options={{
         tabBarLabel: 'Account',
         tabBarIcon: ({ color, size }) => (
           <FontAwesomeIcon name="user-o" color={color} size={20} />
@@ -86,7 +88,10 @@ const App = () => {
 
 
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
-          <Stack.Screen options={{ headerShown: false, gestureEnabled: true }} name="HomeTab" component={HomeTab} />
+          <Stack.Screen options={{
+            headerShown: false,
+            gestureEnabled: true,
+          }} name="HomeTab" component={HomeTab} />
           <Stack.Screen name="Groceries" component={Groceries} />
           <Stack.Screen name="GroceriesItems" component={GroceriesItems} />
           <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} />
@@ -97,7 +102,7 @@ const App = () => {
           <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} />
           <Stack.Screen name="ReceiptRecordItem" component={ReceiptRecordItem} />
           <Stack.Screen name="Groups" component={Groups} />
-          <Stack.Screen name="Add friends" component={AddFriends} />
+          <Stack.Screen name="Add friends" component={AddFriends}/>
           <Stack.Screen name="Create Group" component={CreateGroup} />
           <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
@@ -105,7 +110,7 @@ const App = () => {
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />
         </Stack.Navigator>
 
-        
+
       </NavigationContainer>
       {/* </SafeAreaView > */}
     </Provider>
