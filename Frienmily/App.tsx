@@ -14,8 +14,8 @@ import {
 import LoadingScreen from './components/LoadingScreen';
 import LoginScreen from './components/LoginScreen';
 import UserProfileScreen from './components/UserProfileScreen';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+import { Provider, useSelector } from 'react-redux';
+import store, { RootState } from './redux/store';
 import Account from './components/Account';
 import Groceries from './components/Groceries';
 import Friends from './components/Friends';
@@ -44,7 +44,10 @@ const HomeTab = () => {
       <Tab.Screen name='Groups' component={Groups}
         options={{
           tabBarLabel: 'Groups',
+<<<<<<< HEAD
           unmountOnBlur: true,
+=======
+>>>>>>> 2ced13b4b0cac1951e00d845b684b719c89a87c9
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon name="spinner" color={color} size={23} />
             // <MaterialCommunityIcons name="account-multiple" size={24} color="grey" />r
@@ -54,7 +57,10 @@ const HomeTab = () => {
       <Tab.Screen name='Friends' component={Friends}
         options={{
           tabBarLabel: 'Friends',
+<<<<<<< HEAD
           unmountOnBlur: true,
+=======
+>>>>>>> 2ced13b4b0cac1951e00d845b684b719c89a87c9
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon name="smile-o" color={color} size={25} />
             // <MaterialCommunityIcons name="robot-happy-outline" size={24} color="grey" />
@@ -81,17 +87,25 @@ const HomeTab = () => {
 
 const App = () => {
 
+  const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
+
   return (
     <Provider store={store}>
       {/* <SafeAreaView> */}
       <NavigationContainer>
 
+<<<<<<< HEAD
 
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
           <Stack.Screen options={{
             headerShown: false,
             gestureEnabled: true,
           }} name="HomeTab" component={HomeTab} />
+=======
+        isLoggedIn?
+        <Stack.Navigator>
+          <Stack.Screen options={{ headerShown: false, gestureEnabled: true }} name="HomeTab" component={HomeTab} />
+>>>>>>> 2ced13b4b0cac1951e00d845b684b719c89a87c9
           <Stack.Screen name="Groceries" component={Groceries} />
           <Stack.Screen name="GroceriesItems" component={GroceriesItems} />
           <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} />
@@ -105,8 +119,6 @@ const App = () => {
           <Stack.Screen name="Add friends" component={AddFriends}/>
           <Stack.Screen name="Create Group" component={CreateGroup} />
           <Stack.Screen name="Loading" component={LoadingScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />
         </Stack.Navigator>
 

@@ -9,9 +9,11 @@ export interface UserState {
     isLoggedIn: boolean,
     username: string,
     fullName: string,
-    email: string,
-    mobile: string,
-    errMsg: string
+    email: string | null,
+    mobile: string | null,
+    isMale: boolean | null,
+    profilePicture: string | null,
+    errMsg: string | null
 }
 
 
@@ -23,6 +25,8 @@ export const userSlice = createSlice({
         fullName: "(none)",
         email: "(none)",
         mobile: "(none)",
+        isMale: null,
+        profilePicture: "",
         errMsg: "(none)"
     } as UserState
     ,
