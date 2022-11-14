@@ -4,9 +4,9 @@ import FriendItem from "./FriendItem";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import GroceriesCategories from "./GroceriesCategories";
-import GroceriesItems from "./GroceriesItems";
+import GroceriesDetailsItem from "./GroceriesDetailsItem";
 
-export default function Groceries() {
+export default function GroceriesDetails() {
     const styles = StyleSheet.create({
         text: {
             fontSize: 15,
@@ -105,43 +105,8 @@ export default function Groceries() {
             onPress={() => navigation.navigate()}>
             </TouchableOpacity>
             </View>
-            <ScrollView horizontal={true} style={{ backgroundColor: 'white' }}>
-                <Text><GroceriesCategories/></Text>
-                <Text><GroceriesCategories/></Text>
-                <Text><GroceriesCategories/></Text>
-                <Text><GroceriesCategories/></Text>
-                <Text><GroceriesCategories/></Text>
-  
-            </ScrollView>
-            <ScrollView horizontal={true} style={{ backgroundColor: 'white' }}>
-                <Text><GroceriesCategories/></Text>
-                <Text><GroceriesCategories/></Text>
-                <Text><GroceriesCategories/></Text>
-                <Text><GroceriesCategories/></Text>
-                <Text><GroceriesCategories/></Text>
-
-            </ScrollView>
-            <ScrollView horizontal={true} style={{ backgroundColor: 'white' }}>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-            </ScrollView>
-            <ScrollView horizontal={true} style={{ backgroundColor: 'white' }}>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
-                <Text><GroceriesItems/></Text>
+            <ScrollView style={{ backgroundColor: 'white' }}>
+                <Text><GroceriesDetailsItem/></Text>
             </ScrollView>
         </SafeAreaView>
  

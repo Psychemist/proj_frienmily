@@ -65,12 +65,37 @@ export default function AddFriends() {
             paddingLeft: 40,
             paddingRight: 40,
         },
+        text: {
+            fontSize: 30,
+        },
+        header: {
+            height: "14%",
+            alignItems: "center",
+            paddingTop: "15%",
+            marginBottom: "10%",
+            width: "100%"
+        },
+        backButton: {
+            position: 'absolute',
+            left: 0,
+            paddingTop: "65%",
+            paddingLeft: "20%",
+            fontSize: 25
+            // top: "110%",
+        }
     });
 
 
     return (
-        <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: "#F4E9DF", flex: 1 }}>
-            <Text><FontAwesome name='mobile' size={50}/>   Enter your friend's phone number:</Text>
+        <View style={{ alignItems: 'center', backgroundColor: "#F4E9DF", flex: 1 }}>
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={()=> navigation.navigate('Friends' as never)}>
+                    <FontAwesome name='angle-left' size={35} />
+                </TouchableOpacity>
+
+                <Text style={styles.text}>Add Friends</Text>
+            </View>
+            <Text><FontAwesome name='mobile' size={50} />   Enter your friend's phone number:</Text>
             <TextInput placeholder="Phone number or Email" value={groupName} onChangeText={setGroupName} style={styles.input} />
 
             <TouchableOpacity style={styles.searchButton} onPress={submitButton}>
