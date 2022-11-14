@@ -75,18 +75,20 @@ const HomeTab = () => {
       }} />
     </Tab.Navigator>
   )
+
 }
 
 const App = () => {
 
-  const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
+  // const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
+  // console.log(isLoggedIn)
 
   return (
     <Provider store={store}>
       {/* <SafeAreaView> */}
       <NavigationContainer>
 
-        isLoggedIn?
+        {/* isLoggedIn? */}
         <Stack.Navigator>
           <Stack.Screen options={{ headerShown: false, gestureEnabled: true }} name="HomeTab" component={HomeTab} />
           <Stack.Screen name="Groceries" component={Groceries} />
