@@ -44,10 +44,7 @@ const HomeTab = () => {
       <Tab.Screen name='Groups' component={Groups}
         options={{
           tabBarLabel: 'Groups',
-<<<<<<< HEAD
           unmountOnBlur: true,
-=======
->>>>>>> 2ced13b4b0cac1951e00d845b684b719c89a87c9
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon name="spinner" color={color} size={23} />
             // <MaterialCommunityIcons name="account-multiple" size={24} color="grey" />r
@@ -57,10 +54,7 @@ const HomeTab = () => {
       <Tab.Screen name='Friends' component={Friends}
         options={{
           tabBarLabel: 'Friends',
-<<<<<<< HEAD
           unmountOnBlur: true,
-=======
->>>>>>> 2ced13b4b0cac1951e00d845b684b719c89a87c9
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon name="smile-o" color={color} size={25} />
             // <MaterialCommunityIcons name="robot-happy-outline" size={24} color="grey" />
@@ -94,18 +88,15 @@ const App = () => {
       {/* <SafeAreaView> */}
       <NavigationContainer>
 
-<<<<<<< HEAD
 
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
           <Stack.Screen options={{
             headerShown: false,
             gestureEnabled: true,
           }} name="HomeTab" component={HomeTab} />
-=======
         isLoggedIn?
-        <Stack.Navigator>
+        {/* <Stack.Navigator> */}
           <Stack.Screen options={{ headerShown: false, gestureEnabled: true }} name="HomeTab" component={HomeTab} />
->>>>>>> 2ced13b4b0cac1951e00d845b684b719c89a87c9
           <Stack.Screen name="Groceries" component={Groceries} />
           <Stack.Screen name="GroceriesItems" component={GroceriesItems} />
           <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} />
