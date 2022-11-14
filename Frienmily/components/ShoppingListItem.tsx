@@ -29,7 +29,7 @@ export default function ShoppingListItem() {
             padding: 10,
             paddingTop: 32,
             paddingBottom: 32,
-            // backgroundColor: "#E2D8CF",
+            backgroundColor: "#E2D8CF",
             //SHADOW
             shadowOpacity: 0.2,
             shadowRadius: 3,
