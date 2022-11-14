@@ -20,6 +20,7 @@ export default function LoginScreen() {
 
     const onLogin = () => {
         dispatch(fetchLogin({ username, password }))
+        // TODO: Login 成功時將username紀錄到redux，並開放HomeTab
         navigation.navigate('HomeTab' as never)
     }
 

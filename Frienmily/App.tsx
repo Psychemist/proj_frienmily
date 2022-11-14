@@ -14,8 +14,8 @@ import {
 import LoadingScreen from './components/LoadingScreen';
 import LoginScreen from './components/LoginScreen';
 import UserProfileScreen from './components/UserProfileScreen';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+import { Provider, useSelector } from 'react-redux';
+import store, { RootState } from './redux/store';
 import Account from './components/Account';
 import Groceries from './components/Groceries';
 import Friends from './components/Friends';
@@ -41,22 +41,38 @@ const HomeTab = () => {
 
 const App = () => {
 
+  const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
+
   return (
     <Provider store={store}>
       {/* <SafeAreaView> */}
       <NavigationContainer>
 
-
-        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
+        isLoggedIn? (
+        <Stack.Navigator>
           <Stack.Screen options={{ headerShown: false, gestureEnabled: true }} name="HomeTab" component={HomeTab} />
-
           <Stack.Screen name="Add friends" component={AddFriends} />
           <Stack.Screen name="Create Group" component={CreateGroup} />
           <Stack.Screen name="Loading" component={LoadingScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />
         </Stack.Navigator>
+
+        )
+        :
+        (
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false, gestureEnabled: true }} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false, gestureEnabled: true }} />
+        </Stack.Navigator>
+        )
+
+        {/* <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
+          <Stack.Screen options={{ headerShown: false, gestureEnabled: true }} name="HomeTab" component={HomeTab} />
+          <Stack.Screen name="Add friends" component={AddFriends} />
+          <Stack.Screen name="Create Group" component={CreateGroup} />
+          <Stack.Screen name="Loading" component={LoadingScreen} />
+          <Stack.Screen name="UserProfile" component={UserProfileScreen} />
+        </Stack.Navigator> */}
 
 
       </NavigationContainer>
