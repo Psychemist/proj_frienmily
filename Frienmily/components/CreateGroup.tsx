@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import FriendItemInCreateGroup from './FriendItemInCreateGroup';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { isAnyOf } from '@reduxjs/toolkit';
+import { REACT_APP_API_SERVER } from '@env';
 
 export default function CreateGroup() {
 
@@ -17,7 +18,7 @@ export default function CreateGroup() {
 
     const navigation = useNavigation();
 
-    const submitButton = () => {
+    const submitButton = async () => {
         console.log(groupName)
         console.log(groupType)
         if (groupType == null) {
@@ -25,6 +26,28 @@ export default function CreateGroup() {
         } else if (groupName == "") {
             showAlert1()
         } else {
+            
+            let tempArray: any = [...friendItemList]
+            let idArray: any = []
+            for (let tempItem of tempArray) {
+                if (tempItem['isSelected'] == true) {
+                    idArray.push(tempItem['id'])
+                }
+            }
+            console.log(idArray);
+
+            const res = await fetch(`${REACT_APP_API_SERVER}/groups/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    groupName: groupName,
+                    is_family_group: true,
+                    profile_picture: "testing",
+                    groupMemberId: idArray
+                })
+            })
+            let result = await res.json()
+            console.log(result)
             navigation.navigate('HomeTab' as never)
         }
 
@@ -75,7 +98,6 @@ export default function CreateGroup() {
     }
 
     const itemPress = (num: number) => {
-
         let tempArray: any = [...friendItemList]
         tempArray[num]['isSelected'] = !tempArray[num]['isSelected']
         console.log(tempArray[num]['isSelected']);
@@ -114,7 +136,7 @@ export default function CreateGroup() {
 
     }
 
-    const REACT_APP_API_SERVER = process.env.REACT_APP_API_SERVER
+    // const REACT_APP_API_SERVER = process.env.REACT_APP_API_SERVER
     let fetchResult: any
     const [friendItemList, setFriendItemList]: any = useState([]);
 
@@ -365,7 +387,7 @@ export default function CreateGroup() {
     return (
         <View style={{ alignItems: 'center', backgroundColor: "#F4E9DF", flex: 1 }}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.backButton} onPress={()=> navigation.navigate('HomeTab' as never)}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('HomeTab' as never)}>
                     <FontAwesome name='angle-left' size={35} />
                 </TouchableOpacity>
 

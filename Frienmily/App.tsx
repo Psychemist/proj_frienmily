@@ -44,6 +44,7 @@ const HomeTab = () => {
       <Tab.Screen name='Groups' component={Groups}
         options={{
           tabBarLabel: 'Groups',
+          unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon name="spinner" color={color} size={23} />
             // <MaterialCommunityIcons name="account-multiple" size={24} color="grey" />r
@@ -53,6 +54,7 @@ const HomeTab = () => {
       <Tab.Screen name='Friends' component={Friends}
         options={{
           tabBarLabel: 'Friends',
+          unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon name="smile-o" color={color} size={25} />
             // <MaterialCommunityIcons name="robot-happy-outline" size={24} color="grey" />
@@ -88,8 +90,19 @@ const App = () => {
       {/* <SafeAreaView> */}
       <NavigationContainer>
 
+<<<<<<< HEAD
         {/* isLoggedIn? */}
         <Stack.Navigator>
+=======
+
+        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
+          <Stack.Screen options={{
+            headerShown: false,
+            gestureEnabled: true,
+          }} name="HomeTab" component={HomeTab} />
+        isLoggedIn?
+        {/* <Stack.Navigator> */}
+>>>>>>> 3123d266eb68029c19f5d891db1ed169f95db06b
           <Stack.Screen options={{ headerShown: false, gestureEnabled: true }} name="HomeTab" component={HomeTab} />
           <Stack.Screen name="Groceries" component={Groceries} />
           <Stack.Screen name="GroceriesItems" component={GroceriesItems} />
@@ -101,7 +114,7 @@ const App = () => {
           <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} />
           <Stack.Screen name="ReceiptRecordItem" component={ReceiptRecordItem} />
           <Stack.Screen name="Groups" component={Groups} />
-          <Stack.Screen name="Add friends" component={AddFriends} />
+          <Stack.Screen name="Add friends" component={AddFriends}/>
           <Stack.Screen name="Create Group" component={CreateGroup} />
           <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />

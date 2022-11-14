@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import GroupItem from "./GroupItem";
 
@@ -23,6 +23,11 @@ export default function Groups() {
         },
     })
     const navigation = useNavigation()
+
+    useEffect(() => {
+        console.log("useEffect");
+        
+    }, [])
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{alignItems: "center"}}>
