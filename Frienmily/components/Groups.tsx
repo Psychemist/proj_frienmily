@@ -43,7 +43,7 @@ export default function Groups() {
         if (response) {
           json = await response.json();
         }
-        console.log(json);
+        // console.log(json);
         setGroupItemList(json);
       } catch (error) {
         console.log('error', error);
