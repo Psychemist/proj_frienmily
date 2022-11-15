@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { RootState } from '../redux/store'
 import { fetchLogin } from '../redux/user/thunk'
 import { useNavigation } from '@react-navigation/native'
@@ -9,8 +9,6 @@ import { useNavigation } from '@react-navigation/native'
 export default function SignUpScreen() {
 
   const [username, setUsername] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [mobileNumber, setMobileNumber] = React.useState("");
 
@@ -24,8 +22,58 @@ export default function SignUpScreen() {
     navigation.navigate('Login' as never)
   }
 
-  const onSignUp = () => {
+  const onSignUp = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/user/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+          mobile: mobileNumber
+        })
+      })
 
+      let result = await res.json()
+      let resultMsg = result["message"]
+
+      if (res.ok) {
+        Alert.alert(
+          'Account created successfully!',
+          '',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ]
+        );
+        navigation.navigate('Login' as never)
+        setUsername("")
+        setPassword("")
+        setMobileNumber("")
+
+      } else {
+        Alert.alert(
+          `${resultMsg}`,
+          '',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ]
+        );
+      }
+
+
+    } catch (e) {
+      console.log(e)
+    }
   }
 
 

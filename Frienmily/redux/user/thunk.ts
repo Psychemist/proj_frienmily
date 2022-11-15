@@ -15,17 +15,17 @@ export const fetchLogin: any = createAsyncThunk("user/fetchLogin", async (params
             })
         })
         const data = await res.json()
-        console.log(data)
-
+        console.log('data from thunk :', data)
+        console.log(res)
+        console.log('ok ?', res.ok)
         if (!res.ok) {
             throw data.msg
         }
 
-        return thunkAPI.fulfillWithValue({
-            username: data.username
-        })
+        return thunkAPI.fulfillWithValue(data)
 
     } catch (e) {
+        console.log('catch error in thunk ', e)
         return thunkAPI.rejectWithValue({
             error: "login failed"
         })

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function Account() {
@@ -9,15 +9,15 @@ export default function Account() {
     const [isChangeMobile, setIsChangeMobile] = useState(false)
     const [email, setEmail] = useState("frienmily@gmail.com")
     const [isChangeEmail, setIsChangeEmail] = useState(false)
-    const changeName = ()=> {
+    const changeName = () => {
         setIsChangeName(!isChangeName)
         console.log("changeName")
     }
-    const changeMobile = ()=> {
+    const changeMobile = () => {
         setIsChangeMobile(!isChangeMobile)
         console.log("changeMobile")
     }
-    const changeEmail = ()=> {
+    const changeEmail = () => {
         setIsChangeEmail(!isChangeEmail)
         console.log("changeEmail")
     }
@@ -72,31 +72,35 @@ export default function Account() {
             <View style={{ alignItems: "center" }}>
                 <View style={styles.itemContainer}>
                     <View style={styles.leftContainer}>
-                        <Text style={[styles.fontSize , {fontWeight: "bold", fontSize: 22, paddingLeft:10}]}>Name</Text>
-                        {isChangeName? <TextInput autoCapitalize='none' maxLength={18} placeholder="New name" value={name} onChangeText={setName} style={[styles.fontSize, {backgroundColor:"white", borderRadius: 10, minWidth:270, maxWidth:270, padding: 10}]} /> : <Text style={[styles.fontSize, {padding: 10}]}>{name}</Text>}
+                        <Text style={[styles.fontSize, { fontWeight: "bold", fontSize: 22, paddingLeft: 10 }]}>Name</Text>
+                        {isChangeName ? <TextInput autoCapitalize='none' maxLength={18} placeholder="New name" value={name} onChangeText={setName} style={[styles.fontSize, { backgroundColor: "white", borderRadius: 10, minWidth: 270, maxWidth: 270, padding: 10 }]} /> : <Text style={[styles.fontSize, { padding: 10 }]}>{name}</Text>}
                     </View>
                     <View>
-                        <Text>{isChangeName?<FontAwesome name='check' size={40} onPress={changeName}/> : <FontAwesome name='pencil' size={40} onPress={changeName}/>}</Text>
+                        <Text>{isChangeName ? <FontAwesome name='check' size={40} onPress={changeName} /> : <FontAwesome name='pencil' size={40} onPress={changeName} />}</Text>
                     </View>
                 </View>
                 <View style={styles.itemContainer}>
-                <View style={styles.leftContainer}>
-                        <Text style={[styles.fontSize , {fontWeight: "bold", fontSize: 18, paddingLeft:10}]}>Mobile (for adding friends)</Text>
-                        {isChangeMobile? <TextInput keyboardType='numeric' maxLength={8} placeholder="Phone number" value={mobile} onChangeText={setMobile} style={[styles.fontSize, {backgroundColor:"white", borderRadius: 10, minWidth:270, maxWidth:270, padding: 10}]} /> : <Text style={[styles.fontSize, {padding: 10}]}>{mobile}</Text>}
+                    <View style={styles.leftContainer}>
+                        <Text style={[styles.fontSize, { fontWeight: "bold", fontSize: 18, paddingLeft: 10 }]}>Mobile (for adding friends)</Text>
+                        {isChangeMobile ? <TextInput keyboardType='numeric' maxLength={8} placeholder="Phone number" value={mobile} onChangeText={setMobile} style={[styles.fontSize, { backgroundColor: "white", borderRadius: 10, minWidth: 270, maxWidth: 270, padding: 10 }]} /> : <Text style={[styles.fontSize, { padding: 10 }]}>{mobile}</Text>}
                     </View>
                     <View>
-                        <Text>{isChangeMobile?<FontAwesome name='check' size={40} onPress={changeMobile}/> : <FontAwesome name='pencil' size={40} onPress={changeMobile}/>}</Text>
+                        <Text>{isChangeMobile ? <FontAwesome name='check' size={40} onPress={changeMobile} /> : <FontAwesome name='pencil' size={40} onPress={changeMobile} />}</Text>
                     </View>
                 </View>
                 <View style={styles.itemContainer}>
-                <View style={styles.leftContainer}>
-                        <Text style={[styles.fontSize , {fontWeight: "bold", fontSize: 22, paddingLeft:10}]}>Email</Text>
-                        {isChangeEmail? <TextInput autoCapitalize='none' maxLength={22} placeholder="Email Address" value={email} onChangeText={setEmail} style={[styles.fontSize, {backgroundColor:"white", borderRadius: 10, minWidth:270, maxWidth:270, padding: 10}]} /> : <Text style={[styles.fontSize, {padding: 10}]}>{email}</Text>}
+                    <View style={styles.leftContainer}>
+                        <Text style={[styles.fontSize, { fontWeight: "bold", fontSize: 22, paddingLeft: 10 }]}>Email</Text>
+                        {isChangeEmail ? <TextInput autoCapitalize='none' maxLength={22} placeholder="Email Address" value={email} onChangeText={setEmail} style={[styles.fontSize, { backgroundColor: "white", borderRadius: 10, minWidth: 270, maxWidth: 270, padding: 10 }]} /> : <Text style={[styles.fontSize, { padding: 10 }]}>{email}</Text>}
                     </View>
                     <View>
-                        <Text>{isChangeEmail?<FontAwesome name='check' size={40} onPress={changeEmail}/> : <FontAwesome name='pencil' size={40} onPress={changeEmail}/>}</Text>
+                        <Text>{isChangeEmail ? <FontAwesome name='check' size={40} onPress={changeEmail} /> : <FontAwesome name='pencil' size={40} onPress={changeEmail} />}</Text>
                     </View>
                 </View>
+
+                <TouchableOpacity style={styles.itemContainer}>
+                    <Text style={[styles.fontSize, { fontWeight: "bold", fontSize: 18, paddingLeft: 10, textAlign: "center" }]}>Logout</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )

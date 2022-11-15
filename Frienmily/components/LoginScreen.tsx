@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { RootState } from '../redux/store'
 import { fetchLogin } from '../redux/user/thunk'
 import { useNavigation } from '@react-navigation/native'
@@ -12,16 +12,38 @@ export default function LoginScreen() {
 
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
+    // const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
+    const errMsg = useSelector((state: RootState) => state.user.errMsg)
 
 
     // NOTE: Remember to add this line before using dispatch
     const dispatch = useDispatch()
     const navigation = useNavigation()
 
-    const onLogin = () => {
-        dispatch(fetchLogin({ username, password }))
-        // TODO: Login 成功時將username紀錄到redux，並開放HomeTab
-        navigation.navigate('HomeTab' as never)
+    const onLogin = async () => {
+        try {
+            let loginResult = await dispatch(fetchLogin({ username, password })).unwrap()
+
+            // TODO: login成功時，isLoggedIn變為true; 以此作為 guard
+            console.log('loginResult from unwrap = ', loginResult)
+            setUsername("")
+            setPassword("")
+            navigation.navigate('HomeTab' as never)
+        } catch (error) {
+            console.log('error from unwrap = ', error)
+            Alert.alert(
+                `${errMsg}`,
+                '',
+                [
+                    {
+                        text: 'Cancel',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: 'cancel',
+                    },
+                    { text: 'OK', onPress: () => console.log('OK Pressed') },
+                ]
+            );
+        }
     }
 
     const onGoogleLogin = () => {
@@ -34,7 +56,7 @@ export default function LoginScreen() {
 
     }
 
-    const onSignUp = () => {
+    const onCreateAccount = () => {
         navigation.navigate('SignUp' as never)
 
     }
@@ -119,7 +141,7 @@ export default function LoginScreen() {
                     }}>Continue with Facebook</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={onSignUp} style={styles.loginBtn}>
+                <TouchableOpacity onPress={onCreateAccount} style={styles.loginBtn}>
                     <Text style={{
                         fontSize: 20
                     }}>Create a New Account</Text>
@@ -133,7 +155,7 @@ export default function LoginScreen() {
 
     )
 }
-function useSelector(arg0: (state: RootState) => any) {
-    throw new Error('Function not implemented.')
-}
+// function useSelector(arg0: (state: RootState) => any) {
+//     throw new Error('Function not implemented.')
+// }
 
