@@ -12,7 +12,7 @@ export default function LoginScreen() {
 
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
+    // const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
     const errMsg = useSelector((state: RootState) => state.user.errMsg)
 
 
@@ -20,17 +20,17 @@ export default function LoginScreen() {
     const dispatch = useDispatch()
     const navigation = useNavigation()
 
-    const onLogin = () => {
-        dispatch(fetchLogin({ username, password }))
+    const onLogin = async () => {
+        try {
+            let loginResult = await dispatch(fetchLogin({ username, password })).unwrap()
 
-        // TODO: login成功時，isLoggedIn變為true
-
-
-        if (isLoggedIn) {
+            // TODO: login成功時，isLoggedIn變為true; 以此作為 guard
+            console.log('loginResult from unwrap = ', loginResult)
             setUsername("")
             setPassword("")
             navigation.navigate('HomeTab' as never)
-        } else {
+        } catch (error) {
+            console.log('error from unwrap = ', error)
             Alert.alert(
                 `${errMsg}`,
                 '',
@@ -44,7 +44,6 @@ export default function LoginScreen() {
                 ]
             );
         }
-
     }
 
     const onGoogleLogin = () => {

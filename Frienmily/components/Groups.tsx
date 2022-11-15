@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -9,8 +9,8 @@ import {
   View,
 } from 'react-native';
 import GroupItem from './GroupItem';
-import {useIsFocused} from '@react-navigation/native';
-import {REACT_APP_API_SERVER} from '@env';
+import { useIsFocused } from '@react-navigation/native';
+import { REACT_APP_API_SERVER } from '@env';
 
 export default function Groups() {
   const styles = StyleSheet.create({
@@ -55,11 +55,11 @@ export default function Groups() {
   }, [isFocused]);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{alignItems: 'center'}}>
-        <Text style={{fontSize: 25, paddingBottom: '1%'}}>Groups</Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ alignItems: 'center' }}>
+        <Text style={{ fontSize: 25, paddingBottom: '1%' }}>Groups</Text>
       </View>
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView style={{ backgroundColor: 'white' }}>
         {groupItemList.map((item: any, idx: number) => (
           <GroupItem items={item} key={idx} />
         ))}

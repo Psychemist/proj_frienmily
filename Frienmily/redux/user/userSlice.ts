@@ -1,7 +1,9 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchLogin } from './thunk';
 import jwt_decode from "jwt-decode"
-import { AsyncStorage } from 'react-native';
+import { RefreshControlBase } from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
@@ -59,6 +61,7 @@ export const userSlice = createSlice({
 
 const login = (state: UserState, action: PayloadAction<{ token: string }>) => {
     const token = action.payload.token
+    console.log('useSlice login token:', token)
     let payload = jwt_decode<{
         id: number;
         username: string;
