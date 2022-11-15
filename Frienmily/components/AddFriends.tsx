@@ -131,6 +131,47 @@ export default function AddFriends() {
       marginTop: 5,
       marginBottom: 5,
     },
+    messageText: {
+      fontSize: 18,
+    },
+    container: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'row',
+      width: 320,
+      height: 100,
+      borderRadius: 25,
+      padding: 10,
+      paddingTop: 32,
+      paddingBottom: 32,
+      backgroundColor: '#E2D8CF',
+      //SHADOW
+      shadowOpacity: 0.8,
+      shadowRadius: 3,
+      shadowOffset: {
+        height: 1,
+        width: 1,
+      },
+    },
+    container2: {
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexDirection: 'row',
+      width: 320,
+      height: 100,
+      borderRadius: 25,
+      padding: 10,
+      paddingTop: 32,
+      paddingBottom: 32,
+      backgroundColor: '#E2D8CF',
+      //SHADOW
+      shadowOpacity: 0.8,
+      shadowRadius: 3,
+      shadowOffset: {
+        height: 1,
+        width: 1,
+      },
+    },
   });
 
   return (
@@ -160,19 +201,54 @@ export default function AddFriends() {
       </TouchableOpacity>
 
       {addFriendStatus == 1 ? (
-        <Text>No such user</Text>
+        <View style={styles.container}>
+          <View>
+            <FontAwesome
+              name="exclamation-triangle"
+              size={30}
+              style={{color: 'red', marginRight: '2%'}}
+            />
+          </View>
+          <Text style={styles.messageText}>No such user!</Text>
+        </View>
       ) : addFriendStatus == 2 ? (
-        <Text>cannot add yourself</Text>
+        <View style={styles.container}>
+          <View>
+            <FontAwesome
+              name="exclamation-triangle"
+              size={30}
+              style={{color: 'red', marginRight: '2%'}}
+            />
+          </View>
+          <Text style={styles.messageText}>Cannot add yourself!</Text>
+        </View>
       ) : addFriendStatus == 3 ? (
-        <Text>they are friend already</Text>
+        <View style={styles.container}>
+          <View>
+            <FontAwesome
+              name="exclamation-triangle"
+              size={30}
+              style={{color: 'red', marginRight: '2%'}}
+            />
+          </View>
+          <Text style={styles.messageText}>He/She is your friend already!</Text>
+        </View>
       ) : addFriendStatus == 4 ? (
-        <View style={styles.resultContainer}>
+        <View>
           {userDetail ? (
-            <View style={styles.itemContainer}>
-              <Text>
+            <View style={styles.container2}>
+              <View>
                 <FontAwesome name="user-circle-o" size={30} />
-                mobile: {userDetail.mobile} username: {userDetail.username}
-              </Text>
+              </View>
+              <View>
+                <Text style={styles.messageText}>
+                  mobile: {userDetail.mobile}
+                </Text>
+                <Text style={styles.messageText}>
+                  username: {userDetail.username}
+                </Text>
+              </View>
+
               <TouchableOpacity onPress={addFriendButton}>
                 {buttonIsClicked ? (
                   <FontAwesome name="check-square-o" size={30} />
@@ -186,7 +262,7 @@ export default function AddFriends() {
           )}
         </View>
       ) : (
-        <Text>please enter a mobile number</Text>
+        <Text></Text>
       )}
     </View>
   );
