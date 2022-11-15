@@ -7,7 +7,7 @@ import { fetchLogin } from '../redux/user/thunk'
 import { useNavigation } from '@react-navigation/native'
 
 export default function LoginScreen() {
-
+    const usernameInRedux = useSelector((state: RootState) => state.user.username)
 
 
     const [username, setUsername] = React.useState("");
