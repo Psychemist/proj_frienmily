@@ -9,9 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export interface UserState {
     isLoggedIn: boolean,
+    userId: number | null,
     username: string,
-    firstName: string,
-    lastName: string,
     email: string | null,
     mobile: string | null,
     isMale: boolean | null,
@@ -24,9 +23,8 @@ export const userSlice = createSlice({
     name: "user",
     initialState: {
         isLoggedIn: false,
+        userId: 0,
         username: "(none)",
-        firstName: "(none)",
-        lastName: "(none)",
         email: "(none)",
         mobile: "(none)",
         isMale: null,
@@ -72,10 +70,12 @@ const login = (state: UserState, action: PayloadAction<{ token: string }>) => {
     AsyncStorage.setItem("token", token)
 
     state.isLoggedIn = true
+    state.userId = payload.id
     state.username = payload.username
     state.isMale = payload.isMale
     state.mobile = payload.mobile
     state.email = payload.email
+
 
     console.log("fulfilled : ", state.isLoggedIn)
 }

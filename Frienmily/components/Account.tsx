@@ -1,25 +1,55 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 export default function Account() {
-    const [name, setName] = useState("defaultName")
-    const [isChangeName, setIsChangeName] = useState(false)
-    const [mobile, setMobile] = useState("12345678")
-    const [isChangeMobile, setIsChangeMobile] = useState(false)
-    const [email, setEmail] = useState("frienmily@gmail.com")
-    const [isChangeEmail, setIsChangeEmail] = useState(false)
-    const changeName = () => {
-        setIsChangeName(!isChangeName)
-        console.log("changeName")
+    // 在 Redux 取資料
+    const usernameInRedux = useSelector((state: RootState) => state.user.username)
+    const mobileInRedux = useSelector((state: RootState) => state.user.mobile)
+    const emailInRedux = useSelector((state: RootState) => state.user.email)
+
+    const [username, setUsername] = useState(usernameInRedux)
+    const [mobile, setMobile] = useState(mobileInRedux ?? "Enter your mobile number so that your friend can find you")
+    const [email, setEmail] = useState(emailInRedux ?? "Enter your email address so that your friend can find you")
+    const [isNameEditable, setIsNameEditable] = useState(false)
+    const [isMobileEditable, setIsMobileEditable] = useState(false)
+    const [isEmailEditable, setIsEmailEditable] = useState(false)
+
+
+    const navigation = useNavigation()
+    const dispatch = useDispatch()
+
+    const changeUsername = () => {
+        setIsNameEditable(!isNameEditable)
+        console.log("Can edit username now")
     }
     const changeMobile = () => {
-        setIsChangeMobile(!isChangeMobile)
-        console.log("changeMobile")
+        setIsMobileEditable(!isMobileEditable)
+        console.log("Can edit mobile number now")
     }
     const changeEmail = () => {
-        setIsChangeEmail(!isChangeEmail)
-        console.log("changeEmail")
+        setIsEmailEditable(!isEmailEditable)
+        console.log("Can edit email now")
+    }
+    const onLogout = () => {
+        // TODO: isLoggedIn 變為false；將token無效化
+
+
+        Alert.alert(
+            'Are you sure you want to log out?',
+            '',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                { text: 'Yes', onPress: () => navigation.navigate('Login' as never) },
+            ]
+        );
     }
 
     const styles = StyleSheet.create({
@@ -57,10 +87,20 @@ export default function Account() {
             height: "100%",
             justifyContent: "space-around",
         },
-        fontSize: {
-            fontSize: 18,
-
+        fieldHeader: {
+            fontSize: 22,
+            fontWeight: "bold",
+            paddingLeft: 10
+        },
+        inputField: {
+            backgroundColor: "white",
+            fontSize: 22,
+            borderRadius: 10,
+            minWidth: 270,
+            maxWidth: 270,
+            padding: 10
         }
+
     });
     return (
         <SafeAreaView style={styles.mainPage}>
@@ -70,37 +110,72 @@ export default function Account() {
 
             <Text style={styles.title}>Personal Details</Text>
             <View style={{ alignItems: "center" }}>
+
                 <View style={styles.itemContainer}>
                     <View style={styles.leftContainer}>
-                        <Text style={[styles.fontSize, { fontWeight: "bold", fontSize: 22, paddingLeft: 10 }]}>Name</Text>
-                        {isChangeName ? <TextInput autoCapitalize='none' maxLength={18} placeholder="New name" value={name} onChangeText={setName} style={[styles.fontSize, { backgroundColor: "white", borderRadius: 10, minWidth: 270, maxWidth: 270, padding: 10 }]} /> : <Text style={[styles.fontSize, { padding: 10 }]}>{name}</Text>}
+                        <Text style={styles.fieldHeader}>Username</Text>
+                        {isNameEditable ?
+                            <TextInput autoCapitalize='none' maxLength={18} style={styles.inputField}
+                                value={username} onChangeText={setUsername}
+                            />
+                            :
+                            <Text style={[styles.fieldHeader, { fontSize: 17, padding: 10 }]}>{username}</Text>}
                     </View>
                     <View>
-                        <Text>{isChangeName ? <FontAwesome name='check' size={40} onPress={changeName} /> : <FontAwesome name='pencil' size={40} onPress={changeName} />}</Text>
-                    </View>
-                </View>
-                <View style={styles.itemContainer}>
-                    <View style={styles.leftContainer}>
-                        <Text style={[styles.fontSize, { fontWeight: "bold", fontSize: 18, paddingLeft: 10 }]}>Mobile (for adding friends)</Text>
-                        {isChangeMobile ? <TextInput keyboardType='numeric' maxLength={8} placeholder="Phone number" value={mobile} onChangeText={setMobile} style={[styles.fontSize, { backgroundColor: "white", borderRadius: 10, minWidth: 270, maxWidth: 270, padding: 10 }]} /> : <Text style={[styles.fontSize, { padding: 10 }]}>{mobile}</Text>}
-                    </View>
-                    <View>
-                        <Text>{isChangeMobile ? <FontAwesome name='check' size={40} onPress={changeMobile} /> : <FontAwesome name='pencil' size={40} onPress={changeMobile} />}</Text>
-                    </View>
-                </View>
-                <View style={styles.itemContainer}>
-                    <View style={styles.leftContainer}>
-                        <Text style={[styles.fontSize, { fontWeight: "bold", fontSize: 22, paddingLeft: 10 }]}>Email</Text>
-                        {isChangeEmail ? <TextInput autoCapitalize='none' maxLength={22} placeholder="Email Address" value={email} onChangeText={setEmail} style={[styles.fontSize, { backgroundColor: "white", borderRadius: 10, minWidth: 270, maxWidth: 270, padding: 10 }]} /> : <Text style={[styles.fontSize, { padding: 10 }]}>{email}</Text>}
-                    </View>
-                    <View>
-                        <Text>{isChangeEmail ? <FontAwesome name='check' size={40} onPress={changeEmail} /> : <FontAwesome name='pencil' size={40} onPress={changeEmail} />}</Text>
+                        <Text>
+                            {isNameEditable ?
+                                <FontAwesome name='check' size={40} onPress={changeUsername} />
+                                :
+                                <FontAwesome name='pencil' size={40} onPress={changeUsername} />}
+                        </Text>
                     </View>
                 </View>
 
-                <TouchableOpacity style={styles.itemContainer}>
-                    <Text style={[styles.fontSize, { fontWeight: "bold", fontSize: 18, paddingLeft: 10, textAlign: "center" }]}>Logout</Text>
+                <View style={styles.itemContainer}>
+                    <View style={styles.leftContainer}>
+                        <Text style={styles.fieldHeader}>Mobile (for adding friends)</Text>
+                        {isMobileEditable ?
+                            <TextInput keyboardType='numeric' maxLength={8} style={styles.inputField}
+                                value={mobile} onChangeText={setMobile}
+                            />
+                            :
+                            <Text style={[styles.fieldHeader, { fontSize: 17, padding: 10 }]}>{mobile}</Text>}
+                    </View>
+                    <View>
+                        <Text>
+                            {isMobileEditable ?
+                                <FontAwesome name='check' size={40} onPress={changeMobile} />
+                                :
+                                <FontAwesome name='pencil' size={40} onPress={changeMobile} />}
+                        </Text>
+                    </View>
+                </View>
+
+                <View style={styles.itemContainer}>
+                    <View style={styles.leftContainer}>
+                        <Text style={styles.fieldHeader}>Email Address</Text>
+                        {isEmailEditable ?
+                            <TextInput autoCapitalize='none' maxLength={22} style={styles.inputField}
+                                value={email} onChangeText={setEmail}
+                            />
+                            :
+                            <Text style={[styles.fieldHeader, { fontSize: 17, padding: 10 }]}>{email}</Text>}
+                    </View>
+                    <View>
+                        <Text>
+                            {isEmailEditable ?
+                                <FontAwesome name='check' size={40} onPress={changeEmail} />
+                                :
+                                <FontAwesome name='pencil' size={40} onPress={changeEmail} />}
+                        </Text>
+                    </View>
+                </View>
+
+
+                <TouchableOpacity style={styles.itemContainer} onPress={onLogout}>
+                    <Text style={[styles.fieldHeader, { fontWeight: "bold", fontSize: 18, paddingLeft: 10, textAlign: "center" }]}>Logout</Text>
                 </TouchableOpacity>
+
             </View>
         </SafeAreaView>
     )
