@@ -28,8 +28,6 @@ export default function CreateGroup() {
   const navigation = useNavigation();
 
   const submitButton = async () => {
-    console.log(groupName);
-    console.log(isFamilyGroup);
     if (groupName == '') {
       showAlert();
     } else if (isFamilyGroup == null) {
@@ -42,11 +40,13 @@ export default function CreateGroup() {
           idArray.push(tempItem['id']);
         }
       }
-      console.log(idArray);
       if (idArray.length == 0) {
         showAlert2();
         return;
       }
+      console.log('groupName :', groupName);
+      console.log('isFamilyGroup :', isFamilyGroup);
+      console.log('groupIdArray :', idArray);
 
       const res = await fetch(`${REACT_APP_API_SERVER}/groups/`, {
         method: 'POST',
