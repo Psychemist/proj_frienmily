@@ -110,7 +110,11 @@ const App = () => {
           <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} />
           <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="CartItem" component={CartItem} />
-          <Stack.Screen name="ShoppingList" component={ShoppingList} />
+          <Stack.Screen
+            name="ShoppingList"
+            component={ShoppingList}
+            options={{headerShown: false, gestureEnabled: true}}
+          />
           <Stack.Screen name="ShoppingListItem" component={ShoppingListItem} />
           <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} />
           <Stack.Screen
