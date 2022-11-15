@@ -90,20 +90,13 @@ const App = () => {
       {/* <SafeAreaView> */}
       <NavigationContainer>
 
-<<<<<<< HEAD
         {/* isLoggedIn? */}
-        <Stack.Navigator>
-=======
-
-        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}>
-          <Stack.Screen options={{
-            headerShown: false,
-            gestureEnabled: true,
-          }} name="HomeTab" component={HomeTab} />
-        isLoggedIn?
-        {/* <Stack.Navigator> */}
->>>>>>> 3123d266eb68029c19f5d891db1ed169f95db06b
+        <Stack.Navigator
+          initialRouteName="Login" screenOptions={{ headerShown: false, gestureEnabled: false }}
+        >
           <Stack.Screen options={{ headerShown: false, gestureEnabled: true }} name="HomeTab" component={HomeTab} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="Groceries" component={Groceries} />
           <Stack.Screen name="GroceriesItems" component={GroceriesItems} />
           <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} />
@@ -114,7 +107,7 @@ const App = () => {
           <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} />
           <Stack.Screen name="ReceiptRecordItem" component={ReceiptRecordItem} />
           <Stack.Screen name="Groups" component={Groups} />
-          <Stack.Screen name="Add friends" component={AddFriends}/>
+          <Stack.Screen name="Add friends" component={AddFriends} />
           <Stack.Screen name="Create Group" component={CreateGroup} />
           <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />

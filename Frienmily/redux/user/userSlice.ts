@@ -8,7 +8,8 @@ import { AsyncStorage } from 'react-native';
 export interface UserState {
     isLoggedIn: boolean,
     username: string,
-    fullName: string,
+    firstName: string,
+    lastName: string,
     email: string | null,
     mobile: string | null,
     isMale: boolean | null,
@@ -22,12 +23,13 @@ export const userSlice = createSlice({
     initialState: {
         isLoggedIn: false,
         username: "(none)",
-        fullName: "(none)",
+        firstName: "(none)",
+        lastName: "(none)",
         email: "(none)",
         mobile: "(none)",
         isMale: null,
-        profilePicture: "",
-        errMsg: "(none)"
+        profilePicture: null,
+        errMsg: null
     } as UserState
     ,
 
@@ -56,11 +58,22 @@ export const userSlice = createSlice({
 })
 
 const login = (state: UserState, action: PayloadAction<{ token: string }>) => {
-    state.isLoggedIn = true
     const token = action.payload.token
-    let payload = jwt_decode<{ fullName: string }>(token)
+    let payload = jwt_decode<{
+        id: number;
+        username: string;
+        isMale: boolean | null;
+        mobile: string | null;
+        email: string | null;
+    }>(token)
     AsyncStorage.setItem("token", token)
-    state.fullName = payload.fullName
+
+    state.isLoggedIn = true
+    state.username = payload.username
+    state.isMale = payload.isMale
+    state.mobile = payload.mobile
+    state.email = payload.email
+
     console.log("fulfilled : ", state.isLoggedIn)
 }
 
