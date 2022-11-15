@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 
 export default function Account() {
     const [name, setName] = useState("defaultName")
@@ -9,6 +11,9 @@ export default function Account() {
     const [isChangeMobile, setIsChangeMobile] = useState(false)
     const [email, setEmail] = useState("frienmily@gmail.com")
     const [isChangeEmail, setIsChangeEmail] = useState(false)
+    const navigation = useNavigation()
+    const dispatch = useDispatch()
+
     const changeName = () => {
         setIsChangeName(!isChangeName)
         console.log("changeName")
@@ -20,6 +25,23 @@ export default function Account() {
     const changeEmail = () => {
         setIsChangeEmail(!isChangeEmail)
         console.log("changeEmail")
+    }
+    const onLogout = () => {
+        // TODO: isLoggedIn 變為false；將token無效化
+
+
+        Alert.alert(
+            'Are you sure you want to log out?',
+            '',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                { text: 'Yes', onPress: () => navigation.navigate('Login' as never) },
+            ]
+        );
     }
 
     const styles = StyleSheet.create({
@@ -98,7 +120,7 @@ export default function Account() {
                     </View>
                 </View>
 
-                <TouchableOpacity style={styles.itemContainer}>
+                <TouchableOpacity style={styles.itemContainer} onPress={onLogout}>
                     <Text style={[styles.fontSize, { fontWeight: "bold", fontSize: 18, paddingLeft: 10, textAlign: "center" }]}>Logout</Text>
                 </TouchableOpacity>
             </View>
