@@ -35,13 +35,15 @@ import ReceiptRecord from './components/ReceiptRecord';
 import ReceiptRecordItem from './components/ReceiptRecordItem';
 import GroceriesDetails from './components/GroceriesDetails';
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const HomeTab = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name='Groups' component={Groups}
+      <Tab.Screen
+        name="Groups"
+        component={Groups}
         options={{
           tabBarLabel: 'Groups',
           unmountOnBlur: true,
@@ -51,7 +53,9 @@ const HomeTab = () => {
           ),
         }}
       />
-      <Tab.Screen name='Friends' component={Friends}
+      <Tab.Screen
+        name="Friends"
+        component={Friends}
         options={{
           tabBarLabel: 'Friends',
           unmountOnBlur: true,
@@ -59,29 +63,35 @@ const HomeTab = () => {
             <FontAwesomeIcon name="smile-o" color={color} size={25} />
             // <MaterialCommunityIcons name="robot-happy-outline" size={24} color="grey" />
           ),
-        }} />
-      <Tab.Screen name='Groceries' component={Groceries}
+        }}
+      />
+      <Tab.Screen
+        name="Groceries"
+        component={Groceries}
         options={{
           tabBarLabel: 'Groceries',
           tabBarIcon: ({ color, size }) => (
             // <FontAwesomeIcon name="braille" color={color} size={20} />
             <FontAwesomeIcon name="cubes" color={color} size={20} />
           ),
-        }} />
-      <Tab.Screen name='Account' component={Account} options={{
-        tabBarLabel: 'Account',
-        tabBarIcon: ({ color, size }) => (
-          <FontAwesomeIcon name="user-o" color={color} size={20} />
-          // <MaterialCommunityIcons name="account-multiple" size={24} color="black" />
-        ),
-      }} />
+        }}
+      />
+      <Tab.Screen
+        name="Account"
+        component={Account}
+        options={{
+          tabBarLabel: 'Account',
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesomeIcon name="user-o" color={color} size={20} />
+            // <MaterialCommunityIcons name="account-multiple" size={24} color="black" />
+          ),
+        }}
+      />
     </Tab.Navigator>
-  )
-
-}
+  );
+};
 
 const App = () => {
-
   // const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
   // console.log(isLoggedIn)
 
@@ -102,22 +112,35 @@ const App = () => {
           <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} />
           <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="CartItem" component={CartItem} />
-          <Stack.Screen name="ShoppingList" component={ShoppingList} />
+          <Stack.Screen
+            name="ShoppingList"
+            component={ShoppingList}
+            options={{ headerShown: false, gestureEnabled: true }}
+          />
           <Stack.Screen name="ShoppingListItem" component={ShoppingListItem} />
           <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} />
-          <Stack.Screen name="ReceiptRecordItem" component={ReceiptRecordItem} />
+          <Stack.Screen
+            name="ReceiptRecordItem"
+            component={ReceiptRecordItem}
+          />
           <Stack.Screen name="Groups" component={Groups} />
-          <Stack.Screen name="Add friends" component={AddFriends} />
-          <Stack.Screen name="Create Group" component={CreateGroup} />
+          <Stack.Screen
+            name="Add friends"
+            component={AddFriends}
+            options={{ headerShown: false, gestureEnabled: true }}
+          />
+          <Stack.Screen
+            name="Create Group"
+            component={CreateGroup}
+            options={{ headerShown: false, gestureEnabled: true }}
+          />
           <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />
         </Stack.Navigator>
-
-
       </NavigationContainer>
       {/* </SafeAreaView > */}
     </Provider>
   );
 };
 
-export default App
+export default App;
