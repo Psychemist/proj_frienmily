@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -9,10 +9,14 @@ import {
   View,
 } from 'react-native';
 import GroupItem from './GroupItem';
-import { useIsFocused } from '@react-navigation/native';
-import { REACT_APP_API_SERVER } from '@env';
+import {useIsFocused} from '@react-navigation/native';
+import {REACT_APP_API_SERVER} from '@env';
+import {RootState} from '../redux/store';
+import {useSelector} from 'react-redux';
 
 export default function Groups() {
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
+
   const styles = StyleSheet.create({
     floatButtonFontSize: {
       fontSize: 50,
@@ -38,7 +42,17 @@ export default function Groups() {
     const loadGroupList = async () => {
       try {
         console.log('loadGroupList...');
-        const response = await fetch(`${REACT_APP_API_SERVER}/groups/`);
+        const response = await fetch(
+          `${REACT_APP_API_SERVER}/groups/getGroups/`,
+          {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              userID: userIdInRedux,
+            }),
+          },
+        );
+
         let json = [];
         if (response) {
           json = await response.json();
@@ -55,11 +69,11 @@ export default function Groups() {
   }, [isFocused]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ alignItems: 'center' }}>
-        <Text style={{ fontSize: 25, paddingBottom: '1%' }}>Groups</Text>
+    <SafeAreaView style={{flex: 1}}>
+      <View style={{alignItems: 'center'}}>
+        <Text style={{fontSize: 25, paddingBottom: '1%'}}>Groups</Text>
       </View>
-      <ScrollView style={{ backgroundColor: 'white' }}>
+      <ScrollView style={{backgroundColor: 'white'}}>
         {groupItemList.map((item: any, idx: number) => (
           <GroupItem items={item} key={idx} />
         ))}

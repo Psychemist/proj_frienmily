@@ -13,8 +13,11 @@ import {useNavigation} from '@react-navigation/native';
 import GroupItem from './GroupItem';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {REACT_APP_API_SERVER} from '@env';
+import {useSelector} from 'react-redux';
+import {RootState} from '../redux/store';
 
 export default function AddFriends() {
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const [searchBar, setSearchBar] = React.useState('');
 
   const navigation = useNavigation();
@@ -32,13 +35,13 @@ export default function AddFriends() {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           searchBar: searchBar,
-          userID: 1,
+          userID: userIdInRedux,
         }),
       });
 
       let result = await res.json();
       setAddFriendStatus(result.type);
-      console.log('result.userDetails :', result.userDetails);
+      console.log('targetUserDetails :', result.userDetails);
       setUserDetail(result.userDetails);
 
       //   userDetail = result.userDetails;
@@ -68,7 +71,7 @@ export default function AddFriends() {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         targetID: userDetail.id,
-        userID: 1,
+        userID: userIdInRedux,
       }),
     });
   };

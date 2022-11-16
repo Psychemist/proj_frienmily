@@ -13,9 +13,11 @@ import dotenv from 'dotenv';
 import {REACT_APP_API_SERVER} from '@env';
 import {useFocusEffect} from '@react-navigation/native';
 import {useIsFocused} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {RootState} from '../redux/store';
 
 export default function Friends() {
-  // const REACT_APP_API_SERVER = process.env.REACT_APP_API_SERVER
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
 
   const [friendItemList, setFriendItemList] = useState([]);
 
@@ -38,14 +40,18 @@ export default function Friends() {
   });
   const navigation = useNavigation();
 
-  let fetchResult: any;
-
   const isFocused = useIsFocused();
   useEffect(() => {
     const loadFriendList = async () => {
       try {
         console.log('loadFriendList...');
-        const response = await fetch(`${REACT_APP_API_SERVER}/friends/`);
+        const response = await fetch(`${REACT_APP_API_SERVER}/friends/`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            userID: userIdInRedux,
+          }),
+        });
         let json = [];
         if (response) {
           json = await response.json();

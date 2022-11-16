@@ -13,8 +13,11 @@ import FriendItemInCreateGroup from './FriendItemInCreateGroup';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {isAnyOf} from '@reduxjs/toolkit';
 import {REACT_APP_API_SERVER} from '@env';
+import {RootState} from '../redux/store';
+import {useSelector} from 'react-redux';
 
 export default function CreateGroup() {
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const [groupName, setGroupName] = React.useState('');
   const [isFamilyGroup, setIsFamilyGroup] = React.useState<boolean | null>(
     null,
@@ -56,6 +59,7 @@ export default function CreateGroup() {
           is_family_group: isFamilyGroup,
           profile_picture: 'testing',
           groupMemberId: idArray,
+          userID: userIdInRedux,
         }),
       });
       let result = await res.json();
@@ -157,7 +161,14 @@ export default function CreateGroup() {
     const loadFriendList = async () => {
       try {
         console.log('load Friend List when creating group...');
-        const response = await fetch(`${REACT_APP_API_SERVER}/friends/`);
+        const response = await fetch(`${REACT_APP_API_SERVER}/friends/`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            userID: userIdInRedux,
+          }),
+        });
+
         let json = [];
         if (response) {
           json = await response.json();
