@@ -13,9 +13,11 @@ import dotenv from 'dotenv';
 import {REACT_APP_API_SERVER} from '@env';
 import {useFocusEffect} from '@react-navigation/native';
 import {useIsFocused} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {RootState} from '../redux/store';
 
 export default function Friends() {
-  // const REACT_APP_API_SERVER = process.env.REACT_APP_API_SERVER
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
 
   const [friendItemList, setFriendItemList] = useState([]);
 
@@ -38,14 +40,18 @@ export default function Friends() {
   });
   const navigation = useNavigation();
 
-  let fetchResult: any;
-
   const isFocused = useIsFocused();
   useEffect(() => {
     const loadFriendList = async () => {
       try {
         console.log('loadFriendList...');
-        const response = await fetch(`${REACT_APP_API_SERVER}/friends/`);
+        const response = await fetch(`${REACT_APP_API_SERVER}/friends/`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            userID: userIdInRedux,
+          }),
+        });
         let json = [];
         if (response) {
           json = await response.json();
@@ -63,10 +69,10 @@ export default function Friends() {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{alignItems: 'center'}}>
+      <View style={{alignItems: 'center', backgroundColor: '#F5F5F5'}}>
         <Text style={{fontSize: 25, paddingBottom: '1%'}}>Friends</Text>
       </View>
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView style={{backgroundColor: '#F5F5F5'}}>
         {friendItemList.map((item: any, idx: number) => (
           <FriendItem items={item} key={idx} />
         ))}
