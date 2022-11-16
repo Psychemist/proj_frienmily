@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { GENDERS } from "../../components/Account";
 
 
 export const fetchLogin: any = createAsyncThunk("user/fetchLogin", async (params: {
@@ -33,15 +34,19 @@ export const fetchLogin: any = createAsyncThunk("user/fetchLogin", async (params
 })
 
 export const fetchUpdateGender: any = createAsyncThunk("user/fetchUpdateGender", async (params: {
-    username: string, gender: string
+    username: string, gender: number
 }, thunkAPI: any) => {
     try {
+        console.log("gender received at thunk: ", params.gender)
+        let genderName = GENDERS[params.gender]
+        console.log("gender name: ", genderName)
+
         const res = await fetch("http://localhost:8000/user/updateGender", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 username: params.username,
-                mobile: params.gender
+                gender: genderName
             })
         })
         const data = await res.json()

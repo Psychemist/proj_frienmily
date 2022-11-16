@@ -7,6 +7,8 @@ import { RootState } from "../redux/store";
 import { fetchUpdateEmail, fetchUpdateGender, fetchUpdateMobileNumber } from "../redux/user/thunk";
 import ModalDropdown from 'react-native-modal-dropdown';
 
+export const GENDERS = ["Male", "Female", "Others"]
+
 export default function Account() {
     // 在 Redux 取資料
     const usernameInRedux = useSelector((state: RootState) => state.user.username)
@@ -14,8 +16,7 @@ export default function Account() {
     const mobileInRedux = useSelector((state: RootState) => state.user.mobile)
     const emailInRedux = useSelector((state: RootState) => state.user.email)
 
-    const genders = ["Male", "Female", "Others"]
-    const genderIndex = genders.indexOf(genderInRedux!)
+    const genderIndex = GENDERS.indexOf(genderInRedux!)
 
     // 設定初始值
     const [username, __] = useState(usernameInRedux)
@@ -32,13 +33,15 @@ export default function Account() {
     const dispatch = useDispatch()
 
     const changeGender = async () => {
+        console.log("genderInRedux before editing: ", genderInRedux)
         if (isGenderEditable == true) {
             // TODO: update Redux Store State
             try {
-                let newGender = genders[gender]
-                console.log("newGender: ", newGender)
-                let updateGenderResult = await dispatch(fetchUpdateGender({ username, newGender })).unwrap()
+                let newGender = GENDERS[gender]
+                let updateGenderResult = await dispatch(fetchUpdateGender({ username, gender })).unwrap()
                 console.log('fetchUpdateGender from unwrap = ', updateGenderResult)
+
+                console.log("genderInRedux after editing: ", genderInRedux)
             }
             catch (error) {
                 console.log('error from unwrap = ', error)
@@ -47,9 +50,10 @@ export default function Account() {
         }
         setIsGenderEditable(!isGenderEditable)
 
-        console.log("genderInRedux: ", genderInRedux)
     }
     const changeMobile = async () => {
+        console.log("mobileInRedux before edting: ", mobileInRedux)
+
         if (isMobileEditable == true) {
             // TODO: update Redux Store State
             try {
@@ -72,6 +76,7 @@ export default function Account() {
                 let updateMobileNumberResult = await dispatch(fetchUpdateMobileNumber({ username, mobile })).unwrap()
                 console.log('updateMobileNumberResult from unwrap = ', updateMobileNumberResult)
 
+                console.log("mobileInRedux: after editing", mobileInRedux)
             }
             catch (error) {
                 console.log('error from unwrap = ', error)
@@ -80,10 +85,11 @@ export default function Account() {
         }
 
         setIsMobileEditable(!isMobileEditable)
-        console.log("mobileInRedux: ", mobileInRedux)
 
     }
     const changeEmail = async () => {
+        console.log("emailInRedux before edting: ", emailInRedux)
+
         if (isEmailEditable == true) {
             // TODO: update Redux Store State
             try {
@@ -106,6 +112,7 @@ export default function Account() {
                 let updateEmailResult = await dispatch(fetchUpdateEmail({ username, email })).unwrap()
                 console.log('updateEmailResult from unwrap = ', updateEmailResult)
 
+                console.log("emailInRedux after edting: ", emailInRedux)
             }
             catch (error) {
                 console.log('error from unwrap = ', error)
@@ -114,7 +121,6 @@ export default function Account() {
         }
 
         setIsEmailEditable(!isEmailEditable)
-        console.log("emailInRedux: ", emailInRedux)
 
     }
     const onLogout = () => {
@@ -223,10 +229,11 @@ export default function Account() {
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Gender</Text>
                         {isGenderEditable ?
-                            <ModalDropdown options={genders} defaultValue={genders[gender]} onSelect={(a) => { setGender(Number(a)) }} style={styles.inputField} />
+                            <ModalDropdown options={GENDERS} defaultValue={GENDERS[gender]} onSelect={(a) => { setGender(Number(a)) }}
+                                style={styles.inputField} dropdownTextStyle={{ fontSize: 18 }} />
                             :
                             <View>
-                                <Text style={styles.fieldContentText}>{genders[gender]}</Text>
+                                <Text style={styles.fieldContentText}>{GENDERS[gender]}</Text>
                             </View>
                         }
                     </View>
