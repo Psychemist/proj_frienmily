@@ -4,21 +4,26 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { fetchUpdateEmail, fetchUpdateGender, fetchUpdateMobileNumber } from "../redux/user/thunk";
+import ModalDropdown from 'react-native-modal-dropdown';
 
 export default function Account() {
     // 在 Redux 取資料
-    const userIdInRedux = useSelector((state: RootState) => state.user.userId)
     const usernameInRedux = useSelector((state: RootState) => state.user.username)
+    const genderInRedux = useSelector((state: RootState) => state.user.gender)
     const mobileInRedux = useSelector((state: RootState) => state.user.mobile)
     const emailInRedux = useSelector((state: RootState) => state.user.email)
 
+    const genders = ["Male", "Female", "Others"]
+    const genderIndex = genders.indexOf(genderInRedux!)
+
     // 設定初始值
-    const [userId, setUserId] = useState(userIdInRedux)
-    const [username, setUsername] = useState(usernameInRedux)
+    const [username, __] = useState(usernameInRedux)
+    const [gender, setGender] = useState(genderIndex)
     const [mobile, setMobile] = useState(mobileInRedux)
     const [email, setEmail] = useState(emailInRedux)
 
-    const [isNameEditable, setIsNameEditable] = useState(false)
+    const [isGenderEditable, setIsGenderEditable] = useState(false)
     const [isMobileEditable, setIsMobileEditable] = useState(false)
     const [isEmailEditable, setIsEmailEditable] = useState(false)
 
@@ -26,20 +31,91 @@ export default function Account() {
     const navigation = useNavigation()
     const dispatch = useDispatch()
 
-    const changeUsername = () => {
-        if (isNameEditable == true) {
-
+    const changeGender = async () => {
+        if (isGenderEditable == true) {
+            // TODO: update Redux Store State
+            try {
+                let newGender = genders[gender]
+                console.log("newGender: ", newGender)
+                let updateGenderResult = await dispatch(fetchUpdateGender({ username, newGender })).unwrap()
+                console.log('fetchUpdateGender from unwrap = ', updateGenderResult)
+            }
+            catch (error) {
+                console.log('error from unwrap = ', error)
+            }
+            console.log("Submitted new gender setting")
         }
-        setIsNameEditable(!isNameEditable)
-        console.log("Can edit username now")
+        setIsGenderEditable(!isGenderEditable)
+
+        console.log("genderInRedux: ", genderInRedux)
     }
-    const changeMobile = () => {
+    const changeMobile = async () => {
+        if (isMobileEditable == true) {
+            // TODO: update Redux Store State
+            try {
+                const normalMobileNumberLength = 8
+                if (!mobile || mobile.length != normalMobileNumberLength) {
+                    Alert.alert(
+                        'Invalid mobile number. Please input again.',
+                        '',
+                        [
+                            {
+                                text: 'OK',
+                                onPress: () => console.log('OK Pressed'),
+                                style: 'cancel',
+                            }
+                        ]
+                    );
+                    return
+                }
+
+                let updateMobileNumberResult = await dispatch(fetchUpdateMobileNumber({ username, mobile })).unwrap()
+                console.log('updateMobileNumberResult from unwrap = ', updateMobileNumberResult)
+
+            }
+            catch (error) {
+                console.log('error from unwrap = ', error)
+            }
+            console.log("Submitted new mobile number")
+        }
+
         setIsMobileEditable(!isMobileEditable)
-        console.log("Can edit mobile number now")
+        console.log("mobileInRedux: ", mobileInRedux)
+
     }
-    const changeEmail = () => {
+    const changeEmail = async () => {
+        if (isEmailEditable == true) {
+            // TODO: update Redux Store State
+            try {
+                if (!email || !email.includes('@') || !email.includes('.')) {
+                    Alert.alert(
+                        'Invalid email address. Please input again.',
+                        '',
+                        [
+                            {
+                                text: 'OK',
+                                onPress: () => console.log('OK Pressed'),
+                                style: 'cancel',
+                            }
+                        ]
+                    );
+
+                    return
+                }
+
+                let updateEmailResult = await dispatch(fetchUpdateEmail({ username, email })).unwrap()
+                console.log('updateEmailResult from unwrap = ', updateEmailResult)
+
+            }
+            catch (error) {
+                console.log('error from unwrap = ', error)
+            }
+            console.log("Submitted new email address")
+        }
+
         setIsEmailEditable(!isEmailEditable)
-        console.log("Can edit email now")
+        console.log("emailInRedux: ", emailInRedux)
+
     }
     const onLogout = () => {
         // TODO: isLoggedIn 變為false；將token無效化
@@ -65,17 +141,13 @@ export default function Account() {
             backgroundColor: "#F5F5F5"
         },
         title: {
-            // height: 40,
-            // margin: 12,
             padding: 10,
-            // minWidth: 300,
-            // maxWidth: 300,
             borderRadius: 10,
             fontSize: 30
         },
         itemContainer: {
             width: "90%",
-            height: "18%",
+            height: "16%",
             backgroundColor: "white",
             shadowOffset: {
                 width: 0,
@@ -96,8 +168,7 @@ export default function Account() {
 
         },
         leftContainer: {
-            // height: "100%",
-            maxWidth: "80%",
+            maxWidth: "100%",
             justifyContent: "space-around"
         },
         fieldHeader: {
@@ -105,24 +176,23 @@ export default function Account() {
             paddingLeft: 10,
             marginBottom: 10
         },
-        fieldContent: {
-
-        },
         fieldContentText: {
             paddingLeft: 10,
-            fontSize: 18,
+            fontSize: 16,
             padding: 10,
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            color: '#47b4b1'
         },
         inputField: {
             boxSizing: 'border-box',
             backgroundColor: "rgba(71, 180, 177, 0.3)",
-            fontSize: 18,
+            fontSize: 16,
             shadowColor: "#47b4b1",
             borderRadius: 10,
             minWidth: 270,
             maxWidth: 270,
-            padding: 10
+            padding: 10,
+            marginTop: 1
         },
         editBtn: {
             fontSize: 27,
@@ -143,37 +213,50 @@ export default function Account() {
                 <View style={styles.itemContainer}>
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Username</Text>
-                        {isNameEditable ?
-                            <TextInput autoCapitalize='none' maxLength={18} style={styles.inputField}
-                                value={username} onChangeText={setUsername}
-                            />
+                        <Text style={styles.fieldContentText}>{username}</Text>
+
+                    </View>
+                </View>
+
+
+                <View style={styles.itemContainer}>
+                    <View style={styles.leftContainer}>
+                        <Text style={styles.fieldHeader}>Gender</Text>
+                        {isGenderEditable ?
+                            <ModalDropdown options={genders} defaultValue={genders[gender]} onSelect={(a) => { setGender(Number(a)) }} style={styles.inputField} />
                             :
                             <View>
-                                <Text style={styles.fieldContentText}>{username}</Text>
+                                <Text style={styles.fieldContentText}>{genders[gender]}</Text>
                             </View>
                         }
                     </View>
                     <View>
                         <Text>
-                            {isNameEditable ?
-                                <FontAwesome name='check' size={40} onPress={changeUsername} style={styles.editBtn} />
+                            {isGenderEditable ?
+                                <FontAwesome name='check' size={40} onPress={changeGender} style={styles.editBtn} />
                                 :
-                                <FontAwesome name='pencil' size={40} onPress={changeUsername} style={styles.editBtn} />}
+                                <FontAwesome name='pencil' size={40} onPress={changeGender} style={styles.editBtn} />}
                         </Text>
                     </View>
                 </View>
 
+
                 <View style={styles.itemContainer}>
                     <View style={styles.leftContainer}>
-                        <Text style={styles.fieldHeader}>Mobile (for adding friends)</Text>
-                        {isMobileEditable ?
+                        <Text style={styles.fieldHeader}>Mobile</Text>
+                        {isMobileEditable && mobile ?
                             <TextInput keyboardType='numeric' maxLength={8} style={styles.inputField}
                                 value={mobile} onChangeText={setMobile}
                             />
                             :
-                            <View>
+                            (mobile ?
                                 <Text style={styles.fieldContentText}>{mobile}</Text>
-                            </View>
+                                :
+                                <View>
+                                    <Text style={[styles.fieldContentText, { color: "red" }]}>(Update your mobile number)</Text>
+                                </View>
+
+                            )
                         }
                     </View>
                     <View>
@@ -186,19 +269,20 @@ export default function Account() {
                     </View>
                 </View>
 
+
                 <View style={styles.itemContainer}>
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Email Address</Text>
-                        {isEmailEditable ?
-                            <TextInput autoCapitalize='none' maxLength={22} style={styles.inputField}
+                        {isEmailEditable && email ?
+                            <TextInput autoCapitalize='none' maxLength={30} style={styles.inputField}
                                 value={email} onChangeText={setEmail}
                             />
                             :
                             (email ?
-                                <Text style={styles.fieldContentText}>{email}{userId}hihi</Text>
+                                <Text style={styles.fieldContentText}>{email}</Text>
                                 :
                                 <View>
-                                    <Text style={styles.fieldContentText}>Update your email address so that your friend can find you!</Text>
+                                    <Text style={[styles.fieldContentText, { color: "red" }]}></Text>
                                 </View>
                             )
                         }
