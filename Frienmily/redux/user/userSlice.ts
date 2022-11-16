@@ -78,6 +78,7 @@ const login = (state: UserState, action: PayloadAction<{ token: string }>) => {
 
 
     console.log("fulfilled : ", state.isLoggedIn)
+    console.log("payload: ", payload)
 }
 
 

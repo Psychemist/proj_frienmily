@@ -7,13 +7,17 @@ import { RootState } from "../redux/store";
 
 export default function Account() {
     // 在 Redux 取資料
+    const userIdInRedux = useSelector((state: RootState) => state.user.userId)
     const usernameInRedux = useSelector((state: RootState) => state.user.username)
     const mobileInRedux = useSelector((state: RootState) => state.user.mobile)
     const emailInRedux = useSelector((state: RootState) => state.user.email)
 
+    // 設定初始值
+    const [userId, setUserId] = useState(userIdInRedux)
     const [username, setUsername] = useState(usernameInRedux)
-    const [mobile, setMobile] = useState(mobileInRedux ?? "Enter your mobile number so that your friend can find you")
-    const [email, setEmail] = useState(emailInRedux ?? "Enter your email address so that your friend can find you")
+    const [mobile, setMobile] = useState(mobileInRedux)
+    const [email, setEmail] = useState(emailInRedux)
+
     const [isNameEditable, setIsNameEditable] = useState(false)
     const [isMobileEditable, setIsMobileEditable] = useState(false)
     const [isEmailEditable, setIsEmailEditable] = useState(false)
@@ -23,6 +27,9 @@ export default function Account() {
     const dispatch = useDispatch()
 
     const changeUsername = () => {
+        if (isNameEditable == true) {
+
+        }
         setIsNameEditable(!isNameEditable)
         console.log("Can edit username now")
     }
@@ -54,7 +61,8 @@ export default function Account() {
 
     const styles = StyleSheet.create({
         mainPage: {
-            flex: 1
+            flex: 1,
+            backgroundColor: "#F5F5F5"
         },
         title: {
             // height: 40,
@@ -67,38 +75,58 @@ export default function Account() {
         },
         itemContainer: {
             width: "90%",
-            backgroundColor: "#907651",
-            justifyContent: "space-between",
-            // alignItems: "center",
+            height: "18%",
+            backgroundColor: "white",
+            shadowOffset: {
+                width: 0,
+                height: 0,
+            },
+            shadowOpacity: 0.32,
+            shadowRadius: 5.46,
+            elevation: 9,
             flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
             padding: 10,
             paddingTop: 20,
             paddingBottom: 20,
             borderRadius: 15,
             marginTop: 5,
             marginBottom: 5,
-            height: "22%",
-            alignItems: "center",
-            // justifyContent: "space-between",
-            // alignItems:"space-around",
 
         },
         leftContainer: {
-            height: "100%",
-            justifyContent: "space-around",
+            // height: "100%",
+            maxWidth: "80%",
+            justifyContent: "space-around"
         },
         fieldHeader: {
-            fontSize: 22,
-            fontWeight: "bold",
-            paddingLeft: 10
+            fontSize: 20,
+            paddingLeft: 10,
+            marginBottom: 10
+        },
+        fieldContent: {
+
+        },
+        fieldContentText: {
+            paddingLeft: 10,
+            fontSize: 18,
+            padding: 10,
+            fontWeight: 'bold'
         },
         inputField: {
-            backgroundColor: "white",
-            fontSize: 22,
+            boxSizing: 'border-box',
+            backgroundColor: "rgba(71, 180, 177, 0.3)",
+            fontSize: 18,
+            shadowColor: "#47b4b1",
             borderRadius: 10,
             minWidth: 270,
             maxWidth: 270,
             padding: 10
+        },
+        editBtn: {
+            fontSize: 27,
+            color: "#47b4b1"
         }
 
     });
@@ -109,6 +137,7 @@ export default function Account() {
             </View>
 
             <Text style={styles.title}>Personal Details</Text>
+
             <View style={{ alignItems: "center" }}>
 
                 <View style={styles.itemContainer}>
@@ -119,14 +148,17 @@ export default function Account() {
                                 value={username} onChangeText={setUsername}
                             />
                             :
-                            <Text style={[styles.fieldHeader, { fontSize: 17, padding: 10 }]}>{username}</Text>}
+                            <View>
+                                <Text style={styles.fieldContentText}>{username}</Text>
+                            </View>
+                        }
                     </View>
                     <View>
                         <Text>
                             {isNameEditable ?
-                                <FontAwesome name='check' size={40} onPress={changeUsername} />
+                                <FontAwesome name='check' size={40} onPress={changeUsername} style={styles.editBtn} />
                                 :
-                                <FontAwesome name='pencil' size={40} onPress={changeUsername} />}
+                                <FontAwesome name='pencil' size={40} onPress={changeUsername} style={styles.editBtn} />}
                         </Text>
                     </View>
                 </View>
@@ -139,14 +171,17 @@ export default function Account() {
                                 value={mobile} onChangeText={setMobile}
                             />
                             :
-                            <Text style={[styles.fieldHeader, { fontSize: 17, padding: 10 }]}>{mobile}</Text>}
+                            <View>
+                                <Text style={styles.fieldContentText}>{mobile}</Text>
+                            </View>
+                        }
                     </View>
                     <View>
                         <Text>
                             {isMobileEditable ?
-                                <FontAwesome name='check' size={40} onPress={changeMobile} />
+                                <FontAwesome name='check' size={40} onPress={changeMobile} style={styles.editBtn} />
                                 :
-                                <FontAwesome name='pencil' size={40} onPress={changeMobile} />}
+                                <FontAwesome name='pencil' size={40} onPress={changeMobile} style={styles.editBtn} />}
                         </Text>
                     </View>
                 </View>
@@ -159,21 +194,28 @@ export default function Account() {
                                 value={email} onChangeText={setEmail}
                             />
                             :
-                            <Text style={[styles.fieldHeader, { fontSize: 17, padding: 10 }]}>{email}</Text>}
+                            (email ?
+                                <Text style={styles.fieldContentText}>{email}{userId}hihi</Text>
+                                :
+                                <View>
+                                    <Text style={styles.fieldContentText}>Update your email address so that your friend can find you!</Text>
+                                </View>
+                            )
+                        }
                     </View>
                     <View>
                         <Text>
                             {isEmailEditable ?
-                                <FontAwesome name='check' size={40} onPress={changeEmail} />
+                                <FontAwesome name='check' size={40} onPress={changeEmail} style={styles.editBtn} />
                                 :
-                                <FontAwesome name='pencil' size={40} onPress={changeEmail} />}
+                                <FontAwesome name='pencil' size={40} onPress={changeEmail} style={styles.editBtn} />}
                         </Text>
                     </View>
                 </View>
 
 
                 <TouchableOpacity style={styles.itemContainer} onPress={onLogout}>
-                    <Text style={[styles.fieldHeader, { fontWeight: "bold", fontSize: 18, paddingLeft: 10, textAlign: "center" }]}>Logout</Text>
+                    <Text style={[styles.fieldHeader, { fontWeight: "bold", fontSize: 18, paddingLeft: 10 }]}>Logout</Text>
                 </TouchableOpacity>
 
             </View>
