@@ -69,10 +69,10 @@ export default function Friends() {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{alignItems: 'center'}}>
+      <View style={{alignItems: 'center', backgroundColor: '#F5F5F5'}}>
         <Text style={{fontSize: 25, paddingBottom: '1%'}}>Friends</Text>
       </View>
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView style={{backgroundColor: '#F5F5F5'}}>
         {friendItemList.map((item: any, idx: number) => (
           <FriendItem items={item} key={idx} />
         ))}

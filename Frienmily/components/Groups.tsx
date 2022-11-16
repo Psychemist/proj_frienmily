@@ -69,11 +69,11 @@ export default function Groups() {
   }, [isFocused]);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#F5F5F5'}}>
       <View style={{alignItems: 'center'}}>
         <Text style={{fontSize: 25, paddingBottom: '1%'}}>Groups</Text>
       </View>
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView style={{backgroundColor: '#F5F5F5'}}>
         {groupItemList.map((item: any, idx: number) => (
           <GroupItem items={item} key={idx} />
         ))}
