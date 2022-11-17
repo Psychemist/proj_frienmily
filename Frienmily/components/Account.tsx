@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { fetchUpdateEmail, fetchUpdateGender, fetchUpdateMobileNumber } from "../redux/user/thunk";
 import ModalDropdown from 'react-native-modal-dropdown';
+import { logout } from "../redux/user/userSlice";
 
 export const GENDERS = ["Male", "Female", "Others"]
 
@@ -18,6 +20,15 @@ export default function Account() {
 
     const genderIndex = GENDERS.indexOf(genderInRedux!)
 
+
+
+    const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
+    if (isLoggedIn == true) {
+        console.log("isLoggedIn is true at User Profile Screen")
+    } else {
+        console.log("isLoggedIn is false at User Profile Screen")
+    }
+
     // 設定初始值
     const [username, __] = useState(usernameInRedux)
     const [gender, setGender] = useState(genderIndex)
@@ -29,19 +40,15 @@ export default function Account() {
     const [isEmailEditable, setIsEmailEditable] = useState(false)
 
 
+
     const navigation = useNavigation()
     const dispatch = useDispatch()
 
     const changeGender = async () => {
-        console.log("genderInRedux before editing: ", genderInRedux)
         if (isGenderEditable == true) {
-            // TODO: update Redux Store State
             try {
-                let newGender = GENDERS[gender]
                 let updateGenderResult = await dispatch(fetchUpdateGender({ username, gender })).unwrap()
                 console.log('fetchUpdateGender from unwrap = ', updateGenderResult)
-
-                console.log("genderInRedux after editing: ", genderInRedux)
             }
             catch (error) {
                 console.log('error from unwrap = ', error)
@@ -52,10 +59,8 @@ export default function Account() {
 
     }
     const changeMobile = async () => {
-        console.log("mobileInRedux before edting: ", mobileInRedux)
 
         if (isMobileEditable == true) {
-            // TODO: update Redux Store State
             try {
                 const normalMobileNumberLength = 8
                 if (!mobile || mobile.length != normalMobileNumberLength) {
@@ -76,7 +81,6 @@ export default function Account() {
                 let updateMobileNumberResult = await dispatch(fetchUpdateMobileNumber({ username, mobile })).unwrap()
                 console.log('updateMobileNumberResult from unwrap = ', updateMobileNumberResult)
 
-                console.log("mobileInRedux: after editing", mobileInRedux)
             }
             catch (error) {
                 console.log('error from unwrap = ', error)
@@ -88,10 +92,8 @@ export default function Account() {
 
     }
     const changeEmail = async () => {
-        console.log("emailInRedux before edting: ", emailInRedux)
 
         if (isEmailEditable == true) {
-            // TODO: update Redux Store State
             try {
                 if (!email || !email.includes('@') || !email.includes('.')) {
                     Alert.alert(
@@ -112,7 +114,6 @@ export default function Account() {
                 let updateEmailResult = await dispatch(fetchUpdateEmail({ username, email })).unwrap()
                 console.log('updateEmailResult from unwrap = ', updateEmailResult)
 
-                console.log("emailInRedux after edting: ", emailInRedux)
             }
             catch (error) {
                 console.log('error from unwrap = ', error)
@@ -124,8 +125,7 @@ export default function Account() {
 
     }
     const onLogout = () => {
-        // TODO: isLoggedIn 變為false；將token無效化
-
+        // TODO: 將token無效化
 
         Alert.alert(
             'Are you sure you want to log out?',
@@ -136,7 +136,12 @@ export default function Account() {
                     onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                 },
-                { text: 'Yes', onPress: () => navigation.navigate('Login' as never) },
+                {
+                    text: 'Yes', onPress: () => {
+                        navigation.navigate('Login' as never)
+                        dispatch(logout())
+                    }
+                },
             ]
         );
     }
@@ -149,7 +154,8 @@ export default function Account() {
         title: {
             padding: 10,
             borderRadius: 10,
-            fontSize: 30
+            fontSize: 22,
+            marginLeft: 10
         },
         itemContainer: {
             width: "90%",
@@ -203,14 +209,17 @@ export default function Account() {
         editBtn: {
             fontSize: 27,
             color: "#47b4b1"
+        },
+        BtnText: {
+            fontSize: 20,
+            paddingLeft: 10
         }
-
     });
     return (
         <SafeAreaView style={styles.mainPage}>
-            <View style={{ alignItems: "center" }}>
+            {/* <View style={{ alignItems: "center" }}>
                 <Text style={{ fontSize: 25, paddingBottom: "1%" }}>Account</Text>
-            </View>
+            </View> */}
 
             <Text style={styles.title}>Personal Details</Text>
 
@@ -251,9 +260,9 @@ export default function Account() {
                 <View style={styles.itemContainer}>
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Mobile</Text>
-                        {isMobileEditable && mobile ?
+                        {isMobileEditable ?
                             <TextInput keyboardType='numeric' maxLength={8} style={styles.inputField}
-                                value={mobile} onChangeText={setMobile}
+                                value={mobile!} onChangeText={setMobile}
                             />
                             :
                             (mobile ?
@@ -280,16 +289,16 @@ export default function Account() {
                 <View style={styles.itemContainer}>
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Email Address</Text>
-                        {isEmailEditable && email ?
+                        {isEmailEditable ?
                             <TextInput autoCapitalize='none' maxLength={30} style={styles.inputField}
-                                value={email} onChangeText={setEmail}
+                                value={email!} onChangeText={setEmail}
                             />
                             :
                             (email ?
                                 <Text style={styles.fieldContentText}>{email}</Text>
                                 :
                                 <View>
-                                    <Text style={[styles.fieldContentText, { color: "red" }]}></Text>
+                                    <Text style={[styles.fieldContentText, { color: "red" }]}>(Update your email address)</Text>
                                 </View>
                             )
                         }
@@ -304,9 +313,14 @@ export default function Account() {
                     </View>
                 </View>
 
+            </View>
 
-                <TouchableOpacity style={styles.itemContainer} onPress={onLogout}>
-                    <Text style={[styles.fieldHeader, { fontWeight: "bold", fontSize: 18, paddingLeft: 10 }]}>Logout</Text>
+            <Text style={styles.title}>Options</Text>
+
+            <View style={{ alignItems: "center" }}>
+                <TouchableOpacity style={[styles.itemContainer, { height: "30%" }]} onPress={onLogout}>
+                    <Text style={styles.BtnText}>Logout</Text>
+                    <Icon name='ios-exit-outline' size={28} color={"#47b4b1"} />
                 </TouchableOpacity>
 
             </View>

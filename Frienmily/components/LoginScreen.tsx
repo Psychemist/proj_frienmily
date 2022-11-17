@@ -12,9 +12,14 @@ export default function LoginScreen() {
 
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
-    // const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
     const errMsg = useSelector((state: RootState) => state.user.errMsg)
 
+    const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
+    if (isLoggedIn == true) {
+        console.log("isLoggedIn is true at LoginScreen")
+    } else {
+        console.log("isLoggedIn is false at LoginScreen")
+    }
 
     // NOTE: Remember to add this line before using dispatch
     const dispatch = useDispatch()
@@ -28,7 +33,9 @@ export default function LoginScreen() {
             console.log('loginResult from unwrap = ', loginResult)
             setUsername("")
             setPassword("")
+
             navigation.navigate('HomeTab' as never)
+
         } catch (error) {
             console.log('error from unwrap = ', error)
             Alert.alert(
@@ -58,7 +65,6 @@ export default function LoginScreen() {
 
     const onCreateAccount = () => {
         navigation.navigate('SignUp' as never)
-
     }
 
 
@@ -129,13 +135,13 @@ export default function LoginScreen() {
                     }} >Login</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={onGoogleLogin} style={[styles.loginBtn, { backgroundColor: '#32519c' }]}>
+                <TouchableOpacity onPress={onGoogleLogin} style={[styles.loginBtn, { backgroundColor: '#d1463b' }]}>
                     <Text style={{
                         fontSize: 20
                     }}>Continue with Google</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={onFacebookLogin} style={[styles.loginBtn, { backgroundColor: '#d1463b' }]}>
+                <TouchableOpacity onPress={onFacebookLogin} style={[styles.loginBtn, { backgroundColor: '#32519c' }]}>
                     <Text style={{
                         fontSize: 20
                     }}>Continue with Facebook</Text>
