@@ -30,7 +30,8 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ShoppingList from './components/ShoppingList';
 import ShoppingListItem from './components/ShoppingListItem';
-import GroceriesItems from './components/GroceriesItems';
+import GroceriesRandomItems from './components/GroceriesRandomItems';
+import GroceriesTopItems from './components/GroceriesTopItems';
 import ReceiptRecord from './components/ReceiptRecord';
 import ReceiptRecordItem from './components/ReceiptRecordItem';
 import GroceriesDetails from './components/GroceriesDetails';
@@ -102,7 +103,8 @@ const App = () => {
       <NavigationContainer>
         {/* isLoggedIn? */}
         <Stack.Navigator
-          initialRouteName="Login"
+          // initialRouteName="Login"
+          initialRouteName="Groceries"
           // initialRouteName="Gallery"
           screenOptions={{ headerShown: false, gestureEnabled: false }}>
           <Stack.Screen
@@ -113,7 +115,8 @@ const App = () => {
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="Groceries" component={Groceries} />
-          <Stack.Screen name="GroceriesItems" component={GroceriesItems} />
+          <Stack.Screen name="GroceriesTopItems" component={GroceriesTopItems} />
+          <Stack.Screen name="GroceriesRandomItems" component={GroceriesRandomItems} />
           <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} />
           <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="CartItem" component={CartItem} />
