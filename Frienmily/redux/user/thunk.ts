@@ -2,12 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GENDERS } from "../../components/Account";
 
 
+
 export const fetchLogin: any = createAsyncThunk("user/fetchLogin", async (params: {
     username: string,
     password: string
 }, thunkAPI: any) => {
     try {
-        const res = await fetch("http://localhost:8000/user/login", {
+        const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -41,7 +42,7 @@ export const fetchUpdateGender: any = createAsyncThunk("user/fetchUpdateGender",
         let genderName = GENDERS[params.gender]
         console.log("gender name: ", genderName)
 
-        const res = await fetch("http://localhost:8000/user/updateGender", {
+        const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/updateGender`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -71,7 +72,7 @@ export const fetchUpdateMobileNumber: any = createAsyncThunk("user/fetchUpdateMo
     username: string, mobile: string
 }, thunkAPI: any) => {
     try {
-        const res = await fetch("http://localhost:8000/user/updateMobileNumber", {
+        const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/updateMobileNumber`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -101,7 +102,7 @@ export const fetchUpdateEmail: any = createAsyncThunk("user/updateEmail", async 
     username: string, email: string
 }, thunkAPI: any) => {
     try {
-        const res = await fetch("http://localhost:8000/user/updateEmail", {
+        const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/updateEmail`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

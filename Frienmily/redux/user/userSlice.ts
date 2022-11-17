@@ -36,6 +36,9 @@ export const userSlice = createSlice({
     // NOTE: reducers handle Sync cases
     reducers: {
         test() {
+        },
+        logout(state: UserState) {
+            state.isLoggedIn = false
         }
 
     },
@@ -60,6 +63,10 @@ export const userSlice = createSlice({
         build.addCase(fetchUpdateEmail.fulfilled, updateEmail)
     }
 })
+
+export const { logout } = userSlice.actions
+
+
 
 const login = (state: UserState, action: PayloadAction<{ token: string }>) => {
     const token = action.payload.token
@@ -99,6 +106,7 @@ const updateGender = (state: UserState, action: PayloadAction<{ token: string }>
 
     state.gender = payload.gender
 
+    console.log("state of gender : ", state.gender)
     console.log("fulfilled : ", state.isLoggedIn)
     console.log("payload: ", payload)
 }

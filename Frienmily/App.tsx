@@ -102,7 +102,7 @@ const App = () => {
       <NavigationContainer>
         {/* isLoggedIn? */}
         <Stack.Navigator
-          initialRouteName="Login"
+          initialRouteName="Loading"
           // initialRouteName="Gallery"
           screenOptions={{ headerShown: false, gestureEnabled: false }}>
           <Stack.Screen
