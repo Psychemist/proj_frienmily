@@ -1,7 +1,7 @@
-import React, { type PropsWithChildren } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, {type PropsWithChildren} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   SafeAreaView,
   ScrollView,
@@ -14,8 +14,8 @@ import {
 import LoadingScreen from './components/LoadingScreen';
 import LoginScreen from './components/LoginScreen';
 import UserProfileScreen from './components/UserProfileScreen';
-import { Provider, useSelector } from 'react-redux';
-import store, { RootState } from './redux/store';
+import {Provider, useSelector} from 'react-redux';
+import store, {RootState} from './redux/store';
 import Account from './components/Account';
 import Groceries from './components/Groceries';
 import Friends from './components/Friends';
@@ -34,21 +34,21 @@ import GroceriesItems from './components/GroceriesItems';
 import ReceiptRecord from './components/ReceiptRecord';
 import ReceiptRecordItem from './components/ReceiptRecordItem';
 import GroceriesDetails from './components/GroceriesDetails';
-import Gallery from './components/Gallery';
+import Photo from './components/Photo';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const HomeTab = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen
         name="Groups"
         component={Groups}
         options={{
           tabBarLabel: 'Groups',
           unmountOnBlur: true,
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon name="spinner" color={color} size={23} />
             // <MaterialCommunityIcons name="account-multiple" size={24} color="grey" />r
           ),
@@ -60,7 +60,7 @@ const HomeTab = () => {
         options={{
           tabBarLabel: 'Friends',
           unmountOnBlur: true,
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon name="smile-o" color={color} size={25} />
             // <MaterialCommunityIcons name="robot-happy-outline" size={24} color="grey" />
           ),
@@ -71,7 +71,7 @@ const HomeTab = () => {
         component={Groceries}
         options={{
           tabBarLabel: 'Groceries',
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             // <FontAwesomeIcon name="braille" color={color} size={20} />
             <FontAwesomeIcon name="cubes" color={color} size={20} />
           ),
@@ -82,7 +82,7 @@ const HomeTab = () => {
         component={Account}
         options={{
           tabBarLabel: 'Account',
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon name="user-o" color={color} size={20} />
             // <MaterialCommunityIcons name="account-multiple" size={24} color="black" />
           ),
@@ -102,11 +102,11 @@ const App = () => {
       <NavigationContainer>
         {/* isLoggedIn? */}
         <Stack.Navigator
-          initialRouteName="Loading"
-          // initialRouteName="Gallery"
-          screenOptions={{ headerShown: false, gestureEnabled: false }}>
+          // initialRouteName="Loading"
+          initialRouteName="Photo"
+          screenOptions={{headerShown: false, gestureEnabled: false}}>
           <Stack.Screen
-            options={{ headerShown: false, gestureEnabled: true }}
+            options={{headerShown: false, gestureEnabled: true}}
             name="HomeTab"
             component={HomeTab}
           />
@@ -120,7 +120,7 @@ const App = () => {
           <Stack.Screen
             name="ShoppingList"
             component={ShoppingList}
-            options={{ headerShown: false, gestureEnabled: true }}
+            options={{headerShown: false, gestureEnabled: true}}
           />
           <Stack.Screen name="ShoppingListItem" component={ShoppingListItem} />
           <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} />
@@ -132,16 +132,16 @@ const App = () => {
           <Stack.Screen
             name="Add friends"
             component={AddFriends}
-            options={{ headerShown: false, gestureEnabled: true }}
+            options={{headerShown: false, gestureEnabled: true}}
           />
           <Stack.Screen
             name="Create Group"
             component={CreateGroup}
-            options={{ headerShown: false, gestureEnabled: true }}
+            options={{headerShown: false, gestureEnabled: true}}
           />
           <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />
-          <Stack.Screen name="Gallery" component={Gallery} />
+          <Stack.Screen name="Photo" component={Photo} />
           <Stack.Screen name="Account" component={Account} />
         </Stack.Navigator>
       </NavigationContainer>
