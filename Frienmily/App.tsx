@@ -142,6 +142,7 @@ const App = () => {
           <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />
           <Stack.Screen name="Gallery" component={Gallery} />
+          <Stack.Screen name="Account" component={Account} />
         </Stack.Navigator>
       </NavigationContainer>
       {/* </SafeAreaView > */}

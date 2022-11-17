@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -153,7 +154,8 @@ export default function Account() {
         title: {
             padding: 10,
             borderRadius: 10,
-            fontSize: 30
+            fontSize: 22,
+            marginLeft: 10
         },
         itemContainer: {
             width: "90%",
@@ -207,14 +209,17 @@ export default function Account() {
         editBtn: {
             fontSize: 27,
             color: "#47b4b1"
+        },
+        BtnText: {
+            fontSize: 20,
+            paddingLeft: 10
         }
-
     });
     return (
         <SafeAreaView style={styles.mainPage}>
-            <View style={{ alignItems: "center" }}>
+            {/* <View style={{ alignItems: "center" }}>
                 <Text style={{ fontSize: 25, paddingBottom: "1%" }}>Account</Text>
-            </View>
+            </View> */}
 
             <Text style={styles.title}>Personal Details</Text>
 
@@ -255,9 +260,9 @@ export default function Account() {
                 <View style={styles.itemContainer}>
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Mobile</Text>
-                        {isMobileEditable && mobile ?
+                        {isMobileEditable ?
                             <TextInput keyboardType='numeric' maxLength={8} style={styles.inputField}
-                                value={mobile} onChangeText={setMobile}
+                                value={mobile!} onChangeText={setMobile}
                             />
                             :
                             (mobile ?
@@ -284,16 +289,16 @@ export default function Account() {
                 <View style={styles.itemContainer}>
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Email Address</Text>
-                        {isEmailEditable && email ?
+                        {isEmailEditable ?
                             <TextInput autoCapitalize='none' maxLength={30} style={styles.inputField}
-                                value={email} onChangeText={setEmail}
+                                value={email!} onChangeText={setEmail}
                             />
                             :
                             (email ?
                                 <Text style={styles.fieldContentText}>{email}</Text>
                                 :
                                 <View>
-                                    <Text style={[styles.fieldContentText, { color: "red" }]}></Text>
+                                    <Text style={[styles.fieldContentText, { color: "red" }]}>(Update your email address)</Text>
                                 </View>
                             )
                         }
@@ -308,9 +313,14 @@ export default function Account() {
                     </View>
                 </View>
 
+            </View>
 
-                <TouchableOpacity style={styles.itemContainer} onPress={onLogout}>
-                    <Text style={[styles.fieldHeader, { fontWeight: "bold", fontSize: 18, paddingLeft: 10 }]}>Logout</Text>
+            <Text style={styles.title}>Options</Text>
+
+            <View style={{ alignItems: "center" }}>
+                <TouchableOpacity style={[styles.itemContainer, { height: "30%" }]} onPress={onLogout}>
+                    <Text style={styles.BtnText}>Logout</Text>
+                    <Icon name='ios-exit-outline' size={28} color={"#47b4b1"} />
                 </TouchableOpacity>
 
             </View>
