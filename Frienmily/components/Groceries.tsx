@@ -13,7 +13,8 @@ import FriendItem from './FriendItem';
 import {useNavigation} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import GroceriesCategories from './GroceriesCategories';
-import GroceriesItems from './GroceriesItems';
+import GroceriesRandomItems from './GroceriesRandomItems';
+import GroceriesTopItems from './GroceriesTopItems';
 
 export default function Groceries() {
   const styles = StyleSheet.create({
@@ -21,11 +22,11 @@ export default function Groceries() {
       fontSize: 15,
     },
     container: {
-      justifyContent: 'space-between',
+      justifyContent: 'space-around',
       alignItems: 'center',
       flexDirection: 'row',
       width: '100%',
-      padding: 10,
+      padding: 20,
       paddingTop: 2,
       paddingBottom: 2,
       backgroundColor: '#47b4b1',
@@ -58,15 +59,16 @@ export default function Groceries() {
       alignItems: 'center',
       marginBottom: 20,
     },
-    resultContainer: {
-      // backgroundColor: "pink",
-      minHeight: 450,
-      maxHeight: 450,
-      width: '100%',
-      flexGrow: 1,
-      paddingLeft: 40,
-      paddingRight: 40,
-    },
+    
+    catergoriesContainer:{
+        // justifyContent: 'space-between',
+        // alignItems: 'center',
+        // flexDirection: 'row',
+        // width: '100%',
+        // paddingBottom: 5,
+        backgroundColor: 'white',
+
+    }
   });
   const navigation = useNavigation();
   // const [data, setData] = React.useState([]);
@@ -102,7 +104,7 @@ export default function Groceries() {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#47b4b1'}}>
       <View style={styles.container}>
-        <Text style={{fontSize: 25, paddingBottom: '1%'}}>Groceries</Text>
+        {/* <Text style={{fontSize: 25, paddingBottom: '1%'}}>Groceries</Text> */}
       </View>
       <View style={styles.container}>
         <View>
@@ -113,103 +115,37 @@ export default function Groceries() {
             style={styles.input}
           />
         </View>
-        <Pressable onPress={() => navigation.navigate('Cart' as never)}>
-          <FontAwesome name="shopping-cart" size={30} />
-        </Pressable>
-        <TouchableOpacity
-          onPress={() => navigation.navigate()}></TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)}>
+            <FontAwesome name="shopping-cart" size={30}/>
+        </TouchableOpacity>
+        </View>
+
+
+{/* Categories Column */}
+    <View style={styles.catergoriesContainer}>
+      {/* <ScrollView horizontal={true} style={{backgroundColor: 'white'}}> */}
+        <Text>
+          <GroceriesCategories />
+        </Text>
+      {/* </ScrollView> */}
       </View>
-      <ScrollView horizontal={true} style={{backgroundColor: '#F5F5F5'}}>
-        <Text>
-          <GroceriesCategories />
+
+{/* Top 5 Column */}
+      <ScrollView horizontal={true} style={{backgroundColor: 'white'}}>
+      <TouchableOpacity>
+      <Text>
+          <GroceriesTopItems />
         </Text>
-        <Text>
-          <GroceriesCategories />
-        </Text>
-        <Text>
-          <GroceriesCategories />
-        </Text>
-        <Text>
-          <GroceriesCategories />
-        </Text>
-        <Text>
-          <GroceriesCategories />
-        </Text>
+        </TouchableOpacity>
       </ScrollView>
-      <ScrollView horizontal={true} style={{backgroundColor: '#F5F5F5'}}>
+
+{/* Random Goods Column */}
+      <ScrollView style={{backgroundColor: 'white'}}>
         <Text>
-          <GroceriesCategories />
+          <GroceriesRandomItems />
         </Text>
-        <Text>
-          <GroceriesCategories />
-        </Text>
-        <Text>
-          <GroceriesCategories />
-        </Text>
-        <Text>
-          <GroceriesCategories />
-        </Text>
-        <Text>
-          <GroceriesCategories />
-        </Text>
-      </ScrollView>
-      <ScrollView horizontal={true} style={{backgroundColor: '#F5F5F5'}}>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-      </ScrollView>
-      <ScrollView horizontal={true} style={{backgroundColor: '#F5F5F5'}}>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
-        <Text>
-          <GroceriesItems />
-        </Text>
+
       </ScrollView>
     </SafeAreaView>
   );
