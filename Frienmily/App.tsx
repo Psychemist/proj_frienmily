@@ -36,6 +36,7 @@ import ReceiptRecord from './components/ReceiptRecord';
 import ReceiptRecordItem from './components/ReceiptRecordItem';
 import GroceriesDetails from './components/GroceriesDetails';
 import Photo from './components/Photo';
+import UploadReceipt from './components/UploadReceipt';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -148,6 +149,7 @@ const App = () => {
           <Stack.Screen name="UserProfile" component={UserProfileScreen} />
           <Stack.Screen name="Photo" component={Photo} />
           <Stack.Screen name="Account" component={Account} />
+          <Stack.Screen name="UploadReceipt" component={UploadReceipt} />
         </Stack.Navigator>
       </NavigationContainer>
       {/* </SafeAreaView > */}
