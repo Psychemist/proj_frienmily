@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   SafeAreaView,
@@ -9,6 +9,9 @@ import {
   View,
 } from 'react-native';
 import CartItem from './CartItem';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+
 
 export default function Cart() {
   const styles = StyleSheet.create({
@@ -43,14 +46,47 @@ export default function Cart() {
       marginRight: 'auto',
       color: 'white',
     },
+    header: {
+      height: "14%",
+      alignItems: "center",
+      marginBottom: "10%",
+      width: "100%"
+    },
+    text: {
+      fontSize: 30,
+    },
+    backButton: {
+      position: 'absolute',
+      left: 0,
+      paddingLeft: '20%',
+      fontSize: 25,
+    },
   });
   const navigation = useNavigation();
+
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{alignItems: 'center'}}>
-        <Text style={{fontSize: 25, paddingBottom: '1%'}}>Cart</Text>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
+
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('HomeTab' as never)}>
+          <FontAwesome name='angle-left' size={35} />
+        </TouchableOpacity>
+
+        <Text style={styles.text}>Cart</Text>
       </View>
-      <ScrollView style={{backgroundColor: 'white'}}>
+
+      {/* <TouchableOpacity
+        // style={styles.backButton}
+        onPress={() => navigation.navigate('HomeTab' as never)}>
+        <FontAwesome name="angle-left" size={35} />
+      </TouchableOpacity>
+
+      <View style={{ alignItems: 'center' }}>
+        <Text style={{ fontSize: 25, paddingBottom: '1%' }}>Cart</Text>
+      </View> */}
+
+
+      <ScrollView style={{ backgroundColor: 'white' }}>
         <Text>
           <CartItem />
         </Text>
@@ -126,3 +162,4 @@ export default function Cart() {
     </SafeAreaView>
   );
 }
+
