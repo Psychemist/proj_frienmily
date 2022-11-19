@@ -37,11 +37,11 @@ export default function FriendItem(props: FriendItemProps) {
         }
         console.log(json);
         if (json.case == 1) {
-          setShowResult(<Text>No transaction</Text>);
+          setShowResult(<Text>No txn</Text>);
         } else if (json.case == 2) {
-          setShowResult(<Text>You can get {json.amount}</Text>);
+          setShowResult(<Text style={styles.green}>+{json.amount}</Text>);
         } else if (json.case == 3) {
-          setShowResult(<Text>You should pay {json.amount}</Text>);
+          setShowResult(<Text style={styles.red}>-{json.amount}</Text>);
         }
       } catch (error) {
         console.log('error', error);
@@ -72,6 +72,12 @@ export default function FriendItem(props: FriendItemProps) {
         height: 1,
         width: 1,
       },
+    },
+    green: {
+      color: 'green',
+    },
+    red: {
+      color: 'red',
     },
   });
 
