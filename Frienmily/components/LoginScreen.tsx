@@ -56,7 +56,6 @@ export default function LoginScreen() {
     const onGoogleLogin = () => {
         // TODO: 做 Google Login
 
-        navigation.navigate('Groups' as never)
     }
     const onFacebookLogin = () => {
         // TODO: 做 FB Login
