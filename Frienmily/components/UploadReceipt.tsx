@@ -59,12 +59,17 @@ export default function UploadReceipt() {
       return;
     }
 
+    // TODO: connect userID & groupID
     const formData = new FormData();
     formData.append('image', imgs[0]);
-    const res = await fetch(`${REACT_APP_API_SERVER}/file/`, {
+    formData.append('amount', number);
+    formData.append('userID', 2);
+    formData.append('groupID', 1);
+    const res = await fetch(`${REACT_APP_API_SERVER}/receipts/`, {
       method: 'POST',
       body: formData,
     });
+    console.log('result : ', res.json());
   };
 
   const showAlert = () => {
