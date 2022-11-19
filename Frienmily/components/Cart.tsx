@@ -18,7 +18,7 @@ export default function Cart() {
     addMoreText: {
       fontSize: 15,
       padding: 5,
-      color: '#47b4b1',
+      color: '#e41574',
     },
 
     totalText: {
@@ -61,11 +61,53 @@ export default function Cart() {
       paddingLeft: '20%',
       fontSize: 25,
     },
+    progressBar: {
+      position: "absolute",
+      marginTop: 130
+
+    },
+    line: {
+      height: 5,
+      width: 200
+    },
+    circleWrapper: {
+      position: "relative",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    circle: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: 40,
+      width: 40,
+      borderRadius: 20,
+      position: "absolute",
+
+    },
+    circleFilled: {
+      backgroundColor: "#e41574",
+    },
+    circleUnfilled: {
+      backgroundColor: "white",
+      borderWidth: 6,
+      borderStyle: "solid",
+      borderColor: "#e1e0e1",
+    },
+    caption: {
+      position: "absolute",
+      fontWeight: "bold",
+      color: "#939493",
+      top: 21.5
+    }
+
   });
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
 
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('HomeTab' as never)}>
@@ -75,15 +117,27 @@ export default function Cart() {
         <Text style={styles.text}>Cart</Text>
       </View>
 
-      {/* <TouchableOpacity
-        // style={styles.backButton}
-        onPress={() => navigation.navigate('HomeTab' as never)}>
-        <FontAwesome name="angle-left" size={35} />
-      </TouchableOpacity>
+      <View style={styles.progressBar}>
+        <View style={{ display: "flex", flexDirection: "row" }}>
+          <View style={[styles.line, { backgroundColor: '#e41574' }]}></View>
+          <View style={[styles.line, { backgroundColor: '#e1e0e1' }]}></View>
+        </View>
+        <View style={styles.circleWrapper}>
+          <View style={[styles.circle, styles.circleFilled, { left: 50, top: -21.5 }]}>
+            <Text style={{ fontWeight: "bold", color: "white" }}>1</Text>
+          </View>
+          <View style={[styles.circle, styles.circleFilled, { left: "45%", top: -21.5 }]}>
+            <Text style={{ fontWeight: "bold", color: "white" }}>2</Text>
+          </View>
+          <View style={[styles.circle, styles.circleUnfilled, { right: 50, top: -21.5 }]}>
+            <Text style={{ fontWeight: "bold", color: "#939493" }}>3</Text>
+          </View>
+          <Text style={[styles.caption, { left: 50 }]}>Menu</Text>
+          <Text style={[styles.caption, { left: "46%" }]}>Cart</Text>
+          <Text style={[styles.caption, { right: 25 }]}>Assign Group</Text>
+        </View>
+      </View>
 
-      <View style={{ alignItems: 'center' }}>
-        <Text style={{ fontSize: 25, paddingBottom: '1%' }}>Cart</Text>
-      </View> */}
 
 
       <ScrollView style={{ backgroundColor: 'white' }}>
@@ -147,7 +201,7 @@ export default function Cart() {
           </TouchableOpacity>
         </View>
         <View>
-          <Text style={styles.totalText}>Estimate Total: HKD$ 800</Text>
+          <Text style={styles.totalText}>Estimated Total: HKD$ 800</Text>
         </View>
         <View>
           <TouchableOpacity
