@@ -15,8 +15,11 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {REACT_APP_API_SERVER} from '@env';
+import {useSelector} from 'react-redux';
+import {RootState} from '../redux/store';
 
 export default function UploadReceipt() {
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const navigation = useNavigation();
   const [imgs, setImgs]: any = useState(null);
   const [number, setNumber]: any = useState('');
@@ -59,11 +62,11 @@ export default function UploadReceipt() {
       return;
     }
 
-    // TODO: connect userID & groupID
+    // TODO: connect groupID
     const formData = new FormData();
     formData.append('image', imgs[0]);
     formData.append('amount', number);
-    formData.append('userID', 2);
+    formData.append('userID', userIdInRedux);
     formData.append('groupID', 1);
     const res = await fetch(`${REACT_APP_API_SERVER}/receipts/`, {
       method: 'POST',
