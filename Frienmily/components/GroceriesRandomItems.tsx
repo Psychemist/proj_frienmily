@@ -4,7 +4,7 @@ import React from 'react';
 import { Icon } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default function GroceriesItems() {
+export default function GroceriesRandomItems() {
     const styles = StyleSheet.create({
         text: {
             fontSize: 15,

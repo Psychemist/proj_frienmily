@@ -8,6 +8,7 @@ import { RootState } from "../redux/store";
 import { fetchUpdateEmail, fetchUpdateGender, fetchUpdateMobileNumber } from "../redux/user/thunk";
 import ModalDropdown from 'react-native-modal-dropdown';
 import { logout } from "../redux/user/userSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const GENDERS = ["Male", "Female", "Others"]
 
@@ -43,6 +44,8 @@ export default function Account() {
 
     const navigation = useNavigation()
     const dispatch = useDispatch()
+
+    // TODO: 離開此頁時，如果各個isEditable仍是true，則彈出視窗問用戶是否要放棄更改
 
     const changeGender = async () => {
         if (isGenderEditable == true) {
@@ -124,9 +127,9 @@ export default function Account() {
         setIsEmailEditable(!isEmailEditable)
 
     }
-    const onLogout = () => {
+    const onLogout = async () => {
         // TODO: 將token無效化
-
+        await AsyncStorage.removeItem("token")
         Alert.alert(
             'Are you sure you want to log out?',
             '',
@@ -138,8 +141,8 @@ export default function Account() {
                 },
                 {
                     text: 'Yes', onPress: () => {
-                        navigation.navigate('Login' as never)
                         dispatch(logout())
+                        navigation.navigate('Login' as never)
                     }
                 },
             ]
