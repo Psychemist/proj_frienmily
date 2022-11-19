@@ -10,6 +10,11 @@ export default function CartItem() {
     const styles = StyleSheet.create({
         text: {
             fontSize: 15,
+            color: "#384db7"
+        },
+        price: {
+            fontSize: 15,
+            color: "black"
         },
         container: {
             justifyContent: "space-between",
@@ -19,14 +24,14 @@ export default function CartItem() {
             padding: 10,
             paddingTop: 32,
             paddingBottom: 32,
-            backgroundColor: "#E2D8CF",
+            // backgroundColor: "#E2D8CF",
             //SHADOW
-            shadowOpacity: 0.8,
-            shadowRadius: 3,
-            shadowOffset: {
-                height: 1,
-                width: 1
-            }
+            // shadowOpacity: 0.8,
+            // shadowRadius: 3,
+            // shadowOffset: {
+            //     height: 1,
+            //     width: 1
+            // }
         },
     })
 
@@ -37,10 +42,10 @@ export default function CartItem() {
 
     return (
         <View style={styles.container}>
-            <NumericInput onChange={value => console.log(value)} 
-            totalWidth={80} 
-            totalHeight={30} 
-            iconSize={25}/>
+            <NumericInput onChange={value => console.log(value)}
+                totalWidth={80}
+                totalHeight={30}
+                iconSize={25} />
             {/* value={this.state.value} 
             onChange={value => this.setState({value})} 
             onLimitReached={(isMax,msg) => console.log(isMax,msg)}
@@ -54,16 +59,16 @@ export default function CartItem() {
             iconStyle={{ color: 'white' }} 
             rightButtonBackgroundColor='#EA3788' 
             leftButtonBackgroundColor='#E56B70'/> */}
-            <Pressable onPress={()=> navigation.navigate('Groceries' as never)}> 
-            {/* change navigation to product details */}
-            <View><Image source={{uri: 'https://reactjs.org/logo-og.png'}}
-             style={{width: 50, height: 50}} /></View>
-             </Pressable>
+            <Pressable onPress={() => navigation.navigate('Groceries' as never)}>
+                {/* change navigation to product details */}
+                <View><Image source={{ uri: 'https://reactjs.org/logo-og.png' }}
+                    style={{ width: 50, height: 50 }} /></View>
+            </Pressable>
             <View >
                 <View><Text style={styles.text}>Groceries Details</Text></View>
                 <View><Text style={styles.text}>Supermarket</Text></View>
             </View>
-            <View ><Text style={styles.text}>HK$80</Text></View>
+            <View ><Text style={styles.price}>HK$80</Text></View>
         </View>
     )
 }

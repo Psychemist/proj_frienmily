@@ -18,7 +18,7 @@ export default function Cart() {
     addMoreText: {
       fontSize: 15,
       padding: 5,
-      color: '#e41574',
+      color: '#384db7',
     },
 
     totalText: {
@@ -88,7 +88,7 @@ export default function Cart() {
 
     },
     circleFilled: {
-      backgroundColor: "#e41574",
+      backgroundColor: "#f79f24",
     },
     circleUnfilled: {
       backgroundColor: "white",
@@ -119,7 +119,7 @@ export default function Cart() {
 
       <View style={styles.progressBar}>
         <View style={{ display: "flex", flexDirection: "row" }}>
-          <View style={[styles.line, { backgroundColor: '#e41574' }]}></View>
+          <View style={[styles.line, { backgroundColor: '#47b4b1' }]}></View>
           <View style={[styles.line, { backgroundColor: '#e1e0e1' }]}></View>
         </View>
         <View style={styles.circleWrapper}>
@@ -195,7 +195,8 @@ export default function Cart() {
           <TouchableOpacity
             style={styles.addMoreText}
             onPress={() => {
-              navigation.navigate('Groceries' as never);
+              // navigation.navigate('Groceries' as never);
+              navigation.navigate('HomeTab' as never);
             }}>
             <Text style={styles.addMoreText}>+ Add more items</Text>
           </TouchableOpacity>
