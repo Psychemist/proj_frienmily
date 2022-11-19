@@ -8,23 +8,11 @@ const Photo = () => {
     launchImageLibrary(
       {
         mediaType: 'photo', // 'photo' or 'video' or 'mixed'
-        selectionLimit: 0, // 1为一张，0不限制数量
+        selectionLimit: 1, // 1为一张，0不限制数量
         includeBase64: true,
       },
       res => {
         setImgs(res.assets);
-      },
-    );
-  };
-
-  const addVideo = () => {
-    launchImageLibrary(
-      {
-        mediaType: 'video',
-        selectionLimit: 1,
-      },
-      res => {
-        console.log(res);
       },
     );
   };
@@ -43,13 +31,26 @@ const Photo = () => {
   return (
     <SafeAreaView>
       <Button title="启动图库选择图像" onPress={() => addPhoto()}></Button>
-      <Button title="启动图库选择视频" onPress={() => addVideo()}></Button>
       <Button title="启动相机拍摄图片" onPress={() => tackPhoto()}></Button>
+      <Button
+        title="check"
+        onPress={async () => {
+          const formData = new FormData();
+
+          formData.append('image', imgs[0]);
+
+          const res = await fetch('http://localhost:8000/file/', {
+            method: 'POST',
+            body: formData,
+          });
+
+          // console.log(imgs[0].base64);
+        }}></Button>
       {imgs.map((item: any, index: number) => {
         return (
           <View key={index}>
             <Image
-              style={{width: 50, height: 50}}
+              style={{width: 300, height: 300}}
               source={{uri: item.uri}}></Image>
           </View>
         );
