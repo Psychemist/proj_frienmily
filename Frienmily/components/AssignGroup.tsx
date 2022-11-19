@@ -1,19 +1,15 @@
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import CartItem from './CartItem';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { REACT_APP_API_SERVER } from '@env';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 
+export default function AssignGroup() {
 
-export default function Cart() {
   const styles = StyleSheet.create({
     addMoreText: {
       fontSize: 15,
@@ -113,35 +109,89 @@ export default function Cart() {
       fontWeight: "bold",
       color: "#939493",
       top: 21.5
-    }
+    },
+    groupsWrapper: {
+      marginTop: 50
+    },
+    itemContainer: {
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexDirection: 'row',
+      width: '100%',
+      padding: 10,
+      paddingTop: 32,
+      paddingBottom: 32,
+      backgroundColor: '#E2D8CF',
+      //SHADOW
+      shadowOpacity: 0.8,
+      shadowRadius: 3,
+      shadowOffset: {
+        height: 1,
+        width: 1,
+      },
+    },
 
   });
+
   const navigation = useNavigation();
+
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
+  const isFocused = useIsFocused();
+  const [groupItemList, setGroupItemList] = useState([]);
+  useEffect(() => {
+    const loadGroupList = async () => {
+      try {
+        console.log('loadGroupList...');
+        const response = await fetch(
+          `${REACT_APP_API_SERVER}/groups/getGroups/`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userID: userIdInRedux,
+            }),
+          },
+        );
+
+        let json = [];
+        if (response) {
+          json = await response.json();
+        }
+        // console.log(json);
+        setGroupItemList(json);
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
+    if (isFocused) {
+      loadGroupList();
+    }
+  }, [isFocused]);
+
 
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
-
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('HomeTab' as never)}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Cart' as never)}>
           <FontAwesome name='angle-left' size={35} />
         </TouchableOpacity>
 
-        <Text style={styles.text}>Cart</Text>
+        <Text style={styles.text}>Assign a Group</Text>
       </View>
 
       <View style={styles.progressBar}>
         <View style={{ display: "flex", flexDirection: "row" }}>
           <View style={[styles.line1, { backgroundColor: '#47b4b1' }]}></View>
           <View style={[styles.line2, { backgroundColor: '#47b4b1' }]}></View>
-          <View style={[styles.line3, { backgroundColor: '#e1e0e1' }]}></View>
+          <View style={[styles.line3, { backgroundColor: '#47b4b1' }]}></View>
           <View style={[styles.line4, { backgroundColor: '#e1e0e1' }]}></View>
         </View>
         <View style={styles.circleWrapper}>
           <View style={[styles.circle, styles.circleFilled, { left: 50, top: -21.5 }]}>
             <Text style={{ fontWeight: "bold", color: "white" }}>1</Text>
           </View>
-          <View style={[styles.circle, styles.circleUnfilled, { left: "45%", top: -21.5 }]}>
-            <Text style={{ fontWeight: "bold", color: "#939493" }}>2</Text>
+          <View style={[styles.circle, styles.circleFilled, { left: "45%", top: -21.5 }]}>
+            <Text style={{ fontWeight: "bold", color: "white" }}>2</Text>
           </View>
           <View style={[styles.circle, styles.circleUnfilled, { right: 50, top: -21.5 }]}>
             <Text style={{ fontWeight: "bold", color: "#939493" }}>3</Text>
@@ -150,85 +200,20 @@ export default function Cart() {
           <Text style={[styles.caption, { left: "46%" }]}>Cart</Text>
           <Text style={[styles.caption, { right: 25 }]}>Assign Group</Text>
         </View>
-      </View>
 
+        {/* TODO: 繼續做 group list的呈現方式 */}
+        {/* 
+        <ScrollView style={{ backgroundColor: '#F5F5F5' }}>
+          {groupItemList.map((item: any, idx: number) => (
+            <View style={styles.groupsWrapper}>
+              <TouchableOpacity style={styles.itemContainer}>
+                <Text>{item.group_name}</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </ScrollView> */}
 
-
-      <ScrollView style={{ backgroundColor: 'white' }}>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-      </ScrollView>
-      <View>
-        <View>
-          <TouchableOpacity
-            style={styles.addMoreText}
-            onPress={() => {
-              // navigation.navigate('Groceries' as never);
-              navigation.navigate('HomeTab' as never);
-            }}>
-            <Text style={styles.addMoreText}>+ Add more items</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <Text style={styles.totalText}>Estimated Total: HKD$ 800</Text>
-        </View>
-        <View>
-          <TouchableOpacity
-            style={styles.assignGroupButton}
-            onPress={() => {
-              navigation.navigate('AssignGroup' as never);
-            }}>
-            <Text style={styles.buttonText}>Assign Group</Text>
-          </TouchableOpacity>
-        </View>
       </View>
     </SafeAreaView>
-  );
+  )
 }
-
