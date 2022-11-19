@@ -1,82 +1,74 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { RootState } from '../redux/store'
-import { fetchLogin } from '../redux/user/thunk'
-import { useNavigation } from '@react-navigation/native'
+import React from 'react';
+import {useForm} from 'react-hook-form';
+import {useDispatch} from 'react-redux';
+import {
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {RootState} from '../redux/store';
+import {fetchLogin} from '../redux/user/thunk';
+import {useNavigation} from '@react-navigation/native';
 
 export default function SignUpScreen() {
-
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [mobileNumber, setMobileNumber] = React.useState("");
-
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [mobileNumber, setMobileNumber] = React.useState('');
 
   // NOTE: Remember to add this line before using dispatch
-  const dispatch = useDispatch()
-  const navigation = useNavigation()
-
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const onClickBackBtn = () => {
-    navigation.navigate('Login' as never)
-  }
+    navigation.navigate('Login' as never);
+  };
 
   const onSignUp = async () => {
     try {
-      const res = await fetch("http://localhost:8000/user/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('http://localhost:8000/user/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           username: username,
           password: password,
-          mobile: mobileNumber
-        })
-      })
+          mobile: mobileNumber,
+        }),
+      });
 
-      let result = await res.json()
-      let resultMsg = result["message"]
+      let result = await res.json();
+      let resultMsg = result['message'];
 
       if (res.ok) {
-        Alert.alert(
-          'Account created successfully!',
-          '',
-          [
-            {
-              text: 'Cancel',
-              onPress: () => console.log('Cancel Pressed'),
-              style: 'cancel',
-            },
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ]
-        );
-        navigation.navigate('Login' as never)
-        setUsername("")
-        setPassword("")
-        setMobileNumber("")
-
+        Alert.alert('Account created successfully!', '', [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]);
+        navigation.navigate('Login' as never);
+        setUsername('');
+        setPassword('');
+        setMobileNumber('');
       } else {
-        Alert.alert(
-          `${resultMsg}`,
-          '',
-          [
-            {
-              text: 'Cancel',
-              onPress: () => console.log('Cancel Pressed'),
-              style: 'cancel',
-            },
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ]
-        );
+        Alert.alert(`${resultMsg}`, '', [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]);
       }
-
-
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
-
-
+  };
 
   const styles = StyleSheet.create({
     body: {
@@ -85,18 +77,18 @@ export default function SignUpScreen() {
       flex: 1,
     },
     backBtn: {
-      position: "absolute",
+      position: 'absolute',
       top: 100,
       left: 20,
       height: 20,
       width: 45,
-      backgroundColor: '#47b4b1'
+      backgroundColor: '#47b4b1',
     },
     logoWrapper: {
       top: 80,
       height: 200,
       width: 300,
-      backgroundColor: '#47b4b1'
+      backgroundColor: '#47b4b1',
     },
     inputFieldWrapper: {
       height: 40,
@@ -106,7 +98,7 @@ export default function SignUpScreen() {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 10
+      margin: 10,
     },
     signUpBtn: {
       backgroundColor: '#47b4b1',
@@ -115,39 +107,55 @@ export default function SignUpScreen() {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 10
-    }
-  })
+      margin: 10,
+    },
+  });
 
   return (
     <SafeAreaView style={styles.body}>
-
-      <TouchableOpacity onPress={onClickBackBtn} style={styles.backBtn} >
-        <Text style={{
-          textAlign: 'center'
-        }}> Back </Text>
+      <TouchableOpacity onPress={onClickBackBtn} style={styles.backBtn}>
+        <Text
+          style={{
+            textAlign: 'center',
+          }}>
+          {' '}
+          Back{' '}
+        </Text>
       </TouchableOpacity>
 
       <View style={styles.logoWrapper}>
         <Text>LOGO here</Text>
       </View>
 
-      <View style={{
-        position: 'absolute',
-        marginTop: 330
-      }}>
-        <View style={[styles.inputFieldWrapper, { marginTop: 80 }]}>
-          <TextInput placeholder="Username" value={username} onChangeText={setUsername} style={{
-            margin: 5,
-            fontSize: 20
-          }} />
+      <View
+        style={{
+          position: 'absolute',
+          marginTop: 330,
+        }}>
+        <View style={[styles.inputFieldWrapper, {marginTop: 80}]}>
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Username"
+            value={username}
+            onChangeText={setUsername}
+            style={{
+              margin: 5,
+              fontSize: 20,
+            }}
+          />
         </View>
 
         <View style={styles.inputFieldWrapper}>
-          <TextInput placeholder="Password" value={password} onChangeText={setPassword} style={{
-            margin: 5,
-            fontSize: 20
-          }} />
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            style={{
+              margin: 5,
+              fontSize: 20,
+            }}
+          />
         </View>
 
         {/* <View style={{
@@ -170,26 +178,31 @@ export default function SignUpScreen() {
         </View> */}
 
         <View style={styles.inputFieldWrapper}>
-          <TextInput placeholder="Mobile Number" value={mobileNumber} onChangeText={setMobileNumber} style={{
-            margin: 5,
-            fontSize: 20
-          }} />
+          <TextInput
+            placeholder="Mobile Number"
+            value={mobileNumber}
+            onChangeText={setMobileNumber}
+            style={{
+              margin: 5,
+              fontSize: 20,
+            }}
+          />
         </View>
 
-        <TouchableOpacity onPress={onSignUp} style={[styles.signUpBtn, { marginBottom: 30 }]}>
-          <Text style={{
-            fontSize: 20
-          }} >Sign Up</Text>
+        <TouchableOpacity
+          onPress={onSignUp}
+          style={[styles.signUpBtn, {marginBottom: 30}]}>
+          <Text
+            style={{
+              fontSize: 20,
+            }}>
+            Sign Up
+          </Text>
         </TouchableOpacity>
-
       </View>
-
-    </SafeAreaView >
-
-
-  )
+    </SafeAreaView>
+  );
 }
 function useSelector(arg0: (state: RootState) => any) {
-  throw new Error('Function not implemented.')
+  throw new Error('Function not implemented.');
 }
-
