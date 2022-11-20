@@ -38,6 +38,7 @@ import Photo from './components/Photo';
 import AssignGroup from './components/AssignGroup';
 import UploadReceipt from './components/UploadReceipt';
 import MoneySettle from './components/MoneySettle';
+import UserProfilePicuture from './components/UserProfilePicuture';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -152,6 +153,7 @@ const App = () => {
           <Stack.Screen name="Account" component={Account} />
           <Stack.Screen name="UploadReceipt" component={UploadReceipt} />
           <Stack.Screen name="MoneySettle" component={MoneySettle} />
+          <Stack.Screen name="UserProfilePicuture" component={UserProfilePicuture} />
         </Stack.Navigator>
       </NavigationContainer>
       {/* </SafeAreaView > */}

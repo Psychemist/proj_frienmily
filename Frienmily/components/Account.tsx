@@ -47,6 +47,9 @@ export default function Account() {
 
     // TODO: 離開此頁時，如果各個isEditable仍是true，則彈出視窗問用戶是否要放棄更改
 
+    const enlargeProfilePicture = () => {
+        navigation.navigate('UserProfilePicuture' as never)
+    }
     const changeGender = async () => {
         if (isGenderEditable == true) {
             try {
@@ -128,7 +131,7 @@ export default function Account() {
 
     }
     const onLogout = async () => {
-        // TODO: 將token無效化
+
         await AsyncStorage.removeItem("token")
         Alert.alert(
             'Are you sure you want to log out?',
@@ -148,6 +151,7 @@ export default function Account() {
             ]
         );
     }
+
 
     const styles = StyleSheet.create({
         mainPage: {
@@ -181,6 +185,14 @@ export default function Account() {
             marginTop: 5,
             marginBottom: 5,
 
+        },
+        userImage: {
+            width: 60,
+            height: 60,
+            borderRadius: 50,
+            backgroundColor: 'grey',
+            postion: "absolute",
+            right: 5,
         },
         leftContainer: {
             maxWidth: "100%",
@@ -218,6 +230,7 @@ export default function Account() {
             paddingLeft: 10
         }
     });
+
     return (
         <SafeAreaView style={styles.mainPage}>
             {/* <View style={{ alignItems: "center" }}>
@@ -228,12 +241,12 @@ export default function Account() {
 
             <View style={{ alignItems: "center" }}>
 
-                <View style={styles.itemContainer}>
+                <View style={[styles.itemContainer, { position: "relative" }]}>
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Username</Text>
                         <Text style={styles.fieldContentText}>{username}</Text>
-
                     </View>
+                    <TouchableOpacity style={styles.userImage} onPress={enlargeProfilePicture}></TouchableOpacity>
                 </View>
 
 
