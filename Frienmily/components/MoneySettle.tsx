@@ -21,7 +21,10 @@ export default function MoneySettle() {
     const route = useRoute()
     const isFocused = useIsFocused();
     let settleDetails = route.params.settleDetails
+    let username = route.params.username
     console.log(settleDetails);
+    console.log(username);
+
 
     const [showResult, setShowResult] = useState(<Text></Text>);
 
@@ -29,11 +32,11 @@ export default function MoneySettle() {
         const loadFriendList = async () => {
             try {
                 if (settleDetails.case == 1) {
-                    setShowResult(<Text>111</Text>)
+                    setShowResult(<Text>No transaction</Text>)
                 } else if (settleDetails.case == 2) {
-                    setShowResult(<Text>222</Text>)
+                    setShowResult(<Text>Have you received ${settleDetails.amount} from {username}?</Text>)
                 } else if (settleDetails.case == 3) {
-                    setShowResult(<Text>333</Text>)
+                    setShowResult(<Text>Did you paid ${settleDetails.amount} to {username}?</Text>)
                 }
             } catch (error) {
                 console.log('error', error);
@@ -52,30 +55,8 @@ export default function MoneySettle() {
     const [userDetail, setUserDetail]: any = React.useState();
     //   let userDetail: any;
 
-    const submitButton = async () => {
-        if (searchBar == '') {
-            showAlert();
-        } else {
-            setButtonIsClick(false);
-            let res = await fetch(`${REACT_APP_API_SERVER}/friends/newFriend`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    searchBar: searchBar,
-                    userID: userIdInRedux,
-                }),
-            });
+    const confirmButton = async () => {
 
-            let result = await res.json();
-            setAddFriendStatus(result.type);
-            console.log('targetUserDetails :', result.userDetails);
-            setUserDetail(result.userDetails);
-
-            //   userDetail = result.userDetails;
-            //   console.log('userDetails :', userDetail.id);
-
-            // navigation.navigate('Friends' as never)
-        }
     };
 
     const showAlert = () => {
@@ -147,14 +128,11 @@ export default function MoneySettle() {
                 <Text style={styles.text}>Settlement</Text>
             </View>
             <Image source={require('./img/money.gif')}
-                style={{ width: 150, height: 150, borderRadius: 15 }} />
-            <Text>
-                Enter your friend's phone number:
-            </Text>
+                style={{ width: 250, height: 250, borderRadius: 15 }} />
             <Text>{showResult}</Text>
 
-            <TouchableOpacity style={styles.searchButton} onPress={submitButton}>
-                <Text>Search</Text>
+            <TouchableOpacity style={styles.searchButton} onPress={confirmButton}>
+                <Text>Settled</Text>
             </TouchableOpacity>
         </View>
     );

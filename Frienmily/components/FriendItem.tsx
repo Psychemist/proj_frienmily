@@ -44,7 +44,7 @@ export default function FriendItem(props: FriendItemProps) {
                     json = await response.json();
                 }
                 setJson(json)
-                console.log(json);
+                console.log("json :", json);
                 if (json.case == 1) {
                     setShowResult(<Text>No txn</Text>);
                 } else if (json.case == 2) {
@@ -102,7 +102,7 @@ export default function FriendItem(props: FriendItemProps) {
         <TouchableOpacity style={styles.container} onPress={() =>
             navigation.navigate(
                 'MoneySettle' as never,
-                { settleDetails: json } as never,
+                { settleDetails: json, username: props.items.username } as never,
             )
         }>
             <FontAwesome name="user-circle-o" size={30} />
