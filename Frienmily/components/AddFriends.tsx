@@ -193,6 +193,7 @@ export default function AddFriends() {
         number:
       </Text>
       <TextInput
+        autoCapitalize="none"
         placeholder="Phone number or Email"
         value={searchBar}
         onChangeText={setSearchBar}

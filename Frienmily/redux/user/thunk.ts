@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GENDERS } from "../../components/Account";
-
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import jwt_decode from "jwt-decode"
 
 export const fetchLogin: any = createAsyncThunk("user/fetchLogin", async (params: {
     username: string,
@@ -30,6 +30,24 @@ export const fetchLogin: any = createAsyncThunk("user/fetchLogin", async (params
         console.log('catch error in thunk ', e)
         return thunkAPI.rejectWithValue({
             error: "login failed"
+        })
+    }
+})
+
+export const getStoredAuth: any = createAsyncThunk("user/getStoredAuth", async (params: never, thunkAPI: any) => {
+    try {
+
+        let token = await AsyncStorage.getItem("token")
+        console.log("token: ", token)
+        let result = jwt_decode(token!)
+        console.log("result: ", result)
+        return thunkAPI.fulfillWithValue(result)
+
+
+    } catch (e) {
+        console.log('catch error in thunk getStoredAuth', e)
+        return thunkAPI.rejectWithValue({
+            error: "get auth failed"
         })
     }
 })
@@ -127,5 +145,4 @@ export const fetchUpdateEmail: any = createAsyncThunk("user/updateEmail", async 
         })
     }
 })
-
 

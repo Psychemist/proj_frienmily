@@ -1,5 +1,5 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchLogin, fetchUpdateEmail, fetchUpdateGender, fetchUpdateMobileNumber } from './thunk';
+import { fetchLogin, fetchUpdateEmail, fetchUpdateGender, fetchUpdateMobileNumber, getStoredAuth } from './thunk';
 import jwt_decode from "jwt-decode"
 import { RefreshControlBase } from 'react-native';
 
@@ -18,10 +18,36 @@ export interface UserState {
     errMsg: string | null
 }
 
+const initialState: UserState = {
+    isLoggedIn: false,
+    userId: 0,
+    username: "(none)",
+    email: null,
+    mobile: null,
+    gender: "Others",
+    profilePicture: null,
+    errMsg: null
+}
 
-export const userSlice = createSlice({
-    name: "user",
-    initialState: {
+const prepareInitialState: () => Promise<UserState> = async () => {
+    // let token = await AsyncStorage.getItem("token")
+    // console.log("token: ", token)
+    // let result = jwt_decode(token!)
+    // console.log("result: ", result)
+
+    // return { ...initialState, ...result! }
+    let token = await AsyncStorage.getItem("token")
+    if (token) {
+        let payload = jwt_decode<{
+            userId: number;
+            username: string;
+            gender: string | null;
+            mobile: string | null;
+            email: string | null;
+        }>(token) as UserState
+        return payload
+    }
+    return {
         isLoggedIn: false,
         userId: 0,
         username: "(none)",
@@ -31,14 +57,34 @@ export const userSlice = createSlice({
         profilePicture: null,
         errMsg: null
     } as UserState
-    ,
+}
+
+export const userSlice = createSlice({
+    name: "user",
+    initialState: initialState,
 
     // NOTE: reducers handle Sync cases
     reducers: {
-        test() {
+        reLogin(state: UserState, params: PayloadAction<string>) {
+            const token = params.payload
+            let payload = jwt_decode<{
+                userId: number;
+                username: string;
+                gender: string | null;
+                mobile: string | null;
+                email: string | null;
+            }>(token)
+            AsyncStorage.setItem("token", token)
+
+            state.isLoggedIn = true
+            state.userId = payload.userId
+            state.username = payload.username
+            state.gender = payload.gender
+            state.mobile = payload.mobile
+            state.email = payload.email
         },
         logout(state: UserState) {
-            state.isLoggedIn = false
+            state = initialState
         }
 
     },
@@ -46,25 +92,24 @@ export const userSlice = createSlice({
     // NOTE: extraReducers handle Async cases
     extraReducers: (build) => {
 
+
         // NOTE: Specify the handling for pending, fulfill and rejected cases
         build.addCase(fetchLogin.pending, (state: UserState) => {
             console.log("pending: ", state.isLoggedIn)
         })
-
-        build.addCase(fetchLogin.fulfilled, login)
-
         build.addCase(fetchLogin.rejected, (state: UserState, action: PayloadAction<{ error: string }>) => {
             console.log("rejected: ", action.payload.error)
             state.errMsg = action.payload.error
         })
-
+        build.addCase(fetchLogin.fulfilled, login)
         build.addCase(fetchUpdateGender.fulfilled, updateGender)
         build.addCase(fetchUpdateMobileNumber.fulfilled, updateMobileNumber)
         build.addCase(fetchUpdateEmail.fulfilled, updateEmail)
+        build.addCase(getStoredAuth.fulfilled, updateAuth)
     }
 })
 
-export const { logout } = userSlice.actions
+export const { logout, reLogin } = userSlice.actions
 
 
 
@@ -147,5 +192,12 @@ const updateEmail = (state: UserState, action: PayloadAction<{ token: string }>)
     console.log("payload: ", payload)
 }
 
+const updateAuth = (state: any, action: any) => {
+    console.log('action payload = ', action.payload)
+    for (let key in action.payload) {
+        state[key] = action.payload[key]
+    }
+    state.isLoggedIn = true
+}
 
 export default userSlice.reducer

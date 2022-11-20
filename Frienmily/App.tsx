@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import LoadingScreen from './components/LoadingScreen';
 import LoginScreen from './components/LoginScreen';
-import UserProfileScreen from './components/UserProfileScreen';
 import {Provider, useSelector} from 'react-redux';
 import store, {RootState} from './redux/store';
 import Account from './components/Account';
@@ -36,6 +35,8 @@ import ReceiptRecord from './components/ReceiptRecord';
 import ReceiptRecordItem from './components/ReceiptRecordItem';
 import GroceriesDetails from './components/GroceriesDetails';
 import Photo from './components/Photo';
+import AssignGroup from './components/AssignGroup';
+import UploadReceipt from './components/UploadReceipt';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -94,17 +95,14 @@ const HomeTab = () => {
 };
 
 const App = () => {
-  // const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
-  // console.log(isLoggedIn)
-
   return (
     <Provider store={store}>
       {/* <SafeAreaView> */}
       <NavigationContainer>
         {/* isLoggedIn? */}
         <Stack.Navigator
-          // initialRouteName="Loading"
-          initialRouteName="Photo"
+          initialRouteName="Loading"
+          // initialRouteName="Photo"
           screenOptions={{headerShown: false, gestureEnabled: false}}>
           <Stack.Screen
             options={{headerShown: false, gestureEnabled: true}}
@@ -114,11 +112,18 @@ const App = () => {
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="Groceries" component={Groceries} />
-          <Stack.Screen name="GroceriesTopItems" component={GroceriesTopItems} />
-          <Stack.Screen name="GroceriesRandomItems" component={GroceriesRandomItems} />
+          <Stack.Screen
+            name="GroceriesTopItems"
+            component={GroceriesTopItems}
+          />
+          <Stack.Screen
+            name="GroceriesRandomItems"
+            component={GroceriesRandomItems}
+          />
           <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} />
           <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="CartItem" component={CartItem} />
+          <Stack.Screen name="AssignGroup" component={AssignGroup} />
           <Stack.Screen
             name="ShoppingList"
             component={ShoppingList}
@@ -142,9 +147,9 @@ const App = () => {
             options={{headerShown: false, gestureEnabled: true}}
           />
           <Stack.Screen name="Loading" component={LoadingScreen} />
-          <Stack.Screen name="UserProfile" component={UserProfileScreen} />
           <Stack.Screen name="Photo" component={Photo} />
           <Stack.Screen name="Account" component={Account} />
+          <Stack.Screen name="UploadReceipt" component={UploadReceipt} />
         </Stack.Navigator>
       </NavigationContainer>
       {/* </SafeAreaView > */}
