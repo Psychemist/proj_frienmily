@@ -224,7 +224,7 @@ export default function Account() {
                 <Text style={{ fontSize: 25, paddingBottom: "1%" }}>Account</Text>
             </View> */}
 
-            <Text style={styles.title}>Personal Details</Text>
+            <Text style={styles.title}>Personal Profile</Text>
 
             <View style={{ alignItems: "center" }}>
 
