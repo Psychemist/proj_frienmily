@@ -21,22 +21,44 @@ export default function ShoppingListItem() {
         text: {
             fontSize: 15,
         },
-        container: {
+        // container: {
+        //     justifyContent: "space-between",
+        //     alignItems: "center",
+        //     flexDirection: "row",
+        //     width: "100%",
+        //     padding: 10,
+        //     paddingTop: 32,
+        //     paddingBottom: 32,
+        //     backgroundColor: "#E2D8CF",
+        //     //SHADOW
+        //     shadowOpacity: 0.2,
+        //     shadowRadius: 3,
+        //     shadowOffset: {
+        //         height: 1,
+        //         width: 1
+        //     }
+        // },
+        itemContainer: {
+            width: "100%",
+            height: 100,
+            backgroundColor: "white",
+            shadowOffset: {
+                width: 0,
+                height: 0,
+            },
+            shadowOpacity: 0.32,
+            shadowRadius: 5.46,
+            elevation: 9,
+            flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            flexDirection: "row",
-            width: "100%",
             padding: 10,
-            paddingTop: 32,
-            paddingBottom: 32,
-            backgroundColor: "#E2D8CF",
-            //SHADOW
-            shadowOpacity: 0.2,
-            shadowRadius: 3,
-            shadowOffset: {
-                height: 1,
-                width: 1
-            }
+            paddingTop: 20,
+            paddingBottom: 20,
+            borderRadius: 15,
+            marginTop: 5,
+            marginBottom: 5,
+
         },
         selectButton: {
             // margin: 5,
@@ -60,16 +82,16 @@ export default function ShoppingListItem() {
     const navigation = useNavigation()
 
     return (
-        <View style={styles.container}>
+        <View style={styles.itemContainer}>
             <TouchableOpacity style={styles.selectButton} onPress={selectButton}>
                 <Text style={styles.buttonFontSize}><FontAwesome name='circle-o' size={20} /></Text>
             </TouchableOpacity>
             <View ><Text style={styles.text}>x2</Text></View>
-            <Pressable onPress={()=> navigation.navigate('Groceries' as never)}> 
-            {/* change navigation to product details */}
-            <View><Image source={{uri: 'https://reactjs.org/logo-og.png'}}
-             style={{width: 50, height: 50}} /></View>
-             </Pressable>
+            <Pressable onPress={() => navigation.navigate('Groceries' as never)}>
+                {/* change navigation to product details */}
+                <View><Image source={{ uri: 'https://reactjs.org/logo-og.png' }}
+                    style={{ width: 50, height: 50 }} /></View>
+            </Pressable>
             <View >
                 <View><Text style={styles.text}>Groceries Details</Text></View>
                 <View><Text style={styles.text}>Supermarket</Text></View>

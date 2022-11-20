@@ -112,31 +112,22 @@ export default function AssignGroup() {
       color: "#939493",
       top: 21.5
     },
-    // itemContainer: {
-    //   justifyContent: 'space-between',
-    //   alignItems: 'center',
-    //   flexDirection: 'row',
-    //   width: '100%',
-    //   padding: 10,
-    //   paddingTop: 32,
-    //   paddingBottom: 32,
-    //   backgroundColor: '#E2D8CF',
-    //   //SHADOW
-    //   shadowOpacity: 0.8,
-    //   shadowRadius: 3,
-    //   shadowOffset: {
-    //     height: 1,
-    //     width: 1,
-    //   },
-    // },
+    scrollWrapper: {
+      width: "98%",
+      height: 500,
+      padding: 5
+    },
     groupsWrapper: {
       marginTop: 0,
       alignItems: "center",
-      width: "90%"
+      width: "100%",
+      height: 500,
+      padding: 10,
+      backgroundColor: "blue"
     },
     itemContainer: {
       width: "100%",
-      height: "22%",
+      height: 100,
       backgroundColor: "white",
       shadowOffset: {
         width: 0,
@@ -146,7 +137,6 @@ export default function AssignGroup() {
       shadowRadius: 5.46,
       elevation: 9,
       flexDirection: "row",
-      // justifyContent: "space-between",
       alignItems: "center",
       padding: 10,
       paddingTop: 20,
@@ -248,15 +238,15 @@ export default function AssignGroup() {
 
       </View>
 
-
-      <View style={styles.groupsWrapper}>
+      <ScrollView style={styles.scrollWrapper}>
         {groupItemList.map((item: any, idx: number) => (
           <TouchableOpacity style={styles.itemContainer}>
             <View style={styles.groupImage}></View>
             <Text style={styles.groupName}>{item.group_name}</Text>
           </TouchableOpacity>
         ))}
-      </View>
+
+      </ScrollView>
     </SafeAreaView>
   )
 }

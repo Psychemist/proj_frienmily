@@ -162,7 +162,7 @@ export default function Account() {
         },
         itemContainer: {
             width: "90%",
-            height: "16%",
+            height: "17%",
             backgroundColor: "white",
             shadowOffset: {
                 width: 0,
@@ -210,7 +210,7 @@ export default function Account() {
             marginTop: 1
         },
         editBtn: {
-            fontSize: 27,
+            fontSize: 22,
             color: "#47b4b1"
         },
         BtnText: {
@@ -252,9 +252,9 @@ export default function Account() {
                     <View>
                         <Text>
                             {isGenderEditable ?
-                                <FontAwesome name='check' size={40} onPress={changeGender} style={styles.editBtn} />
+                                <FontAwesome name='check' onPress={changeGender} style={styles.editBtn} />
                                 :
-                                <FontAwesome name='pencil' size={40} onPress={changeGender} style={styles.editBtn} />}
+                                <FontAwesome name='pencil' onPress={changeGender} style={styles.editBtn} />}
                         </Text>
                     </View>
                 </View>
@@ -281,9 +281,9 @@ export default function Account() {
                     <View>
                         <Text>
                             {isMobileEditable ?
-                                <FontAwesome name='check' size={40} onPress={changeMobile} style={styles.editBtn} />
+                                <FontAwesome name='check' onPress={changeMobile} style={styles.editBtn} />
                                 :
-                                <FontAwesome name='pencil' size={40} onPress={changeMobile} style={styles.editBtn} />}
+                                <FontAwesome name='pencil' onPress={changeMobile} style={styles.editBtn} />}
                         </Text>
                     </View>
                 </View>
@@ -309,9 +309,9 @@ export default function Account() {
                     <View>
                         <Text>
                             {isEmailEditable ?
-                                <FontAwesome name='check' size={40} onPress={changeEmail} style={styles.editBtn} />
+                                <FontAwesome name='check' onPress={changeEmail} style={styles.editBtn} />
                                 :
-                                <FontAwesome name='pencil' size={40} onPress={changeEmail} style={styles.editBtn} />}
+                                <FontAwesome name='pencil' onPress={changeEmail} style={styles.editBtn} />}
                         </Text>
                     </View>
                 </View>

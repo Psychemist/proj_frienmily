@@ -1,4 +1,4 @@
-import {useNavigation, useRoute} from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import {
   SafeAreaView,
@@ -64,10 +64,15 @@ export default function ShoppingList() {
     text: {
       fontSize: 30,
     },
+    scrollWrapper: {
+      width: "98%",
+      height: 500,
+      padding: 5
+    },
   });
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={{flex: 1, alignItems: 'center'}}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
       {/* <View style={{alignItems: "center"}}>
                 <Text style={{fontSize: 25, paddingBottom: "1%"}}>Shopping List</Text> 
             </View> */}
@@ -80,37 +85,14 @@ export default function ShoppingList() {
 
         <Text style={styles.text}>Shopping List</Text>
       </View>
-      <View style={{alignItems: 'center'}}>
-        <Text style={{fontSize: 20, padding: '1%'}}>GROUP NAME</Text>
+      <View style={{ alignItems: 'center' }}>
+        <Text style={{ fontSize: 20, padding: '1%' }}>GROUP NAME</Text>
       </View>
-      <ScrollView style={{backgroundColor: 'white'}}>
-        <Text>
-          <ShoppingListItem />
-        </Text>
-        <Text>
-          <ShoppingListItem />
-        </Text>
-        <Text>
-          <ShoppingListItem />
-        </Text>
-        <Text>
-          <ShoppingListItem />
-        </Text>
-        <Text>
-          <ShoppingListItem />
-        </Text>
-        <Text>
-          <ShoppingListItem />
-        </Text>
-        <Text>
-          <ShoppingListItem />
-        </Text>
-        <Text>
-          <ShoppingListItem />
-        </Text>
-        <Text>
-          <ShoppingListItem />
-        </Text>
+      <ScrollView style={styles.scrollWrapper}>
+        <ShoppingListItem />
+        <ShoppingListItem />
+        <ShoppingListItem />
+        <ShoppingListItem />
       </ScrollView>
       <View>
         <View>
@@ -131,7 +113,7 @@ export default function ShoppingList() {
             onPress={() => {
               navigation.navigate(
                 'UploadReceipt' as never,
-                {groupId: groupId} as never,
+                { groupId: groupId } as never,
               );
             }}>
             <Text style={styles.buttonText}>Upload Receipt</Text>
