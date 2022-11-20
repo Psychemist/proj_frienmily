@@ -35,11 +35,8 @@ import ReceiptRecord from './components/ReceiptRecord';
 import ReceiptRecordItem from './components/ReceiptRecordItem';
 import GroceriesDetails from './components/GroceriesDetails';
 import Photo from './components/Photo';
-<<<<<<< HEAD
 import AssignGroup from './components/AssignGroup';
-=======
 import UploadReceipt from './components/UploadReceipt';
->>>>>>> 65b4de19ee307897e4ad5d59b742a72bd1dc2429
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
