@@ -45,7 +45,11 @@ export default function FriendItem(props: FriendItemProps) {
             </Text>,
           );
         } else if (json.case == 3) {
-          setShowResult(<Text style={styles.red}>-{json.amount}</Text>);
+          setShowResult(
+            <Text style={styles.red}>
+              -{Math.round(json.amount * 10) / 10}
+            </Text>,
+          );
         }
       } catch (error) {
         console.log('error', error);
