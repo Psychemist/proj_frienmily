@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   Alert,
@@ -19,6 +19,10 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
 
 export default function UploadReceipt() {
+  const route = useRoute();
+  let groupId = route.params.groupId;
+  console.log('groupIdgroupId', groupId);
+
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const navigation = useNavigation();
   const [imgs, setImgs]: any = useState(null);
@@ -62,12 +66,11 @@ export default function UploadReceipt() {
       return;
     }
 
-    // TODO: connect groupID
     const formData = new FormData();
     formData.append('image', imgs[0]);
     formData.append('amount', number);
     formData.append('userID', userIdInRedux);
-    formData.append('groupID', 1);
+    formData.append('groupID', groupId);
     const res = await fetch(`${REACT_APP_API_SERVER}/receipts/`, {
       method: 'POST',
       body: formData,

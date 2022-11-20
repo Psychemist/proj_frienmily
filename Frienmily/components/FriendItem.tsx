@@ -39,7 +39,11 @@ export default function FriendItem(props: FriendItemProps) {
         if (json.case == 1) {
           setShowResult(<Text>No txn</Text>);
         } else if (json.case == 2) {
-          setShowResult(<Text style={styles.green}>+{json.amount}</Text>);
+          setShowResult(
+            <Text style={styles.green}>
+              +{Math.round(json.amount * 10) / 10}
+            </Text>,
+          );
         } else if (json.case == 3) {
           setShowResult(<Text style={styles.red}>-{json.amount}</Text>);
         }
@@ -94,11 +98,6 @@ export default function FriendItem(props: FriendItemProps) {
         {/* Dummy nav to Groceries first, going to change navigation to 'Group Detail' - Ronson 13Nov2022 17:48 */}
         <FontAwesome name="angle-right" size={30} />
       </Pressable>
-
-      {/* // for icon testings */}
-      {/* <FontAwesome name='times' />
-            <FontAwesome5 name='times' />
-            <FontAwesome5Pro name='times' /> */}
     </View>
   );
 }

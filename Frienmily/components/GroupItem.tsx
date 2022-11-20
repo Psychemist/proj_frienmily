@@ -50,7 +50,12 @@ export default function GroupItem(props: GroupItemProps) {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate('ShoppingList' as never)}>
+      onPress={() =>
+        navigation.navigate(
+          'ShoppingList' as never,
+          {groupId: props.items.group_id} as never,
+        )
+      }>
       <FontAwesome name="users" size={30} />
       <View>
         <Text style={styles.text}>{props.items.group_name}</Text>
