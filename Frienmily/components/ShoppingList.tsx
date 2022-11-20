@@ -35,10 +35,10 @@ export default function ShoppingList() {
       color: 'white',
     },
 
-    assignGroupButton: {
+    receiptBtn: {
       backgroundColor: '#47b4b1',
       height: 40,
-      width: 400,
+      width: 360,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -52,7 +52,7 @@ export default function ShoppingList() {
       height: '14%',
       alignItems: 'center',
       // paddingTop: "1%",
-      marginBottom: '10%',
+      marginBottom: 0,
       width: '100%',
     },
     backButton: {
@@ -64,7 +64,14 @@ export default function ShoppingList() {
     text: {
       fontSize: 30,
     },
+    groupNameWrapper: {
+      position: "absolute",
+      top: 120,
+      padding: '1%'
+    },
     scrollWrapper: {
+      // position: "absolute",
+      // top: 140,
       width: "98%",
       height: 500,
       padding: 5
@@ -72,7 +79,7 @@ export default function ShoppingList() {
   });
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
       {/* <View style={{alignItems: "center"}}>
                 <Text style={{fontSize: 25, paddingBottom: "1%"}}>Shopping List</Text> 
             </View> */}
@@ -85,16 +92,21 @@ export default function ShoppingList() {
 
         <Text style={styles.text}>Shopping List</Text>
       </View>
-      <View style={{ alignItems: 'center' }}>
-        <Text style={{ fontSize: 20, padding: '1%' }}>GROUP NAME</Text>
+
+      <View style={styles.groupNameWrapper}>
+        <Text style={{ fontSize: 20 }}>GROUP NAME</Text>
       </View>
       <ScrollView style={styles.scrollWrapper}>
         <ShoppingListItem />
         <ShoppingListItem />
         <ShoppingListItem />
         <ShoppingListItem />
+        <ShoppingListItem />
+        <ShoppingListItem />
+        <ShoppingListItem />
+        <ShoppingListItem />
       </ScrollView>
-      <View>
+      <View style={{ width: "100%" }}>
         <View>
           <TouchableOpacity
             style={styles.addMoreText}
@@ -107,26 +119,29 @@ export default function ShoppingList() {
         <View>
           <Text style={styles.totalText}>Estimate Total: HKD$ 800</Text>
         </View>
-        <View>
-          <TouchableOpacity
-            style={styles.assignGroupButton}
-            onPress={() => {
-              navigation.navigate(
-                'UploadReceipt' as never,
-                { groupId: groupId } as never,
-              );
-            }}>
-            <Text style={styles.buttonText}>Upload Receipt</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.assignGroupButton}
-            onPress={() => {
-              navigation.navigate('ReceiptRecord' as never);
-            }}>
-            <Text style={styles.buttonText}>Receipt Record</Text>
-          </TouchableOpacity>
-        </View>
       </View>
+
+
+      <View>
+        <TouchableOpacity
+          style={styles.receiptBtn}
+          onPress={() => {
+            navigation.navigate(
+              'UploadReceipt' as never,
+              { groupId: groupId } as never,
+            );
+          }}>
+          <Text style={styles.buttonText}>Upload Receipt</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.receiptBtn}
+          onPress={() => {
+            navigation.navigate('ReceiptRecord' as never);
+          }}>
+          <Text style={styles.buttonText}>Receipt Record</Text>
+        </TouchableOpacity>
+      </View>
+
     </SafeAreaView>
   );
 }

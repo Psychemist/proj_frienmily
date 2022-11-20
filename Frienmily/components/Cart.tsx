@@ -36,7 +36,7 @@ export default function Cart() {
     assignGroupButton: {
       backgroundColor: '#47b4b1',
       height: 40,
-      width: 400,
+      width: 360,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -204,7 +204,7 @@ export default function Cart() {
           <CartItem />
         </Text>
       </ScrollView>
-      <View>
+      <View style={{ width: "100%" }}>
         <View>
           <TouchableOpacity
             style={styles.addMoreText}
@@ -218,15 +218,16 @@ export default function Cart() {
         <View>
           <Text style={styles.totalText}>Estimated Total: HKD$ 800</Text>
         </View>
-        <View>
-          <TouchableOpacity
-            style={styles.assignGroupButton}
-            onPress={() => {
-              navigation.navigate('AssignGroup' as never);
-            }}>
-            <Text style={styles.buttonText}>Assign Group</Text>
-          </TouchableOpacity>
-        </View>
+      </View>
+
+      <View>
+        <TouchableOpacity
+          style={styles.assignGroupButton}
+          onPress={() => {
+            navigation.navigate('AssignGroup' as never);
+          }}>
+          <Text style={styles.buttonText}>Assign Group</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

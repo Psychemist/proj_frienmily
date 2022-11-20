@@ -115,7 +115,7 @@ export default function AssignGroup() {
     scrollWrapper: {
       width: "98%",
       height: 500,
-      padding: 5
+      paddingHorizontal: 5
     },
     groupsWrapper: {
       marginTop: 0,
