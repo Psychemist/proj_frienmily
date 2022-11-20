@@ -39,7 +39,7 @@ export default function GroupItem(props: GroupItemProps) {
       alignItems: 'center',
       flexDirection: 'row',
       width: '100%',
-      height: '36%',
+      height: 100,
       padding: 10,
       paddingTop: 32,
       paddingBottom: 32,

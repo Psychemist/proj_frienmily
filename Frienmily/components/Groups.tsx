@@ -19,8 +19,12 @@ export default function Groups() {
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
 
   const styles = StyleSheet.create({
-    floatButtonFontSize: {
+    floatButtonText: {
       fontSize: 50,
+      color: 'white',
+      position: 'absolute',
+      right: 19,
+      bottom: 7,
     },
     circleButton: {
       width: 70,
@@ -28,7 +32,7 @@ export default function Groups() {
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 100,
-      backgroundColor: '#907651',
+      backgroundColor: '#47b4b1',
       position: 'absolute',
       right: 30,
       bottom: 30,
@@ -82,7 +86,7 @@ export default function Groups() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
-      <View style={{ alignItems: 'center' }}>
+      <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5' }}>
         <Text style={{ fontSize: 25, paddingBottom: '1%' }}>Groups</Text>
       </View>
 
@@ -96,7 +100,7 @@ export default function Groups() {
         onPress={() => {
           navigation.navigate('Create Group' as never);
         }}>
-        <Text style={styles.floatButtonFontSize}>+</Text>
+        <Text style={styles.floatButtonText}>+</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
