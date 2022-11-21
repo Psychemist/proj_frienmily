@@ -73,6 +73,7 @@ export const userSlice = createSlice({
                 gender: string | null;
                 mobile: string | null;
                 email: string | null;
+                profilePicture: string | null;
             }>(token)
             AsyncStorage.setItem("token", token)
 
@@ -82,6 +83,7 @@ export const userSlice = createSlice({
             state.gender = payload.gender
             state.mobile = payload.mobile
             state.email = payload.email
+            state.profilePicture = payload.profilePicture
         },
         logout(state: UserState) {
             state = initialState
@@ -122,6 +124,7 @@ const login = (state: UserState, action: PayloadAction<{ token: string }>) => {
         gender: string | null;
         mobile: string | null;
         email: string | null;
+        profilePicture: string | null
     }>(token)
     AsyncStorage.setItem("token", token)
 
@@ -131,6 +134,7 @@ const login = (state: UserState, action: PayloadAction<{ token: string }>) => {
     state.gender = payload.gender
     state.mobile = payload.mobile
     state.email = payload.email
+    state.profilePicture = payload.profilePicture
 
 
     console.log("fulfilled : ", state.isLoggedIn)
@@ -146,6 +150,7 @@ const updateGender = (state: UserState, action: PayloadAction<{ token: string }>
         gender: string | null;
         mobile: string | null;
         email: string | null;
+        profilePicture: string | null
     }>(token)
     AsyncStorage.setItem("token", token)
 
@@ -165,6 +170,7 @@ const updateMobileNumber = (state: UserState, action: PayloadAction<{ token: str
         gender: string | null;
         mobile: string | null;
         email: string | null;
+        profilePicture: string | null
     }>(token)
     AsyncStorage.setItem("token", token)
 
@@ -183,6 +189,7 @@ const updateEmail = (state: UserState, action: PayloadAction<{ token: string }>)
         gender: string | null;
         mobile: string | null;
         email: string | null;
+        profilePicture: string | null
     }>(token)
     AsyncStorage.setItem("token", token)
 

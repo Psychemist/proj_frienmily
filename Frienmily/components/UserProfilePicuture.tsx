@@ -79,8 +79,8 @@ export default function UserProfilePicuture() {
       fontSize: 25,
     },
     pictureContainer: {
-      width: "90%",
-      height: "50%",
+      width: 270,
+      height: 270,
       backgroundColor: "white",
       shadowOffset: {
         width: 0,
@@ -130,29 +130,25 @@ export default function UserProfilePicuture() {
         <Text style={styles.text}>Profile Picture</Text>
       </View>
 
-      <View style={styles.pictureContainer}>
-        <View>
-          <Text >Profile Picuture</Text>
-        </View>
-      </View>
+
 
 
       {imgs == undefined || imgs == null ? (
-        <TouchableOpacity onPress={() => addPhoto()}>
-          <View style={styles.square}>
-            <FontAwesome name="plus" size={25} />
-            <Text> </Text>
-            <Text>CLICK HERE TO UPLOAD</Text>
+        <View>
+          <View style={styles.pictureContainer}>
+            <View>
+              <Text>Original Profile Picuture</Text>
+            </View>
           </View>
-        </TouchableOpacity>
+        </View>
       ) : (
         imgs.map((item: any, index: number) => {
           return (
-            <TouchableOpacity key={index} onPress={() => addPhoto()}>
+            <View key={index}>
               <Image
                 style={{ width: 270, height: 270, borderRadius: 18 }}
                 source={{ uri: item.uri }}></Image>
-            </TouchableOpacity>
+            </View>
           );
         })
       )}

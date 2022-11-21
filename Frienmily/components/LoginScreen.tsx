@@ -1,6 +1,6 @@
 import React from 'react';
-import {useForm} from 'react-hook-form';
-import {useDispatch, useSelector} from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Alert,
   SafeAreaView,
@@ -10,9 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {RootState} from '../redux/store';
-import {fetchLogin} from '../redux/user/thunk';
-import {useNavigation} from '@react-navigation/native';
+import { RootState } from '../redux/store';
+import { fetchLogin } from '../redux/user/thunk';
+import { useNavigation } from '@react-navigation/native';
 
 export default function LoginScreen() {
   const usernameInRedux = useSelector(
@@ -37,10 +37,9 @@ export default function LoginScreen() {
   const onLogin = async () => {
     try {
       let loginResult = await dispatch(
-        fetchLogin({username, password}),
+        fetchLogin({ username, password }),
       ).unwrap();
 
-      // TODO: login成功時，isLoggedIn變為true; 以此作為 guard
       console.log('loginResult from unwrap = ', loginResult);
       setUsername('');
       setPassword('');
@@ -54,7 +53,7 @@ export default function LoginScreen() {
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
       ]);
     }
   };
@@ -142,7 +141,7 @@ export default function LoginScreen() {
 
         <TouchableOpacity
           onPress={onLogin}
-          style={[styles.loginBtn, {marginBottom: 30}]}>
+          style={[styles.loginBtn, { marginBottom: 30 }]}>
           <Text
             style={{
               color: 'white',
@@ -154,7 +153,7 @@ export default function LoginScreen() {
 
         <TouchableOpacity
           onPress={onGoogleLogin}
-          style={[styles.loginBtn, {backgroundColor: '#d1463b'}]}>
+          style={[styles.loginBtn, { backgroundColor: '#d1463b' }]}>
           <Text
             style={{
               fontSize: 20,
@@ -165,7 +164,7 @@ export default function LoginScreen() {
 
         <TouchableOpacity
           onPress={onFacebookLogin}
-          style={[styles.loginBtn, {backgroundColor: '#32519c'}]}>
+          style={[styles.loginBtn, { backgroundColor: '#32519c' }]}>
           <Text
             style={{
               fontSize: 20,
