@@ -1,5 +1,5 @@
-import {useNavigation, useRoute} from '@react-navigation/native';
-import React, {useState} from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useState } from 'react';
 import {
   Alert,
   Button,
@@ -13,10 +13,10 @@ import {
   _View,
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {REACT_APP_API_SERVER} from '@env';
-import {useSelector} from 'react-redux';
-import {RootState} from '../redux/store';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { REACT_APP_API_SERVER } from '@env';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 export default function UploadReceipt() {
   const route = useRoute();
@@ -39,8 +39,6 @@ export default function UploadReceipt() {
         setImgs(res.assets);
       },
     );
-    console.log('imgs :', imgs);
-    console.log(imgs == undefined);
   };
 
   //   const takePhoto = () => {
@@ -61,10 +59,22 @@ export default function UploadReceipt() {
       return;
     }
 
+
     if (number == '') {
       showAlert1();
       return;
     }
+
+    function containsOnlyNumbers(str: any) {
+      return /^[0-9]+$/.test(str);
+    }
+
+    if (!containsOnlyNumbers(number)) {
+      showAlert2()
+      return
+    }
+
+
 
     const formData = new FormData();
     formData.append('image', imgs[0]);
@@ -85,18 +95,29 @@ export default function UploadReceipt() {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
 
   const showAlert1 = () => {
-    Alert.alert('Please enter how much you paid', '', [
+    Alert.alert('How much you paid?', '', [
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
+
+  const showAlert2 = () => {
+    Alert.alert('Integer only', '', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
 
@@ -211,7 +232,7 @@ export default function UploadReceipt() {
   });
 
   return (
-    <View style={{alignItems: 'center', backgroundColor: '#F4E9DF', flex: 1}}>
+    <View style={{ alignItems: 'center', backgroundColor: '#F4E9DF', flex: 1 }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -235,8 +256,8 @@ export default function UploadReceipt() {
           return (
             <TouchableOpacity key={index} onPress={() => addPhoto()}>
               <Image
-                style={{width: 270, height: 270, borderRadius: 18}}
-                source={{uri: item.uri}}></Image>
+                style={{ width: 270, height: 270, borderRadius: 18 }}
+                source={{ uri: item.uri }}></Image>
             </TouchableOpacity>
           );
         })

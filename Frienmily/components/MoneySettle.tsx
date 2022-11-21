@@ -18,23 +18,36 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
 export default function MoneySettle() {
-    const route = useRoute()
+    const route = useRoute<any>()
     const isFocused = useIsFocused();
-    let settleDetails = route.params.settleDetails
-    let username = route.params.username
+    let settleDetails = route.params.settleDetails || ''
+    let username = route.params.username || ''
+    let thisUserID = route.params.thisUserID || ''
+    let friendUserID = route.params.friendUserID || ''
     console.log(settleDetails);
     console.log(username);
+    console.log(thisUserID);
+    console.log(friendUserID);
+
+
 
 
     const [showResult, setShowResult] = useState(<Text></Text>);
+    const [showButton, setShowButton] = useState(<Text></Text>);
 
     useEffect(() => {
         const loadFriendList = async () => {
             try {
                 if (settleDetails.case == 1) {
                     setShowResult(<Text>No transaction</Text>)
+                    // setShowButton()
                 } else if (settleDetails.case == 2) {
                     setShowResult(<Text>Have you received ${settleDetails.amount} from {username}?</Text>)
+                    setShowButton(
+                        <TouchableOpacity style={styles.searchButton} onPress={moneySettle}>
+                            <Text>Settled</Text>
+                        </TouchableOpacity>
+                    )
                 } else if (settleDetails.case == 3) {
                     setShowResult(<Text>Did you paid ${settleDetails.amount} to {username}?</Text>)
                 }
@@ -48,38 +61,18 @@ export default function MoneySettle() {
     }, [isFocused]);
 
     const userIdInRedux = useSelector((state: RootState) => state.user.userId);
-    const [searchBar, setSearchBar] = React.useState('');
 
     const navigation = useNavigation();
     const [addFriendStatus, setAddFriendStatus] = React.useState(0);
     const [userDetail, setUserDetail]: any = React.useState();
-    //   let userDetail: any;
 
-    const confirmButton = async () => {
-
-    };
-
-    const showAlert = () => {
-        Alert.alert('Please enter something to search', '', [
-            {
-                text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel',
-            },
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-        ]);
-    };
-    const [buttonIsClicked, setButtonIsClick] = useState(false);
-
-    const addFriendButton = async () => {
-        setSearchBar('');
-        setButtonIsClick(true);
-        await fetch(`${REACT_APP_API_SERVER}/friends/addFriend`, {
+    const moneySettle = async () => {
+        await fetch(`${REACT_APP_API_SERVER}/receipts/settle/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                targetID: userDetail.id,
-                userID: userIdInRedux,
+                targetID: thisUserID,
+                payerID: friendUserID,
             }),
         });
     };
@@ -130,10 +123,8 @@ export default function MoneySettle() {
             <Image source={require('./img/money.gif')}
                 style={{ width: 250, height: 250, borderRadius: 15 }} />
             <Text>{showResult}</Text>
+            <View>{showButton}</View>
 
-            <TouchableOpacity style={styles.searchButton} onPress={confirmButton}>
-                <Text>Settled</Text>
-            </TouchableOpacity>
         </View>
     );
 }
