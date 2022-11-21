@@ -29,6 +29,7 @@ export default function UploadReceipt() {
   const [number, setNumber]: any = useState('');
   const [remarks, setRemarks]: any = useState();
 
+
   const addPhoto = () => {
     launchImageLibrary(
       {
@@ -76,9 +77,7 @@ export default function UploadReceipt() {
       return
     }
 
-    setImgs(null)
-    setNumber('')
-    setRemarks()
+
 
 
 
@@ -93,6 +92,9 @@ export default function UploadReceipt() {
       method: 'POST',
       body: formData,
     });
+    setImgs(null)
+    setNumber('')
+    setRemarks()
 
   };
 
@@ -297,12 +299,14 @@ export default function UploadReceipt() {
         style={styles.input}
         value={number}
         onChangeText={setNumber}
+        maxLength={8}
       />
       <TextInput
         placeholder="remarks (optional)"
         style={styles.input2}
         value={remarks}
         onChangeText={setRemarks}
+        maxLength={28}
       />
 
       <TouchableOpacity style={styles.searchButton} onPress={submitButton}>

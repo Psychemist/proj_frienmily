@@ -1,7 +1,7 @@
-import React, {type PropsWithChildren} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React, { type PropsWithChildren } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import {
   SafeAreaView,
@@ -41,6 +41,7 @@ import UploadReceipt from './components/UploadReceipt';
 import MoneySettle from './components/MoneySettle';
 import UserProfilePicuture from './components/UserProfilePicuture';
 import GroupMember from './components/GroupMember';
+import ReceiptImage from './components/ReceiptImage';
 
 
 const Tab = createBottomTabNavigator();
@@ -104,65 +105,67 @@ const App = () => {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-      {/* <SafeAreaView> */}
-      <NavigationContainer>
-        {/* isLoggedIn? */}
-        <Stack.Navigator
-          initialRouteName="Loading"
-          // initialRouteName="Photo"
-          screenOptions={{ headerShown: false, gestureEnabled: false }}>
-          <Stack.Screen
-            options={{ headerShown: false, gestureEnabled: true }}
-            name="HomeTab"
-            component={HomeTab}
-          />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
-          <Stack.Screen name="Groceries" component={Groceries} />
-          <Stack.Screen
-            name="GroceriesTopItems"
-            component={GroceriesTopItems}
-          />
-          <Stack.Screen
-            name="GroceriesRandomItems"
-            component={GroceriesRandomItems}
-          />
-          <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} />
-          <Stack.Screen name="Cart" component={Cart} />
-          <Stack.Screen name="CartItem" component={CartItem} />
-          <Stack.Screen name="AssignGroup" component={AssignGroup} />
-          <Stack.Screen
-            name="ShoppingList"
-            component={ShoppingList}
-            options={{ headerShown: false, gestureEnabled: true }}
-          />
-          <Stack.Screen name="ShoppingListItem" component={ShoppingListItem} />
-          <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} />
-          <Stack.Screen
-            name="ReceiptRecordItem"
-            component={ReceiptRecordItem}
-          />
-          <Stack.Screen name="Groups" component={Groups} />
-          <Stack.Screen
-            name="Add friends"
-            component={AddFriends}
-            options={{ headerShown: false, gestureEnabled: true }}
-          />
-          <Stack.Screen
-            name="Create Group"
-            component={CreateGroup}
-            options={{ headerShown: false, gestureEnabled: true }}
-          />
-          <Stack.Screen name="Loading" component={LoadingScreen} />
-          <Stack.Screen name="Photo" component={Photo} />
-          <Stack.Screen name="Account" component={Account} />
-          <Stack.Screen name="UploadReceipt" component={UploadReceipt} />
-          <Stack.Screen name="MoneySettle" component={MoneySettle} />
-          <Stack.Screen name="UserProfilePicuture" component={UserProfilePicuture} />
-          <Stack.Screen name="GroupMember" component={GroupMember} />
-        </Stack.Navigator>
-      </NavigationContainer>
-      {/* </SafeAreaView > */}
+        {/* <SafeAreaView> */}
+        <NavigationContainer>
+          {/* isLoggedIn? */}
+          <Stack.Navigator
+            initialRouteName="Loading"
+            // initialRouteName="Photo"
+            screenOptions={{ headerShown: false, gestureEnabled: false }}>
+            <Stack.Screen
+              options={{ headerShown: false, gestureEnabled: true }}
+              name="HomeTab"
+              component={HomeTab}
+            />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name="Groceries" component={Groceries} />
+            <Stack.Screen
+              name="GroceriesTopItems"
+              component={GroceriesTopItems}
+            />
+            <Stack.Screen
+              name="GroceriesRandomItems"
+              component={GroceriesRandomItems}
+            />
+            <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} />
+            <Stack.Screen name="Cart" component={Cart} />
+            <Stack.Screen name="CartItem" component={CartItem} />
+            <Stack.Screen name="AssignGroup" component={AssignGroup} />
+            <Stack.Screen
+              name="ShoppingList"
+              component={ShoppingList}
+              options={{ headerShown: false, gestureEnabled: true }}
+            />
+            <Stack.Screen name="ShoppingListItem" component={ShoppingListItem} />
+            <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} />
+            <Stack.Screen
+              name="ReceiptRecordItem"
+              component={ReceiptRecordItem}
+            />
+            <Stack.Screen name="Groups" component={Groups} />
+            <Stack.Screen
+              name="Add friends"
+              component={AddFriends}
+              options={{ headerShown: false, gestureEnabled: true }}
+            />
+            <Stack.Screen
+              name="Create Group"
+              component={CreateGroup}
+              options={{ headerShown: false, gestureEnabled: true }}
+            />
+            <Stack.Screen name="Loading" component={LoadingScreen} />
+            <Stack.Screen name="Photo" component={Photo} />
+            <Stack.Screen name="Account" component={Account} />
+            <Stack.Screen name="UploadReceipt" component={UploadReceipt} />
+            <Stack.Screen name="MoneySettle" component={MoneySettle} />
+            <Stack.Screen name="UserProfilePicuture" component={UserProfilePicuture} />
+            <Stack.Screen name="GroupMember" component={GroupMember} />
+            <Stack.Screen name="ReceiptImage" component={ReceiptImage} />
+
+          </Stack.Navigator>
+        </NavigationContainer>
+        {/* </SafeAreaView > */}
       </QueryClientProvider>
     </Provider>
   );
