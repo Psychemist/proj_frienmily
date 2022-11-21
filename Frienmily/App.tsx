@@ -1,7 +1,8 @@
-import React, { type PropsWithChildren } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, {type PropsWithChildren} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import {
   SafeAreaView,
   ScrollView,
@@ -41,8 +42,10 @@ import MoneySettle from './components/MoneySettle';
 import UserProfilePicuture from './components/UserProfilePicuture';
 import GroupMember from './components/GroupMember';
 
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+const queryClient = new QueryClient()
 
 const HomeTab = () => {
   return (
@@ -100,6 +103,7 @@ const HomeTab = () => {
 const App = () => {
   return (
     <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
       {/* <SafeAreaView> */}
       <NavigationContainer>
         {/* isLoggedIn? */}
@@ -159,6 +163,7 @@ const App = () => {
         </Stack.Navigator>
       </NavigationContainer>
       {/* </SafeAreaView > */}
+      </QueryClientProvider>
     </Provider>
   );
 };

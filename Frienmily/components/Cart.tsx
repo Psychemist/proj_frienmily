@@ -53,7 +53,7 @@ export default function Cart() {
       width: "100%"
     },
     text: {
-      fontSize: 30,
+      fontSize: 25,
     },
     backButton: {
       position: 'absolute',

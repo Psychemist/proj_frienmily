@@ -106,7 +106,7 @@ export default function AddFriends() {
       paddingRight: 40,
     },
     text: {
-      fontSize: 30,
+      fontSize: 25,
     },
     header: {
       height: '14%',

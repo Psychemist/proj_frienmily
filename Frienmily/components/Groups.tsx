@@ -45,7 +45,7 @@ export default function Groups() {
     //   width: '100%',
     // },
     text: {
-      fontSize: 30,
+      fontSize: 25,
     },
 
 
