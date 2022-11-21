@@ -225,8 +225,6 @@ export default function AssignGroup() {
           <Text style={[styles.caption, { right: 25 }]}>Assign Group</Text>
         </View>
 
-        {/* TODO: 繼續做 group list的呈現方式 */}
-
         {/* <ScrollView style={[styles.groupsWrapper, { backgroundColor: '#F5F5F5' }]}>
           {groupItemList.map((item: any, idx: number) => (
             <TouchableOpacity style={styles.itemContainer}>

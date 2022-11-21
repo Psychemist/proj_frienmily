@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import ReceiptRecordItem from "./ReceiptRecordItem";
 
 export default function ReceiptRecord() {
@@ -25,7 +26,20 @@ export default function ReceiptRecord() {
             fontWeight: '300',
             color: 'white',
         },
-        
+        header: {
+            height: "14%",
+            alignItems: "center",
+            width: "100%"
+        },
+        text: {
+            fontSize: 30,
+        },
+        backButton: {
+            position: 'absolute',
+            left: 0,
+            paddingLeft: '20%',
+            fontSize: 25,
+        },
         addMoreText: {
             fontSize: 15,
             padding: 5,
@@ -42,57 +56,64 @@ export default function ReceiptRecord() {
             fontSize: 20,
             fontWeight: '300',
             color: 'white',
-            
         },
-        
-        assignGroupButton: {
+        scrollWrapper: {
+            width: "98%",
+            height: 500,
+            paddingHorizontal: 5
+        },
+        receiptBtn: {
             backgroundColor: '#47b4b1',
             height: 40,
-            width: 400,
+            width: 360,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             margin: 10,
             borderRadius: 15,
-            marginLeft:'auto',
-            marginRight:'auto',
+            marginLeft: 'auto',
+            marginRight: 'auto',
             color: 'white',
         },
     })
     const navigation = useNavigation()
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('HomeTab' as never)}>
+                    <FontAwesome name='angle-left' size={35} />
+                </TouchableOpacity>
+
+                <Text style={styles.text}>Receipt Record</Text>
+            </View>
+
             <View style={styles.container}>
-                <Text style={{fontSize: 30,fontWeight: '300', color: 'white',}}>Receipt Record</Text> 
+                <Text style={{ fontSize: 20, fontWeight: '300', color: 'white', }}>GROUP NAME</Text>
             </View>
-             <View style={styles.container}>
-                   <Text style={{fontSize: 20,fontWeight: '300', color: 'white',}}>GROUP NAME</Text>
-            </View>
-            <ScrollView style={{ backgroundColor: 'white' }}>
-                <Text><ReceiptRecordItem/></Text>
-                <Text><ReceiptRecordItem/></Text>
-                <Text><ReceiptRecordItem/></Text>
-                <Text><ReceiptRecordItem/></Text>
-                <Text><ReceiptRecordItem/></Text>
-                <Text><ReceiptRecordItem/></Text>
-                <Text><ReceiptRecordItem/></Text>
-                <Text><ReceiptRecordItem/></Text>
-                <Text><ReceiptRecordItem/></Text>
-              
+            <ScrollView style={styles.scrollWrapper}>
+                <ReceiptRecordItem />
+                <ReceiptRecordItem />
+                <ReceiptRecordItem />
+                <ReceiptRecordItem />
+                <ReceiptRecordItem />
+                <ReceiptRecordItem />
+                <ReceiptRecordItem />
+                <ReceiptRecordItem />
+                <ReceiptRecordItem />
+
 
             </ScrollView>
+
             <View >
-                <View>
-                    <TouchableOpacity
-                    style={styles.assignGroupButton}
-                        onPress={() => {
+                <TouchableOpacity
+                    style={styles.receiptBtn}
+                    onPress={() => {
                         navigation.navigate('UploadReceipt' as never)
                     }}>
                     <Text style={styles.buttonText}>Upload Receipt</Text>
-                    </TouchableOpacity>
-                </View>
+                </TouchableOpacity>
             </View>
-            
+
         </SafeAreaView>
     )
 }

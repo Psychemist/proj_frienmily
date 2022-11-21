@@ -10,7 +10,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { REACT_APP_API_SERVER } from '@env';
-import { json } from 'express';
+// import { json } from 'express';
 interface FriendItemProps {
     items: any;
     key: number;
@@ -29,7 +29,9 @@ export default function FriendItem(props: FriendItemProps) {
             try {
                 console.log('loadCalculation');
                 console.log(
-                    `user_id: ${props.items.user_id}, user_friend_id: ${props.items.user_friend_id}`,
+                    `user_id: ${props.items.user_id}, 
+                    user_friend_id: ${props.items.user_friend_id}, 
+                    profile picture: ${props.items.profile_picture}`,
                 );
                 const response = await fetch(
                     `${REACT_APP_API_SERVER}/friends/calculateMoney/`,
@@ -128,6 +130,8 @@ export default function FriendItem(props: FriendItemProps) {
 
     });
 
+    // TODO: Show the user image of each friend
+
     return (
         <TouchableOpacity style={styles.container} onPress={() =>
             navigation.navigate(
@@ -137,7 +141,7 @@ export default function FriendItem(props: FriendItemProps) {
         }>
             <View style={styles.miniWrapper}>
                 {/* <FontAwesome name="user-circle-o" size={30} /> */}
-                <Image style={styles.userImage} source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} ></Image>
+                <Image style={styles.userImage} source={{ uri: props.items.profile_picture }} ></Image>
                 <View>
                     <Text style={styles.friendName}>{props.items.username}</Text>
                 </View>

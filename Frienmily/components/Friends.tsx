@@ -60,7 +60,7 @@ export default function Friends() {
         if (response) {
           json = await response.json();
         }
-        // console.log(json);
+        console.log("friend list: ", json);
         setFriendItemList(json);
       } catch (error) {
         console.log('error', error);
