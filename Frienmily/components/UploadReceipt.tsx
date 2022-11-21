@@ -19,8 +19,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
 export default function UploadReceipt() {
-  const route = useRoute();
-  let groupId = route.params.groupId;
+  const route = useRoute<any>()
+  let groupId = route.params.groupId || ''
   console.log('groupIdgroupId', groupId);
 
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
@@ -236,7 +236,7 @@ export default function UploadReceipt() {
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.navigate('HomeTab' as never)}>
+          onPress={() => navigation.goBack()}>
           <FontAwesome name="angle-left" size={35} />
         </TouchableOpacity>
 
