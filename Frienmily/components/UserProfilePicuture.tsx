@@ -86,7 +86,7 @@ export default function UserProfilePicuture() {
       width: "100%"
     },
     text: {
-      fontSize: 30,
+      fontSize: 25,
     },
     backButton: {
       position: 'absolute',

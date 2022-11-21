@@ -107,7 +107,7 @@ export default function ShoppingList() {
       fontSize: 25,
     },
     text: {
-      fontSize: 30,
+      fontSize: 25,
     },
     groupNameWrapper: {
       position: "absolute",
@@ -183,14 +183,17 @@ export default function ShoppingList() {
           }}>
           <Text style={styles.buttonText}>Upload Receipt</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.receiptBtn}
           onPress={() => {
-            navigation.navigate('ReceiptRecord' as never);
+            navigation.navigate('ReceiptRecord' as never, { groupId: groupId, groupName: groupName } as never);
           }}>
           <Text style={styles.buttonText}>Receipt Record</Text>
         </TouchableOpacity>
       </View>
+
+
       <View style={{
         // alignItems: 'center',
         // justifyContent: 'space-around',
@@ -200,7 +203,7 @@ export default function ShoppingList() {
         <TouchableOpacity
           style={styles.membersBtn}
           onPress={() => {
-            navigation.navigate('GroupMember' as never, { groupId: groupId, groupName: groupName } as never);
+            navigation.navigate('GroupMember' as never, { groupId: groupId, groupName: groupName } as never)
           }}>
           <Text style={styles.buttonText}>Group Members</Text>
         </TouchableOpacity>

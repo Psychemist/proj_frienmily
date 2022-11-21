@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import FriendItemInCreateGroup from './FriendItemInCreateGroup';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {isAnyOf} from '@reduxjs/toolkit';
-import {REACT_APP_API_SERVER} from '@env';
-import {RootState} from '../redux/store';
-import {useSelector} from 'react-redux';
+import { isAnyOf } from '@reduxjs/toolkit';
+import { REACT_APP_API_SERVER } from '@env';
+import { RootState } from '../redux/store';
+import { useSelector } from 'react-redux';
 
 export default function CreateGroup() {
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
@@ -53,7 +53,7 @@ export default function CreateGroup() {
 
       const res = await fetch(`${REACT_APP_API_SERVER}/groups/`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           groupName: groupName,
           is_family_group: isFamilyGroup,
@@ -88,7 +88,7 @@ export default function CreateGroup() {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
 
@@ -99,7 +99,7 @@ export default function CreateGroup() {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
   const showAlert = () => {
@@ -109,7 +109,7 @@ export default function CreateGroup() {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
 
@@ -163,7 +163,7 @@ export default function CreateGroup() {
         console.log('load Friend List when creating group...');
         const response = await fetch(`${REACT_APP_API_SERVER}/friends/`, {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             userID: userIdInRedux,
           }),
@@ -268,7 +268,7 @@ export default function CreateGroup() {
       width: '100%',
     },
     text: {
-      fontSize: 30,
+      fontSize: 25,
     },
     searchAndClearButton: {
       margin: 5,
@@ -294,7 +294,7 @@ export default function CreateGroup() {
   });
 
   return (
-    <View style={{alignItems: 'center', backgroundColor: '#F4E9DF', flex: 1}}>
+    <View style={{ alignItems: 'center', backgroundColor: '#F4E9DF', flex: 1 }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}

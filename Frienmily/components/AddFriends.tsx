@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 // import AddFriendSearchResult from './AddFriendSearchResult';
 import GroupItem from './GroupItem';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {REACT_APP_API_SERVER} from '@env';
-import {useSelector} from 'react-redux';
-import {RootState} from '../redux/store';
+import { REACT_APP_API_SERVER } from '@env';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 export default function AddFriends() {
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
@@ -32,7 +32,7 @@ export default function AddFriends() {
       setButtonIsClick(false);
       let res = await fetch(`${REACT_APP_API_SERVER}/friends/newFriend`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           searchBar: searchBar,
           userID: userIdInRedux,
@@ -58,7 +58,7 @@ export default function AddFriends() {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
   const [buttonIsClicked, setButtonIsClick] = useState(false);
@@ -68,7 +68,7 @@ export default function AddFriends() {
     setButtonIsClick(true);
     await fetch(`${REACT_APP_API_SERVER}/friends/addFriend`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         targetID: userDetail.id,
         userID: userIdInRedux,
@@ -105,7 +105,7 @@ export default function AddFriends() {
       paddingRight: 40,
     },
     text: {
-      fontSize: 30,
+      fontSize: 25,
     },
     header: {
       height: '14%',
@@ -178,7 +178,7 @@ export default function AddFriends() {
   });
 
   return (
-    <View style={{alignItems: 'center', backgroundColor: '#F4E9DF', flex: 1}}>
+    <View style={{ alignItems: 'center', backgroundColor: '#F4E9DF', flex: 1 }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -210,7 +210,7 @@ export default function AddFriends() {
             <FontAwesome
               name="exclamation-triangle"
               size={30}
-              style={{color: 'red', marginRight: '2%'}}
+              style={{ color: 'red', marginRight: '2%' }}
             />
           </View>
           <Text style={styles.messageText}>No such user!</Text>
@@ -221,7 +221,7 @@ export default function AddFriends() {
             <FontAwesome
               name="exclamation-triangle"
               size={30}
-              style={{color: 'red', marginRight: '2%'}}
+              style={{ color: 'red', marginRight: '2%' }}
             />
           </View>
           <Text style={styles.messageText}>Cannot add yourself!</Text>
@@ -232,7 +232,7 @@ export default function AddFriends() {
             <FontAwesome
               name="exclamation-triangle"
               size={30}
-              style={{color: 'red', marginRight: '2%'}}
+              style={{ color: 'red', marginRight: '2%' }}
             />
           </View>
           <Text style={styles.messageText}>He/She is your friend already!</Text>

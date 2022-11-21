@@ -151,7 +151,7 @@ export default function UploadReceipt() {
       paddingRight: 40,
     },
     text: {
-      fontSize: 30,
+      fontSize: 25,
     },
     header: {
       height: '14%',
