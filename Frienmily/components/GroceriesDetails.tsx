@@ -8,14 +8,35 @@ import GroceriesDetailsItem from "./GroceriesDetailsItem";
 
 export default function GroceriesDetails() {
     const styles = StyleSheet.create({
+        header: {
+            height: "5%",
+            alignItems: "center",
+            width: "100%"
+        },
         text: {
-            fontSize: 15,
+            fontSize: 25,
+        },
+        backButton: {
+            left: 0,
+            fontSize: 25,
+        },
+        cartQty: {
+            justifyContent: "center",
+            alignItems: "center",
+            height: 20,
+            width: 20,
+            borderRadius: 100,
+            backgroundColor: "#f79f24",
+            position: "absolute",
+            top: -10,
+            right: -10
         },
         container: {
+            top: 0,
             justifyContent: "space-between",
             alignItems: "center",
             flexDirection: "row",
-            width: "100%",
+            width: "90%",
             padding: 10,
             paddingTop: 2,
             paddingBottom: 2,
@@ -91,24 +112,54 @@ export default function GroceriesDetails() {
     // }
 
     return (
- 
-        <SafeAreaView style={{ flex: 1 }}>
+
+        <SafeAreaView style={{ flex: 1, position: "relative", backgroundColor: '#47b4b1' }}>
+
+
             <View style={styles.container}>
-                <Text style={{fontSize: 25, paddingBottom: "1%"}}>Groceries</Text> 
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('HomeTab' as never)} >
+                    <FontAwesome name='angle-left' size={35} />
+                </TouchableOpacity>
+                <View>
+                    <TextInput
+                        placeholder="Search Products"
+                        value={groupName}
+                        onChangeText={setGroupName}
+                        style={styles.input}
+                    />
+                </View>
+                <View>
+                    <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
+                        <FontAwesome name="shopping-cart" size={30} />
+                        <View style={styles.cartQty}>
+                            <Text>0</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+
+
+            {/* <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('HomeTab' as never)} >
+                    <FontAwesome name='angle-left' size={35} />
+                </TouchableOpacity>
+                <Text style={styles.text}>Product Details</Text>
             </View>
             <View style={styles.container}>
                 <View><TextInput placeholder="Search Products" value={groupName} onChangeText={setGroupName} style={styles.input} /></View>
-                <Pressable onPress={()=> navigation.navigate('Cart' as never)}> 
-                <FontAwesome name='shopping-cart' size={30}/>
-                </Pressable>
-            <TouchableOpacity 
-            onPress={() => navigation.navigate()}>
-            </TouchableOpacity>
-            </View>
+                <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
+                    <FontAwesome name='shopping-cart' size={30} />
+                    <View style={styles.cartQty}>
+                        <Text>0</Text>
+                    </View>
+                </TouchableOpacity>
+            </View> */}
+
             <ScrollView style={{ backgroundColor: 'white' }}>
-                <Text><GroceriesDetailsItem/></Text>
+                <GroceriesDetailsItem />
             </ScrollView>
         </SafeAreaView>
- 
+
     )
 }

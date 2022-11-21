@@ -48,20 +48,22 @@ export default function GroceriesDetailsItem() {
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
-            <View><Image source={{uri: 'https://reactjs.org/logo-og.png'}}
-            style={{width: 120, height: 120}} /></View>
-            
-            <View style={styles.nameContainer}>
-                <View ><Text style={styles.text}>Groceries Details</Text></View>
-                    <View style={styles.nameContainer}>
-                        <NumericInput onChange={value => console.log(value)} 
-                        totalWidth={80} 
-                        totalHeight={30} 
-                        iconSize={25}/> 
-                        </View>
-                    </View>
+            <View><Image source={{ uri: 'https://reactjs.org/logo-og.png' }}
+                style={{ width: 120, height: 120 }} /></View>
 
-        </View>   
-  
+            <View style={styles.nameContainer}>
+                <View >
+                    <Text style={styles.text}>Groceries Details</Text>
+                </View>
+                <View style={styles.nameContainer}>
+                    <NumericInput onChange={value => console.log(value)}
+                        totalWidth={80}
+                        totalHeight={30}
+                        iconSize={25} />
+                </View>
+            </View>
+
+        </View>
+
     )
 }

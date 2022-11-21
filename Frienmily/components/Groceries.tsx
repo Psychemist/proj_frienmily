@@ -21,6 +21,17 @@ export default function Groceries() {
     text: {
       fontSize: 15,
     },
+    cartQty: {
+      justifyContent: "center",
+      alignItems: "center",
+      height: 20,
+      width: 20,
+      borderRadius: 100,
+      backgroundColor: "#f79f24",
+      position: "absolute",
+      top: -10,
+      right: -10
+    },
     container: {
       justifyContent: 'space-around',
       alignItems: 'center',
@@ -115,10 +126,14 @@ export default function Groceries() {
             style={styles.input}
           />
         </View>
-
-        <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)}>
-          <FontAwesome name="shopping-cart" size={30} />
-        </TouchableOpacity>
+        <View>
+          <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
+            <FontAwesome name="shopping-cart" size={30} />
+            <View style={styles.cartQty}>
+              <Text>0</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
 
 
