@@ -63,8 +63,6 @@ export default function MoneySettle() {
     const userIdInRedux = useSelector((state: RootState) => state.user.userId);
 
     const navigation = useNavigation();
-    const [addFriendStatus, setAddFriendStatus] = React.useState(0);
-    const [userDetail, setUserDetail]: any = React.useState();
 
     const moneySettle = async () => {
         await fetch(`${REACT_APP_API_SERVER}/receipts/settle/`, {
@@ -75,6 +73,9 @@ export default function MoneySettle() {
                 payerID: friendUserID,
             }),
         });
+        setShowResult(<Text>Transactions settled</Text>)
+        setShowButton(<Text></Text>)
+
     };
 
     const styles = StyleSheet.create({

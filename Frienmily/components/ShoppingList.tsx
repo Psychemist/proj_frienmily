@@ -1,5 +1,5 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
-import React from 'react';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -10,11 +10,43 @@ import {
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ShoppingListItem from './ShoppingListItem';
+import { REACT_APP_API_SERVER } from '@env';
 
 export default function ShoppingList() {
-  const route = useRoute();
-  let groupId = route.params.groupId;
-  console.log('groupId :', groupId);
+  const route = useRoute<any>()
+  let groupId = route.params.groupId || ''
+
+  const isFocused = useIsFocused();
+  const [groupName, setGroupName] = useState();
+  useEffect(() => {
+    const loadFriendList = async () => {
+      try {
+        console.log('get group name');
+        console.log("groupID :", groupId);
+
+        const response = await fetch(`${REACT_APP_API_SERVER}/groups/getGroupName/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            groupID: groupId,
+          }),
+        });
+        let groupName = [];
+        if (response) {
+          groupName = await response.json();
+        }
+        console.log("groupName :", groupName);
+        setGroupName(groupName);
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
+    if (isFocused) {
+      loadFriendList();
+    }
+  }, [isFocused]);
+
+
 
   const styles = StyleSheet.create({
     addMoreText: {
@@ -38,7 +70,20 @@ export default function ShoppingList() {
     receiptBtn: {
       backgroundColor: '#47b4b1',
       height: 40,
-      width: 360,
+      width: "45%",
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: 10,
+      borderRadius: 15,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      color: 'white',
+    },
+    membersBtn: {
+      backgroundColor: '#47b4b1',
+      height: 40,
+      width: "95%",
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -94,7 +139,7 @@ export default function ShoppingList() {
       </View>
 
       <View style={styles.groupNameWrapper}>
-        <Text style={{ fontSize: 20 }}>GROUP NAME</Text>
+        <Text style={{ fontSize: 20 }}>{groupName}</Text>
       </View>
       <ScrollView style={styles.scrollWrapper}>
         <ShoppingListItem />
@@ -122,7 +167,12 @@ export default function ShoppingList() {
       </View>
 
 
-      <View>
+      <View style={{
+        // alignItems: 'center',
+        // justifyContent: 'space-around',
+        flexDirection: "row",
+        width: "90%",
+      }}>
         <TouchableOpacity
           style={styles.receiptBtn}
           onPress={() => {
@@ -139,6 +189,20 @@ export default function ShoppingList() {
             navigation.navigate('ReceiptRecord' as never);
           }}>
           <Text style={styles.buttonText}>Receipt Record</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{
+        // alignItems: 'center',
+        // justifyContent: 'space-around',
+        flexDirection: "row",
+        width: "90%",
+      }}>
+        <TouchableOpacity
+          style={styles.membersBtn}
+          onPress={() => {
+            navigation.navigate('GroupMember' as never, { groupId: groupId, groupName: groupName } as never);
+          }}>
+          <Text style={styles.buttonText}>Group Members</Text>
         </TouchableOpacity>
       </View>
 
