@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
@@ -18,10 +18,11 @@ export default function Account() {
     const genderInRedux = useSelector((state: RootState) => state.user.gender)
     const mobileInRedux = useSelector((state: RootState) => state.user.mobile)
     const emailInRedux = useSelector((state: RootState) => state.user.email)
+    const profilePictureInRedux = useSelector((state: RootState) => state.user.profilePicture)
 
     const genderIndex = GENDERS.indexOf(genderInRedux!)
 
-
+    console.log("profilePictureInRedux: ", profilePictureInRedux)
 
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
     if (isLoggedIn == true) {
@@ -40,13 +41,16 @@ export default function Account() {
     const [isMobileEditable, setIsMobileEditable] = useState(false)
     const [isEmailEditable, setIsEmailEditable] = useState(false)
 
-
-
     const navigation = useNavigation()
     const dispatch = useDispatch()
 
+
+
     // TODO: 離開此頁時，如果各個isEditable仍是true，則彈出視窗問用戶是否要放棄更改
 
+    const enlargeProfilePicture = () => {
+        navigation.navigate('UserProfilePicuture' as never)
+    }
     const changeGender = async () => {
         if (isGenderEditable == true) {
             try {
@@ -128,8 +132,7 @@ export default function Account() {
 
     }
     const onLogout = async () => {
-        // TODO: 將token無效化
-        await AsyncStorage.removeItem("token")
+
         Alert.alert(
             'Are you sure you want to log out?',
             '',
@@ -140,7 +143,7 @@ export default function Account() {
                     style: 'cancel',
                 },
                 {
-                    text: 'Yes', onPress: () => {
+                    text: 'Yes', onPress: async () => {
                         dispatch(logout())
                         navigation.navigate('Login' as never)
                     }
@@ -148,6 +151,7 @@ export default function Account() {
             ]
         );
     }
+
 
     const styles = StyleSheet.create({
         mainPage: {
@@ -162,7 +166,7 @@ export default function Account() {
         },
         itemContainer: {
             width: "90%",
-            height: "16%",
+            height: "17%",
             backgroundColor: "white",
             shadowOffset: {
                 width: 0,
@@ -181,6 +185,15 @@ export default function Account() {
             marginTop: 5,
             marginBottom: 5,
 
+        },
+        userImage: {
+            width: 60,
+            height: 60,
+            borderRadius: 50,
+            borderColor: "#47b4b1",
+            borderWidth: 1,
+            postion: "absolute",
+            right: 5
         },
         leftContainer: {
             maxWidth: "100%",
@@ -210,7 +223,7 @@ export default function Account() {
             marginTop: 1
         },
         editBtn: {
-            fontSize: 27,
+            fontSize: 22,
             color: "#47b4b1"
         },
         BtnText: {
@@ -218,22 +231,26 @@ export default function Account() {
             paddingLeft: 10
         }
     });
+
     return (
         <SafeAreaView style={styles.mainPage}>
             {/* <View style={{ alignItems: "center" }}>
                 <Text style={{ fontSize: 25, paddingBottom: "1%" }}>Account</Text>
             </View> */}
 
-            <Text style={styles.title}>Personal Details</Text>
+            <Text style={styles.title}>Personal Profile</Text>
 
             <View style={{ alignItems: "center" }}>
 
-                <View style={styles.itemContainer}>
+                <View style={[styles.itemContainer, { position: "relative" }]}>
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Username</Text>
                         <Text style={styles.fieldContentText}>{username}</Text>
-
                     </View>
+                    <TouchableOpacity onPress={enlargeProfilePicture}>
+                        <Image style={styles.userImage} source={{ uri: profilePictureInRedux! }} ></Image>
+                    </TouchableOpacity>
+
                 </View>
 
 
@@ -252,9 +269,9 @@ export default function Account() {
                     <View>
                         <Text>
                             {isGenderEditable ?
-                                <FontAwesome name='check' size={40} onPress={changeGender} style={styles.editBtn} />
+                                <FontAwesome name='check' onPress={changeGender} style={styles.editBtn} />
                                 :
-                                <FontAwesome name='pencil' size={40} onPress={changeGender} style={styles.editBtn} />}
+                                <FontAwesome name='pencil' onPress={changeGender} style={styles.editBtn} />}
                         </Text>
                     </View>
                 </View>
@@ -281,9 +298,9 @@ export default function Account() {
                     <View>
                         <Text>
                             {isMobileEditable ?
-                                <FontAwesome name='check' size={40} onPress={changeMobile} style={styles.editBtn} />
+                                <FontAwesome name='check' onPress={changeMobile} style={styles.editBtn} />
                                 :
-                                <FontAwesome name='pencil' size={40} onPress={changeMobile} style={styles.editBtn} />}
+                                <FontAwesome name='pencil' onPress={changeMobile} style={styles.editBtn} />}
                         </Text>
                     </View>
                 </View>
@@ -309,9 +326,9 @@ export default function Account() {
                     <View>
                         <Text>
                             {isEmailEditable ?
-                                <FontAwesome name='check' size={40} onPress={changeEmail} style={styles.editBtn} />
+                                <FontAwesome name='check' onPress={changeEmail} style={styles.editBtn} />
                                 :
-                                <FontAwesome name='pencil' size={40} onPress={changeEmail} style={styles.editBtn} />}
+                                <FontAwesome name='pencil' onPress={changeEmail} style={styles.editBtn} />}
                         </Text>
                     </View>
                 </View>

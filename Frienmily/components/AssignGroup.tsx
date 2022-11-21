@@ -6,6 +6,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { REACT_APP_API_SERVER } from '@env';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import Icon from "react-native-vector-icons/Ionicons";
+
 
 
 export default function AssignGroup() {
@@ -49,7 +51,7 @@ export default function AssignGroup() {
       width: "100%"
     },
     text: {
-      fontSize: 30,
+      fontSize: 25,
     },
     backButton: {
       position: 'absolute',
@@ -110,27 +112,49 @@ export default function AssignGroup() {
       color: "#939493",
       top: 21.5
     },
+    scrollWrapper: {
+      width: "98%",
+      height: 500,
+      paddingHorizontal: 5
+    },
     groupsWrapper: {
-      marginTop: 50
+      marginTop: 0,
+      alignItems: "center",
+      width: "100%",
+      height: 500,
+      padding: 10,
+      backgroundColor: "blue"
     },
     itemContainer: {
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      flexDirection: 'row',
-      width: '100%',
-      padding: 10,
-      paddingTop: 32,
-      paddingBottom: 32,
-      backgroundColor: '#E2D8CF',
-      //SHADOW
-      shadowOpacity: 0.8,
-      shadowRadius: 3,
+      width: "100%",
+      height: 100,
+      backgroundColor: "white",
       shadowOffset: {
-        height: 1,
-        width: 1,
+        width: 0,
+        height: 0,
       },
+      shadowOpacity: 0.32,
+      shadowRadius: 5.46,
+      elevation: 9,
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 10,
+      paddingTop: 20,
+      paddingBottom: 20,
+      borderRadius: 15,
+      marginTop: 5,
+      marginBottom: 5,
     },
-
+    groupImage: {
+      width: 60,
+      height: 60,
+      borderRadius: 50,
+      backgroundColor: "grey",
+      marginRight: 20
+    },
+    groupName: {
+      fontSize: 20
+    }
   });
 
   const navigation = useNavigation();
@@ -201,19 +225,26 @@ export default function AssignGroup() {
           <Text style={[styles.caption, { right: 25 }]}>Assign Group</Text>
         </View>
 
-        {/* TODO: 繼續做 group list的呈現方式 */}
-        {/* 
-        <ScrollView style={{ backgroundColor: '#F5F5F5' }}>
+        {/* <ScrollView style={[styles.groupsWrapper, { backgroundColor: '#F5F5F5' }]}>
           {groupItemList.map((item: any, idx: number) => (
-            <View style={styles.groupsWrapper}>
-              <TouchableOpacity style={styles.itemContainer}>
-                <Text>{item.group_name}</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={styles.itemContainer}>
+              <Text>{item.group_name}</Text>
+            </TouchableOpacity>
           ))}
         </ScrollView> */}
 
+
       </View>
+
+      <ScrollView style={styles.scrollWrapper}>
+        {groupItemList.map((item: any, idx: number) => (
+          <TouchableOpacity style={styles.itemContainer}>
+            <View style={styles.groupImage}></View>
+            <Text style={styles.groupName}>{item.group_name}</Text>
+          </TouchableOpacity>
+        ))}
+
+      </ScrollView>
     </SafeAreaView>
   )
 }

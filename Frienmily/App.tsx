@@ -14,8 +14,8 @@ import {
 } from 'react-native';
 import LoadingScreen from './components/LoadingScreen';
 import LoginScreen from './components/LoginScreen';
-import {Provider, useSelector} from 'react-redux';
-import store, {RootState} from './redux/store';
+import { Provider, useSelector } from 'react-redux';
+import store, { RootState } from './redux/store';
 import Account from './components/Account';
 import Groceries from './components/Groceries';
 import Friends from './components/Friends';
@@ -38,6 +38,9 @@ import GroceriesDetails from './components/GroceriesDetails';
 import Photo from './components/Photo';
 import AssignGroup from './components/AssignGroup';
 import UploadReceipt from './components/UploadReceipt';
+import MoneySettle from './components/MoneySettle';
+import UserProfilePicuture from './components/UserProfilePicuture';
+import GroupMember from './components/GroupMember';
 
 
 const Tab = createBottomTabNavigator();
@@ -46,14 +49,14 @@ const queryClient = new QueryClient()
 
 const HomeTab = () => {
   return (
-    <Tab.Navigator screenOptions={{headerShown: false}}>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
         name="Groups"
         component={Groups}
         options={{
           tabBarLabel: 'Groups',
           unmountOnBlur: true,
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon name="spinner" color={color} size={23} />
             // <MaterialCommunityIcons name="account-multiple" size={24} color="grey" />r
           ),
@@ -65,7 +68,7 @@ const HomeTab = () => {
         options={{
           tabBarLabel: 'Friends',
           unmountOnBlur: true,
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon name="smile-o" color={color} size={25} />
             // <MaterialCommunityIcons name="robot-happy-outline" size={24} color="grey" />
           ),
@@ -76,7 +79,7 @@ const HomeTab = () => {
         component={Groceries}
         options={{
           tabBarLabel: 'Groceries',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             // <FontAwesomeIcon name="braille" color={color} size={20} />
             <FontAwesomeIcon name="cubes" color={color} size={20} />
           ),
@@ -87,7 +90,7 @@ const HomeTab = () => {
         component={Account}
         options={{
           tabBarLabel: 'Account',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon name="user-o" color={color} size={20} />
             // <MaterialCommunityIcons name="account-multiple" size={24} color="black" />
           ),
@@ -107,9 +110,9 @@ const App = () => {
         <Stack.Navigator
           initialRouteName="Loading"
           // initialRouteName="Photo"
-          screenOptions={{headerShown: false, gestureEnabled: false}}>
+          screenOptions={{ headerShown: false, gestureEnabled: false }}>
           <Stack.Screen
-            options={{headerShown: false, gestureEnabled: true}}
+            options={{ headerShown: false, gestureEnabled: true }}
             name="HomeTab"
             component={HomeTab}
           />
@@ -131,7 +134,7 @@ const App = () => {
           <Stack.Screen
             name="ShoppingList"
             component={ShoppingList}
-            options={{headerShown: false, gestureEnabled: true}}
+            options={{ headerShown: false, gestureEnabled: true }}
           />
           <Stack.Screen name="ShoppingListItem" component={ShoppingListItem} />
           <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} />
@@ -143,17 +146,20 @@ const App = () => {
           <Stack.Screen
             name="Add friends"
             component={AddFriends}
-            options={{headerShown: false, gestureEnabled: true}}
+            options={{ headerShown: false, gestureEnabled: true }}
           />
           <Stack.Screen
             name="Create Group"
             component={CreateGroup}
-            options={{headerShown: false, gestureEnabled: true}}
+            options={{ headerShown: false, gestureEnabled: true }}
           />
           <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="Photo" component={Photo} />
           <Stack.Screen name="Account" component={Account} />
           <Stack.Screen name="UploadReceipt" component={UploadReceipt} />
+          <Stack.Screen name="MoneySettle" component={MoneySettle} />
+          <Stack.Screen name="UserProfilePicuture" component={UserProfilePicuture} />
+          <Stack.Screen name="GroupMember" component={GroupMember} />
         </Stack.Navigator>
       </NavigationContainer>
       {/* </SafeAreaView > */}

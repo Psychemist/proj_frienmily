@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useCallback, useEffect, useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import FriendItem from './FriendItem';
 import dotenv from 'dotenv';
-import {REACT_APP_API_SERVER} from '@env';
-import {useFocusEffect} from '@react-navigation/native';
-import {useIsFocused} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import {RootState} from '../redux/store';
+import { REACT_APP_API_SERVER } from '@env';
+import { useFocusEffect } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 export default function Friends() {
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
@@ -22,8 +22,12 @@ export default function Friends() {
   const [friendItemList, setFriendItemList] = useState([]);
 
   const styles = StyleSheet.create({
-    floatButtonFontSize: {
+    floatButtonText: {
       fontSize: 50,
+      color: 'white',
+      position: 'absolute',
+      right: 19,
+      bottom: 7,
     },
     circleButton: {
       width: 70,
@@ -31,7 +35,7 @@ export default function Friends() {
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 100,
-      backgroundColor: '#907651',
+      backgroundColor: '#47b4b1',
       position: 'absolute',
       right: 30,
       bottom: 30,
@@ -47,7 +51,7 @@ export default function Friends() {
         console.log('loadFriendList...');
         const response = await fetch(`${REACT_APP_API_SERVER}/friends/`, {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             userID: userIdInRedux,
           }),
@@ -56,7 +60,7 @@ export default function Friends() {
         if (response) {
           json = await response.json();
         }
-        // console.log(json);
+        console.log("friend list: ", json);
         setFriendItemList(json);
       } catch (error) {
         console.log('error', error);
@@ -68,11 +72,11 @@ export default function Friends() {
   }, [isFocused]);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{alignItems: 'center', backgroundColor: '#F5F5F5'}}>
-        <Text style={{fontSize: 25, paddingBottom: '1%'}}>Friends</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
+      <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5' }}>
+        <Text style={{ fontSize: 25, paddingBottom: '1%' }}>Friends</Text>
       </View>
-      <ScrollView style={{backgroundColor: '#F5F5F5'}}>
+      <ScrollView style={{ backgroundColor: '#F5F5F5' }}>
         {friendItemList.map((item: any, idx: number) => (
           <FriendItem items={item} key={idx} />
         ))}
@@ -82,7 +86,7 @@ export default function Friends() {
         onPress={() => {
           navigation.navigate('Add friends' as never);
         }}>
-        <Text style={styles.floatButtonFontSize}>+</Text>
+        <Text style={styles.floatButtonText}>+</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
