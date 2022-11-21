@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -10,16 +10,20 @@ import {
   Pressable,
 } from 'react-native';
 import FriendItem from './FriendItem';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import GroceriesCategories from './GroceriesCategories';
 import GroceriesRandomItems from './GroceriesRandomItems';
 import GroceriesTopItems from './GroceriesTopItems';
+import { REACT_APP_API_SERVER } from '@env';
+import { useQuery } from "react-query";
 
 export default function Groceries() {
   const styles = StyleSheet.create({
     text: {
-      fontSize: 15,
+      fontSize: 25,
+      fontWeight: 'bold',
+      paddingLeft: 20,
     },
     container: {
       justifyContent: 'space-around',
@@ -59,16 +63,44 @@ export default function Groceries() {
       alignItems: 'center',
       marginBottom: 20,
     },
-    
-    catergoriesContainer:{
-        // justifyContent: 'space-between',
-        // alignItems: 'center',
-        // flexDirection: 'row',
-        // width: '100%',
-        // paddingBottom: 5,
-        backgroundColor: 'white',
 
-    }
+    catergoriesContainer: {
+      // justifyContent: 'space-between',
+      // alignItems: 'center',
+      // flexDirection: 'row',
+      // width: '100%',
+      // paddingBottom: 5,
+      backgroundColor: 'white',
+    },
+
+    topItemsContainer: {
+      display: 'flex',
+      // justifyContent: 'space-around',
+      alignItems: 'flex-start',
+      flexDirection: 'row',
+      width: '100%',
+      // padding: 10,
+    },
+
+    randomItemsContainer: {
+      display: 'flex',
+
+      justifyContent: 'space-around',
+      alignItems: 'flex-start',
+      flexDirection: 'column',
+      width: '100%',
+      // padding: 5,
+    },
+
+    topItemsCards: {
+      display: 'flex',
+      // justifyContent: "space-around",
+      // alignItems: "flex-start",
+      flexDirection: "row",
+      width: "100%",
+      // padding: 5,
+
+    },
   });
   const navigation = useNavigation();
   // const [data, setData] = React.useState([]);
@@ -100,9 +132,19 @@ export default function Groceries() {
   //         setFilterData(data);
   //     }
   // }
+  const fetchGoodsList = async () => {
+    const response = await fetch(`${REACT_APP_API_SERVER}/goods/categories`);
+    console.log("response :", response);
+
+    return response.json();
+  };
+
+  const { data: fetchGoodListData, status: fetchGoodListStatus } = useQuery("users", fetchGoodsList);
+
+
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#47b4b1'}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1' }}>
       <View style={styles.container}>
         {/* <Text style={{fontSize: 25, paddingBottom: '1%'}}>Groceries</Text> */}
       </View>
@@ -117,36 +159,57 @@ export default function Groceries() {
         </View>
 
         <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)}>
-            <FontAwesome name="shopping-cart" size={30}/>
+          <FontAwesome name="shopping-cart" size={30} />
         </TouchableOpacity>
-        </View>
+      </View>
 
 
-{/* Categories Column */}
-    <View style={styles.catergoriesContainer}>
-      {/* <ScrollView horizontal={true} style={{backgroundColor: 'white'}}> */}
+      {/* Categories Column */}
+      <View style={styles.catergoriesContainer}>
+        {/* <ScrollView horizontal={true} style={{backgroundColor: 'white'}}> */}
         <Text>
           <GroceriesCategories />
         </Text>
-      {/* </ScrollView> */}
+        {/* </ScrollView> */}
       </View>
 
-{/* Top 5 Column */}
-      <ScrollView horizontal={true} style={{backgroundColor: 'white'}}>
-      <TouchableOpacity>
-      <Text>
-          <GroceriesTopItems />
-        </Text>
-        </TouchableOpacity>
+      {/* Top 5 Column */}
+
+      <View style={{ backgroundColor: 'white'}}>
+        <View >
+          <Text style={styles.text}>Best Seller</Text>
+        </View>
+        <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '1000%'}}>
+          <View style={styles.topItemsContainer}>            
+            {/* <View style={styles.topItemsCards}> */}
+
+              {/* <TouchableOpacity>
+                <Text> */}
+                  {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.data.top5} status={fetchGoodListStatus} />}
+                {/* </Text>
+              </TouchableOpacity> */}
+            {/* </View> */}
+          </View>
+        </ScrollView>
+      </View>
+
+
+
+      {/* Random Goods Column */}
+
+      <ScrollView style={{ backgroundColor: 'white' }}>
+        <View style={styles.randomItemsContainer}>
+          <View><Text style={styles.text}>Explore</Text>
+          </View>
+          <View style={styles.topItemsCards}><TouchableOpacity>
+            <Text>
+              {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.data.random} status={fetchGoodListStatus} />}
+            </Text>
+          </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
 
-{/* Random Goods Column */}
-      <ScrollView style={{backgroundColor: 'white'}}>
-        <Text>
-          <GroceriesRandomItems />
-        </Text>
-
-      </ScrollView>
     </SafeAreaView>
   );
 }
