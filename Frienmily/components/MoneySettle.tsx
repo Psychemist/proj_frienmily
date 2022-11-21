@@ -18,12 +18,18 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
 export default function MoneySettle() {
-    const route = useRoute()
+    const route = useRoute<any>()
     const isFocused = useIsFocused();
-    let settleDetails = route.params.settleDetails
-    let username = route.params.username
+    let settleDetails = route.params.settleDetails || ''
+    let username = route.params.username || ''
+    let thisUserID = route.params.thisUserID || ''
+    let friendUserID = route.params.friendUserID || ''
     console.log(settleDetails);
     console.log(username);
+    console.log(thisUserID);
+    console.log(friendUserID);
+
+
 
 
     const [showResult, setShowResult] = useState(<Text></Text>);
@@ -38,7 +44,7 @@ export default function MoneySettle() {
                 } else if (settleDetails.case == 2) {
                     setShowResult(<Text>Have you received ${settleDetails.amount} from {username}?</Text>)
                     setShowButton(
-                        <TouchableOpacity style={styles.searchButton} onPress={confirmButton}>
+                        <TouchableOpacity style={styles.searchButton} onPress={moneySettle}>
                             <Text>Settled</Text>
                         </TouchableOpacity>
                     )
@@ -60,26 +66,15 @@ export default function MoneySettle() {
     const [addFriendStatus, setAddFriendStatus] = React.useState(0);
     const [userDetail, setUserDetail]: any = React.useState();
 
-    const confirmButton = async () => {
-        await fetch(`${REACT_APP_API_SERVER}/friends/addFriend`, {
+    const moneySettle = async () => {
+        await fetch(`${REACT_APP_API_SERVER}/receipts/settle/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                targetID: userDetail.id,
-                userID: userIdInRedux,
+                targetID: thisUserID,
+                payerID: friendUserID,
             }),
         });
-    };
-
-    const showAlert = () => {
-        Alert.alert('Please enter something to search', '', [
-            {
-                text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel',
-            },
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-        ]);
     };
 
     const styles = StyleSheet.create({

@@ -17,6 +17,8 @@ interface FriendItemProps {
 
 export default function FriendItem(props: FriendItemProps) {
     const navigation = useNavigation();
+    console.log("props.items :", props.items);
+
 
     const isFocused = useIsFocused();
     const [showResult, setShowResult] = useState(<Text></Text>);
@@ -24,7 +26,7 @@ export default function FriendItem(props: FriendItemProps) {
     useEffect(() => {
         const loadFriendList = async () => {
             try {
-                // console.log('loadCalculation');
+                console.log('loadCalculation');
                 console.log(
                     `user_id: ${props.items.user_id}, user_friend_id: ${props.items.user_friend_id}`,
                 );
@@ -127,7 +129,7 @@ export default function FriendItem(props: FriendItemProps) {
         <TouchableOpacity style={styles.container} onPress={() =>
             navigation.navigate(
                 'MoneySettle' as never,
-                { settleDetails: json, username: props.items.username } as never,
+                { settleDetails: json, username: props.items.username, thisUserID: props.items.user_id, friendUserID: props.items.user_friend_id } as never,
             )
         }>
             <View style={styles.miniWrapper}>
