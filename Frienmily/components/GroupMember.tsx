@@ -70,7 +70,6 @@ export default function Friends() {
         setFriendItemList(json);
         let count: number = 0
         for (let j of json) {
-          console.log(j.paid);
           if (j.paid != null) {
             count += parseInt(j.paid)
           }
