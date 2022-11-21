@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
@@ -18,10 +18,11 @@ export default function Account() {
     const genderInRedux = useSelector((state: RootState) => state.user.gender)
     const mobileInRedux = useSelector((state: RootState) => state.user.mobile)
     const emailInRedux = useSelector((state: RootState) => state.user.email)
+    const profilePictureInRedux = useSelector((state: RootState) => state.user.profilePicture)
 
     const genderIndex = GENDERS.indexOf(genderInRedux!)
 
-
+    console.log("profilePictureInRedux: ", profilePictureInRedux)
 
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
     if (isLoggedIn == true) {
@@ -40,10 +41,10 @@ export default function Account() {
     const [isMobileEditable, setIsMobileEditable] = useState(false)
     const [isEmailEditable, setIsEmailEditable] = useState(false)
 
-
-
     const navigation = useNavigation()
     const dispatch = useDispatch()
+
+
 
     // TODO: 離開此頁時，如果各個isEditable仍是true，則彈出視窗問用戶是否要放棄更改
 
@@ -132,7 +133,6 @@ export default function Account() {
     }
     const onLogout = async () => {
 
-        await AsyncStorage.removeItem("token")
         Alert.alert(
             'Are you sure you want to log out?',
             '',
@@ -143,7 +143,7 @@ export default function Account() {
                     style: 'cancel',
                 },
                 {
-                    text: 'Yes', onPress: () => {
+                    text: 'Yes', onPress: async () => {
                         dispatch(logout())
                         navigation.navigate('Login' as never)
                     }
@@ -190,9 +190,10 @@ export default function Account() {
             width: 60,
             height: 60,
             borderRadius: 50,
-            backgroundColor: 'grey',
+            borderColor: "#47b4b1",
+            borderWidth: 1,
             postion: "absolute",
-            right: 5,
+            right: 5
         },
         leftContainer: {
             maxWidth: "100%",
@@ -246,7 +247,10 @@ export default function Account() {
                         <Text style={styles.fieldHeader}>Username</Text>
                         <Text style={styles.fieldContentText}>{username}</Text>
                     </View>
-                    <TouchableOpacity style={styles.userImage} onPress={enlargeProfilePicture}></TouchableOpacity>
+                    <TouchableOpacity onPress={enlargeProfilePicture}>
+                        <Image style={styles.userImage} source={{ uri: profilePictureInRedux! }} ></Image>
+                    </TouchableOpacity>
+
                 </View>
 
 
