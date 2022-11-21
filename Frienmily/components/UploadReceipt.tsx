@@ -27,6 +27,7 @@ export default function UploadReceipt() {
   const navigation = useNavigation();
   const [imgs, setImgs]: any = useState(null);
   const [number, setNumber]: any = useState('');
+  const [remarks, setRemarks]: any = useState();
 
   const addPhoto = () => {
     launchImageLibrary(
@@ -54,6 +55,7 @@ export default function UploadReceipt() {
   //   };
 
   const submitButton = async () => {
+    console.log(remarks)
     if (imgs == undefined || imgs == null) {
       showAlert();
       return;
@@ -74,18 +76,24 @@ export default function UploadReceipt() {
       return
     }
 
+    setImgs(null)
+    setNumber('')
+    setRemarks()
 
 
+
+    showAlert3()
     const formData = new FormData();
     formData.append('image', imgs[0]);
     formData.append('amount', number);
     formData.append('userID', userIdInRedux);
     formData.append('groupID', groupId);
-    const res = await fetch(`${REACT_APP_API_SERVER}/receipts/`, {
+    formData.append('remarks', remarks);
+    await fetch(`${REACT_APP_API_SERVER}/receipts/`, {
       method: 'POST',
       body: formData,
     });
-    console.log('result : ', res.json());
+
   };
 
   const showAlert = () => {
@@ -121,6 +129,12 @@ export default function UploadReceipt() {
     ]);
   };
 
+  const showAlert3 = () => {
+    Alert.alert('Receipt uploaded', '', [
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
+
   const styles = StyleSheet.create({
     input: {
       height: 40,
@@ -128,6 +142,16 @@ export default function UploadReceipt() {
       borderWidth: 1,
       padding: 10,
       width: '30%',
+      //   minWidth: 300,
+      //   maxWidth: 300,
+      borderRadius: 10,
+    },
+    input2: {
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      padding: 10,
+      width: '60%',
       //   minWidth: 300,
       //   maxWidth: 300,
       borderRadius: 10,
@@ -273,6 +297,12 @@ export default function UploadReceipt() {
         style={styles.input}
         value={number}
         onChangeText={setNumber}
+      />
+      <TextInput
+        placeholder="remarks (optional)"
+        style={styles.input2}
+        value={remarks}
+        onChangeText={setRemarks}
       />
 
       <TouchableOpacity style={styles.searchButton} onPress={submitButton}>
