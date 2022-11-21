@@ -1,5 +1,6 @@
 import {
   Alert,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -175,6 +176,13 @@ export default function AddFriends() {
         width: 1,
       },
     },
+    userImage: {
+      width: 60,
+      height: 60,
+      borderRadius: 50,
+      backgroundColor: 'grey',
+      marginRight: 20
+    },
   });
 
   return (
@@ -242,7 +250,7 @@ export default function AddFriends() {
           {userDetail ? (
             <View style={styles.container2}>
               <View>
-                <FontAwesome name="user-circle-o" size={30} />
+                <Image style={styles.userImage} source={{ uri: userDetail.profile_picture }} ></Image>
               </View>
               <View>
                 <Text style={styles.messageText}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 interface FriendItemInCreateGroupProps {
@@ -25,13 +25,21 @@ export default function FriendItemInCreateGroup(props: FriendItemInCreateGroupPr
             borderColor: props.items.isSelected ? "black" : "pink",
             borderWidth: 3,
         },
+        userImage: {
+            width: 60,
+            height: 60,
+            borderRadius: 50,
+            backgroundColor: 'grey',
+            marginRight: 20
+        },
     })
     const boo = true
     return (
-        <View>{props.items.isShow ? <TouchableOpacity style={styles.itemContainer} onPress={()=> {props.itemPress(props.arrayIndex)}}>
-            <FontAwesome name='user' size={30} />
+        <View>{props.items.isShow ? <TouchableOpacity style={styles.itemContainer} onPress={() => { props.itemPress(props.arrayIndex) }}>
+            <Image style={styles.userImage} source={{ uri: props.items.profile_picture }} ></Image>
+
             <Text>     {props.items.username}</Text>
         </TouchableOpacity> : null}</View>
-        
+
     )
 }

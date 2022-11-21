@@ -4,6 +4,7 @@ import {
     View,
     Pressable,
     TouchableOpacity,
+    Image,
 } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
@@ -78,7 +79,7 @@ export default function GroupMemberItem(props: FriendItemProps) {
         <View style={styles.container}>
             <View style={styles.miniWrapper}>
                 {/* <FontAwesome name="user-circle-o" size={30} /> */}
-                <View style={styles.userImage}></View>
+                <Image style={styles.userImage} source={{ uri: props.items.profile_picture }} ></Image>
                 <View>
                     <Text style={styles.friendName}>{props.items.username}</Text>
                 </View>
