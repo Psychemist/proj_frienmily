@@ -3,19 +3,29 @@ import React, { useState } from 'react'
 import { Alert, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+// @ts-ignore
 import { REACT_APP_API_SERVER } from '@env';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { fetchUpdateProfilePicture } from '../redux/user/thunk';
 
 
 
 
 export default function UserProfilePicuture() {
   const navigation = useNavigation();
-  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
-  const [imgs, setImgs]: any = useState(null);
+  const dispatch = useDispatch()
 
-  // TODO: Add photo
+  const profilePictureInRedux = useSelector((state: RootState) => state.user.profilePicture)
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
+
+  const [imgs, setImgs]: any = useState(null);
+  const [profilePicture, __] = useState(profilePictureInRedux)
+  const userId = userIdInRedux
+
+  console.log("profilePicture in Redux:", profilePicture)
+
+  // Add photo
   const addPhoto = () => {
     launchImageLibrary(
       {
@@ -32,22 +42,28 @@ export default function UserProfilePicuture() {
   };
 
 
-  // TODO: Save changes
   const onSavePicture = async () => {
     if (imgs == undefined || imgs == null) {
       emptyImgAlert();
       return;
     }
+    let updateProfileResult = await dispatch(fetchUpdateProfilePicture({ userId, imgs })).unwrap()
+    console.log('fetchUpdateGender from unwrap = ', updateProfileResult)
 
-    const formData = new FormData();
-    formData.append('image', imgs[0]);
-    formData.append('userID', userIdInRedux);
+    // TODO: uploading的過程中用 model遮住
+    Alert.alert(
+      'Your profile page has been updated',
+      '',
+      [
+        {
+          text: 'OK',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        }
+      ]
+    );
 
-    const res = await fetch(`${REACT_APP_API_SERVER}/user/updateProfilePicture`, {
-      method: 'POST',
-      body: formData,
-    });
-    console.log('result : ', res.json());
+
   }
 
   const emptyImgAlert = () => {
@@ -90,12 +106,12 @@ export default function UserProfilePicuture() {
       shadowRadius: 5.46,
       elevation: 9,
       flexDirection: "row",
-      justifyContent: "space-between",
+      justifyContent: "center",
       alignItems: "center",
       padding: 10,
       paddingTop: 20,
       paddingBottom: 20,
-      borderRadius: 15,
+      borderRadius: 200,
       marginTop: 5,
       marginBottom: 5,
       position: "relative"
@@ -133,25 +149,27 @@ export default function UserProfilePicuture() {
 
 
 
-      {imgs == undefined || imgs == null ? (
-        <View>
+      {imgs == undefined || imgs == null ?
+        (
           <View style={styles.pictureContainer}>
-            <View>
-              <Text>Original Profile Picuture</Text>
-            </View>
+            <Image
+              style={{ width: 270, height: 270, borderRadius: 200 }}
+              source={{ uri: profilePicture! }} />
           </View>
-        </View>
-      ) : (
-        imgs.map((item: any, index: number) => {
-          return (
-            <View key={index}>
-              <Image
-                style={{ width: 270, height: 270, borderRadius: 18 }}
-                source={{ uri: item.uri }}></Image>
-            </View>
-          );
-        })
-      )}
+
+        )
+        :
+        (
+          imgs.map((item: any, index: number) => {
+            return (
+              <View key={index}>
+                <Image
+                  style={{ width: 270, height: 270, borderRadius: 200 }}
+                  source={{ uri: item.uri }} />
+              </View>
+            );
+          })
+        )}
 
 
       <TouchableOpacity
@@ -162,7 +180,7 @@ export default function UserProfilePicuture() {
       <TouchableOpacity
         style={styles.receiptBtn}
         onPress={onSavePicture}>
-        <Text style={styles.buttonText}>Save</Text>
+        <Text style={styles.buttonText} >Save</Text>
       </TouchableOpacity>
 
     </SafeAreaView>

@@ -146,3 +146,35 @@ export const fetchUpdateEmail: any = createAsyncThunk("user/updateEmail", async 
     }
 })
 
+export const fetchUpdateProfilePicture: any = createAsyncThunk("user/updateProfilePicture", async (params: {
+    userId: number, imgs: string
+}, thunkAPI: any) => {
+    try {
+
+        const formData = new FormData();
+        formData.append('userID', params.userId);
+        formData.append('image', params.imgs[0]);
+
+        const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/updateProfilePicture`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        const data = await res.json()
+        console.log('data from thunk :', data)
+        console.log("res:", res)
+        console.log('ok ?', res.ok)
+        if (!res.ok) {
+            throw data.msg
+        }
+
+        return thunkAPI.fulfillWithValue(data)
+
+    } catch (e) {
+        console.log('catch error in thunk ', e)
+        return thunkAPI.rejectWithValue({
+            error: "update profile picture failed"
+        })
+    }
+})
+

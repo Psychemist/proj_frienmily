@@ -4,6 +4,7 @@ import {
     View,
     Pressable,
     TouchableOpacity,
+    Image,
 } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
@@ -72,6 +73,8 @@ export default function FriendItem(props: FriendItemProps) {
     const styles = StyleSheet.create({
         text: {
             fontSize: 16,
+            marginRight: 20,
+            color: '#81848b'
         },
         friendName: {
             fontSize: 20,
@@ -132,7 +135,7 @@ export default function FriendItem(props: FriendItemProps) {
         }>
             <View style={styles.miniWrapper}>
                 {/* <FontAwesome name="user-circle-o" size={30} /> */}
-                <View style={styles.userImage}></View>
+                <Image style={styles.userImage} source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} ></Image>
                 <View>
                     <Text style={styles.friendName}>{props.items.username}</Text>
                 </View>

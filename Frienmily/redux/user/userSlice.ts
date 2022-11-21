@@ -1,5 +1,5 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchLogin, fetchUpdateEmail, fetchUpdateGender, fetchUpdateMobileNumber, getStoredAuth } from './thunk';
+import { fetchLogin, fetchUpdateEmail, fetchUpdateGender, fetchUpdateMobileNumber, fetchUpdateProfilePicture, getStoredAuth } from './thunk';
 import jwt_decode from "jwt-decode"
 import { RefreshControlBase } from 'react-native';
 
@@ -86,7 +86,14 @@ export const userSlice = createSlice({
             state.profilePicture = payload.profilePicture
         },
         logout(state: UserState) {
-            state = initialState
+            for (let key in initialState) {
+                // @ts-ignore
+                let value = initialState[key]
+                // @ts-ignore
+                state[key] = value
+            }
+            AsyncStorage.removeItem("token")
+
         }
 
     },
@@ -107,6 +114,7 @@ export const userSlice = createSlice({
         build.addCase(fetchUpdateGender.fulfilled, updateGender)
         build.addCase(fetchUpdateMobileNumber.fulfilled, updateMobileNumber)
         build.addCase(fetchUpdateEmail.fulfilled, updateEmail)
+        build.addCase(fetchUpdateProfilePicture.fulfilled, updateProfilePicture)
         build.addCase(getStoredAuth.fulfilled, updateAuth)
     }
 })
@@ -193,7 +201,26 @@ const updateEmail = (state: UserState, action: PayloadAction<{ token: string }>)
     }>(token)
     AsyncStorage.setItem("token", token)
 
-    state.mobile = payload.email
+    state.email = payload.email
+
+    console.log("fulfilled : ", state.isLoggedIn)
+    console.log("payload: ", payload)
+}
+
+const updateProfilePicture = (state: UserState, action: PayloadAction<{ token: string }>) => {
+    const token = action.payload.token
+    console.log('userSlice token get after updating profile picture:', token)
+    let payload = jwt_decode<{
+        userId: number;
+        username: string;
+        gender: string | null;
+        mobile: string | null;
+        email: string | null;
+        profilePicture: string | null
+    }>(token)
+    AsyncStorage.setItem("token", token)
+
+    state.profilePicture = payload.profilePicture
 
     console.log("fulfilled : ", state.isLoggedIn)
     console.log("payload: ", payload)

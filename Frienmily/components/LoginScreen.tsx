@@ -47,7 +47,7 @@ export default function LoginScreen() {
       navigation.navigate('HomeTab' as never);
     } catch (error) {
       console.log('error from unwrap = ', error);
-      Alert.alert(`${errMsg}`, '', [
+      Alert.alert(`Please enter your username and password`, '', [
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),

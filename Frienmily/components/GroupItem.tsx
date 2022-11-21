@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   Pressable,
+  Image,
 } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -83,7 +84,7 @@ export default function GroupItem(props: GroupItemProps) {
       }>
       {/* <FontAwesome name="users" size={30} /> */}
       <View style={styles.miniWrapper}>
-        <View style={styles.groupImage}></View>
+        <Image style={styles.groupImage} source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} ></Image>
         <View>
           <Text style={styles.groupName}>{props.items.group_name}</Text>
         </View>
