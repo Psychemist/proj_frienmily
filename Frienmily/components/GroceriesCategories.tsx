@@ -3,7 +3,12 @@ import React, { useState } from 'react';
 import { Icon } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default function GroceriesCategories() {
+interface GroceriesCategoriesProps {
+    allCatFetch: () => void
+    someCatFetch: (array: any) => void
+}
+
+export default function GroceriesCategories(props: GroceriesCategoriesProps) {
     const [button1, setButton1] = useState(false)
     const [button2, setButton2] = useState(false)
     const [button3, setButton3] = useState(false)
@@ -175,9 +180,11 @@ export default function GroceriesCategories() {
         }
     }
     if (finalSelectedCategoriesArray.length == 0 || finalSelectedCategoriesArray.length == 10) {
-        console.log("LOAD ALL CATTEGORIES!!!")
+        // console.log("LOAD ALL CATTEGORIES!!!")
+        props.allCatFetch()
     } else {
-        console.log(finalSelectedCategoriesArray);
+        // console.log(finalSelectedCategoriesArray);
+        props.someCatFetch(finalSelectedCategoriesArray)
     }
 
 

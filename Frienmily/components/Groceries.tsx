@@ -39,6 +39,15 @@ export default function Groceries() {
 
   };
 
+  const allCatFetch = () => {
+    console.log("allCatFetch");
+  }
+  const someCatFetch = (array: any) => {
+    // console.log(`someCatFetch: ${array}`)
+    console.log(array);
+
+  }
+
 
 
   const navigation = useNavigation();
@@ -249,7 +258,7 @@ export default function Groceries() {
       <View style={styles.catergoriesContainer}>
         {/* <ScrollView horizontal={true} style={{backgroundColor: 'white'}}> */}
         <Text>
-          <GroceriesCategories />
+          <GroceriesCategories allCatFetch={allCatFetch} someCatFetch={someCatFetch} />
         </Text>
         {/* </ScrollView> */}
       </View>
