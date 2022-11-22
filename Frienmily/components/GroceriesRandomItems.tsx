@@ -61,20 +61,18 @@ export default function GroceriesRandomItems({ items, status }: { items: Array<G
             justifyContent: "flex-start",
             alignItems: "flex-start",
             flexDirection: "row",
-            // flexWrap: 'wrap',
-            // height: "100%",
-            // width: "100%",
             padding: 10,
             paddingTop: 10,
             paddingBottom: 20,
-            // backgroundColor: "#E2D8CF",
+            flexWrap: 'wrap',
+
 
         },
         categoriesItemContainer: {
             alignContent: 'center',
             justifyContent: "space-between",
             flexDirection: "column",
-            // width: 20,
+            width: '33%',
             // maxWidth: 200,
         },
         categoriesPhotoContainer: {
@@ -111,7 +109,7 @@ export default function GroceriesRandomItems({ items, status }: { items: Array<G
 
 
     return (
-        <View style={styles.categoriesItemContainer}>
+        <View>
             <View
                 style={{ flexDirection: 'row' }}>
                 {status === "error" && <Text>Error fetching data</Text>}

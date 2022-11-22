@@ -308,7 +308,7 @@ export default function Groceries() {
             <View style={styles.topItemsCards}>
 
               <Text>
-                {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.data.random} status={fetchGoodListStatus} />}
+                {fetchGoodListStatus === 'success' && <GroceriesRandomItems items={fetchGoodListData.data.random} status={fetchGoodListStatus} />}
               </Text>
 
             </View>

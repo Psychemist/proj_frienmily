@@ -18,7 +18,7 @@ interface FriendItemProps {
 
 export default function FriendItem(props: FriendItemProps) {
     const navigation = useNavigation();
-    console.log("props.items :", props.items);
+    // console.log("props.items :", props.items);
 
 
     const isFocused = useIsFocused();
