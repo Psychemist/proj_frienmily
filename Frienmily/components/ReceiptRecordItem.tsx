@@ -6,29 +6,17 @@ import { Button, Icon } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input'
 
-export default function ReceiptRecordItem() {
+interface ReceiptRecordItemProps {
+    items: any;
+    key: number;
+}
+
+export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
 
     const styles = StyleSheet.create({
         text: {
             fontSize: 15,
         },
-        // container: {
-        //     justifyContent: "space-between",
-        //     alignItems: "center",
-        //     flexDirection: "row",
-        //     width: "100%",
-        //     padding: 10,
-        //     // paddingTop: 32,
-        //     // paddingBottom: 32,
-        //     // backgroundColor: "#E2D8CF",
-        //     //SHADOW
-        //     shadowOpacity: 0.2,
-        //     shadowRadius: 3,
-        //     shadowOffset: {
-        //         height: 1,
-        //         width: 1
-        //     }
-        // },
         itemContainer: {
             justifyContent: "space-between",
             width: "100%",
@@ -61,19 +49,22 @@ export default function ReceiptRecordItem() {
     return (
         <View style={styles.itemContainer}>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                <Pressable onPress={() => navigation.navigate({ uri: 'https://reactjs.org/logo-og.png' } as never)}>
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate('ReceiptImage' as never, { image: props.items.receipt_image } as never)
+                }}>
                     {/* change navigation to product details */}
-                    <View><Image source={{ uri: 'https://reactjs.org/logo-og.png' }}
+                    <View><Image source={{ uri: props.items.receipt_image }}
                         style={{ width: 70, height: 70, marginRight: 20 }} /></View>
-                </Pressable>
+                </TouchableOpacity>
                 <View >
-                    <View><Text style={styles.text}>Receipt Details</Text></View>
+                    <View><Text style={styles.text}>Payer: {props.items.userName}</Text></View>
+                    <View><Text style={styles.text}>Remarks: {props.items.remarks}</Text></View>
                 </View>
             </View>
 
 
             <View >
-                <Text style={styles.text}>HK$800</Text>
+                <Text style={styles.text}>HK${props.items.amount}</Text>
             </View>
         </View>
     )
