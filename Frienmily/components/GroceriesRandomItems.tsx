@@ -4,7 +4,14 @@ import React from 'react';
 import { Icon } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default function GroceriesRandomItems() {
+interface GroceriesRandomItemsProps {
+    name: string;
+    barcode: number;
+    category_id: number;
+    goods_picture: Text;
+}
+
+export default function GroceriesRandomItems({ items, status }: { items: Array<GroceriesRandomItemsProps>, status: string }) {
     // const styles = StyleSheet.create({
     //     text: {
     //         fontSize: 15,
@@ -54,6 +61,8 @@ export default function GroceriesRandomItems() {
             justifyContent: "flex-start",
             alignItems: "flex-start",
             flexDirection: "row",
+            // flexWrap: 'wrap',
+            // height: "100%",
             // width: "100%",
             padding: 10,
             paddingTop: 10,
@@ -65,7 +74,7 @@ export default function GroceriesRandomItems() {
             alignContent: 'center',
             justifyContent: "space-between",
             flexDirection: "column",
-            // width: "100%",
+            // width: 20,
             // maxWidth: 200,
         },
         categoriesPhotoContainer: {
