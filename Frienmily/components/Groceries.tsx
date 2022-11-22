@@ -19,6 +19,32 @@ import { REACT_APP_API_SERVER } from '@env';
 import { useQuery } from "react-query";
 
 export default function Groceries() {
+  const [isBestSeller, setIsBestSeller] = useState(true)
+
+
+  const bestSellerButton = () => {
+    if (isBestSeller == false) {
+      setIsBestSeller(!isBestSeller)
+    }
+
+    // console.log(isBestSeller);
+
+  };
+  const exploreButton = () => {
+    if (isBestSeller != false) {
+      setIsBestSeller(!isBestSeller)
+    }
+
+    // console.log(isBestSeller);
+
+  };
+
+
+
+  const navigation = useNavigation();
+  // const [data, setData] = React.useState([]);
+  const [groupName, setGroupName] = React.useState('');
+  // const [FilterData, setFilterData] = React.useState([]);
   const styles = StyleSheet.create({
     text: {
       fontSize: 25,
@@ -112,12 +138,44 @@ export default function Groceries() {
       // padding: 5,
 
     },
-  });
-  const navigation = useNavigation();
-  // const [data, setData] = React.useState([]);
-  const [groupName, setGroupName] = React.useState('');
-  // const [FilterData, setFilterData] = React.useState([]);
+    bestSellerButton: {
+      // margin: 5,
+      fontSize: 20,
+      backgroundColor: 'white',
+      width: '40%',
+      height: 35,
+      // borderRadius: 10,
+      borderWidth: 3,
+      borderColor: isBestSeller ? '#47b4b1' : 'white',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    exploreButton: {
+      // margin: 5,
+      fontSize: 20,
+      backgroundColor: 'white',
+      width: '40%',
+      height: 35,
+      // borderRadius: 10,
+      borderWidth: 3,
+      borderColor: isBestSeller ? 'white' : '#47b4b1',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
 
+    searchAndClearText: {
+      fontSize: 12,
+    },
+    groupTypeButtonContainer: {
+      justifyContent: 'center',
+      flexDirection: 'row',
+      width: '100%',
+      paddingTop: 10,
+      paddingBottom: 10,
+      alignItems: 'center',
+      backgroundColor: 'white'
+    },
+  });
   // useEffect(() => {
   //     navigation.setOptions({
   //         headerLargerTitle: true,
@@ -145,14 +203,14 @@ export default function Groceries() {
   // }
   const fetchGoodsList = async () => {
     const response = await fetch(`${REACT_APP_API_SERVER}/goods/categories`);
-    console.log("response :", response);
+    // console.log("response :", response);
 
     return response.json();
   };
 
   const { data: fetchGoodListData, status: fetchGoodListStatus } = useQuery("users", fetchGoodsList);
-  console.log("fetchGoodsList :", fetchGoodsList);
-  console.log("HELLOOOO");
+  // console.log("fetchGoodsList :", fetchGoodListData);
+  // console.log("HELLOOOO");
 
 
 
@@ -160,9 +218,6 @@ export default function Groceries() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1' }}>
-      <View style={styles.container}>
-        {/* <Text style={{fontSize: 25, paddingBottom: '1%'}}>Groceries</Text> */}
-      </View>
       <View style={styles.container}>
         <View>
           <TextInput
@@ -192,58 +247,73 @@ export default function Groceries() {
         {/* </ScrollView> */}
       </View>
 
+      <View style={styles.groupTypeButtonContainer}>
+        <TouchableOpacity
+          style={styles.bestSellerButton}
+          onPress={bestSellerButton}>
+          <Text style={styles.searchAndClearText}>Best Seller</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.exploreButton}
+          onPress={exploreButton}>
+          <Text style={styles.searchAndClearText}>Explore</Text>
+        </TouchableOpacity>
+      </View>
+
       {/* Top 5 Column */}
 
-      <View style={{ backgroundColor: 'white' }}>
-        <View >
-          <Text style={styles.text}>Best Seller</Text>
-        </View>
-
-        {/* ======================= test start ======================= */}
-        <TouchableOpacity style={{
-          height: 50,
-          width: 80,
-          backgroundColor: "grey",
-          justifyContent: "center",
-          alignItems: "center"
-        }} onPress={() => navigation.navigate('GroceriesDetails' as never)} >
-          <Text>Temp Item by Mike</Text>
-        </TouchableOpacity>
-
-
-        {/* ======================= test end ======================= */}
-
-        <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '100%' }}>
-          <View style={styles.topItemsContainer}>
-            {/* <View style={styles.topItemsCards}> */}
-
-            {/* <TouchableOpacity>
-                <Text> */}
-            {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.topResults} status={fetchGoodListStatus} />}
-            {/* </Text>
-              </TouchableOpacity> */}
-            {/* </View> */}
+      {isBestSeller == true &&
+        <View style={{ backgroundColor: 'white' }}>
+          <View >
+            <Text style={styles.text}>Best Seller</Text>
           </View>
-        </ScrollView>
-      </View>
+
+          <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '100%' }}>
+            <View style={styles.topItemsContainer}>
+              {/* <View style={styles.topItemsCards}> */}
+
+              {/* <TouchableOpacity>
+                <Text> */}
+              {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.topResults} status={fetchGoodListStatus} />}
+              {/* </Text>
+              </TouchableOpacity> */}
+              {/* </View> */}
+            </View>
+          </ScrollView>
+          {/* ======================= test start ======================= */}
+          <TouchableOpacity style={{
+            height: 50,
+            width: 80,
+            backgroundColor: "grey",
+            justifyContent: "center",
+            alignItems: "center"
+          }} onPress={() => navigation.navigate('GroceriesDetails' as never)} >
+            <Text>Temp Item by Mike</Text>
+          </TouchableOpacity>
+
+
+          {/* ======================= test end ======================= */}
+          <View style={{ minHeight: 500 }}></View>
+        </View>}
 
 
 
       {/* Random Goods Column */}
+      {isBestSeller == false &&
 
-      <ScrollView style={{ backgroundColor: 'white' }}>
-        <View style={styles.randomItemsContainer}>
-          <View><Text style={styles.text}>Explore</Text>
+        <ScrollView style={{ backgroundColor: 'white' }}>
+          <View style={styles.randomItemsContainer}>
+            <View><Text style={styles.text}>Explore</Text>
+            </View>
+            <View style={styles.topItemsCards}>
+
+              <Text>
+                {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.randomResults} status={fetchGoodListStatus} />}
+              </Text>
+
+            </View>
           </View>
-          <View style={styles.topItemsCards}>
-
-            <Text>
-              {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.randomResults} status={fetchGoodListStatus} />}
-            </Text>
-
-          </View>
-        </View>
-      </ScrollView>
+        </ScrollView>}
 
     </SafeAreaView>
   );
