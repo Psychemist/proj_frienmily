@@ -39,7 +39,7 @@ export default function GroceriesTopItems({ items, status }: { items: Array<Groc
             width: "100%",
             justifyContent: "center",
             flexDirection: "column",
-            alignItems:"center",
+            alignItems: "center",
 
         },
 
@@ -47,7 +47,7 @@ export default function GroceriesTopItems({ items, status }: { items: Array<Groc
             justifyContent: "center",
             flexDirection: "column",
             maxWidth: 150,
-            padding:10,
+            padding: 10,
             height: 80,
         },
 
@@ -62,39 +62,36 @@ export default function GroceriesTopItems({ items, status }: { items: Array<Groc
             alignContent: 'stretch',
             justifyContent: "space-between",
             flexDirection: "row",
-            padding:0,
+            padding: 0,
         },
     })
 
 
     return (
         <View style={styles.categoriesItemContainer}>
-            <TouchableOpacity
-                style={{ flexDirection: 'row' }}
-                onPress={() => {
-                    navigation.navigate('GroceriesDetails' as never)
-                }}>
+            <View
+                style={{ flexDirection: 'row' }}>
                 {status === "error" && <Text>Error fetching data</Text>}
                 {status === "loading" && <Text>Fetching data...</Text>}
                 {status === 'success' && <View style={styles.container}>
 
                     {items.map((item: any) => {
                         return (
-                            <View style={styles.categoriesItemContainer} key={item.id}>
+                            <TouchableOpacity style={styles.categoriesItemContainer} key={item.id}>
                                 <View style={styles.categoriesPhotoContainer}><Image source={{ uri: item.goods_picture }} style={{ width: 120, height: 120 }}></Image></View>
                                 <View style={styles.cardContainer}>
                                     <View style={styles.titleContainer}><Text style={styles.text}>{item.name}</Text></View>
                                     <View style={styles.supermarketprice}>
-                                         <View><Text>百佳{item.supermarket}</Text></View>
-                                         <View><Text>$9{item.price}</Text></View>
+                                        <View><Text>百佳{item.supermarket}</Text></View>
+                                        <View><Text>$9{item.price}</Text></View>
                                     </View>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         );
                     })}
                 </View>
                 }
-            </TouchableOpacity>
+            </View>
 
         </View>
 

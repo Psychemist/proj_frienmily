@@ -151,6 +151,10 @@ export default function Groceries() {
   };
 
   const { data: fetchGoodListData, status: fetchGoodListStatus } = useQuery("users", fetchGoodsList);
+  console.log("fetchGoodsList :", fetchGoodsList);
+  console.log("HELLOOOO");
+
+
 
 
 
@@ -195,27 +199,27 @@ export default function Groceries() {
           <Text style={styles.text}>Best Seller</Text>
         </View>
 
-        <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '1000%' }}>
-          {/* ======================= test start ======================= */}
-          <TouchableOpacity style={{
-            height: 50,
-            width: 80,
-            backgroundColor: "grey",
-            justifyContent: "center",
-            alignItems: "center"
-          }} onPress={() => navigation.navigate('GroceriesDetails' as never)} >
-            <Text>Temp Item by Mike</Text>
-          </TouchableOpacity>
+        {/* ======================= test start ======================= */}
+        <TouchableOpacity style={{
+          height: 50,
+          width: 80,
+          backgroundColor: "grey",
+          justifyContent: "center",
+          alignItems: "center"
+        }} onPress={() => navigation.navigate('GroceriesDetails' as never)} >
+          <Text>Temp Item by Mike</Text>
+        </TouchableOpacity>
 
 
-          {/* ======================= test end ======================= */}
+        {/* ======================= test end ======================= */}
 
+        <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '100%' }}>
           <View style={styles.topItemsContainer}>
             {/* <View style={styles.topItemsCards}> */}
 
             {/* <TouchableOpacity>
                 <Text> */}
-            {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.data.top5} status={fetchGoodListStatus} />}
+            {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.topResults} status={fetchGoodListStatus} />}
             {/* </Text>
               </TouchableOpacity> */}
             {/* </View> */}
@@ -231,11 +235,12 @@ export default function Groceries() {
         <View style={styles.randomItemsContainer}>
           <View><Text style={styles.text}>Explore</Text>
           </View>
-          <View style={styles.topItemsCards}><TouchableOpacity>
+          <View style={styles.topItemsCards}>
+
             <Text>
-              {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.data.random} status={fetchGoodListStatus} />}
+              {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.randomResults} status={fetchGoodListStatus} />}
             </Text>
-          </TouchableOpacity>
+
           </View>
         </View>
       </ScrollView>
