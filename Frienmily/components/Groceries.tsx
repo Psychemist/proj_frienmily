@@ -151,8 +151,7 @@ export default function Groceries() {
   };
 
   const { data: fetchGoodListData, status: fetchGoodListStatus } = useQuery("users", fetchGoodsList);
-  console.log("fetchGoodsList :", fetchGoodsList);
-  console.log("HELLOOOO");
+
 
 
 

@@ -11,14 +11,15 @@ export default function GroceriesDetailsItem() {
             fontSize: 15,
         },
         container: {
-            // justifyContent: "space-between",
+            backgroundColor: "blue",
+            flexDirection: "column",
             alignItems: "center",
-            flexDirection: "row",
+            justifyContent: "center",
             width: "100%",
+            height: "100%",
             padding: 10,
             paddingTop: 10,
             paddingBottom: 20,
-            // backgroundColor: "#E2D8CF",
             //SHADOW
             shadowOpacity: 0.1,
             shadowRadius: 2,
@@ -27,42 +28,56 @@ export default function GroceriesDetailsItem() {
                 width: 1
             }
         },
-        nameContainer: {
-            // justifyContent: "space-between",
-            alignItems: "flex-start",
-            flexDirection: "column",
+        topWrapper: {
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "green",
             width: "100%",
-            padding: 10,
-            paddingTop: 10,
-            paddingBottom: 20,
-            // backgroundColor: "#E2D8CF",
-            //SHADOW
-            shadowOpacity: 0.1,
-            shadowRadius: 2,
-            shadowOffset: {
-                height: 1,
-                width: 1
-            }
+            padding: 10
+
+        },
+        imageWrapper: {
+            width: 120,
+            height: 120
+        },
+        nameWrapper: {
+            backgroundColor: "yellow",
+            justifyContent: "space-between",
+            flexDirection: "column",
+            width: "60%",
+            height: "50%",
+            paddingLeft: 10,
         },
     })
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
-            <View><Image source={{ uri: 'https://reactjs.org/logo-og.png' }}
-                style={{ width: 120, height: 120 }} /></View>
+            {/* <View style={styles.topWrapper}>
+                <Image source={{ uri: 'https://reactjs.org/logo-og.png' }}
+                    style={styles.imageWrapper} />
+                <View style={styles.nameWrapper}>
+                    <View >
+                        <Text style={styles.text}>Product Name</Text>
+                    </View>
+                    <View>
+                        <NumericInput onChange={value => console.log(value)}
+                            totalWidth={100}
+                            totalHeight={30}
+                            iconSize={25} />
+                    </View>
+                </View>
 
-            <View style={styles.nameContainer}>
-                <View >
-                    <Text style={styles.text}>Groceries Details</Text>
-                </View>
-                <View style={styles.nameContainer}>
-                    <NumericInput onChange={value => console.log(value)}
-                        totalWidth={80}
-                        totalHeight={30}
-                        iconSize={25} />
-                </View>
             </View>
-
+            <View>
+                <View><Text>惠康</Text></View>
+                <View><Text>百佳</Text></View>
+                <View><Text>Market Place by Jasons</Text></View>
+                <View><Text>屈臣氏</Text></View>
+                <View><Text>萬寧</Text></View>
+                <View><Text>AEON</Text></View>
+                <View><Text>大昌食品</Text></View>
+            </View> */}
         </View>
 
     )
