@@ -274,7 +274,7 @@ export default function Groceries() {
 
               {/* <TouchableOpacity>
                 <Text> */}
-              {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.topResults} status={fetchGoodListStatus} />}
+              {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.data.top5} status={fetchGoodListStatus} />}
               {/* </Text>
               </TouchableOpacity> */}
               {/* </View> */}
@@ -308,7 +308,7 @@ export default function Groceries() {
             <View style={styles.topItemsCards}>
 
               <Text>
-                {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.randomResults} status={fetchGoodListStatus} />}
+                {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.data.random} status={fetchGoodListStatus} />}
               </Text>
 
             </View>
