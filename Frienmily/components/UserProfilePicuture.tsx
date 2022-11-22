@@ -47,10 +47,7 @@ export default function UserProfilePicuture() {
       emptyImgAlert();
       return;
     }
-    let updateProfileResult = await dispatch(fetchUpdateProfilePicture({ userId, imgs })).unwrap()
-    console.log('fetchUpdateGender from unwrap = ', updateProfileResult)
 
-    // TODO: uploading的過程中用 model遮住
     Alert.alert(
       'Your profile page has been updated',
       '',
@@ -62,6 +59,11 @@ export default function UserProfilePicuture() {
         }
       ]
     );
+
+    let updateProfileResult = await dispatch(fetchUpdateProfilePicture({ userId, imgs })).unwrap()
+    console.log('fetchUpdateGender from unwrap = ', updateProfileResult)
+
+
 
 
   }
