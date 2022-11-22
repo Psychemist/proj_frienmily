@@ -190,18 +190,33 @@ export default function Groceries() {
 
       {/* Top 5 Column */}
 
-      <View style={{ backgroundColor: 'white'}}>
+      <View style={{ backgroundColor: 'white' }}>
         <View >
           <Text style={styles.text}>Best Seller</Text>
         </View>
-        <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '1000%'}}>
-          <View style={styles.topItemsContainer}>            
+
+        <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '1000%' }}>
+          {/* ======================= test start ======================= */}
+          <TouchableOpacity style={{
+            height: 50,
+            width: 80,
+            backgroundColor: "grey",
+            justifyContent: "center",
+            alignItems: "center"
+          }} onPress={() => navigation.navigate('GroceriesDetails' as never)} >
+            <Text>Temp Item by Mike</Text>
+          </TouchableOpacity>
+
+
+          {/* ======================= test end ======================= */}
+
+          <View style={styles.topItemsContainer}>
             {/* <View style={styles.topItemsCards}> */}
 
-              {/* <TouchableOpacity>
+            {/* <TouchableOpacity>
                 <Text> */}
-                  {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.data.top5} status={fetchGoodListStatus} />}
-                {/* </Text>
+            {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.data.top5} status={fetchGoodListStatus} />}
+            {/* </Text>
               </TouchableOpacity> */}
             {/* </View> */}
           </View>
