@@ -145,26 +145,33 @@ export default function Groceries() {
       width: '40%',
       height: 35,
       // borderRadius: 10,
-      borderWidth: 3,
-      borderColor: isBestSeller ? '#47b4b1' : 'white',
+      // borderWidth: 1,
+      // borderColor: isBestSeller ? '#47b4b1' : 'white',
+      // borderColor: 'grey',
       justifyContent: 'center',
       alignItems: 'center',
     },
-    exploreButton: {
+    exploreButton
+
+      : {
       // margin: 5,
       fontSize: 20,
       backgroundColor: 'white',
       width: '40%',
       height: 35,
       // borderRadius: 10,
-      borderWidth: 3,
-      borderColor: isBestSeller ? 'white' : '#47b4b1',
+      // borderWidth: 1,
+      // borderColor: isBestSeller ? 'white' : '#47b4b1',
+      // borderColor: 'grey',
       justifyContent: 'center',
       alignItems: 'center',
     },
 
-    searchAndClearText: {
-      fontSize: 12,
+    bestSellerButtonText: {
+      fontSize: isBestSeller ? 15 : 12,
+    },
+    exploreButtonText: {
+      fontSize: isBestSeller ? 15 : 18,
     },
     groupTypeButtonContainer: {
       justifyContent: 'center',
@@ -251,12 +258,14 @@ export default function Groceries() {
         <TouchableOpacity
           style={styles.bestSellerButton}
           onPress={bestSellerButton}>
-          <Text style={styles.searchAndClearText}>Best Seller</Text>
+          <Text style={styles.bestSellerButtonText}>Best Seller</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.exploreButton}
+          style={styles.exploreButton
+
+          }
           onPress={exploreButton}>
-          <Text style={styles.searchAndClearText}>Explore</Text>
+          <Text style={styles.exploreButtonText}>Explore</Text>
         </TouchableOpacity>
       </View>
 
