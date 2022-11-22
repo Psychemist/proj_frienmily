@@ -140,6 +140,10 @@ export default function Groceries() {
   };
 
   const { data: fetchGoodListData, status: fetchGoodListStatus } = useQuery("users", fetchGoodsList);
+  console.log("fetchGoodListData.randomResults :", fetchGoodListData.randomResults);
+  console.log("HELLOOOO");
+
+
 
 
 
@@ -175,18 +179,18 @@ export default function Groceries() {
 
       {/* Top 5 Column */}
 
-      <View style={{ backgroundColor: 'white'}}>
+      <View style={{ backgroundColor: 'white' }}>
         <View >
           <Text style={styles.text}>Best Seller</Text>
         </View>
-        <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '1000%'}}>
-          <View style={styles.topItemsContainer}>            
+        <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '100%' }}>
+          <View style={styles.topItemsContainer}>
             {/* <View style={styles.topItemsCards}> */}
 
-              {/* <TouchableOpacity>
+            {/* <TouchableOpacity>
                 <Text> */}
-                  {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.data.top5} status={fetchGoodListStatus} />}
-                {/* </Text>
+            {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.topResults} status={fetchGoodListStatus} />}
+            {/* </Text>
               </TouchableOpacity> */}
             {/* </View> */}
           </View>
@@ -201,11 +205,12 @@ export default function Groceries() {
         <View style={styles.randomItemsContainer}>
           <View><Text style={styles.text}>Explore</Text>
           </View>
-          <View style={styles.topItemsCards}><TouchableOpacity>
+          <View style={styles.topItemsCards}>
+
             <Text>
-              {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.data.random} status={fetchGoodListStatus} />}
+              {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.randomResults} status={fetchGoodListStatus} />}
             </Text>
-          </TouchableOpacity>
+
           </View>
         </View>
       </ScrollView>
