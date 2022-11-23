@@ -10,6 +10,8 @@ interface GroceriesRandomItemsProps {
 
 export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
 
+    const navigation = useNavigation();
+
     const styles = StyleSheet.create({
         text: {
             fontSize: 15,
@@ -67,7 +69,7 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
 
 
     return (
-        <TouchableOpacity style={styles.categoriesItemContainer}>
+        <TouchableOpacity style={styles.categoriesItemContainer} onPress={() => navigation.navigate('GroceriesDetails' as never, { info: props.item } as never)}>
             <View style={styles.categoriesPhotoContainer}><Image source={{ uri: props.item.goods_picture }} style={{ width: 120, height: 120 }}></Image></View>
             <View style={styles.cardContainer}>
                 <View style={styles.titleContainer}><Text style={styles.text}>{props.item.goods_name}</Text></View>
