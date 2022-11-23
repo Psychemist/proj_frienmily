@@ -3,36 +3,20 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from 'react';
 
 
-export interface GroceriesTopItemsProps {
-    name: string;
-    barcode: number;
-    category_id: number;
-    goods_picture: Text;
+interface GroceriesTopItemsProps {
+    item: any,
 }
-export default function GroceriesTopItems({ items, status }: { items: Array<GroceriesTopItemsProps>, status: string }) {
+export default function GroceriesTopItems(props: GroceriesTopItemsProps) {
     const navigation = useNavigation();
     const styles = StyleSheet.create({
         text: {
             fontSize: 15,
             fontWeight: "500",
         },
-        container: {
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
-            flexDirection: "row",
-            // width: "100%",
-            padding: 10,
-            paddingTop: 10,
-            paddingBottom: 20,
-            // backgroundColor: "#E2D8CF",
-
-        },
         categoriesItemContainer: {
             alignContent: 'center',
             justifyContent: "space-between",
             flexDirection: "column",
-            // width: "100%",
-            // maxWidth: 200,
         },
         categoriesPhotoContainer: {
             // height: 80,
@@ -66,37 +50,18 @@ export default function GroceriesTopItems({ items, status }: { items: Array<Groc
         },
     })
 
-
     return (
-        <View style={styles.categoriesItemContainer}>
-            <View
-                style={{ flexDirection: 'row' }}>
-                {status === "error" && <Text>Error fetching data</Text>}
-                {status === "loading" && <Text>Fetching data...</Text>}
-                {status === 'success' && <View style={styles.container}>
-
-                    {items.map((item: any) => {
-                        return (
-                            <TouchableOpacity style={styles.categoriesItemContainer} key={item.id}>
-                                <View style={styles.categoriesPhotoContainer}><Image source={{ uri: item.goods_picture }} style={{ width: 120, height: 120 }}></Image></View>
-                                <View style={styles.cardContainer}>
-                                    <View style={styles.titleContainer}><Text style={styles.text}>{item.name}</Text></View>
-                                    <View style={styles.supermarketprice}>
-                                        <View><Text>百佳{item.supermarket}</Text></View>
-                                        <View><Text>$9{item.price}</Text></View>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        );
-                    })}
+        <TouchableOpacity style={styles.categoriesItemContainer}>
+            <View style={styles.categoriesPhotoContainer}><Image source={{ uri: props.item.goods_picture }} style={{ width: 120, height: 120 }}></Image></View>
+            <View style={styles.cardContainer}>
+                <View style={styles.titleContainer}><Text style={styles.text}>{props.item.goods_name}</Text></View>
+                <View style={styles.supermarketprice}>
+                    <Text>百佳</Text>
+                    <Text>$9</Text>
                 </View>
-                }
             </View>
-
-        </View>
-
+        </TouchableOpacity>
     );
 }
-
 
 

@@ -20,40 +20,70 @@ import { useQuery } from "react-query";
 
 export default function Groceries() {
   const [isBestSeller, setIsBestSeller] = useState(true)
+  const [allExploreData, setAllExploreData]: any = useState([]);
+  const [allTop5Data, setAllTop5Data]: any = useState([]);
+  const navigation = useNavigation();
+  const [groupName, setGroupName] = React.useState('');
 
 
   const bestSellerButton = () => {
     if (isBestSeller == false) {
       setIsBestSeller(!isBestSeller)
     }
-
-    // console.log(isBestSeller);
-
   };
+
   const exploreButton = () => {
     if (isBestSeller != false) {
       setIsBestSeller(!isBestSeller)
     }
-
-    // console.log(isBestSeller);
-
   };
 
-  const allCatFetch = () => {
-    console.log("allCatFetch");
+  const fetchData = async (array: any) => {
+    try {
+      console.log(`fetch data from [${array}]`);
+
+      const response = await fetch(
+        `${REACT_APP_API_SERVER}/goods/productByBatchAndCatId/`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            qtyInOneBatch: 10,
+            ItemsToBeSkipped: 0,
+            catIds: array
+          }),
+        },
+      );
+      let json;
+      if (response) {
+        json = await response.json();
+      }
+      setAllExploreData(json.result.exploreResults)
+      setAllTop5Data(json.result.top5Results)
+      console.log("exploreResults :", allExploreData);
+      console.log("top5Results :", allTop5Data);
+
+
+      // setAllCatFetchData((prev) => [...prev,])
+      // console.log("json :", json.result);
+
+    } catch (error) {
+      console.log('error', error);
+    }
   }
-  const someCatFetch = (array: any) => {
-    // console.log(`someCatFetch: ${array}`)
-    console.log(array);
-
-  }
 
 
 
-  const navigation = useNavigation();
-  // const [data, setData] = React.useState([]);
-  const [groupName, setGroupName] = React.useState('');
-  // const [FilterData, setFilterData] = React.useState([]);
+  // const fetchGoodsList = async () => {
+  //   const response = await fetch(`${REACT_APP_API_SERVER}/goods/categories`);
+  //   // console.log("response :", response);
+
+  //   return response.json();
+  // };
+
+  // const { data: fetchGoodListData, status: fetchGoodListStatus } = useQuery("users", fetchGoodsList);
+
+
   const styles = StyleSheet.create({
     text: {
       fontSize: 25,
@@ -119,15 +149,6 @@ export default function Groceries() {
       backgroundColor: 'white',
     },
 
-    topItemsContainer: {
-      display: 'flex',
-      // justifyContent: 'space-around',
-      alignItems: 'flex-start',
-      flexDirection: 'row',
-      width: '100%',
-      // padding: 10,
-    },
-
     randomItemsContainer: {
       display: 'flex',
 
@@ -191,42 +212,30 @@ export default function Groceries() {
       alignItems: 'center',
       backgroundColor: 'white'
     },
+    container2: {
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+      flexDirection: "row",
+      // width: "100%",
+      padding: 10,
+      paddingTop: 10,
+      paddingBottom: 20,
+      // backgroundColor: "#E2D8CF",
+
+    },
+    container3: {
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+      flexDirection: "row",
+      padding: 10,
+      paddingTop: 10,
+      paddingBottom: 20,
+      flexWrap: 'wrap',
+      width: '100%'
+
+
+    },
   });
-  // useEffect(() => {
-  //     navigation.setOptions({
-  //         headerLargerTitle: true,
-  //         headerTitle: "Groceries",
-  //         headerSearchBarOptions: {
-  //             placeholder: "Search Groceries",
-  //             onChangeText: (event: { nativeEvent: { text: any; }; }) => {
-  //                 searchFilterFunction(event.nativeEvent.text);
-  //             },
-  //         }
-  //     });
-  // }, [navigation]);
-
-  // const searchFilterFunction = (text: string) => {
-  //     if(text){
-  //         const newData = data.filter(item => {
-  //             const itemData = item.name.first? item.name.first.toUpperCase() : ''.toUpperCase();
-  //             const textData = text.toUpperCase();
-  //             return itemData.indexOf(textData) > -1;
-  //         })
-  //         setFilterData(newData);
-  //     } else {
-  //         setFilterData(data);
-  //     }
-  // }
-  const fetchGoodsList = async () => {
-    const response = await fetch(`${REACT_APP_API_SERVER}/goods/categories`);
-    // console.log("response :", response);
-
-    return response.json();
-  };
-
-  const { data: fetchGoodListData, status: fetchGoodListStatus } = useQuery("users", fetchGoodsList);
-  // console.log("fetchGoodsList :", fetchGoodListData);
-  // console.log("HELLOOOO");
 
 
 
@@ -258,7 +267,7 @@ export default function Groceries() {
       <View style={styles.catergoriesContainer}>
         {/* <ScrollView horizontal={true} style={{backgroundColor: 'white'}}> */}
         <Text>
-          <GroceriesCategories allCatFetch={allCatFetch} someCatFetch={someCatFetch} />
+          <GroceriesCategories fetchData={fetchData} />
         </Text>
         {/* </ScrollView> */}
       </View>
@@ -287,15 +296,10 @@ export default function Groceries() {
           </View>
 
           <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '100%' }}>
-            <View style={styles.topItemsContainer}>
-              {/* <View style={styles.topItemsCards}> */}
-
-              {/* <TouchableOpacity>
-                <Text> */}
-              {fetchGoodListStatus === 'success' && <GroceriesTopItems items={fetchGoodListData.data.top5} status={fetchGoodListStatus} />}
-              {/* </Text>
-              </TouchableOpacity> */}
-              {/* </View> */}
+            <View style={styles.container2}>
+              {allTop5Data.map((item: any, idx: number) => (
+                <GroceriesTopItems item={item} key={idx} />
+              ))}
             </View>
           </ScrollView>
           {/* ======================= test start ======================= */}
@@ -326,27 +330,56 @@ export default function Groceries() {
 
           {/* ======================= test end ======================= */}
           <View style={{ minHeight: 500 }}></View>
-        </View>}
+        </View >}
 
 
 
       {/* Random Goods Column */}
-      {isBestSeller == false &&
+      {
+        isBestSeller == false &&
 
-        <ScrollView style={{ backgroundColor: 'white' }}>
+        <ScrollView style={{ backgroundColor: 'white', width: '100%' }}>
           <View style={styles.randomItemsContainer}>
-            <View><Text style={styles.text}>Explore</Text>
+            <View>
+              <Text style={styles.text}>Explore</Text>
             </View>
             <View style={styles.topItemsCards}>
 
-              <Text>
-                {fetchGoodListStatus === 'success' && <GroceriesRandomItems items={fetchGoodListData.data.random} status={fetchGoodListStatus} />}
-              </Text>
+
+
+
+
+
+
+
+
+
+
+              <View style={styles.container3}>
+
+
+
+                {allExploreData.map((item: any, idx: number) => (
+                  <GroceriesRandomItems item={item} key={idx} />
+                ))}
+
+
+
+              </View>
+
+
+
+
+
+
+
+
 
             </View>
           </View>
-        </ScrollView>}
+        </ScrollView>
+      }
 
-    </SafeAreaView>
+    </SafeAreaView >
   );
 }
