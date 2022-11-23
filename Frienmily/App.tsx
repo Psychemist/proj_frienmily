@@ -42,6 +42,7 @@ import MoneySettle from './components/MoneySettle';
 import UserProfilePicuture from './components/UserProfilePicuture';
 import GroupMember from './components/GroupMember';
 import ReceiptImage from './components/ReceiptImage';
+import GroceriesTest from './components/GroceriesTest';
 
 
 const Tab = createBottomTabNavigator();
@@ -162,6 +163,7 @@ const App = () => {
             <Stack.Screen name="UserProfilePicuture" component={UserProfilePicuture} />
             <Stack.Screen name="GroupMember" component={GroupMember} />
             <Stack.Screen name="ReceiptImage" component={ReceiptImage} />
+            <Stack.Screen name="GroceriesTest" component={GroceriesTest} />
 
           </Stack.Navigator>
         </NavigationContainer>

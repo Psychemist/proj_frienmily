@@ -16,7 +16,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import GroupMemberItem from './GroupMamberItem';
+import GroupMemberItem from './GroupMemberItem';
 
 export default function Friends() {
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);

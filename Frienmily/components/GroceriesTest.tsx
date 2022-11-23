@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
   Pressable,
+  FlatList,
 } from 'react-native';
 import FriendItem from './FriendItem';
 import { useNavigation } from '@react-navigation/native';
@@ -17,8 +18,10 @@ import GroceriesRandomItems from './GroceriesRandomItems';
 import GroceriesTopItems from './GroceriesTopItems';
 import { REACT_APP_API_SERVER } from '@env';
 import { useQuery } from "react-query";
+import { useDispatch } from 'react-redux';
 
-export default function Groceries() {
+export default function GroceriesTest() {
+  const [page, setPage] = useState(1)
   const [isBestSeller, setIsBestSeller] = useState(true)
 
 
@@ -192,31 +195,7 @@ export default function Groceries() {
       backgroundColor: 'white'
     },
   });
-  // useEffect(() => {
-  //     navigation.setOptions({
-  //         headerLargerTitle: true,
-  //         headerTitle: "Groceries",
-  //         headerSearchBarOptions: {
-  //             placeholder: "Search Groceries",
-  //             onChangeText: (event: { nativeEvent: { text: any; }; }) => {
-  //                 searchFilterFunction(event.nativeEvent.text);
-  //             },
-  //         }
-  //     });
-  // }, [navigation]);
 
-  // const searchFilterFunction = (text: string) => {
-  //     if(text){
-  //         const newData = data.filter(item => {
-  //             const itemData = item.name.first? item.name.first.toUpperCase() : ''.toUpperCase();
-  //             const textData = text.toUpperCase();
-  //             return itemData.indexOf(textData) > -1;
-  //         })
-  //         setFilterData(newData);
-  //     } else {
-  //         setFilterData(data);
-  //     }
-  // }
   const fetchGoodsList = async () => {
     const response = await fetch(`${REACT_APP_API_SERVER}/goods/categories`);
     // console.log("response :", response);
@@ -225,10 +204,28 @@ export default function Groceries() {
   };
 
   const { data: fetchGoodListData, status: fetchGoodListStatus } = useQuery("users", fetchGoodsList);
-  // console.log("fetchGoodsList :", fetchGoodListData);
-  // console.log("HELLOOOO");
 
+  // =================================================================
 
+  const onChangePage = () => {
+    setPage(page + 1)
+  }
+  const fetchMoreData = () => {
+    if (!fetchGoodListData.data && !fetchGoodListData.data.moreLoading) {
+      onChangePage()
+    }
+  }
+
+  const requestAPI = async () => {
+    let response = await fetch(`${REACT_APP_API_SERVER}/goods/productByBatchAndCatId`)
+
+    console.log("response: ", response)
+  }
+
+  useEffect(() => {
+    requestAPI()
+    console.log("The current page number: ", page)
+  }, [page])
 
 
 
@@ -299,30 +296,15 @@ export default function Groceries() {
             </View>
           </ScrollView>
           {/* ======================= test start ======================= */}
-          <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity style={{
-              height: 50,
-              width: 80,
-              backgroundColor: "grey",
-              justifyContent: "center",
-              alignItems: "center",
-              marginRight: 10
-            }} onPress={() => navigation.navigate('GroceriesDetails' as never)} >
-              <Text>Temp Item by Mike</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={{
-              height: 50,
-              width: 80,
-              backgroundColor: "grey",
-              justifyContent: "center",
-              alignItems: "center"
-            }} onPress={() => navigation.navigate('GroceriesTest' as never)} >
-              <Text>Pagination Test by Mike</Text>
-            </TouchableOpacity>
-
-          </View>
-
+          <TouchableOpacity style={{
+            height: 50,
+            width: 80,
+            backgroundColor: "grey",
+            justifyContent: "center",
+            alignItems: "center"
+          }} onPress={() => navigation.navigate('GroceriesDetails' as never)} >
+            <Text>Temp Item by Mike</Text>
+          </TouchableOpacity>
 
           {/* ======================= test end ======================= */}
           <View style={{ minHeight: 500 }}></View>
@@ -333,20 +315,33 @@ export default function Groceries() {
       {/* Random Goods Column */}
       {isBestSeller == false &&
 
-        <ScrollView style={{ backgroundColor: 'white' }}>
-          <View style={styles.randomItemsContainer}>
-            <View><Text style={styles.text}>Explore</Text>
-            </View>
-            <View style={styles.topItemsCards}>
+        // <ScrollView style={{ backgroundColor: 'white' }}>
+        //   <View style={styles.randomItemsContainer}>
+        //     <View><Text style={styles.text}>Explore</Text>
+        //     </View>
+        //     <View style={styles.topItemsCards}>
 
-              <Text>
-                {fetchGoodListStatus === 'success' && <GroceriesRandomItems items={fetchGoodListData.data.random} status={fetchGoodListStatus} />}
-              </Text>
+        //       <Text>
+        //         {fetchGoodListStatus === 'success' && <GroceriesRandomItems items={fetchGoodListData.data.random} status={fetchGoodListStatus} />}
+        //       </Text>
 
-            </View>
-          </View>
-        </ScrollView>}
+        //     </View>
+        //   </View>
+        // </ScrollView>
+
+        <FlatList
+          contentContainerStyle={{ flexGrow: 1 }}
+          data={fetchGoodListData.data.random}
+          renderItem={({ item }) => (
+            <GroceriesRandomItems items={fetchGoodListData.data.random} status={fetchGoodListStatus} />)}
+          onEndReachedThreshold={0.2}
+          onEndReached={fetchMoreData}
+        />
+
+
+      }
 
     </SafeAreaView>
   );
 }
+

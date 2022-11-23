@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from 'react';
 
 
-interface GroceriesTopItemsProps {
+export interface GroceriesTopItemsProps {
     name: string;
     barcode: number;
     category_id: number;
