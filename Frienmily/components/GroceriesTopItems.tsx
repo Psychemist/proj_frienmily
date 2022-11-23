@@ -13,27 +13,10 @@ export default function GroceriesTopItems(props: GroceriesTopItemsProps) {
             fontSize: 15,
             fontWeight: "500",
         },
-        container: {
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
-            flexDirection: "row",
-            // width: "100%",
-            padding: 10,
-            paddingTop: 10,
-            paddingBottom: 20,
-            // backgroundColor: "#E2D8CF",
-
-        },
         categoriesItemContainer: {
             alignContent: 'center',
             justifyContent: "space-between",
             flexDirection: "column",
-
-
-
-            // width: '33%',
-            // width: "100%",
-            // maxWidth: 200,
         },
         categoriesPhotoContainer: {
             // height: 80,
@@ -66,7 +49,6 @@ export default function GroceriesTopItems(props: GroceriesTopItemsProps) {
             padding: 0,
         },
     })
-    // console.log("props.items[0] :", props.items[0])
 
     return (
         <TouchableOpacity style={styles.categoriesItemContainer}>
