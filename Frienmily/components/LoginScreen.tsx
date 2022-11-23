@@ -58,12 +58,7 @@ export default function LoginScreen() {
     }
   };
 
-  const onGoogleLogin = () => {
-    // TODO: 做 Google Login
-  };
-  const onFacebookLogin = () => {
-    // TODO: 做 FB Login
-  };
+
 
   const onCreateAccount = () => {
     navigation.navigate('SignUp' as never);
@@ -151,27 +146,7 @@ export default function LoginScreen() {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={onGoogleLogin}
-          style={[styles.loginBtn, { backgroundColor: '#d1463b' }]}>
-          <Text
-            style={{
-              fontSize: 20,
-            }}>
-            Continue with Google
-          </Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={onFacebookLogin}
-          style={[styles.loginBtn, { backgroundColor: '#32519c' }]}>
-          <Text
-            style={{
-              fontSize: 20,
-            }}>
-            Continue with Facebook
-          </Text>
-        </TouchableOpacity>
 
         <TouchableOpacity onPress={onCreateAccount} style={styles.loginBtn}>
           <Text

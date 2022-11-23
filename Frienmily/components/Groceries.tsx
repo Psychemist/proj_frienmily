@@ -8,6 +8,9 @@ import {
   TouchableOpacity,
   View,
   Pressable,
+  FlatList,
+  Button,
+  ActivityIndicator,
 } from 'react-native';
 import FriendItem from './FriendItem';
 import { useNavigation } from '@react-navigation/native';
@@ -17,13 +20,15 @@ import GroceriesRandomItems from './GroceriesRandomItems';
 import GroceriesTopItems from './GroceriesTopItems';
 import { REACT_APP_API_SERVER } from '@env';
 import { useQuery } from "react-query";
+import { createIconSetFromFontello } from 'react-native-vector-icons';
 
 export default function Groceries() {
+  const navigation = useNavigation();
   const [isBestSeller, setIsBestSeller] = useState(true)
   const [allExploreData, setAllExploreData]: any = useState([]);
   const [allTop5Data, setAllTop5Data]: any = useState([]);
-  const navigation = useNavigation();
   const [groupName, setGroupName] = React.useState('');
+  const [page, setPage] = useState(1)
 
 
   const bestSellerButton = () => {
@@ -48,7 +53,7 @@ export default function Groceries() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            qtyInOneBatch: 10,
+            qtyInOneBatch: 21,
             ItemsToBeSkipped: 0,
             catIds: array
           }),
@@ -71,6 +76,55 @@ export default function Groceries() {
       console.log('error', error);
     }
   }
+
+  // TODO: Infinite Scroll Pagination
+
+  const renderEmpty = () => (
+    <View>
+      <Text>No Data at the Moment</Text>
+      <TouchableOpacity onPress={() => requestAPI()}>
+        <Text>Refresh</Text>
+      </TouchableOpacity>
+    </View>
+  )
+  const renderFooter = () => (
+    <View>
+      {allExploreData.moreLoading && <ActivityIndicator />}
+      {allExploreData.isListEnd && <Text>No more products at the moment</Text>}
+    </View>
+  )
+
+  const onChangePage = () => {
+    setPage(page + 1)
+  }
+  const fetchMoreDataOnPageEnd = () => {
+    console.log("touched the end of the page")
+    if (!allExploreData.isListEnd && !allExploreData.moreLoading) {
+      onChangePage()
+    }
+  }
+
+  const requestAPI = async () => {
+    try {
+      let response = await fetch(`${REACT_APP_API_SERVER}/goods/productByBatchAndCatId`)
+
+      console.log("requestAPI response: ", response)
+
+    } catch (e) {
+      console.log("error: ", e)
+
+    }
+  }
+
+  const renderItem = ({ }) => {
+
+  }
+
+  useEffect(() => {
+    requestAPI()
+    console.log("The current page number: ", page)
+  }, [page])
+  // =================================================================
 
 
 
@@ -338,46 +392,33 @@ export default function Groceries() {
       {
         isBestSeller == false &&
 
+        // <FlatList
+        //   contentContainerStyle={{ flexGrow: 1 }}
+        //   data={allExploreData}
+        //   renderItem={renderItem}
+        //   ListFooterComponent={renderFooter}
+        //   ListEmptyComponent={renderEmpty}
+        //   onEndReachedThreshold={0.2}
+        //   onEndReached={fetchMoreDataOnPageEnd}
+        // />
+
+
         <ScrollView style={{ backgroundColor: 'white', width: '100%' }}>
           <View style={styles.randomItemsContainer}>
             <View>
               <Text style={styles.text}>Explore</Text>
             </View>
             <View style={styles.topItemsCards}>
-
-
-
-
-
-
-
-
-
-
-
               <View style={styles.container3}>
-
-
-
                 {allExploreData.map((item: any, idx: number) => (
                   <GroceriesRandomItems item={item} key={idx} />
                 ))}
-
-
-
               </View>
-
-
-
-
-
-
-
-
-
             </View>
           </View>
         </ScrollView>
+
+
       }
 
     </SafeAreaView >
