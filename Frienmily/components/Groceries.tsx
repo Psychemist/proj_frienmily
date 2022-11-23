@@ -48,7 +48,7 @@ export default function Groceries() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            qtyInOneBatch: 10,
+            qtyInOneBatch: 30,
             ItemsToBeSkipped: 0,
             catIds: array
           }),

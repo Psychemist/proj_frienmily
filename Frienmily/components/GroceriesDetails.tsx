@@ -1,16 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Pressable, Image } from "react-native";
 import FriendItem from "./FriendItem";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import GroceriesCategories from "./GroceriesCategories";
 import GroceriesDetailsItem from "./GroceriesDetailsItem";
 import NumericInput from "react-native-numeric-input";
+import { REACT_APP_API_SERVER } from '@env';
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 export default function GroceriesDetails() {
     const route = useRoute<any>()
     let info = route.params.info || ''
+    const navigation = useNavigation();
+    const [groupName, setGroupName] = React.useState("");
+    function addZeroes(num: number) {
+        return (Math.round(num * 100) / 100).toFixed(2)
+    }
+    const userIdInRedux = useSelector((state: RootState) => state.user.userId);
     console.log("Details :", info);
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        try {
+            const insertUserLiked = async () => {
+                console.log("Insert User Liked...");
+                await fetch(`${REACT_APP_API_SERVER}/goods/userLiked/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userIdInRedux,
+                        goods_id: info.id,
+                        category_id: info.category_id
+                    }),
+                });
+            };
+            if (isFocused) {
+                insertUserLiked();
+            }
+
+        } catch (error) {
+            console.log('error', error);
+        }
+
+    }, [isFocused]);
 
     const styles = StyleSheet.create({
         searchBarcontainer: {
@@ -148,13 +181,7 @@ export default function GroceriesDetails() {
         },
 
     });
-    const navigation = useNavigation();
 
-    const [groupName, setGroupName] = React.useState("");
-
-    function addZeroes(num: number) {
-        return (Math.round(num * 100) / 100).toFixed(2)
-    }
 
     return (
 
@@ -188,7 +215,7 @@ export default function GroceriesDetails() {
                         style={styles.imageWrapper} />
                     <View style={styles.nameWrapper}>
                         <View >
-                            <Text style={styles.text}>Product Name</Text>
+                            <Text style={styles.text}>{info.goods_name}</Text>
                         </View>
                         <View>
                             <NumericInput onChange={value => console.log(value)}

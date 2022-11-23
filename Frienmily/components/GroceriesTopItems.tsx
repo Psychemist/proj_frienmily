@@ -8,6 +8,25 @@ interface GroceriesTopItemsProps {
 }
 export default function GroceriesTopItems(props: GroceriesTopItemsProps) {
     const navigation = useNavigation();
+    const getLowest = () => {
+        let allPriceArray = [
+            { price: parseFloat(props.item.wellcome_price), shop: "惠康" },
+            { price: parseFloat(props.item.parknshop_price), shop: "百佳" },
+            { price: parseFloat(props.item.jasons_price), shop: "Jasons" },
+            { price: parseFloat(props.item.watsons_price), shop: "屈臣氏" },
+            { price: parseFloat(props.item.mannings_price), shop: "萬寧" },
+            { price: parseFloat(props.item.aeon_price), shop: "AEON" },
+            { price: parseFloat(props.item.dch_price), shop: "大昌食品" },
+            { price: parseFloat(props.item.ztore_price), shop: "士多" }
+        ]
+        let filtered = allPriceArray.filter(function (e) {
+            return e.price != NaN;
+        });
+        const lowest = filtered.reduce((previous, current) => {
+            return current.price < previous.price ? current : previous;
+        });
+        return lowest
+    }
     const styles = StyleSheet.create({
         text: {
             fontSize: 15,
@@ -56,8 +75,8 @@ export default function GroceriesTopItems(props: GroceriesTopItemsProps) {
             <View style={styles.cardContainer}>
                 <View style={styles.titleContainer}><Text style={styles.text}>{props.item.goods_name}</Text></View>
                 <View style={styles.supermarketprice}>
-                    <Text>百佳</Text>
-                    <Text>$9</Text>
+                    <View><Text>{getLowest().shop}</Text></View>
+                    <View><Text>${getLowest().price}</Text></View>
                 </View>
             </View>
         </TouchableOpacity>
