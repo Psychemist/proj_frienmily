@@ -1,13 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Pressable, Image } from "react-native";
 import FriendItem from "./FriendItem";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import GroceriesCategories from "./GroceriesCategories";
 import GroceriesDetailsItem from "./GroceriesDetailsItem";
 import NumericInput from "react-native-numeric-input";
+import { REACT_APP_API_SERVER } from '@env';
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 export default function GroceriesDetails() {
+    const route = useRoute<any>()
+    let info = route.params.info || ''
+    const navigation = useNavigation();
+    const [groupName, setGroupName] = React.useState("");
+    function addZeroes(num: number) {
+        return (Math.round(num * 100) / 100).toFixed(2)
+    }
+    const userIdInRedux = useSelector((state: RootState) => state.user.userId);
+    console.log("Details :", info);
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        try {
+            const insertUserLiked = async () => {
+                console.log("Insert User Liked...");
+                await fetch(`${REACT_APP_API_SERVER}/goods/userLiked/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userIdInRedux,
+                        goods_id: info.id,
+                        category_id: info.category_id
+                    }),
+                });
+            };
+            if (isFocused) {
+                insertUserLiked();
+            }
+
+        } catch (error) {
+            console.log('error', error);
+        }
+
+    }, [isFocused]);
+
     const styles = StyleSheet.create({
         searchBarcontainer: {
             top: 0,
@@ -126,7 +163,7 @@ export default function GroceriesDetails() {
         },
         supermarket: {
             backgroundColor: "#f1f3f2",
-            width: "99%",
+            width: "95%",
             height: 41,
             borderRadius: 5,
             flexDirection: "row",
@@ -142,49 +179,16 @@ export default function GroceriesDetails() {
             width: 7,
             borderRadius: 5,
         },
-        productImageBtn: {
-            position: "absolute",
-            right: 10,
-        }
 
     });
-    const navigation = useNavigation();
-    // const [data, setData] = React.useState([]);
-    const [groupName, setGroupName] = React.useState("");
-    // const [FilterData, setFilterData] = React.useState([]);
 
-    // useEffect(() => {
-    //     navigation.setOptions({
-    //         headerLargerTitle: true,
-    //         headerTitle: "Groceries",
-    //         headerSearchBarOptions: {
-    //             placeholder: "Search Groceries",
-    //             onChangeText: (event: { nativeEvent: { text: any; }; }) => {
-    //                 searchFilterFunction(event.nativeEvent.text);
-    //             },
-    //         }
-    //     });
-    // }, [navigation]);
-
-    // const searchFilterFunction = (text: string) => {
-    //     if(text){
-    //         const newData = data.filter(item => {
-    //             const itemData = item.name.first? item.name.first.toUpperCase() : ''.toUpperCase();
-    //             const textData = text.toUpperCase();
-    //             return itemData.indexOf(textData) > -1;
-    //         })
-    //         setFilterData(newData);
-    //     } else {
-    //         setFilterData(data);
-    //     }
-    // }
 
     return (
 
         <SafeAreaView style={{ flex: 1, position: "relative", backgroundColor: '#47b4b1' }}>
 
             <View style={styles.searchBarcontainer}>
-                <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('HomeTab' as never)} >
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                     <FontAwesome name='angle-left' size={35} />
                 </TouchableOpacity>
                 <View>
@@ -207,11 +211,11 @@ export default function GroceriesDetails() {
 
             <View style={styles.contentContainer}>
                 <View style={styles.topWrapper}>
-                    <Image source={{ uri: 'https://reactjs.org/logo-og.png' }}
+                    <Image source={{ uri: info.goods_picture }}
                         style={styles.imageWrapper} />
                     <View style={styles.nameWrapper}>
                         <View >
-                            <Text style={styles.text}>Product Name</Text>
+                            <Text style={styles.text}>{info.goods_name}</Text>
                         </View>
                         <View>
                             <NumericInput onChange={value => console.log(value)}
@@ -226,58 +230,42 @@ export default function GroceriesDetails() {
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#7dbfe9" }]}></View>
                         <Text style={{ marginLeft: 12 }}>惠康</Text>
-                        <Text style={{ marginRight: 50 }}>$9.00</Text>
-                        <TouchableOpacity style={styles.productImageBtn}>
-                            <FontAwesome name="image" style={{ fontSize: 20, color: "#47b4b1" }}></FontAwesome>
-                        </TouchableOpacity>
+                        <Text style={{ marginRight: 12 }}>{info.wellcome_price == null ? <Text>--</Text> : <Text>${addZeroes(info.wellcome_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#fdbb1b" }]}></View>
                         <Text style={{ marginLeft: 12 }}>百佳</Text>
-                        <Text style={{ marginRight: 50 }}>$9.00</Text>
-                        <TouchableOpacity style={styles.productImageBtn}>
-                            <FontAwesome name="image" style={{ fontSize: 20, color: "#47b4b1" }}></FontAwesome>
-                        </TouchableOpacity>
+                        <Text style={{ marginRight: 12 }}>{info.parknshop_price == null ? <Text>--</Text> : <Text>${addZeroes(info.parknshop_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
-                        <View style={[styles.colorDot, { backgroundColor: "#035033" }]}></View>
+                        <View style={[styles.colorDot, { backgroundColor: "#9772ef" }]}></View>
                         <Text style={{ marginLeft: 12 }}>Market Place by Jasons</Text>
-                        <Text style={{ marginRight: 50 }}>$9.00</Text>
-                        <TouchableOpacity style={styles.productImageBtn}>
-                            <FontAwesome name="image" style={{ fontSize: 20, color: "#47b4b1" }}></FontAwesome>
-                        </TouchableOpacity>
+                        <Text style={{ marginRight: 12 }}>{info.jasons_price == null ? <Text>--</Text> : <Text>${addZeroes(info.jasons_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#fd3b02" }]}></View>
                         <Text style={{ marginLeft: 12 }}>屈臣氏</Text>
-                        <Text style={{ marginRight: 50 }}>--</Text>
-                        <TouchableOpacity style={styles.productImageBtn}>
-                            <FontAwesome name="image" style={{ fontSize: 20, color: "#47b4b1" }}></FontAwesome>
-                        </TouchableOpacity>
+                        <Text style={{ marginRight: 12 }}>{info.watsons_price == null ? <Text>--</Text> : <Text>${addZeroes(info.watsons_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#93bf03" }]}></View>
                         <Text style={{ marginLeft: 12 }}>萬寧</Text>
-                        <Text style={{ marginRight: 50 }}>--</Text>
-                        <TouchableOpacity style={styles.productImageBtn}>
-                            <FontAwesome name="image" style={{ fontSize: 20, color: "#47b4b1" }}></FontAwesome>
-                        </TouchableOpacity>
+                        <Text style={{ marginRight: 12 }}>{info.mannings_price == null ? <Text>--</Text> : <Text>${addZeroes(info.mannings_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#ff893d" }]}></View>
                         <Text style={{ marginLeft: 12 }}>AEON</Text>
-                        <Text style={{ marginRight: 50 }}>$9.00</Text>
-                        <TouchableOpacity style={styles.productImageBtn}>
-                            <FontAwesome name="image" style={{ fontSize: 20, color: "#47b4b1" }}></FontAwesome>
-                        </TouchableOpacity>
+                        <Text style={{ marginRight: 12 }}>{info.aeon_price == null ? <Text>--</Text> : <Text>${addZeroes(info.aeon_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
-                        <View style={[styles.colorDot, { backgroundColor: "#9772ef" }]}></View>
+                        <View style={[styles.colorDot, { backgroundColor: "#035033" }]}></View>
                         <Text style={{ marginLeft: 12 }}>大昌食品</Text>
-                        <Text style={{ marginRight: 50 }}>--</Text>
-                        <TouchableOpacity style={styles.productImageBtn}>
-                            <FontAwesome name="image" style={{ fontSize: 20, color: "#47b4b1" }}></FontAwesome>
-                        </TouchableOpacity>
+                        <Text style={{ marginRight: 12 }}>{info.dch_price == null ? <Text>--</Text> : <Text>${addZeroes(info.dch_price)}</Text>}</Text>
+                    </View>
+                    <View style={styles.supermarket}>
+                        <View style={[styles.colorDot, { backgroundColor: "grey" }]}></View>
+                        <Text style={{ marginLeft: 12 }}>士多</Text>
+                        <Text style={{ marginRight: 12 }}>{info.ztore_price == null ? <Text>--</Text> : <Text>${addZeroes(info.ztore_price)}</Text>}</Text>
                     </View>
                 </View>
             </View>

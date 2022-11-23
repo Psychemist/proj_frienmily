@@ -53,7 +53,11 @@ export default function Groceries() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+<<<<<<< HEAD
             qtyInOneBatch: 21,
+=======
+            qtyInOneBatch: 30,
+>>>>>>> f671cd6baa2c88163cff929080df4a7289a18f8e
             ItemsToBeSkipped: 0,
             catIds: array
           }),
@@ -65,17 +69,13 @@ export default function Groceries() {
       }
       setAllExploreData(json.result.exploreResults)
       setAllTop5Data(json.result.top5Results)
-      console.log("exploreResults :", allExploreData);
-      console.log("top5Results :", allTop5Data);
-
-
-      // setAllCatFetchData((prev) => [...prev,])
-      // console.log("json :", json.result);
 
     } catch (error) {
       console.log('error', error);
     }
   }
+  console.log("exploreResults :", allExploreData);
+  console.log("top5Results :", allTop5Data);
 
   // TODO: Infinite Scroll Pagination
 
