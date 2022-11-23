@@ -5,52 +5,10 @@ import { Icon } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 interface GroceriesRandomItemsProps {
-    name: string;
-    barcode: number;
-    category_id: number;
-    goods_picture: Text;
+    item: any,
 }
 
-export default function GroceriesRandomItems({ items, status }: { items: Array<GroceriesRandomItemsProps>, status: string }) {
-    // const styles = StyleSheet.create({
-    //     text: {
-    //         fontSize: 15,
-    //     },
-    //     container: {
-    //         justifyContent: "space-between",
-    //         alignItems: "center",
-    //         flexDirection: "column",
-    //         width: "100%",
-    //         padding: 10,
-    //         paddingTop: 10,
-    //         paddingBottom: 20,
-    //         // backgroundColor: "#E2D8CF",
-    //         //SHADOW
-    //         shadowOpacity: 0.1,
-    //         shadowRadius: 2,
-    //         shadowOffset: {
-    //             height: 1,
-    //             width: 1
-    //         }
-    //     },
-    // })
-    // const navigation = useNavigation();
-    // return (
-    //     <View style={styles.container}>
-    //         <TouchableOpacity
-    //             onPress={() => {
-    //                 navigation.navigate('GroceriesDetails' as never)
-    //                 }}>
-    //             <View><Image source={{uri: 'https://reactjs.org/logo-og.png'}}
-    //         style={{width: 120, height: 120}} /></View>
-    //         <View ><Text style={styles.text}>Price</Text></View>
-    //         <View ><Text style={styles.text}>Supermarket</Text></View>
-    //         <View ><Text style={styles.text}>Groceries Details</Text></View>
-    //     </TouchableOpacity>
-
-    //     </View>
-    // )
-
+export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
 
     const styles = StyleSheet.create({
         text: {
@@ -109,32 +67,15 @@ export default function GroceriesRandomItems({ items, status }: { items: Array<G
 
 
     return (
-        <View>
-            <View
-                style={{ flexDirection: 'row' }}>
-                {status === "error" && <Text>Error fetching data</Text>}
-                {status === "loading" && <Text>Fetching data...</Text>}
-                {status === 'success' && <View style={styles.container}>
-
-                    {items.map((item: any) => {
-                        return (
-                            <TouchableOpacity style={styles.categoriesItemContainer} key={item.id}>
-                                <View style={styles.categoriesPhotoContainer}><Image source={{ uri: item.goods_picture }} style={{ width: 120, height: 120 }}></Image></View>
-                                <View style={styles.cardContainer}>
-                                    <View style={styles.titleContainer}><Text style={styles.text}>{item.name}</Text></View>
-                                    <View style={styles.supermarketprice}>
-                                        <View><Text>百佳{item.supermarket}</Text></View>
-                                        <View><Text>$9{item.price}</Text></View>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        );
-                    })}
+        <TouchableOpacity style={styles.categoriesItemContainer}>
+            <View style={styles.categoriesPhotoContainer}><Image source={{ uri: props.item.goods_picture }} style={{ width: 120, height: 120 }}></Image></View>
+            <View style={styles.cardContainer}>
+                <View style={styles.titleContainer}><Text style={styles.text}>{props.item.goods_name}</Text></View>
+                <View style={styles.supermarketprice}>
+                    <View><Text>百佳</Text></View>
+                    <View><Text>$9</Text></View>
                 </View>
-                }
             </View>
-
-        </View>
-
+        </TouchableOpacity>
     );
 }

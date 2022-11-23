@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Icon } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 interface GroceriesCategoriesProps {
-    allCatFetch: () => void
-    someCatFetch: (array: any) => void
+    fetchData: (array: any) => void
 }
 
 export default function GroceriesCategories(props: GroceriesCategoriesProps) {
@@ -172,20 +171,28 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
 
     })
 
-    const booleanArray = [{ isSelected: button1, id: 1 }, { isSelected: button2, id: 2 }, { isSelected: button3, id: 3 }, { isSelected: button4, id: 4 }, { isSelected: button5, id: 5 }, { isSelected: button6, id: 6 }, { isSelected: button7, id: 7 }, { isSelected: button8, id: 8 }, { isSelected: button9, id: 9 }, { isSelected: button10, id: 10 }]
-    const finalSelectedCategoriesArray = []
-    for (let item of booleanArray) {
-        if (item.isSelected == true) {
-            finalSelectedCategoriesArray.push(item.id)
+    // if (finalSelectedCategoriesArray.length == 0 || finalSelectedCategoriesArray.length == 10) {
+    //     // console.log("LOAD ALL CATTEGORIES!!!")
+    //     // props.allCatFetch()
+    // } else {
+    //     // console.log(finalSelectedCategoriesArray);
+    //     props.someCatFetch(finalSelectedCategoriesArray)
+    // }
+    useEffect(() => {
+        const booleanArray = [{ isSelected: button1, id: 1 }, { isSelected: button2, id: 2 }, { isSelected: button3, id: 3 }, { isSelected: button4, id: 4 }, { isSelected: button5, id: 5 }, { isSelected: button6, id: 6 }, { isSelected: button7, id: 7 }, { isSelected: button8, id: 8 }, { isSelected: button9, id: 9 }, { isSelected: button10, id: 10 }]
+        const finalSelectedCategoriesArray = []
+        for (let item of booleanArray) {
+            if (item.isSelected == true) {
+                finalSelectedCategoriesArray.push(item.id)
+            }
         }
-    }
-    if (finalSelectedCategoriesArray.length == 0 || finalSelectedCategoriesArray.length == 10) {
-        // console.log("LOAD ALL CATTEGORIES!!!")
-        props.allCatFetch()
-    } else {
-        // console.log(finalSelectedCategoriesArray);
-        props.someCatFetch(finalSelectedCategoriesArray)
-    }
+        if (finalSelectedCategoriesArray.length == 0) {
+            props.fetchData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        } else {
+            props.fetchData(finalSelectedCategoriesArray)
+        }
+    }, [button1, button2, button3, button4, button5, button6, button7, button8, button9, button10]);
+
 
 
 
