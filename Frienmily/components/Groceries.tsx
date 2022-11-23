@@ -60,17 +60,13 @@ export default function Groceries() {
       }
       setAllExploreData(json.result.exploreResults)
       setAllTop5Data(json.result.top5Results)
-      console.log("exploreResults :", allExploreData);
-      console.log("top5Results :", allTop5Data);
-
-
-      // setAllCatFetchData((prev) => [...prev,])
-      // console.log("json :", json.result);
 
     } catch (error) {
       console.log('error', error);
     }
   }
+  console.log("exploreResults :", allExploreData);
+  console.log("top5Results :", allTop5Data);
 
 
 
