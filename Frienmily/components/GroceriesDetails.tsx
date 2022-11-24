@@ -15,7 +15,7 @@ export default function GroceriesDetails() {
     let info = route.params.info || ''
     const navigation = useNavigation();
     const [groupName, setGroupName] = React.useState("");
-    const [initNum, setInitNum] = React.useState(10);
+    const [initNum, setInitNum] = React.useState(0);
     function addZeroes(num: number) {
         return (Math.round(num * 100) / 100).toFixed(2)
     }
@@ -49,7 +49,7 @@ export default function GroceriesDetails() {
                 if (response) {
                     json = await response.json();
                 }
-                console.log(json.quantity);
+                console.log("quantity :", json.quantity);
 
                 setInitNum(json.quantity)
 
@@ -64,30 +64,38 @@ export default function GroceriesDetails() {
         }
 
     }, [isFocused]);
-
-    const amountChanged = async (amount: number) => {
-
-        console.log(amount);
+    useEffect(() => {
         try {
-            // setInitNum(amount)
-            console.log("change from DB");
+            console.log("initNum", initNum)
 
-            let response = await fetch(`${REACT_APP_API_SERVER}/goods/addToCart/`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    user_id: userIdInRedux,
-                    goods_id: info.id,
-                    quantity: amount
-                }),
-            })
+            async function updateCounter() {
+                await fetch(`${REACT_APP_API_SERVER}/goods/addToCart/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userIdInRedux,
+                        goods_id: info.id,
+                        quantity: initNum
+                    }),
+                })
+            }
+            updateCounter()
 
-            console.log("Inserted a record to DB")
-
-        } catch (e) {
-            console.log("error: ", e)
-
+        } catch (error) {
+            console.log('error', error);
         }
+
+    }, [initNum]);
+
+
+    const addOneToCounter = () => {
+        setInitNum(initNum + 1)
+    }
+    const minusOneToCounter = () => {
+        if (initNum - 1 < 0) {
+            return
+        }
+        setInitNum(initNum - 1)
     }
 
     const styles = StyleSheet.create({
@@ -217,6 +225,25 @@ export default function GroceriesDetails() {
             width: 7,
             borderRadius: 5,
         },
+        counter: {
+            flexDirection: "row",
+        },
+        minusAndPlusBox: {
+            padding: 10,
+            borderRadius: 0,
+            borderWidth: 1,
+            borderColor: 'grey',
+        },
+        counterNumber: {
+            padding: 10,
+            fontSize: 15,
+            width: '20%',
+            justifyContent: 'center',
+            alignItems: "center",
+            borderRadius: 0,
+            borderWidth: 1,
+            borderColor: 'grey',
+        }
 
     });
 
@@ -255,15 +282,26 @@ export default function GroceriesDetails() {
                         <View >
                             <Text style={styles.text}>{info.goods_name}</Text>
                         </View>
-                        <View>
+                        {/* <View>
                             <NumericInput onChange={value => amountChanged(value)}
                                 totalWidth={100}
                                 totalHeight={30}
                                 iconSize={25}
                                 editable={false}
                                 minValue={0}
-                            // value={0}
                             />
+                        </View> */}
+                        <View style={styles.counter}>
+                            <TouchableOpacity style={styles.minusAndPlusBox} onPress={minusOneToCounter}>
+                                <FontAwesome name="minus" size={18} />
+                            </TouchableOpacity>
+                            <View style={styles.counterNumber}>
+                                <Text>{initNum}</Text>
+                            </View>
+
+                            <TouchableOpacity style={styles.minusAndPlusBox} onPress={addOneToCounter}>
+                                <FontAwesome name="plus" size={18} />
+                            </TouchableOpacity>
                         </View>
                     </View>
 
