@@ -106,6 +106,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
+      <StatusBar barStyle="dark-content"/>
         {/* <SafeAreaView> */}
         <NavigationContainer>
           {/* isLoggedIn? */}

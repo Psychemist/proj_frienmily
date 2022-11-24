@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Pressable, Image } from "react-native";
+import { StatusBar, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Pressable, Image } from "react-native";
 import FriendItem from "./FriendItem";
 import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -9,6 +9,8 @@ import NumericInput from "react-native-numeric-input";
 import { REACT_APP_API_SERVER } from '@env';
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import useDebounce from './useDebounce';
+import SearchBarItem from './SearchBarItem';
 
 export default function GroceriesDetails() {
     const route = useRoute<any>()
@@ -22,6 +24,66 @@ export default function GroceriesDetails() {
     }
     const userIdInRedux = useSelector((state: RootState) => state.user.userId);
     const isFocused = useIsFocused();
+    //---------------SEARCH BAR--------------------//
+  const [searchKeyword, setSearchKeyword] = useState<string>('')
+  const [isShow, setIsShow] = useState<boolean>(false)
+  const [searchResult, setSearchResult] = useState([])
+  const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 500)
+  const textChange = ()=> {
+    // console.log("value: ", debouncedSearchKeyword)
+    if (debouncedSearchKeyword && debouncedSearchKeyword.length >= 2) {
+      console.log('i am now searching :', debouncedSearchKeyword)
+
+      const loadSearchResult = async () => {
+        try {
+          console.log('Seraching Result...');
+          const response = await fetch(
+            `${REACT_APP_API_SERVER}/goods/searchKeyword/`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                name: debouncedSearchKeyword,
+              }),
+            },
+          );
+
+          let json = [];
+          if (response) {
+            json = await response.json();
+          }
+          // console.log("json :", json.searchResult);
+          setSearchResult(json.searchResult);
+          setIsShow(true)
+
+        } catch (error) {
+          console.log('error', error);
+          setIsShow(false)
+
+        }
+      };
+      if (isFocused) {
+        loadSearchResult();
+      }
+    } else {
+      setIsShow(false)
+
+    }
+
+    // console.log(searchKeyword);
+    
+    // if (searchKeyword == '') {
+    //   setIsShow(false)
+    // } else {
+    //   setIsShow(true)
+    // }
+  }
+  useEffect(()=>{
+    textChange()
+  },[debouncedSearchKeyword])
+  //---------------SEARCH BAR--------------------//
+
+
     useEffect(() => {
         try {
             const insertUserLiked = async () => {
@@ -124,13 +186,33 @@ export default function GroceriesDetails() {
     }
 
     const styles = StyleSheet.create({
-        searchBarcontainer: {
-            top: 0,
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexDirection: "row",
-            width: "90%",
+        dropDown: {
+            position: "absolute",
+            left: "6%",
+            maxHeight: "50%",
+            minHeight:"50%",
+            width: "88%",
+            top: "15.2%",
+            zIndex:9,
             padding: 10,
+            backgroundColor: '#F5F5F5',
+            borderRadius: 10,
+            shadowOpacity: 0.1,
+            shadowRadius: 2,
+            shadowOffset: {
+                height: 1,
+                width: 1
+            }
+      
+          },
+        searchBarcontainer: {
+            top: 0, right: 12,
+            position:"relative",
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexDirection: 'row',
+            width: '100%',
+            padding: 20,
             paddingTop: 2,
             paddingBottom: 2,
             backgroundColor: "#47b4b1",
@@ -144,7 +226,7 @@ export default function GroceriesDetails() {
             fontSize: 25,
         },
         backButton: {
-            left: 0,
+            left: 8,
             fontSize: 25,
         },
         cartQty: {
@@ -162,12 +244,19 @@ export default function GroceriesDetails() {
         input: {
             height: 40,
             margin: 12,
-            borderWidth: 1,
+            borderWidth: 2.5,
             padding: 10,
             minWidth: 300,
             maxWidth: 300,
-            borderRadius: 10,
-            backgroundColor: "white",
+            borderRadius: 15,
+            backgroundColor: 'white',
+            borderColor:"white",
+            shadowOpacity: 0.2,
+            shadowRadius: 2,
+            shadowOffset: {
+                height: 1,
+                width: 1
+            }
         },
         searchButton: {
             margin: 5,
@@ -268,36 +357,55 @@ export default function GroceriesDetails() {
             borderRadius: 0,
             borderWidth: 1,
             borderColor: 'grey',
-        }
+        },
+        cartNumText: {
+            fontSize:9,
+         
+          },
 
     });
 
 
     return (
+        
 
-        <SafeAreaView style={{ flex: 1, position: "relative", backgroundColor: '#47b4b1' }}>
-
-            <View style={styles.searchBarcontainer}>
-                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+//---------------SEARCH BAR--------------------//
+<SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
+<StatusBar barStyle="light-content"/>
+{isShow? <ScrollView style={styles.dropDown}>
+          {searchResult.map((item: any, idx: number) => (
+            <SearchBarItem item={item} key={idx} />
+          ))}
+        </ScrollView>: (null)}
+      <View style={styles.searchBarcontainer}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                     <FontAwesome name='angle-left' size={35} />
                 </TouchableOpacity>
-                <View>
-                    <TextInput
-                        placeholder="Search Products"
-                        value={groupName}
-                        onChangeText={setGroupName}
-                        style={styles.input}
-                    />
-                </View>
-                <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
-                        <FontAwesome name="shopping-cart" size={30} />
-                        <View style={styles.cartQty}>
-                            <Text>{shoppingCartNum}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+        <View >
+          <TextInput
+            placeholder="Search Products"
+            value={searchKeyword}
+            // onChangeText={setSearchKeyword}
+            style={styles.input}
+            onChangeText={(value) => {
+              console.log('on change value = ', value)
+              setSearchKeyword(value)
+            }}
+          />        
+        
+        </View>
+        {/* //---------------SEARCH BAR--------------------// */}
+        <View>
+          <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
+            <FontAwesome name="shopping-cart" size={25} />
+            <View style={styles.cartQty}>
+              <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
             </View>
+          </TouchableOpacity>
+        </View>
+
+
+      </View>
 
             <View style={styles.contentContainer}>
                 <View style={styles.topWrapper}>

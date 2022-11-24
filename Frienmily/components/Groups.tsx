@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  StatusBar
 } from 'react-native';
 import GroupItem from './GroupItem';
 import { useIsFocused } from '@react-navigation/native';
@@ -86,6 +87,7 @@ export default function Groups() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
+      <StatusBar barStyle="dark-content" />
       <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5' }}>
         <Text style={{ fontSize: 25, paddingBottom: '1%' }}>Groups</Text>
       </View>

@@ -11,6 +11,7 @@ import {
   FlatList,
   Button,
   ActivityIndicator,
+  StatusBar,
 } from 'react-native';
 import FriendItem from './FriendItem';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -239,7 +240,8 @@ export default function Groceries() {
     dropDown: {
       position: "absolute",
       left: "6%",
-      maxHeight: "30%",
+      maxHeight: "50%",
+      minHeight:"50%",
       width: "88%",
       top: "16%",
       zIndex:9,
@@ -258,6 +260,10 @@ export default function Groceries() {
       fontSize: 25,
       fontWeight: 'bold',
       paddingLeft: 20,
+    },
+    cartNumText: {
+      fontSize:9,
+   
     },
     cartQty: {
       justifyContent: "center",
@@ -291,12 +297,20 @@ export default function Groceries() {
     input: {
       height: 40,
       margin: 12,
-      borderWidth: 1,
+      borderWidth: 2.5,
       padding: 10,
       minWidth: 300,
       maxWidth: 300,
-      borderRadius: 10,
+      borderRadius: 15,
       backgroundColor: 'white',
+      borderColor:"white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+          height: 1,
+          width: 1
+      }
+
     },
     searchButton: {
       margin: 5,
@@ -340,41 +354,56 @@ export default function Groceries() {
     },
     bestSellerButton: {
       // margin: 5,
-      fontSize: 20,
+      // fontSize: 50,
       backgroundColor: 'white',
       width: '40%',
       height: 35,
-      // borderRadius: 10,
-      // borderWidth: 1,
-      // borderColor: isBestSeller ? '#47b4b1' : 'white',
-      // borderColor: 'grey',
+      shadowOpacity:1,
+      shadowColor: isBestSeller ? "#47b4b1": "lightgray",
+      shadowRadius:1,
+      shadowOffset: {
+          height: isBestSeller? -4:-4,
+          width: isBestSeller? 4: 4
+      },
       justifyContent: 'center',
       alignItems: 'center',
+      borderTopRightRadius:20,
+      borderTopLeftRadius:20,
+      margin: 2
     },
     exploreButton
 
       : {
       // margin: 5,
-      fontSize: 20,
+      // fontSize: 100,
       backgroundColor: 'white',
       width: '40%',
       height: 35,
-      // borderRadius: 10,
-      // borderWidth: 1,
-      // borderColor: isBestSeller ? 'white' : '#47b4b1',
-      // borderColor: 'grey',
+      shadowOpacity:1,
+      shadowColor:isBestSeller ? "lightgray": "#47b4b1",
+      shadowRadius: 1,
+      shadowOffset: {
+          height: isBestSeller? -4: -4,
+          width: isBestSeller? 4: 4
+      },
       justifyContent: 'center',
       alignItems: 'center',
+      borderTopRightRadius:20,
+      borderTopLeftRadius:20,
+      margin: 2
     },
 
     bestSellerButtonText: {
-      fontSize: isBestSeller ? 15 : 12,
+      fontSize: isBestSeller ? 20 : 20,
+      fontWeight: "bold"
+  
     },
     exploreButtonText: {
-      fontSize: isBestSeller ? 15 : 18,
+      fontSize: isBestSeller ? 20 : 20,
+      fontWeight: "bold"
     },
     groupTypeButtonContainer: {
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       flexDirection: 'row',
       width: '100%',
       paddingTop: 10,
@@ -414,13 +443,14 @@ export default function Groceries() {
   return (
     //---------------SEARCH BAR--------------------//
     <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
+      <StatusBar barStyle="light-content"/>
       {isShow? <ScrollView style={styles.dropDown}>
           {searchResult.map((item: any, idx: number) => (
             <SearchBarItem item={item} key={idx} />
           ))}
         </ScrollView>: (null)}
       <View style={styles.container}>
-        <ScrollView >
+        <View >
           <TextInput
             placeholder="Search Products"
             value={searchKeyword}
@@ -432,13 +462,13 @@ export default function Groceries() {
             }}
           />        
 
-        </ScrollView>
+        </View>
         {/* //---------------SEARCH BAR--------------------// */}
         <View>
           <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
             <FontAwesome name="shopping-cart" size={25} />
             <View style={styles.cartQty}>
-              <Text>{shoppingCartNum}</Text>
+              <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -475,9 +505,6 @@ export default function Groceries() {
 
       {isBestSeller == true &&
         <View style={{ backgroundColor: 'white' }}>
-          <View >
-            <Text style={styles.text}>Best Seller</Text>
-          </View>
 
           <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '100%' }}>
             <View style={styles.container2}>
