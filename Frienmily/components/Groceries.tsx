@@ -26,7 +26,6 @@ import { RootState } from '../redux/store';
 
 
 import useDebounce from './useDebounce';
-import { useIsFocused } from '@react-navigation/native';
 import SearchBarItem from './SearchBarItem';
 
 export default function Groceries() {
@@ -77,7 +76,6 @@ export default function Groceries() {
   const [isShow, setIsShow] = useState<boolean>(false)
   const [searchResult, setSearchResult] = useState([])
   const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 500)
-  const isFocused = useIsFocused();
   const [searching, setSearching] = useState(false)
   // const UselessTextInput = () => {
   // const [text, onChangeText] = React.useState("Useless Text");
@@ -198,11 +196,7 @@ export default function Groceries() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-<<<<<<< HEAD
-            qtyInOneBatch: 21,
-=======
             qtyInOneBatch: 30,
->>>>>>> f671cd6baa2c88163cff929080df4a7289a18f8e
             ItemsToBeSkipped: 0,
             catIds: array
           }),
