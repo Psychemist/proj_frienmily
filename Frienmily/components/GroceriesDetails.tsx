@@ -25,63 +25,63 @@ export default function GroceriesDetails() {
     const userIdInRedux = useSelector((state: RootState) => state.user.userId);
     const isFocused = useIsFocused();
     //---------------SEARCH BAR--------------------//
-  const [searchKeyword, setSearchKeyword] = useState<string>('')
-  const [isShow, setIsShow] = useState<boolean>(false)
-  const [searchResult, setSearchResult] = useState([])
-  const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 500)
-  const textChange = ()=> {
-    // console.log("value: ", debouncedSearchKeyword)
-    if (debouncedSearchKeyword && debouncedSearchKeyword.length >= 2) {
-      console.log('i am now searching :', debouncedSearchKeyword)
+    const [searchKeyword, setSearchKeyword] = useState<string>('')
+    const [isShow, setIsShow] = useState<boolean>(false)
+    const [searchResult, setSearchResult] = useState([])
+    const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 500)
+    const textChange = () => {
+        // console.log("value: ", debouncedSearchKeyword)
+        if (debouncedSearchKeyword && debouncedSearchKeyword.length >= 2) {
+            console.log('i am now searching :', debouncedSearchKeyword)
 
-      const loadSearchResult = async () => {
-        try {
-          console.log('Seraching Result...');
-          const response = await fetch(
-            `${REACT_APP_API_SERVER}/goods/searchKeyword/`,
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                name: debouncedSearchKeyword,
-              }),
-            },
-          );
+            const loadSearchResult = async () => {
+                try {
+                    console.log('Seraching Result...');
+                    const response = await fetch(
+                        `${REACT_APP_API_SERVER}/goods/searchKeyword/`,
+                        {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                name: debouncedSearchKeyword,
+                            }),
+                        },
+                    );
 
-          let json = [];
-          if (response) {
-            json = await response.json();
-          }
-          // console.log("json :", json.searchResult);
-          setSearchResult(json.searchResult);
-          setIsShow(true)
+                    let json = [];
+                    if (response) {
+                        json = await response.json();
+                    }
+                    // console.log("json :", json.searchResult);
+                    setSearchResult(json.searchResult);
+                    setIsShow(true)
 
-        } catch (error) {
-          console.log('error', error);
-          setIsShow(false)
+                } catch (error) {
+                    console.log('error', error);
+                    setIsShow(false)
+
+                }
+            };
+            if (isFocused) {
+                loadSearchResult();
+            }
+        } else {
+            setIsShow(false)
 
         }
-      };
-      if (isFocused) {
-        loadSearchResult();
-      }
-    } else {
-      setIsShow(false)
 
+        // console.log(searchKeyword);
+
+        // if (searchKeyword == '') {
+        //   setIsShow(false)
+        // } else {
+        //   setIsShow(true)
+        // }
     }
-
-    // console.log(searchKeyword);
-    
-    // if (searchKeyword == '') {
-    //   setIsShow(false)
-    // } else {
-    //   setIsShow(true)
-    // }
-  }
-  useEffect(()=>{
-    textChange()
-  },[debouncedSearchKeyword])
-  //---------------SEARCH BAR--------------------//
+    useEffect(() => {
+        textChange()
+    }, [debouncedSearchKeyword])
+    //---------------SEARCH BAR--------------------//
 
 
     useEffect(() => {
@@ -190,10 +190,10 @@ export default function GroceriesDetails() {
             position: "absolute",
             left: "6%",
             maxHeight: "50%",
-            minHeight:"50%",
+            minHeight: "50%",
             width: "88%",
             top: "15.2%",
-            zIndex:9,
+            zIndex: 9,
             padding: 10,
             backgroundColor: '#F5F5F5',
             borderRadius: 10,
@@ -203,11 +203,11 @@ export default function GroceriesDetails() {
                 height: 1,
                 width: 1
             }
-      
-          },
+            
+        },
         searchBarcontainer: {
             top: 0, right: 12,
-            position:"relative",
+            position: "relative",
             justifyContent: 'space-between',
             alignItems: 'center',
             flexDirection: 'row',
@@ -238,11 +238,17 @@ export default function GroceriesDetails() {
             backgroundColor: "#f79f24",
             position: "absolute",
             top: -10,
-            right: -10
+            right: -10,
+            shadowOpacity: 0.3,
+            shadowRadius: 1,
+            shadowOffset: {
+                height: 1,
+                width: 1
+            }
         },
 
         input: {
-            height: 40,
+            height: 45,
             margin: 12,
             borderWidth: 2.5,
             padding: 10,
@@ -250,7 +256,7 @@ export default function GroceriesDetails() {
             maxWidth: 300,
             borderRadius: 15,
             backgroundColor: 'white',
-            borderColor:"white",
+            borderColor: "white",
             shadowOpacity: 0.2,
             shadowRadius: 2,
             shadowOffset: {
@@ -359,53 +365,62 @@ export default function GroceriesDetails() {
             borderColor: 'grey',
         },
         cartNumText: {
-            fontSize:9,
-         
-          },
+            fontSize: 9,
+
+        },
+        shoppingCartIcon: {
+            color: "white",
+            shadowOpacity: 0.2,
+            shadowRadius: 2,
+            shadowOffset: {
+                height: 1,
+                width: 1
+            }
+        }
 
     });
 
 
     return (
-        
 
-//---------------SEARCH BAR--------------------//
-<SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
-<StatusBar barStyle="light-content"/>
-{isShow? <ScrollView style={styles.dropDown}>
-          {searchResult.map((item: any, idx: number) => (
-            <SearchBarItem item={item} key={idx} />
-          ))}
-        </ScrollView>: (null)}
-      <View style={styles.searchBarcontainer}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                    <FontAwesome name='angle-left' size={35} />
+
+        //---------------SEARCH BAR--------------------//
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
+            <StatusBar barStyle="light-content" />
+            {isShow ? <ScrollView style={styles.dropDown}>
+                {searchResult.map((item: any, idx: number) => (
+                    <SearchBarItem item={item} key={idx} />
+                ))}
+            </ScrollView> : (null)}
+            <View style={styles.searchBarcontainer}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                    <FontAwesome name='angle-left' size={35} style={styles.shoppingCartIcon} />
                 </TouchableOpacity>
-        <View >
-          <TextInput
-            placeholder="Search Products"
-            value={searchKeyword}
-            // onChangeText={setSearchKeyword}
-            style={styles.input}
-            onChangeText={(value) => {
-              console.log('on change value = ', value)
-              setSearchKeyword(value)
-            }}
-          />        
-        
-        </View>
-        {/* //---------------SEARCH BAR--------------------// */}
-        <View>
-          <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
-            <FontAwesome name="shopping-cart" size={25} />
-            <View style={styles.cartQty}>
-              <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
+                <View >
+                    <TextInput
+                        placeholder="Search Products"
+                        value={searchKeyword}
+                        // onChangeText={setSearchKeyword}
+                        style={styles.input}
+                        onChangeText={(value) => {
+                            console.log('on change value = ', value)
+                            setSearchKeyword(value)
+                        }}
+                    />
+
+                </View>
+                {/* //---------------SEARCH BAR--------------------// */}
+                <View>
+                    <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
+                        <FontAwesome name="shopping-cart" size={28} style={styles.shoppingCartIcon}/>
+                        <View style={styles.cartQty}>
+                            <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+
             </View>
-          </TouchableOpacity>
-        </View>
-
-
-      </View>
 
             <View style={styles.contentContainer}>
                 <View style={styles.topWrapper}>

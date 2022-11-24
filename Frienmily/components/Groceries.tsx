@@ -274,7 +274,13 @@ export default function Groceries() {
       backgroundColor: "#f79f24",
       position: "absolute",
       top: -10,
-      right: -10
+      right: -10,
+      shadowOpacity: 0.3,
+      shadowRadius: 1,
+      shadowOffset: {
+          height: 1,
+          width: 1
+      }
     },
     container: {
       position:"relative",
@@ -295,7 +301,7 @@ export default function Groceries() {
       // }
     },
     input: {
-      height: 40,
+      height: 45,
       margin: 12,
       borderWidth: 2.5,
       padding: 10,
@@ -434,6 +440,15 @@ export default function Groceries() {
 
 
     },
+    shoppingCartIcon: {
+      color: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+          height: 1,
+          width: 1
+      }
+    }
   });
 
   // console.log("searchResult :", searchResult)
@@ -466,7 +481,7 @@ export default function Groceries() {
         {/* //---------------SEARCH BAR--------------------// */}
         <View>
           <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
-            <FontAwesome name="shopping-cart" size={25} />
+            <FontAwesome name="shopping-cart" size={28} style={styles.shoppingCartIcon} />
             <View style={styles.cartQty}>
               <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
             </View>
