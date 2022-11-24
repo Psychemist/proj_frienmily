@@ -1,13 +1,12 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { REACT_APP_API_SERVER } from '@env';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import Icon from "react-native-vector-icons/Ionicons";
-
 
 
 export default function AssignGroup() {
@@ -158,7 +157,7 @@ export default function AssignGroup() {
   });
 
   const navigation = useNavigation();
-
+  let groupNumber: number
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const isFocused = useIsFocused();
   const [groupItemList, setGroupItemList] = useState([]);
@@ -192,11 +191,32 @@ export default function AssignGroup() {
     }
   }, [isFocused]);
 
-  const selectedGroup = (group_id: number) => {
-    console.log("group_id :", group_id);
+  const selectedGroup = async (group_id: number) => {
+    console.log("groupItemList :", groupItemList)
+    console.log("userIdInRedux :", userIdInRedux);
+    console.log("groupId :", group_id);
+    groupNumber = group_id
+    // assign items to group
+    await fetch(`${REACT_APP_API_SERVER}/goods/assignToGroup/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: userIdInRedux,
+        groupId: group_id
+      }),
+    });
+    showAlert()
 
+    // navigation.navigate('ShoppingList' as never, { groupId: group_id } as never)
   }
 
+  const showAlert = () => {
+    Alert.alert('Item(s) assigned~~', '', [
+      {
+        text: 'OK', onPress: () => navigation.navigate('ShoppingList' as never, { groupId: groupNumber } as never)
+      },
+    ]);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
@@ -235,9 +255,8 @@ export default function AssignGroup() {
 
       <ScrollView style={styles.scrollWrapper}>
         {groupItemList.map((item: any, idx: number) => (
-          <TouchableOpacity style={styles.itemContainer} onPress={() => {
-            selectedGroup(item.id)
-            // navigation.navigate('HomeTab' as never)
+          <TouchableOpacity style={styles.itemContainer} key={idx} onPress={() => {
+            selectedGroup(item.group_id)
           }}>
             <View style={styles.groupImage}></View>
             <Text style={styles.groupName}>{item.group_name}</Text>

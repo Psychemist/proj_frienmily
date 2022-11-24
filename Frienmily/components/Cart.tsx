@@ -1,6 +1,7 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -86,6 +87,25 @@ export default function Cart() {
   function addZeroes(num: number) {
     return (Math.round(num * 100) / 100).toFixed(2)
   }
+
+  const assignToGroup = () => {
+    if (shoppingListArray.length == 0) {
+      showAlert()
+      return
+    }
+    navigation.navigate('AssignGroup' as never)
+  }
+
+  const showAlert = () => {
+    Alert.alert('Please at least grab something to your cart', '', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
 
 
 
@@ -259,7 +279,7 @@ export default function Cart() {
         <TouchableOpacity
           style={styles.assignGroupButton}
           onPress={() => {
-            navigation.navigate('AssignGroup' as never);
+            assignToGroup();
           }}>
           <Text style={styles.buttonText}>Assign Group</Text>
         </TouchableOpacity>
