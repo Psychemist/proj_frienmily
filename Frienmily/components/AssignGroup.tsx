@@ -217,7 +217,7 @@ export default function AssignGroup() {
           <View style={[styles.circle, styles.circleFilled, { left: "45%", top: -21.5 }]}>
             <Text style={{ fontWeight: "bold", color: "white" }}>2</Text>
           </View>
-          <View style={[styles.circle, styles.circleUnfilled, { right: 50, top: -21.5 }]}>
+          <View style={[styles.circle, styles.circleUnfilled, { right: 50, top: -21.5, borderColor: '#f79f24' }]}>
             <Text style={{ fontWeight: "bold", color: "#939493" }}>3</Text>
           </View>
           <Text style={[styles.caption, { left: 50 }]}>Menu</Text>

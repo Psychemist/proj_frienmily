@@ -13,7 +13,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import FriendItem from './FriendItem';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import GroceriesCategories from './GroceriesCategories';
 import GroceriesRandomItems from './GroceriesRandomItems';
@@ -21,6 +21,10 @@ import GroceriesTopItems from './GroceriesTopItems';
 import { REACT_APP_API_SERVER } from '@env';
 import { useQuery } from "react-query";
 import { createIconSetFromFontello } from 'react-native-vector-icons';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+
+
 import useDebounce from './useDebounce';
 import { useIsFocused } from '@react-navigation/native';
 import SearchBarItem from './SearchBarItem';
@@ -32,6 +36,41 @@ export default function Groceries() {
   const [allTop5Data, setAllTop5Data]: any = useState([]);
   const [groupName, setGroupName] = React.useState('');
   const [page, setPage] = useState(1)
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
+  const [shoppingCartNum, setShoppingCartNum] = React.useState<number>(0);
+
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    try {
+      const shoppingCartInitNum = async () => {
+        const quantity = await fetch(`${REACT_APP_API_SERVER}/goods/getShoppingCartInitNum/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user_id: userIdInRedux
+          }),
+        });
+        let json = await quantity.json()
+        console.log("shoppingCart :", json.shoppingCartInit)
+        if (json.shoppingCartInit == null) {
+          setShoppingCartNum(0)
+        } else {
+          setShoppingCartNum(json.shoppingCartInit)
+        }
+
+      };
+
+
+
+      if (isFocused) {
+        shoppingCartInitNum()
+      }
+
+    } catch (error) {
+      console.log('error', error);
+    }
+
+  }, [isFocused]);
 
   //---------------SEARCH BAR--------------------//
   const [searchKeyword, setSearchKeyword] = useState<string>('')
@@ -159,7 +198,11 @@ export default function Groceries() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+<<<<<<< HEAD
+            qtyInOneBatch: 21,
+=======
             qtyInOneBatch: 30,
+>>>>>>> f671cd6baa2c88163cff929080df4a7289a18f8e
             ItemsToBeSkipped: 0,
             catIds: array
           }),
@@ -176,7 +219,8 @@ export default function Groceries() {
       console.log('error', error);
     }
   }
-
+  console.log("exploreResults :", allExploreData);
+  console.log("top5Results :", allTop5Data);
 
   // TODO: Infinite Scroll Pagination
 
@@ -217,9 +261,10 @@ export default function Groceries() {
     }
   }
 
-  const renderItem = ({ }) => {
+  const renderItem = ({ item }) => (
+    <GroceriesRandomItems item={item} />
+  )
 
-  }
 
   useEffect(() => {
     requestAPI()
@@ -440,7 +485,7 @@ export default function Groceries() {
           <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
             <FontAwesome name="shopping-cart" size={30} />
             <View style={styles.cartQty}>
-              <Text>0</Text>
+              <Text>{shoppingCartNum}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -523,32 +568,22 @@ export default function Groceries() {
       {/* Random Goods Column */}
       {
         isBestSeller == false &&
-
-        // <FlatList
-        //   contentContainerStyle={{ flexGrow: 1 }}
-        //   data={allExploreData}
-        //   renderItem={renderItem}
-        //   ListFooterComponent={renderFooter}
-        //   ListEmptyComponent={renderEmpty}
-        //   onEndReachedThreshold={0.2}
-        //   onEndReached={fetchMoreDataOnPageEnd}
-        // />
-
-
-        <ScrollView style={{ backgroundColor: 'white', width: '100%' }}>
-          <View style={styles.randomItemsContainer}>
-            <View>
-              <Text style={styles.text}>Explore</Text>
-            </View>
-            <View style={styles.topItemsCards}>
-              <View style={styles.container3}>
-                {allExploreData.map((item: any, idx: number) => (
-                  <GroceriesRandomItems item={item} key={idx} />
-                ))}
-              </View>
-            </View>
+          allExploreData.loading ?
+          <View>
+            <ActivityIndicator size="large" />
           </View>
-        </ScrollView>
+          :
+          <FlatList
+            style={{ backgroundColor: 'white' }}
+            contentContainerStyle={{ flexGrow: 1 }}
+            data={allExploreData}
+            renderItem={renderItem}
+            ListFooterComponent={renderFooter}
+            ListEmptyComponent={renderEmpty}
+            onEndReachedThreshold={0.2}
+            onEndReached={fetchMoreDataOnPageEnd}
+          />
+
 
 
       }

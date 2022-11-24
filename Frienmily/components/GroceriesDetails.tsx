@@ -15,11 +15,12 @@ export default function GroceriesDetails() {
     let info = route.params.info || ''
     const navigation = useNavigation();
     const [groupName, setGroupName] = React.useState("");
+    const [initNum, setInitNum] = React.useState<number>(0);
+    const [shoppingCartNum, setShoppingCartNum] = React.useState<number>(0);
     function addZeroes(num: number) {
         return (Math.round(num * 100) / 100).toFixed(2)
     }
     const userIdInRedux = useSelector((state: RootState) => state.user.userId);
-    console.log("Details :", info);
     const isFocused = useIsFocused();
     useEffect(() => {
         try {
@@ -35,8 +36,50 @@ export default function GroceriesDetails() {
                     }),
                 });
             };
+
+            const getInitNum = async () => {
+                const response = await fetch(`${REACT_APP_API_SERVER}/goods/getInitNum/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userIdInRedux,
+                        goods_id: info.id
+                    }),
+                });
+                let json;
+                if (response) {
+                    json = await response.json();
+                }
+                console.log("quantity :", json.quantity);
+
+                setInitNum(json.quantity)
+
+            };
+
+            const shoppingCartInitNum = async () => {
+                const quantity = await fetch(`${REACT_APP_API_SERVER}/goods/getShoppingCartInitNum/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userIdInRedux
+                    }),
+                });
+                let json = await quantity.json()
+                console.log("shoppingCart :", json.shoppingCartInit)
+                if (json.shoppingCartInit == null) {
+                    setShoppingCartNum(0)
+                } else {
+                    setShoppingCartNum(json.shoppingCartInit)
+                }
+
+            };
+
+
+
             if (isFocused) {
-                insertUserLiked();
+                insertUserLiked()
+                getInitNum()
+                shoppingCartInitNum()
             }
 
         } catch (error) {
@@ -44,6 +87,41 @@ export default function GroceriesDetails() {
         }
 
     }, [isFocused]);
+
+    async function updateCounter(initNum: number) {
+        console.log(initNum);
+
+        await fetch(`${REACT_APP_API_SERVER}/goods/addToCart/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: userIdInRedux,
+                goods_id: info.id,
+                quantity: initNum
+            }),
+        })
+    }
+
+    const addOneToCounter = () => {
+
+
+        setShoppingCartNum((e) => +e + 1)
+        setInitNum((e) => {
+            updateCounter(+e + 1)
+            return e + 1
+        })
+
+    }
+    const minusOneToCounter = () => {
+        if (initNum - 1 < 0) {
+            return
+        }
+        setShoppingCartNum((e) => +e - 1)
+        setInitNum((e) => {
+            updateCounter(+e - 1)
+            return e - 1
+        })
+    }
 
     const styles = StyleSheet.create({
         searchBarcontainer: {
@@ -56,13 +134,6 @@ export default function GroceriesDetails() {
             paddingTop: 2,
             paddingBottom: 2,
             backgroundColor: "#47b4b1",
-            //SHADOW
-            // shadowOpacity: 0.1,
-            // shadowRadius: 2,
-            // shadowOffset: {
-            //     height: 1,
-            //     width: 1
-            // }
         },
         header: {
             height: "5%",
@@ -179,6 +250,25 @@ export default function GroceriesDetails() {
             width: 7,
             borderRadius: 5,
         },
+        counter: {
+            flexDirection: "row",
+        },
+        minusAndPlusBox: {
+            padding: 10,
+            borderRadius: 0,
+            borderWidth: 1,
+            borderColor: 'grey',
+        },
+        counterNumber: {
+            padding: 10,
+            fontSize: 15,
+            width: '20%',
+            justifyContent: 'center',
+            alignItems: "center",
+            borderRadius: 0,
+            borderWidth: 1,
+            borderColor: 'grey',
+        }
 
     });
 
@@ -203,7 +293,7 @@ export default function GroceriesDetails() {
                     <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
                         <FontAwesome name="shopping-cart" size={30} />
                         <View style={styles.cartQty}>
-                            <Text>0</Text>
+                            <Text>{shoppingCartNum}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -217,11 +307,17 @@ export default function GroceriesDetails() {
                         <View >
                             <Text style={styles.text}>{info.goods_name}</Text>
                         </View>
-                        <View>
-                            <NumericInput onChange={value => console.log(value)}
-                                totalWidth={100}
-                                totalHeight={30}
-                                iconSize={25} />
+                        <View style={styles.counter}>
+                            <TouchableOpacity style={styles.minusAndPlusBox} onPress={minusOneToCounter}>
+                                <FontAwesome name="minus" size={18} />
+                            </TouchableOpacity>
+                            <View style={styles.counterNumber}>
+                                <Text>{initNum}</Text>
+                            </View>
+
+                            <TouchableOpacity style={styles.minusAndPlusBox} onPress={addOneToCounter}>
+                                <FontAwesome name="plus" size={18} />
+                            </TouchableOpacity>
                         </View>
                     </View>
 
