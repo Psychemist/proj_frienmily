@@ -268,7 +268,11 @@ export default function GroceriesDetails() {
             borderRadius: 0,
             borderWidth: 1,
             borderColor: 'grey',
-        }
+        },
+        cartNumText: {
+            fontSize:9,
+         
+          },
 
     });
 
@@ -291,9 +295,9 @@ export default function GroceriesDetails() {
                 </View>
                 <View>
                     <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
-                        <FontAwesome name="shopping-cart" size={30} />
+                        <FontAwesome name="shopping-cart" size={25} />
                         <View style={styles.cartQty}>
-                            <Text>{shoppingCartNum}</Text>
+                            <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

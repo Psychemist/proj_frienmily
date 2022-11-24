@@ -260,6 +260,10 @@ export default function Groceries() {
       fontWeight: 'bold',
       paddingLeft: 20,
     },
+    cartNumText: {
+      fontSize:9,
+   
+    },
     cartQty: {
       justifyContent: "center",
       alignItems: "center",
@@ -341,41 +345,56 @@ export default function Groceries() {
     },
     bestSellerButton: {
       // margin: 5,
-      fontSize: 20,
+      // fontSize: 50,
       backgroundColor: 'white',
       width: '40%',
       height: 35,
-      // borderRadius: 10,
-      // borderWidth: 1,
-      // borderColor: isBestSeller ? '#47b4b1' : 'white',
-      // borderColor: 'grey',
+      shadowOpacity:1,
+      shadowColor: isBestSeller ? "#47b4b1": "lightgray",
+      shadowRadius:1,
+      shadowOffset: {
+          height: isBestSeller? -4:-4,
+          width: isBestSeller? 4: 4
+      },
       justifyContent: 'center',
       alignItems: 'center',
+      borderTopRightRadius:20,
+      borderTopLeftRadius:20,
+      margin: 2
     },
     exploreButton
 
       : {
       // margin: 5,
-      fontSize: 20,
+      // fontSize: 100,
       backgroundColor: 'white',
       width: '40%',
       height: 35,
-      // borderRadius: 10,
-      // borderWidth: 1,
-      // borderColor: isBestSeller ? 'white' : '#47b4b1',
-      // borderColor: 'grey',
+      shadowOpacity:1,
+      shadowColor:isBestSeller ? "lightgray": "#47b4b1",
+      shadowRadius: 1,
+      shadowOffset: {
+          height: isBestSeller? -4: -4,
+          width: isBestSeller? 4: 4
+      },
       justifyContent: 'center',
       alignItems: 'center',
+      borderTopRightRadius:20,
+      borderTopLeftRadius:20,
+      margin: 2
     },
 
     bestSellerButtonText: {
-      fontSize: isBestSeller ? 15 : 12,
+      fontSize: isBestSeller ? 20 : 20,
+      fontWeight: "bold"
+  
     },
     exploreButtonText: {
-      fontSize: isBestSeller ? 15 : 18,
+      fontSize: isBestSeller ? 20 : 20,
+      fontWeight: "bold"
     },
     groupTypeButtonContainer: {
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       flexDirection: 'row',
       width: '100%',
       paddingTop: 10,
@@ -439,7 +458,7 @@ export default function Groceries() {
           <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
             <FontAwesome name="shopping-cart" size={25} />
             <View style={styles.cartQty}>
-              <Text>{shoppingCartNum}</Text>
+              <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -476,9 +495,6 @@ export default function Groceries() {
 
       {isBestSeller == true &&
         <View style={{ backgroundColor: 'white' }}>
-          <View >
-            <Text style={styles.text}>Best Seller</Text>
-          </View>
 
           <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '100%' }}>
             <View style={styles.container2}>
