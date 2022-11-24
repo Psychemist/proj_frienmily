@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Pressable, Image } from "react-native";
+import { StatusBar, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Pressable, Image } from "react-native";
 import FriendItem from "./FriendItem";
 import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -370,8 +370,9 @@ export default function GroceriesDetails() {
         
 
 //---------------SEARCH BAR--------------------//
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
-      {isShow? <ScrollView style={styles.dropDown}>
+<SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
+<StatusBar barStyle="light-content"/>
+{isShow? <ScrollView style={styles.dropDown}>
           {searchResult.map((item: any, idx: number) => (
             <SearchBarItem item={item} key={idx} />
           ))}

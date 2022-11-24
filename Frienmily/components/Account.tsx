@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, StatusBar} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
@@ -234,6 +234,7 @@ export default function Account() {
 
     return (
         <SafeAreaView style={styles.mainPage}>
+            <StatusBar barStyle="dark-content" />
             {/* <View style={{ alignItems: "center" }}>
                 <Text style={{ fontSize: 25, paddingBottom: "1%" }}>Account</Text>
             </View> */}

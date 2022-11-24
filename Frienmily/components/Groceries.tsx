@@ -11,6 +11,7 @@ import {
   FlatList,
   Button,
   ActivityIndicator,
+  StatusBar,
 } from 'react-native';
 import FriendItem from './FriendItem';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -442,6 +443,7 @@ export default function Groceries() {
   return (
     //---------------SEARCH BAR--------------------//
     <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
+      <StatusBar barStyle="light-content"/>
       {isShow? <ScrollView style={styles.dropDown}>
           {searchResult.map((item: any, idx: number) => (
             <SearchBarItem item={item} key={idx} />
