@@ -15,7 +15,8 @@ export default function GroceriesDetails() {
     let info = route.params.info || ''
     const navigation = useNavigation();
     const [groupName, setGroupName] = React.useState("");
-    const [initNum, setInitNum] = React.useState(0);
+    const [initNum, setInitNum] = React.useState<number>(0);
+    const [shoppingCartNum, setShoppingCartNum] = React.useState<number>(0);
     function addZeroes(num: number) {
         return (Math.round(num * 100) / 100).toFixed(2)
     }
@@ -54,9 +55,33 @@ export default function GroceriesDetails() {
                 setInitNum(json.quantity)
 
             };
+
+            const shoppingCartInitNum = async () => {
+                const quantity = await fetch(`${REACT_APP_API_SERVER}/goods/getShoppingCartInitNum/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userIdInRedux,
+                        goods_id: info.id,
+                        category_id: info.category_id
+                    }),
+                });
+                let json = await quantity.json()
+                console.log("shoppingCart :", json.shoppingCartInit)
+                if (json.shoppingCartInit == null) {
+                    setShoppingCartNum(0)
+                } else {
+                    setShoppingCartNum(json.shoppingCartInit)
+                }
+
+            };
+
+
+
             if (isFocused) {
                 insertUserLiked()
                 getInitNum()
+                shoppingCartInitNum()
             }
 
         } catch (error) {
@@ -64,38 +89,40 @@ export default function GroceriesDetails() {
         }
 
     }, [isFocused]);
-    useEffect(() => {
-        try {
-            console.log("initNum", initNum)
 
-            async function updateCounter() {
-                await fetch(`${REACT_APP_API_SERVER}/goods/addToCart/`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        user_id: userIdInRedux,
-                        goods_id: info.id,
-                        quantity: initNum
-                    }),
-                })
-            }
-            updateCounter()
+    async function updateCounter(initNum: number) {
+        console.log(initNum);
 
-        } catch (error) {
-            console.log('error', error);
-        }
-
-    }, [initNum]);
-
+        await fetch(`${REACT_APP_API_SERVER}/goods/addToCart/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: userIdInRedux,
+                goods_id: info.id,
+                quantity: initNum
+            }),
+        })
+    }
 
     const addOneToCounter = () => {
-        setInitNum(initNum + 1)
+
+
+        setShoppingCartNum((e) => +e + 1)
+        setInitNum((e) => {
+            updateCounter(+e + 1)
+            return e + 1
+        })
+
     }
     const minusOneToCounter = () => {
         if (initNum - 1 < 0) {
             return
         }
-        setInitNum(initNum - 1)
+        setShoppingCartNum((e) => +e - 1)
+        setInitNum((e) => {
+            updateCounter(+e - 1)
+            return e - 1
+        })
     }
 
     const styles = StyleSheet.create({
@@ -268,7 +295,7 @@ export default function GroceriesDetails() {
                     <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
                         <FontAwesome name="shopping-cart" size={30} />
                         <View style={styles.cartQty}>
-                            <Text>0</Text>
+                            <Text>{shoppingCartNum}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -282,15 +309,6 @@ export default function GroceriesDetails() {
                         <View >
                             <Text style={styles.text}>{info.goods_name}</Text>
                         </View>
-                        {/* <View>
-                            <NumericInput onChange={value => amountChanged(value)}
-                                totalWidth={100}
-                                totalHeight={30}
-                                iconSize={25}
-                                editable={false}
-                                minValue={0}
-                            />
-                        </View> */}
                         <View style={styles.counter}>
                             <TouchableOpacity style={styles.minusAndPlusBox} onPress={minusOneToCounter}>
                                 <FontAwesome name="minus" size={18} />
