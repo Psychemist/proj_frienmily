@@ -1,43 +1,85 @@
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Pressable } from "react-native";
-import React from 'react';
-import { useNavigation } from "@react-navigation/native";
+import React, { useEffect } from 'react';
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button, Icon } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input'
+import { REACT_APP_API_SERVER } from '@env';
 
-export default function ShoppingListItem() {
-    const [SelectBuy, setSelectBuy] = React.useState(null);
+interface ShoppingListItemProps {
+    items: any;
+    key: number;
+}
+
+export default function ShoppingListItem(props: ShoppingListItemProps) {
     const [isSelected, setIsSelected] = React.useState(false);
+    const isFocused = useIsFocused();
 
-    const selectButton = () => {
-        setSelectBuy("buy" as never)
-        setIsSelected(true)
-        if (isSelected == true) {
-            setIsSelected(false)
-        }
+
+    const selectButton = async () => {
+        setIsSelected(!isSelected)
+        console.log(props.items.cart_id);
+        // console.log(props.items)
+
+        await fetch(`${REACT_APP_API_SERVER}/goods/changeIsCompleted/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                cart_id: props.items.cart_id,
+            }),
+        });
+
+
+
     }
+
+    useEffect(() => {
+        try {
+            const getIsCompleted = async () => {
+                console.log(props.items.is_completed);
+                setIsSelected(props.items.is_completed)
+
+            }
+
+
+            if (isFocused) {
+                getIsCompleted()
+            }
+
+        } catch (error) {
+            console.log('error', error);
+        }
+
+    }, [isFocused]);
+
+    const getLowest = () => {
+        let allPriceArray = [
+            { price: parseFloat(props.items.wellcome_price), shop: "惠康" },
+            { price: parseFloat(props.items.parknshop_price), shop: "百佳" },
+            { price: parseFloat(props.items.jasons_price), shop: "Jasons" },
+            { price: parseFloat(props.items.watsons_price), shop: "屈臣氏" },
+            { price: parseFloat(props.items.mannings_price), shop: "萬寧" },
+            { price: parseFloat(props.items.aeon_price), shop: "AEON" },
+            { price: parseFloat(props.items.dch_price), shop: "大昌食品" },
+            { price: parseFloat(props.items.ztore_price), shop: "士多" }
+        ]
+        let filtered = allPriceArray.filter(function (e) {
+            return e.price != NaN;
+        });
+        const lowest = filtered.reduce((previous, current) => {
+            return current.price < previous.price ? current : previous;
+        });
+        return lowest
+    }
+    function addZeroes(num: number) {
+        return (Math.round(num * 100) / 100).toFixed(2)
+    }
+
     const styles = StyleSheet.create({
         text: {
             fontSize: 15,
         },
-        // container: {
-        //     justifyContent: "space-between",
-        //     alignItems: "center",
-        //     flexDirection: "row",
-        //     width: "100%",
-        //     padding: 10,
-        //     paddingTop: 32,
-        //     paddingBottom: 32,
-        //     backgroundColor: "#E2D8CF",
-        //     //SHADOW
-        //     shadowOpacity: 0.2,
-        //     shadowRadius: 3,
-        //     shadowOffset: {
-        //         height: 1,
-        //         width: 1
-        //     }
-        // },
         itemContainer: {
             width: "100%",
             height: 100,
@@ -86,17 +128,17 @@ export default function ShoppingListItem() {
             <TouchableOpacity style={styles.selectButton} onPress={selectButton}>
                 <Text style={styles.buttonFontSize}><FontAwesome name='circle-o' size={20} /></Text>
             </TouchableOpacity>
-            <View ><Text style={styles.text}>x2</Text></View>
+            <View ><Text style={styles.text}>x{props.items.quantity}</Text></View>
             <Pressable onPress={() => navigation.navigate('Groceries' as never)}>
                 {/* change navigation to product details */}
-                <View><Image source={{ uri: 'https://reactjs.org/logo-og.png' }}
+                <View><Image source={{ uri: props.items.goods_picture }}
                     style={{ width: 50, height: 50 }} /></View>
             </Pressable>
-            <View >
-                <View><Text style={styles.text}>Groceries Details</Text></View>
-                <View><Text style={styles.text}>Supermarket</Text></View>
+            <View style={{ width: 200 }}>
+                <View><Text style={styles.text}>{props.items.name}</Text></View>
+                <View><Text style={styles.text}>{getLowest().shop}</Text></View>
             </View>
-            <View ><Text style={styles.text}>HK$80</Text></View>
+            <View ><Text style={styles.text}>HK${addZeroes(getLowest().price * props.items.quantity)}</Text></View>
         </View>
     )
 }
