@@ -13,7 +13,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import FriendItem from './FriendItem';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import GroceriesCategories from './GroceriesCategories';
 import GroceriesRandomItems from './GroceriesRandomItems';
@@ -21,6 +21,10 @@ import GroceriesTopItems from './GroceriesTopItems';
 import { REACT_APP_API_SERVER } from '@env';
 import { useQuery } from "react-query";
 import { createIconSetFromFontello } from 'react-native-vector-icons';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+
+
 
 export default function Groceries() {
   const navigation = useNavigation();
@@ -29,6 +33,41 @@ export default function Groceries() {
   const [allTop5Data, setAllTop5Data]: any = useState([]);
   const [groupName, setGroupName] = React.useState('');
   const [page, setPage] = useState(1)
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
+  const [shoppingCartNum, setShoppingCartNum] = React.useState<number>(0);
+
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    try {
+      const shoppingCartInitNum = async () => {
+        const quantity = await fetch(`${REACT_APP_API_SERVER}/goods/getShoppingCartInitNum/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user_id: userIdInRedux
+          }),
+        });
+        let json = await quantity.json()
+        console.log("shoppingCart :", json.shoppingCartInit)
+        if (json.shoppingCartInit == null) {
+          setShoppingCartNum(0)
+        } else {
+          setShoppingCartNum(json.shoppingCartInit)
+        }
+
+      };
+
+
+
+      if (isFocused) {
+        shoppingCartInitNum()
+      }
+
+    } catch (error) {
+      console.log('error', error);
+    }
+
+  }, [isFocused]);
 
 
   const bestSellerButton = () => {
@@ -307,7 +346,7 @@ export default function Groceries() {
           <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
             <FontAwesome name="shopping-cart" size={30} />
             <View style={styles.cartQty}>
-              <Text>0</Text>
+              <Text>{shoppingCartNum}</Text>
             </View>
           </TouchableOpacity>
         </View>

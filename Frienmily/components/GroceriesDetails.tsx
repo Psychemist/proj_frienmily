@@ -61,9 +61,7 @@ export default function GroceriesDetails() {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        user_id: userIdInRedux,
-                        goods_id: info.id,
-                        category_id: info.category_id
+                        user_id: userIdInRedux
                     }),
                 });
                 let json = await quantity.json()
