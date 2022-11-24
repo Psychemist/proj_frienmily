@@ -239,7 +239,7 @@ export default function Groceries() {
     dropDown: {
       position: "absolute",
       left: "6%",
-      // maxHeight: "40%",
+      maxHeight: "30%",
       width: "88%",
       top: "16%",
       zIndex:9,
