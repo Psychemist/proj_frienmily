@@ -239,7 +239,7 @@ export default function Groceries() {
     dropDown: {
       position: "absolute",
       left: "6%",
-      // maxHeight: "40%",
+      maxHeight: "30%",
       width: "88%",
       top: "16%",
       zIndex:9,
@@ -436,7 +436,7 @@ export default function Groceries() {
         {/* //---------------SEARCH BAR--------------------// */}
         <View>
           <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
-            <FontAwesome name="shopping-cart" size={30} />
+            <FontAwesome name="shopping-cart" size={25} />
             <View style={styles.cartQty}>
               <Text>{shoppingCartNum}</Text>
             </View>
