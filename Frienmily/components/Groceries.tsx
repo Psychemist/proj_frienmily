@@ -76,55 +76,10 @@ export default function Groceries() {
   const [isShow, setIsShow] = useState<boolean>(false)
   const [searchResult, setSearchResult] = useState([])
   const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 500)
-  const [searching, setSearching] = useState(false)
-  // const UselessTextInput = () => {
-  // const [text, onChangeText] = React.useState("Useless Text");
-  // const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
-  //    setValue(event.target.value)
-  //   }
-
-  // Fetch API (optional)
-  // useEffect(() => {
-  //   // Do fetch here...
-  //   // Triggers when "debouncedValue" changes
-  //   if (debouncedSearchKeyword && debouncedSearchKeyword.length >= 3) {
-  //     console.log('i am now seraching :', debouncedSearchKeyword)
-
-  //     const loadSearchResult = async () => {
-  //       try {
-  //         console.log('Seraching Result...');
-  //         const response = await fetch(
-  //           `${REACT_APP_API_SERVER}/goods/searchKeyword/`,
-  //           {
-  //             method: 'POST',
-  //             headers: { 'Content-Type': 'application/json' },
-  //             body: JSON.stringify({
-  //               name: debouncedSearchKeyword,
-  //             }),
-  //           },
-  //         );
-
-  //         let json = [];
-  //         if (response) {
-  //           json = await response.json();
-  //         }
-  //         // console.log("json :", json.searchResult);
-  //         setSearchResult(json.searchResult);
-  //       } catch (error) {
-  //         console.log('error', error);
-  //       }
-  //     };
-  //     if (isFocused) {
-  //       loadSearchResult();
-  //     }
-  //   }
-  // }, [debouncedSearchKeyword])
-
-  const textChange = (value: string)=> {
-    setSearchKeyword(value)
-    console.log("value: ", value)
-    if (value && value.length >= 3) {
-      console.log('i am now seraching :', value)
+  const textChange = ()=> {
+    // console.log("value: ", debouncedSearchKeyword)
+    if (debouncedSearchKeyword && debouncedSearchKeyword.length >= 2) {
+      console.log('i am now searching :', debouncedSearchKeyword)
 
       const loadSearchResult = async () => {
         try {
@@ -135,7 +90,7 @@ export default function Groceries() {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                name: value,
+                name: debouncedSearchKeyword,
               }),
             },
           );
@@ -170,7 +125,9 @@ export default function Groceries() {
     //   setIsShow(true)
     // }
   }
-
+  useEffect(()=>{
+    textChange()
+  },[debouncedSearchKeyword])
   //---------------SEARCH BAR--------------------//
 
 
@@ -213,8 +170,8 @@ export default function Groceries() {
       console.log('error', error);
     }
   }
-  console.log("exploreResults :", allExploreData);
-  console.log("top5Results :", allTop5Data);
+  // console.log("exploreResults :", allExploreData);
+  // console.log("top5Results :", allTop5Data);
 
   // TODO: Infinite Scroll Pagination
 
@@ -281,10 +238,10 @@ export default function Groceries() {
   const styles = StyleSheet.create({
     dropDown: {
       position: "absolute",
-      left: "8%",
+      left: "6%",
       // maxHeight: "40%",
-      width: "70%",
-      top: "14.5%",
+      width: "88%",
+      top: "16%",
       zIndex:9,
       padding: 10,
       backgroundColor: '#F5F5F5',
@@ -457,12 +414,11 @@ export default function Groceries() {
   return (
     //---------------SEARCH BAR--------------------//
     <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
-      {isShow? <View style={styles.dropDown}>
+      {isShow? <ScrollView style={styles.dropDown}>
           {searchResult.map((item: any, idx: number) => (
             <SearchBarItem item={item} key={idx} />
           ))}
-        </View>: (null)}
-        
+        </ScrollView>: (null)}
       <View style={styles.container}>
         <ScrollView >
           <TextInput
@@ -470,7 +426,10 @@ export default function Groceries() {
             value={searchKeyword}
             // onChangeText={setSearchKeyword}
             style={styles.input}
-            onChangeText={(e) => textChange(e)}
+            onChangeText={(value) => {
+              console.log('on change value = ', value)
+              setSearchKeyword(value)
+            }}
           />        
 
         </ScrollView>

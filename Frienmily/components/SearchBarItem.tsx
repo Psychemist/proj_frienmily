@@ -28,14 +28,16 @@ export default function SearchBarItem(props: SearchBarItemProps) {
             marginRight: 20,
             color: '#81848b'
         },
-
+        searchItemBox:{
+            padding:10,
+        }
     });
 
     // TODO: Show the user image of each friend
 
     return (
         <TouchableOpacity onPress={() => navigation.navigate('GroceriesDetails' as never, { info: props.item } as never)}>
-            <View>
+            <View style={styles.searchItemBox}>
                 <View><Text style={styles.text}>{props.item.name}</Text></View>
             </View>
         </TouchableOpacity>
