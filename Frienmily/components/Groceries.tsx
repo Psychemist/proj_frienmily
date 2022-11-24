@@ -239,7 +239,8 @@ export default function Groceries() {
     dropDown: {
       position: "absolute",
       left: "6%",
-      maxHeight: "30%",
+      maxHeight: "50%",
+      minHeight:"50%",
       width: "88%",
       top: "16%",
       zIndex:9,
@@ -420,7 +421,7 @@ export default function Groceries() {
           ))}
         </ScrollView>: (null)}
       <View style={styles.container}>
-        <ScrollView >
+        <View >
           <TextInput
             placeholder="Search Products"
             value={searchKeyword}
@@ -432,7 +433,7 @@ export default function Groceries() {
             }}
           />        
 
-        </ScrollView>
+        </View>
         {/* //---------------SEARCH BAR--------------------// */}
         <View>
           <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
