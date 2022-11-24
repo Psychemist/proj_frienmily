@@ -192,6 +192,11 @@ export default function AssignGroup() {
     }
   }, [isFocused]);
 
+  const selectedGroup = (group_id: number) => {
+    console.log("group_id :", group_id);
+
+  }
+
 
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
@@ -225,20 +230,15 @@ export default function AssignGroup() {
           <Text style={[styles.caption, { right: 25 }]}>Assign Group</Text>
         </View>
 
-        {/* <ScrollView style={[styles.groupsWrapper, { backgroundColor: '#F5F5F5' }]}>
-          {groupItemList.map((item: any, idx: number) => (
-            <TouchableOpacity style={styles.itemContainer}>
-              <Text>{item.group_name}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView> */}
-
 
       </View>
 
       <ScrollView style={styles.scrollWrapper}>
         {groupItemList.map((item: any, idx: number) => (
-          <TouchableOpacity style={styles.itemContainer}>
+          <TouchableOpacity style={styles.itemContainer} onPress={() => {
+            selectedGroup(item.id)
+            // navigation.navigate('HomeTab' as never)
+          }}>
             <View style={styles.groupImage}></View>
             <Text style={styles.groupName}>{item.group_name}</Text>
           </TouchableOpacity>

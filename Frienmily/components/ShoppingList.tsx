@@ -31,7 +31,8 @@ export default function ShoppingList() {
             groupID: groupId,
           }),
         });
-        let groupName = [];
+
+        let groupName;
         if (response) {
           groupName = await response.json();
         }
