@@ -296,12 +296,20 @@ export default function Groceries() {
     input: {
       height: 40,
       margin: 12,
-      borderWidth: 1,
+      borderWidth: 2.5,
       padding: 10,
       minWidth: 300,
       maxWidth: 300,
-      borderRadius: 10,
+      borderRadius: 15,
       backgroundColor: 'white',
+      borderColor:"white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+          height: 1,
+          width: 1
+      }
+
     },
     searchButton: {
       margin: 5,
