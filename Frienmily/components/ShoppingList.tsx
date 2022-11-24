@@ -18,8 +18,10 @@ export default function ShoppingList() {
 
   const isFocused = useIsFocused();
   const [groupName, setGroupName] = useState();
+  const [allAssignedItems, setAllAssignedItems] = useState([]);
+  const [estimatedTotal, setEstimatedTotal] = useState(0)
   useEffect(() => {
-    const loadFriendList = async () => {
+    const getGroupName = async () => {
       try {
         console.log('get group name');
         console.log("groupID :", groupId);
@@ -41,10 +43,61 @@ export default function ShoppingList() {
         console.log('error', error);
       }
     };
+    const getAssignedItems = async () => {
+      try {
+        console.log('getAssignedItems');
+        console.log("groupIdHERE :", groupId)
+
+        const response = await fetch(`${REACT_APP_API_SERVER}/goods/getAssignedItems/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            groupId: groupId,
+          }),
+        });
+        let result;
+        if (response) {
+          result = await response.json();
+        }
+        setAllAssignedItems(result);
+        let total = 0
+        for (let item of result) {
+          const getLowest = () => {
+            let allPriceArray = [
+              { price: parseFloat(item.wellcome_price), shop: "惠康" },
+              { price: parseFloat(item.parknshop_price), shop: "百佳" },
+              { price: parseFloat(item.jasons_price), shop: "Jasons" },
+              { price: parseFloat(item.watsons_price), shop: "屈臣氏" },
+              { price: parseFloat(item.mannings_price), shop: "萬寧" },
+              { price: parseFloat(item.aeon_price), shop: "AEON" },
+              { price: parseFloat(item.dch_price), shop: "大昌食品" },
+              { price: parseFloat(item.ztore_price), shop: "士多" }
+            ]
+            let filtered = allPriceArray.filter(function (e) {
+              return e.price != NaN;
+            });
+            const lowest = filtered.reduce((previous, current) => {
+              return current.price < previous.price ? current : previous;
+            });
+            return lowest
+          }
+          console.log(getLowest().price * item.quantity)
+          total += getLowest().price * item.quantity
+        }
+        setEstimatedTotal(total)
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
     if (isFocused) {
-      loadFriendList();
+      getGroupName();
+      getAssignedItems()
     }
   }, [isFocused]);
+
+  function addZeroes(num: number) {
+    return (Math.round(num * 100) / 100).toFixed(2)
+  }
 
 
 
@@ -142,14 +195,9 @@ export default function ShoppingList() {
         <Text style={{ fontSize: 20 }}>{groupName}</Text>
       </View>
       <ScrollView style={styles.scrollWrapper}>
-        <ShoppingListItem />
-        <ShoppingListItem />
-        <ShoppingListItem />
-        <ShoppingListItem />
-        <ShoppingListItem />
-        <ShoppingListItem />
-        <ShoppingListItem />
-        <ShoppingListItem />
+        {allAssignedItems.map((item: any, idx: number) => (
+          <ShoppingListItem items={item} key={idx} />
+        ))}
       </ScrollView>
       <View style={{ width: "100%" }}>
         <View>
@@ -162,7 +210,7 @@ export default function ShoppingList() {
           </TouchableOpacity>
         </View>
         <View>
-          <Text style={styles.totalText}>Estimate Total: HKD$ 800</Text>
+          <Text style={styles.totalText}>Estimate Total: HKD$ {addZeroes(estimatedTotal)}</Text>
         </View>
       </View>
 
