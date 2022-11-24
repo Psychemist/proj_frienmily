@@ -15,11 +15,11 @@ export default function GroceriesDetails() {
     let info = route.params.info || ''
     const navigation = useNavigation();
     const [groupName, setGroupName] = React.useState("");
+    const [initNum, setInitNum] = React.useState(10);
     function addZeroes(num: number) {
         return (Math.round(num * 100) / 100).toFixed(2)
     }
     const userIdInRedux = useSelector((state: RootState) => state.user.userId);
-    console.log("Details :", info);
     const isFocused = useIsFocused();
     useEffect(() => {
         try {
@@ -35,8 +35,28 @@ export default function GroceriesDetails() {
                     }),
                 });
             };
+
+            const getInitNum = async () => {
+                const response = await fetch(`${REACT_APP_API_SERVER}/goods/getInitNum/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userIdInRedux,
+                        goods_id: info.id
+                    }),
+                });
+                let json;
+                if (response) {
+                    json = await response.json();
+                }
+                console.log(json.quantity);
+
+                setInitNum(json.quantity)
+
+            };
             if (isFocused) {
-                insertUserLiked();
+                insertUserLiked()
+                getInitNum()
             }
 
         } catch (error) {
@@ -44,6 +64,31 @@ export default function GroceriesDetails() {
         }
 
     }, [isFocused]);
+
+    const amountChanged = async (amount: number) => {
+
+        console.log(amount);
+        try {
+            // setInitNum(amount)
+            console.log("change from DB");
+
+            let response = await fetch(`${REACT_APP_API_SERVER}/goods/addToCart/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: userIdInRedux,
+                    goods_id: info.id,
+                    quantity: amount
+                }),
+            })
+
+            console.log("Inserted a record to DB")
+
+        } catch (e) {
+            console.log("error: ", e)
+
+        }
+    }
 
     const styles = StyleSheet.create({
         searchBarcontainer: {
@@ -56,13 +101,6 @@ export default function GroceriesDetails() {
             paddingTop: 2,
             paddingBottom: 2,
             backgroundColor: "#47b4b1",
-            //SHADOW
-            // shadowOpacity: 0.1,
-            // shadowRadius: 2,
-            // shadowOffset: {
-            //     height: 1,
-            //     width: 1
-            // }
         },
         header: {
             height: "5%",
@@ -218,10 +256,14 @@ export default function GroceriesDetails() {
                             <Text style={styles.text}>{info.goods_name}</Text>
                         </View>
                         <View>
-                            <NumericInput onChange={value => console.log(value)}
+                            <NumericInput onChange={value => amountChanged(value)}
                                 totalWidth={100}
                                 totalHeight={30}
-                                iconSize={25} />
+                                iconSize={25}
+                                editable={false}
+                                minValue={0}
+                            // value={0}
+                            />
                         </View>
                     </View>
 

@@ -70,8 +70,8 @@ export default function Groceries() {
       console.log('error', error);
     }
   }
-  console.log("exploreResults :", allExploreData);
-  console.log("top5Results :", allTop5Data);
+  // console.log("exploreResults :", allExploreData);
+  // console.log("top5Results :", allTop5Data);
 
   // TODO: Infinite Scroll Pagination
 
