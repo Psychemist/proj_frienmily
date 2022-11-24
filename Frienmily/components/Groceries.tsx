@@ -280,7 +280,7 @@ export default function Groceries() {
       shadowOffset: {
           height: 1,
           width: 1
-      }
+      } 
     },
     container: {
       position:"relative",
