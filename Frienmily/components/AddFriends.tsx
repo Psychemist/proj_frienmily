@@ -90,7 +90,7 @@ export default function AddFriends() {
     searchButton: {
       margin: 5,
       fontSize: 20,
-      backgroundColor: '#907651',
+      backgroundColor: '#47b4b1',
       width: 120,
       height: 45,
       borderRadius: 100,
@@ -138,24 +138,27 @@ export default function AddFriends() {
     messageText: {
       fontSize: 18,
     },
-    container: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'row',
-      width: 320,
-      height: 100,
-      borderRadius: 25,
-      padding: 10,
-      paddingTop: 32,
-      paddingBottom: 32,
-      backgroundColor: '#E2D8CF',
-      //SHADOW
-      shadowOpacity: 0.8,
-      shadowRadius: 3,
+    alertBox: {
+      width: "75%",
+      height: "13%",
+      backgroundColor: "white",
       shadowOffset: {
-        height: 1,
-        width: 1,
+        width: 0,
+        height: 0,
       },
+      shadowOpacity: 0.32,
+      shadowRadius: 5.46,
+      elevation: 9,
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 10,
+      paddingTop: 20,
+      paddingBottom: 20,
+      borderRadius: 15,
+      marginTop: 5,
+      marginBottom: 5,
+
     },
     container2: {
       justifyContent: 'space-between',
@@ -186,7 +189,7 @@ export default function AddFriends() {
   });
 
   return (
-    <View style={{ alignItems: 'center', backgroundColor: '#F4E9DF', flex: 1 }}>
+    <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1 }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -197,8 +200,8 @@ export default function AddFriends() {
         <Text style={styles.text}>Add Friends</Text>
       </View>
       <Text>
-        <FontAwesome name="mobile" size={50} /> Enter your friend's phone
-        number:
+        <FontAwesome name="mobile" size={50} />
+        Add a new contact to Frienmily
       </Text>
       <TextInput
         autoCapitalize="none"
@@ -213,34 +216,34 @@ export default function AddFriends() {
       </TouchableOpacity>
 
       {addFriendStatus == 1 ? (
-        <View style={styles.container}>
+        <View style={styles.alertBox}>
           <View>
             <FontAwesome
               name="exclamation-triangle"
               size={30}
-              style={{ color: 'red', marginRight: '2%' }}
+              style={{ color: '#47b4b1', marginRight: '2%' }}
             />
           </View>
-          <Text style={styles.messageText}>No such user!</Text>
+          <Text style={styles.messageText}>No user found</Text>
         </View>
       ) : addFriendStatus == 2 ? (
-        <View style={styles.container}>
+        <View style={styles.alertBox}>
           <View>
             <FontAwesome
               name="exclamation-triangle"
               size={30}
-              style={{ color: 'red', marginRight: '2%' }}
+              style={{ color: '#47b4b1', marginRight: '2%' }}
             />
           </View>
-          <Text style={styles.messageText}>Cannot add yourself!</Text>
+          <Text style={styles.messageText}>Cannot add yourself</Text>
         </View>
       ) : addFriendStatus == 3 ? (
-        <View style={styles.container}>
+        <View style={styles.alertBox}>
           <View>
             <FontAwesome
               name="exclamation-triangle"
               size={30}
-              style={{ color: 'red', marginRight: '2%' }}
+              style={{ color: '#47b4b1', marginRight: '2%' }}
             />
           </View>
           <Text style={styles.messageText}>He/She is your friend already!</Text>
