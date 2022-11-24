@@ -207,15 +207,18 @@ export default function CreateGroup() {
       maxWidth: 200,
       borderRadius: 10,
     },
-    createButton: {
-      margin: 5,
-      fontSize: 20,
-      backgroundColor: '#907651',
-      width: 70,
-      height: 70,
-      borderRadius: 100,
+    createBtn: {
+      backgroundColor: '#47b4b1',
+      height: 40,
+      width: 360,
+      display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      margin: 10,
+      borderRadius: 15,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      color: 'white',
     },
     groupTypeButtonContainer: {
       justifyContent: 'center',
@@ -294,7 +297,7 @@ export default function CreateGroup() {
   });
 
   return (
-    <View style={{ alignItems: 'center', backgroundColor: '#F4E9DF', flex: 1 }}>
+    <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1 }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -358,8 +361,8 @@ export default function CreateGroup() {
         ))}
       </ScrollView>
 
-      <TouchableOpacity style={styles.createButton} onPress={submitButton}>
-        <Text>Create Group</Text>
+      <TouchableOpacity style={styles.createBtn} onPress={submitButton}>
+        <Text style={{ color: "white" }}>Create Group</Text>
       </TouchableOpacity>
     </View>
   );

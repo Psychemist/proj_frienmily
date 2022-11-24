@@ -70,7 +70,7 @@ export default function Groceries() {
       console.log('error', error);
     }
   }
-  // console.log("exploreResults :", allExploreData);
+  console.log("exploreResults :", allExploreData);
   // console.log("top5Results :", allTop5Data);
 
   // TODO: Infinite Scroll Pagination
@@ -112,9 +112,10 @@ export default function Groceries() {
     }
   }
 
-  const renderItem = ({ }) => {
+  const renderItem = ({ item }) => (
+    <GroceriesRandomItems item={item} />
+  )
 
-  }
 
   useEffect(() => {
     requestAPI()
@@ -387,32 +388,22 @@ export default function Groceries() {
       {/* Random Goods Column */}
       {
         isBestSeller == false &&
-
-        // <FlatList
-        //   contentContainerStyle={{ flexGrow: 1 }}
-        //   data={allExploreData}
-        //   renderItem={renderItem}
-        //   ListFooterComponent={renderFooter}
-        //   ListEmptyComponent={renderEmpty}
-        //   onEndReachedThreshold={0.2}
-        //   onEndReached={fetchMoreDataOnPageEnd}
-        // />
-
-
-        <ScrollView style={{ backgroundColor: 'white', width: '100%' }}>
-          <View style={styles.randomItemsContainer}>
-            <View>
-              <Text style={styles.text}>Explore</Text>
-            </View>
-            <View style={styles.topItemsCards}>
-              <View style={styles.container3}>
-                {allExploreData.map((item: any, idx: number) => (
-                  <GroceriesRandomItems item={item} key={idx} />
-                ))}
-              </View>
-            </View>
+          allExploreData.loading ?
+          <View>
+            <ActivityIndicator size="large" />
           </View>
-        </ScrollView>
+          :
+          <FlatList
+            style={{ backgroundColor: 'white' }}
+            contentContainerStyle={{ flexGrow: 1 }}
+            data={allExploreData}
+            renderItem={renderItem}
+            ListFooterComponent={renderFooter}
+            ListEmptyComponent={renderEmpty}
+            onEndReachedThreshold={0.2}
+            onEndReached={fetchMoreDataOnPageEnd}
+          />
+
 
 
       }
