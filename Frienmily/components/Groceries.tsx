@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -21,6 +21,9 @@ import GroceriesTopItems from './GroceriesTopItems';
 import { REACT_APP_API_SERVER } from '@env';
 import { useQuery } from "react-query";
 import { createIconSetFromFontello } from 'react-native-vector-icons';
+import useDebounce from './useDebounce';
+import { useIsFocused } from '@react-navigation/native';
+import SearchBarItem from './SearchBarItem';
 
 export default function Groceries() {
   const navigation = useNavigation();
@@ -29,6 +32,109 @@ export default function Groceries() {
   const [allTop5Data, setAllTop5Data]: any = useState([]);
   const [groupName, setGroupName] = React.useState('');
   const [page, setPage] = useState(1)
+
+  //---------------SEARCH BAR--------------------//
+  const [searchKeyword, setSearchKeyword] = useState<string>('')
+  const [isShow, setIsShow] = useState<boolean>(false)
+  const [searchResult, setSearchResult] = useState([])
+  const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 500)
+  const isFocused = useIsFocused();
+  const [searching, setSearching] = useState(false)
+  // const UselessTextInput = () => {
+  // const [text, onChangeText] = React.useState("Useless Text");
+  // const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
+  //    setValue(event.target.value)
+  //   }
+
+  // Fetch API (optional)
+  // useEffect(() => {
+  //   // Do fetch here...
+  //   // Triggers when "debouncedValue" changes
+  //   if (debouncedSearchKeyword && debouncedSearchKeyword.length >= 3) {
+  //     console.log('i am now seraching :', debouncedSearchKeyword)
+
+  //     const loadSearchResult = async () => {
+  //       try {
+  //         console.log('Seraching Result...');
+  //         const response = await fetch(
+  //           `${REACT_APP_API_SERVER}/goods/searchKeyword/`,
+  //           {
+  //             method: 'POST',
+  //             headers: { 'Content-Type': 'application/json' },
+  //             body: JSON.stringify({
+  //               name: debouncedSearchKeyword,
+  //             }),
+  //           },
+  //         );
+
+  //         let json = [];
+  //         if (response) {
+  //           json = await response.json();
+  //         }
+  //         // console.log("json :", json.searchResult);
+  //         setSearchResult(json.searchResult);
+  //       } catch (error) {
+  //         console.log('error', error);
+  //       }
+  //     };
+  //     if (isFocused) {
+  //       loadSearchResult();
+  //     }
+  //   }
+  // }, [debouncedSearchKeyword])
+
+  const textChange = (value: string)=> {
+    setSearchKeyword(value)
+    console.log("value: ", value)
+    if (value && value.length >= 3) {
+      console.log('i am now seraching :', value)
+
+      const loadSearchResult = async () => {
+        try {
+          console.log('Seraching Result...');
+          const response = await fetch(
+            `${REACT_APP_API_SERVER}/goods/searchKeyword/`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                name: value,
+              }),
+            },
+          );
+
+          let json = [];
+          if (response) {
+            json = await response.json();
+          }
+          // console.log("json :", json.searchResult);
+          setSearchResult(json.searchResult);
+          setIsShow(true)
+
+        } catch (error) {
+          console.log('error', error);
+          setIsShow(false)
+
+        }
+      };
+      if (isFocused) {
+        loadSearchResult();
+      }
+    } else {
+      setIsShow(false)
+
+    }
+
+    // console.log(searchKeyword);
+    
+    // if (searchKeyword == '') {
+    //   setIsShow(false)
+    // } else {
+    //   setIsShow(true)
+    // }
+  }
+
+  //---------------SEARCH BAR--------------------//
 
 
   const bestSellerButton = () => {
@@ -53,11 +159,7 @@ export default function Groceries() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-<<<<<<< HEAD
-            qtyInOneBatch: 21,
-=======
             qtyInOneBatch: 30,
->>>>>>> f671cd6baa2c88163cff929080df4a7289a18f8e
             ItemsToBeSkipped: 0,
             catIds: array
           }),
@@ -74,8 +176,7 @@ export default function Groceries() {
       console.log('error', error);
     }
   }
-  console.log("exploreResults :", allExploreData);
-  console.log("top5Results :", allTop5Data);
+
 
   // TODO: Infinite Scroll Pagination
 
@@ -139,6 +240,24 @@ export default function Groceries() {
 
 
   const styles = StyleSheet.create({
+    dropDown: {
+      position: "absolute",
+      left: "8%",
+      // maxHeight: "40%",
+      width: "70%",
+      top: "14.5%",
+      zIndex:9,
+      padding: 10,
+      backgroundColor: '#F5F5F5',
+      borderRadius: 10,
+      shadowOpacity: 0.1,
+      shadowRadius: 2,
+      shadowOffset: {
+          height: 1,
+          width: 1
+      }
+
+    },
     text: {
       fontSize: 25,
       fontWeight: 'bold',
@@ -156,6 +275,7 @@ export default function Groceries() {
       right: -10
     },
     container: {
+      position:"relative",
       justifyContent: 'space-around',
       alignItems: 'center',
       flexDirection: 'row',
@@ -291,21 +411,31 @@ export default function Groceries() {
     },
   });
 
-
+  // console.log("searchResult :", searchResult)
 
 
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1' }}>
+    //---------------SEARCH BAR--------------------//
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
+      {isShow? <View style={styles.dropDown}>
+          {searchResult.map((item: any, idx: number) => (
+            <SearchBarItem item={item} key={idx} />
+          ))}
+        </View>: (null)}
+        
       <View style={styles.container}>
-        <View>
+        <ScrollView >
           <TextInput
             placeholder="Search Products"
-            value={groupName}
-            onChangeText={setGroupName}
+            value={searchKeyword}
+            // onChangeText={setSearchKeyword}
             style={styles.input}
-          />
-        </View>
+            onChangeText={(e) => textChange(e)}
+          />        
+
+        </ScrollView>
+        {/* //---------------SEARCH BAR--------------------// */}
         <View>
           <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
             <FontAwesome name="shopping-cart" size={30} />
@@ -314,6 +444,8 @@ export default function Groceries() {
             </View>
           </TouchableOpacity>
         </View>
+
+
       </View>
 
 
