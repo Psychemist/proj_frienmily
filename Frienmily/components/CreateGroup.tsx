@@ -326,8 +326,8 @@ export default function CreateGroup() {
       maxHeight: "38%",
       width: '100%',
       flexGrow: 1,
-      paddingLeft: "9%",
-      // paddingRight: "20%",
+      paddingLeft: "10%",
+      paddingRight: "10%",
     },
     header: {
       height: '14%',

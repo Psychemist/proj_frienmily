@@ -194,17 +194,59 @@ export default function AddFriends() {
     messageText: {
       fontSize: 20,
       color: "gray",
-      padding: "2%"
+      padding: "2%",
+      fontWeight:"300"
     },
     nameText: {
       fontSize: 20,
-      color: "gray",
+      color: buttonIsClicked ? "#47b4b1":"gray",
+      fontWeight:"300"
       // padding: "2%"
     },
     mobileText: {
       fontSize: 15,
-      color: "gray",
+      color: buttonIsClicked ? "#47b4b1":"gray",
+      fontWeight:"200"
       // padding: "2%"
+    },
+    plusButton:{
+      fontSize: 35,
+      color: "gray",
+      fontWeight:"300"
+    },
+    checkIcon: {
+      color: "#47b4b1",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
+    },
+    successAddBox:{
+      display: "flex",
+      width: "100%",
+      height: "53%",
+      backgroundColor: "white",
+      shadowOffset: {
+        height: 1,
+        width: 1,
+      },
+      shadowOpacity: 0.8,
+      shadowRadius: 3,
+      elevation: 9,
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 10,
+      paddingTop: 20,
+      paddingBottom: 20,
+      borderColor: "#47b4b1",
+      shadowColor: "#47b4b1",
+      borderRadius: 15,
+      marginTop: 5,
+      marginBottom: 5,
+
     },
     alertBox: {
       display: "flex",
@@ -235,21 +277,27 @@ export default function AddFriends() {
       flexDirection: 'row',
       width: "100%",
       height: "53%",
+      borderColor: buttonIsClicked ? "#47b4b1":"gray",
+      shadowColor: buttonIsClicked ? "#47b4b1":"gray",
       borderRadius: 25,
+      borderWidth: 1,
       padding: 10,
+      paddingLeft:"8%",
+      paddingRight:"8%",
       paddingTop: 20,
       paddingBottom: 20,
       backgroundColor: 'white',
+      
       //SHADOW
-      shadowOpacity: 0.8,
-      shadowRadius: 3,
+      shadowOpacity: 10,
+      shadowRadius: 1,
       shadowOffset: {
-        height: 1,
-        width: 1,
+        height: 0,
+        width: 0,
       },
     },
     nameMobileContainer:{
-      paddingRight:"20%"
+      paddingRight:"40%"
     },
     userImage: {
       width: 60,
@@ -343,7 +391,7 @@ export default function AddFriends() {
               <Text style={styles.messageText}>Cannot add yourself</Text>
             </View>
           ) : addFriendStatus == 3 ? (
-            <View style={styles.alertBox}>
+            <View style={styles.successAddBox}>
               <View>
                 <FontAwesome
                   name="exclamation-triangle"
@@ -372,9 +420,9 @@ export default function AddFriends() {
                   
                   <TouchableOpacity onPress={addFriendButton}>
                     {buttonIsClicked ? (
-                      <FontAwesome name="check-square-o" size={25} />
+                      <FontAwesome name="check" size={25} style={styles.checkIcon}/>
                     ) : (
-                      <FontAwesome name="plus-square-o" size={25} />
+                      <Text style={styles.plusButton}>+</Text>
                     )}
                   </TouchableOpacity>
                 </View>

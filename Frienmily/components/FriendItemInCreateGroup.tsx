@@ -12,47 +12,54 @@ export default function FriendItemInCreateGroup(props: FriendItemInCreateGroupPr
 
     const styles = StyleSheet.create({
         itemContainer: {
-            width: "90%",
+            width: "100%",
             // height: "40%",
-            backgroundColor: props.items.isSelected ? "#47b4b1" : "white",
+            backgroundColor: "white",
             alignItems: "center",
             flexDirection: "row",
-            justifyContent: "space-around",
+            justifyContent: "flex-start",
             padding: 20,
             // paddingTop: 20,
             // paddingBottom: 20,
             borderRadius: 15,
             // marginTop: 5,
             marginBottom: 5,
-            borderColor: props.items.isSelected ? "#47b4b1" : "white",
-            borderWidth: 3,
-            shadowColor: props.items.isSelected ? "lightgray": "lightgray",
-            shadowOpacity: 3,
-            shadowRadius: 3,
+            borderColor: props.items.isSelected ? "#47b4b1":"gray",
+            borderWidth: 1,
+            shadowColor: props.items.isSelected ? "#47b4b1":"gray",
+            shadowOpacity: 10,
+            shadowRadius: 1,
             shadowOffset: {
-              height: props.items.isSelected ? 4 : 0,
-              width: props.items.isSelected ? 4 : 0,
+              height: 0,
+              width: 0,
             },
         },
         userImage: {
-            width: 50,
-            height: 50,
+            width: 60,
+            height: 60,
             borderRadius: 50,
             backgroundColor: 'grey',
-            // marginRight: 20
+            marginRight: 0
         },
         userNameText:{
-            fontSize: 17,
-            color: props.items.isSelected ? "white" : "gray",
-    
+            fontSize: 20,
+            color: props.items.isSelected ? "#47b4b1":"gray",
+            paddingRight:"10%",
+            fontWeight:"300"
+        },
+        userNamePictureContainer:{
+            justifyContent: "space-between",
+            alignItems: 'center',
+            flexDirection: 'row',
         }
     })
     const boo = true
     return (
-        <View>{props.items.isShow ? <TouchableOpacity style={styles.itemContainer} onPress={() => { props.itemPress(props.arrayIndex) }}>
-            <Image style={styles.userImage} source={{ uri: props.items.profile_picture }} ></Image>
-
-            <Text style={styles.userNameText}>     {props.items.username}</Text>
+        <View style={styles.userNamePictureContainer}>{props.items.isShow ? <TouchableOpacity style={styles.itemContainer} onPress={() => { props.itemPress(props.arrayIndex) }}>
+            <View><Image style={styles.userImage} source={{ uri: props.items.profile_picture }} ></Image>
+            </View>
+            <View><Text style={styles.userNameText}>     {props.items.username}</Text>
+            </View>
         </TouchableOpacity> : null}</View>
 
     )
