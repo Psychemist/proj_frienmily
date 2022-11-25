@@ -84,7 +84,7 @@ export default function GroupItem(props: GroupItemProps) {
       }>
       {/* <FontAwesome name="users" size={30} /> */}
       <View style={styles.miniWrapper}>
-        <Image style={styles.groupImage} source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} ></Image>
+        <Image style={styles.groupImage} source={{ uri: props.items.profile_picture }} ></Image>
         <View>
           <Text style={styles.groupName}>{props.items.group_name}</Text>
         </View>
