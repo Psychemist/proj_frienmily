@@ -91,9 +91,7 @@ export default function GroupItem(props: GroupItemProps) {
       </View>
 
       <View style={styles.miniWrapper}>
-        <View>
-          <Text style={styles.settle}>settled up</Text>
-        </View>
+
         {/* <Pressable onPress={()=> navigation.navigate('ShoppingList' as never)}>  */}
         {/* Dummy nav to Groceries first, going to change navigation to 'Group Detail' - Ronson 13Nov2022 17:48 */}
         <FontAwesome name="angle-right" size={30} color={"#81848b"} style={styles.arrowIcon} />
