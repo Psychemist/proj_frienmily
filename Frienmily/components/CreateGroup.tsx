@@ -195,12 +195,12 @@ export default function CreateGroup() {
 
   const styles = StyleSheet.create({
     input: {
-      height: 45,
+      height: 55,
       margin: 12,
       borderWidth: 2.5,
       padding: 10,
-      minWidth: 300,
-      maxWidth: 300,
+      minWidth: "60%",
+      maxWidth: "60%",
       borderRadius: 15,
       backgroundColor: 'white',
       borderColor: "white",
@@ -210,87 +210,149 @@ export default function CreateGroup() {
         height: 1,
         width: 1
       }
-
+      
+    },
+    searchUserNameTextBox: {
+      height: 55,
+      marginTop: 10,
+      marginBottom: 5,
+      borderWidth: 2.5,
+      padding: 10,
+      minWidth: "85%",
+      maxWidth: "85%",
+      borderRadius: 15,
+      backgroundColor: 'white',
+      borderColor: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
+      
     },
     createBtn: {
       backgroundColor: '#47b4b1',
-      height: 40,
+      height: 60,
       width: 360,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 10,
+      margin: "3%",
       borderRadius: 15,
       marginLeft: 'auto',
       marginRight: 'auto',
       color: 'white',
     },
     groupTypeButtonContainer: {
-      justifyContent: 'center',
+      // justifyContent: "center",
       flexDirection: 'row',
       width: '100%',
-      paddingTop: 10,
-      paddingBottom: 10,
-      alignItems: 'center',
-      flexWrap: "wrap"
+      // paddingTop: 10,
+      paddingBottom: "2%",
+      // alignItems: 'center',
+      flexWrap: "wrap",
+      // paddingRight: "5%"
     },
     friendButton: {
       margin: 5,
       fontSize: 20,
-      backgroundColor: '#907651',
-      borderColor: isFriendsButtonSelected ? 'black' : '',
-      borderWidth: isFriendsButtonSelected ? 3 : 0,
+      backgroundColor: isFriendsButtonSelected ? "#47b4b1" : "lightgray",
+      // borderColor: isFriendsButtonSelected ? 'black' : '',
+      // borderWidth: isFriendsButtonSelected ? 3 : 0,
       width: '40%',
       height: 50,
       borderRadius: 10,
       justifyContent: 'center',
       alignItems: 'center',
+      shadowColor:isFriendsButtonSelected? "lightgray": "lightgray",
+      shadowOpacity: 1,
+      shadowRadius: 1,
+      shadowOffset: {
+        height: isFriendsButtonSelected ? 4 : 0,
+        width: isFriendsButtonSelected ? 4 : 0,
+      },
     },
     familyButton: {
       margin: 5,
       fontSize: 20,
-      backgroundColor: '#907651',
-      borderColor: isFamilyButtonSelected ? 'black' : '',
-      borderWidth: isFamilyButtonSelected ? 3 : 0,
+      backgroundColor: isFamilyButtonSelected ? "#47b4b1": "lightgray",
+      // borderColor: isFamilyButtonSelected ? 'black' : '',
+      // borderWidth: isFamilyButtonSelected ? 3 : 0,
       width: '40%',
       height: 50,
       borderRadius: 10,
       justifyContent: 'center',
       alignItems: 'center',
+      shadowColor:isFamilyButtonSelected ?  "lightgray": "lightgray",
+      shadowOpacity: 1,
+      shadowRadius: 1,
+      shadowOffset: {
+        height: isFamilyButtonSelected ?  4 : 0,
+        width: isFamilyButtonSelected ?  4 : 0,
+      },
     },
     buttonFontSize: {
-      fontSize: 25,
+      fontSize: 20,
+      color: "white"
     },
     resultContainer: {
-      minHeight: 300,
-      maxHeight: 300,
+      minHeight: "38%",
+      maxHeight: "38%",
       width: '100%',
       flexGrow: 1,
-      paddingLeft: 40,
-      paddingRight: 40,
+      paddingLeft: "9%",
+      // paddingRight: "20%",
     },
     header: {
       height: '14%',
       alignItems: 'center',
       paddingTop: '15%',
-      marginBottom: '10%',
+      // marginBottom: '10%',
       width: '100%',
     },
     text: {
       fontSize: 25,
     },
-    searchAndClearButton: {
+    searchButton: {
+      
       margin: 5,
       fontSize: 20,
-      backgroundColor: '#907651',
-      width: '12%',
-      height: 40,
-      borderRadius: 10,
+      backgroundColor: "#47b4b1",
+      width: '40%',
+      height: '32%',
+      borderRadius: 20,
       justifyContent: 'center',
       alignItems: 'center',
+      shadowOpacity: 1,
+      shadowColor:"#47b4b1",
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 0,
+        width: 0,
+      },
+    },
+    clearButton: {
+      
+      margin: 5,
+      fontSize: 20,
+      backgroundColor: "lightgray",
+      width: '40%',
+      height: '32%',
+      borderRadius: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowOpacity: 1,
+      shadowColor:"lightgray",
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 0,
+        width: 0,
+      },
     },
     searchAndClearText: {
-      fontSize: 12,
+      fontSize: 20,
+      color: "white"
     },
     backButton: {
       position: 'absolute',
@@ -305,23 +367,44 @@ export default function CreateGroup() {
       height: 100,
       borderRadius: 150,
       borderColor: "#47b4b1",
-      borderWidth: 1,
+      borderWidth: 4,
       postion: "absolute",
-      right: 5
+      right: "-20%",
+      top: "-20%",
+      shadowOpacity: 3,
+      shadowColor:"lightgray",
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 0,
+        width: 0,
+      },
     },
     groupNameAndPhotoContainer: {
       flexDirection: 'row',
       alignItems: 'center',
       paddingTop: '5%',
-      paddingBottom: '5%'
+      // paddingBottom: '5%'
+    },
+    groupMemberContainer: {
+
+      alignItems: 'flex-start',
+      // paddingBottom: '5%'
+      maxHeight: "30%"
     },
     stepsContainer:{
       position: 'relative',
-      padding: 10
+      alignItems: 'center',
+      // paddingLeft: "10%"
+
     },
     stepText: {
-      fontSize: 20,
+      fontSize: 25,
       fontWeight: "bold"
+  
+    },
+    memberNumText: {
+      fontSize: 15,
+      // fontWeight: "bold"
   
     },
   });
@@ -341,7 +424,7 @@ export default function CreateGroup() {
       {/* <TouchableOpacity onPress={enlargeProfilePicture}>
         <Image style={styles.userImage} source={{ uri: "https://iconandreceipt.s3.ap-southeast-1.amazonaws.com/c3269ab8c2949b1e0614dad00" }} ></Image>
       </TouchableOpacity> */}
-      <Text style={styles.stepText}>1. Enter a group name and select a group photo:</Text>
+      {/* <Text style={styles.stepText}>1. Enter a group name and select a group photo:</Text> */}
       <View style={styles.groupNameAndPhotoContainer}>
         <TouchableOpacity onPress={enlargeProfilePicture}>
           <Image style={styles.userImage} source={{ uri: "https://iconandreceipt.s3.ap-southeast-1.amazonaws.com/c3269ab8c2949b1e0614dad00" }} ></Image>
@@ -355,20 +438,22 @@ export default function CreateGroup() {
         />
       </View>
 
-      <Text style={styles.stepText}>2. Select a group type:</Text>
+      {/* <Text style={styles.stepText}>2. Select a group type:</Text> */}
       <View style={styles.groupTypeButtonContainer}>
         <TouchableOpacity style={styles.friendButton} onPress={friendsButton}>
           <Text style={styles.buttonFontSize}>
-            <FontAwesome name="group" size={20} /> Friends
+            <FontAwesome name="group" size={15} /> Friends
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.familyButton} onPress={familyButton}>
           <Text style={styles.buttonFontSize}>
-            Family <FontAwesome name="home" size={25} />
+            Family <FontAwesome name="home" size={20} />
           </Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.stepText}>3. Invite group members: (members: {numOfMembers()})</Text>
+      <View style={styles.groupMemberContainer}>
+      <Text style={styles.stepText}>Add Group Members </Text>
+      <Text style={styles.memberNumText}>Current members number in group: {numOfMembers()}</Text>
       <View style={styles.groupTypeButtonContainer}>
         <TextInput
           placeholder="Search username..."
@@ -376,15 +461,15 @@ export default function CreateGroup() {
           autoCapitalize="none"
           value={friendSearchBar}
           onChangeText={setFriendSearchBar}
-          style={styles.input}
+          style={styles.searchUserNameTextBox}
         />
         <TouchableOpacity
-          style={styles.input}
+          style={styles.searchButton}
           onPress={searchBarEnter}>
           <Text style={styles.searchAndClearText}>Search</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.input}
+          style={styles.clearButton}
           onPress={clearSearchBar}>
           <Text style={styles.searchAndClearText}>Clear</Text>
         </TouchableOpacity>
@@ -402,8 +487,9 @@ export default function CreateGroup() {
       </ScrollView>
 
       <TouchableOpacity style={styles.createBtn} onPress={submitButton}>
-        <Text style={{ color: "white" }}>Create Group</Text>
+        <Text style={styles.buttonFontSize}>Create Group</Text>
       </TouchableOpacity>
+    </View>
     </View>
   );
 }
