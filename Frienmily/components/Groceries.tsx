@@ -21,15 +21,26 @@ import GroceriesTopItems from './GroceriesTopItems';
 import { REACT_APP_API_SERVER } from '@env';
 import { useQuery } from "react-query";
 import { createIconSetFromFontello } from 'react-native-vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductData } from '../redux/product/thunk';
+import { RootState } from '../redux/store';
 
 export default function Groceries() {
   const navigation = useNavigation();
+
+  // FIXME: the state now is empty there's no fetching . How to get the latest state?
+
+  const exploreProductsInRedux = useSelector((state: RootState) => state.product.exploreProductData)
+  const top5ProductsInRedux = useSelector((state: RootState) => state.product.top5ProductData)
+
   const [isBestSeller, setIsBestSeller] = useState(true)
   const [allExploreData, setAllExploreData]: any = useState([]);
   const [allTop5Data, setAllTop5Data]: any = useState([]);
   const [groupName, setGroupName] = React.useState('');
   const [page, setPage] = useState(1)
+  const [categoryArray, setCategoryArray] = useState([])
 
+  const dispatch = useDispatch()
 
   const bestSellerButton = () => {
     if (isBestSeller == false) {
@@ -43,42 +54,29 @@ export default function Groceries() {
     }
   };
 
-  const fetchData = async (array: any) => {
-    try {
-      console.log(`fetch data from [${array}]`);
+  const getCategoryArrayFromChild = (categoryArray: any) => {
+    console.log("THIS IS ARRAY", categoryArray);
+    setCategoryArray(categoryArray)
+    dispatch(fetchProductData(categoryArray))
+  }
 
-      const response = await fetch(
-        `${REACT_APP_API_SERVER}/goods/productByBatchAndCatId/`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            qtyInOneBatch: 30,
-            ItemsToBeSkipped: 0,
-            catIds: array
-          }),
-        },
-      );
-      let json;
-      if (response) {
-        json = await response.json();
-      }
-      setAllExploreData(json.result.exploreResults)
-      setAllTop5Data(json.result.top5Results)
+  const fetchData = async (categoryArray: any) => {
+    try {
+      console.log("@@@@@@@ fetch data")
+      let fetchResult = await dispatch(fetchProductData({
+        categoryArray: categoryArray
+      })).unwrap();
 
     } catch (error) {
       console.log('error', error);
     }
   }
-  console.log("exploreResults :", allExploreData);
-  // console.log("top5Results :", allTop5Data);
 
-  // TODO: Infinite Scroll Pagination
 
   const renderEmpty = () => (
     <View>
       <Text>No Data at the Moment</Text>
-      <TouchableOpacity onPress={() => requestAPI()}>
+      <TouchableOpacity onPress={getCategoryArrayFromChild}>
         <Text>Refresh</Text>
       </TouchableOpacity>
     </View>
@@ -90,49 +88,23 @@ export default function Groceries() {
     </View>
   )
 
-  const onChangePage = () => {
-    setPage(page + 1)
-  }
-  const fetchMoreDataOnPageEnd = () => {
-    console.log("touched the end of the page")
-    if (!allExploreData.isListEnd && !allExploreData.moreLoading) {
-      onChangePage()
-    }
-  }
-
-  const requestAPI = async () => {
-    try {
-      let response = await fetch(`${REACT_APP_API_SERVER}/goods/productByBatchAndCatId`)
-
-      console.log("requestAPI response: ", response)
-
-    } catch (e) {
-      console.log("error: ", e)
-
-    }
-  }
-
-  const renderItem = ({ item }) => (
-    <GroceriesRandomItems item={item} />
-  )
+  // const onChangePage = () => {
+  //   setPage(page + 1)
+  // }
+  // const fetchMoreDataOnPageEnd = () => {
+  //   console.log("touched the end of the page")
+  //   if (!allExploreData.isListEnd && !allExploreData.moreLoading) {
+  //     onChangePage()
+  //   }
+  // }
 
 
-  useEffect(() => {
-    requestAPI()
-    console.log("The current page number: ", page)
-  }, [page])
+  // useEffect(() => {
+  //   console.log("categoryArray--------: ", categoryArray)
+  //   console.log("The current page number: ", page)
+  //   // fetchData(categoryArray)
+  // }, [])
   // =================================================================
-
-
-
-  // const fetchGoodsList = async () => {
-  //   const response = await fetch(`${REACT_APP_API_SERVER}/goods/categories`);
-  //   // console.log("response :", response);
-
-  //   return response.json();
-  // };
-
-  // const { data: fetchGoodListData, status: fetchGoodListStatus } = useQuery("users", fetchGoodsList);
 
 
   const styles = StyleSheet.create({
@@ -283,12 +255,39 @@ export default function Groceries() {
       paddingBottom: 20,
       flexWrap: 'wrap',
       width: '100%'
-
-
     },
+    exploreProductList: {
+      // flexGrow: 1,
+      backgroundColor: 'white',
+      width: "100%",
+      justifyContent: "center"
+    },
+    loadMoreBtn: {
+      backgroundColor: '#47b4b1',
+      height: 40,
+      width: 360,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: 10,
+      borderRadius: 15,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      color: 'white',
+    },
+    buttonText: {
+      fontSize: 20,
+      fontWeight: '300',
+      color: 'white',
+    },
+
   });
 
+  // FIXME: CSS: make it 3 columns
+  // FIXME: It should re-render the items when clicking categories buttons
+  // FIXME: Encountered two children with the same key
 
+  // TODO: 按自己思路來
 
 
 
@@ -316,11 +315,9 @@ export default function Groceries() {
 
       {/* Categories Column */}
       <View style={styles.catergoriesContainer}>
-        {/* <ScrollView horizontal={true} style={{backgroundColor: 'white'}}> */}
         <Text>
-          <GroceriesCategories fetchData={fetchData} />
+          <GroceriesCategories fetchData={fetchData} getCategoryArrayFromChild={getCategoryArrayFromChild} />
         </Text>
-        {/* </ScrollView> */}
       </View>
 
       <View style={styles.groupTypeButtonContainer}>
@@ -348,38 +345,11 @@ export default function Groceries() {
 
           <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '100%' }}>
             <View style={styles.container2}>
-              {allTop5Data.map((item: any, idx: number) => (
-                <GroceriesTopItems item={item} key={idx} />
+              {top5ProductsInRedux.map((item: any, idx: number) => (
+                <GroceriesTopItems item={item} key={`top_${idx}`} />
               ))}
             </View>
           </ScrollView>
-          {/* ======================= test start ======================= */}
-          <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity style={{
-              height: 50,
-              width: 80,
-              backgroundColor: "grey",
-              justifyContent: "center",
-              alignItems: "center",
-              marginRight: 10
-            }} onPress={() => navigation.navigate('GroceriesDetails' as never)} >
-              <Text>Temp Item by Mike</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={{
-              height: 50,
-              width: 80,
-              backgroundColor: "grey",
-              justifyContent: "center",
-              alignItems: "center"
-            }} onPress={() => navigation.navigate('GroceriesTest' as never)} >
-              <Text>Pagination Test by Mike</Text>
-            </TouchableOpacity>
-
-          </View>
-
-
-          {/* ======================= test end ======================= */}
           <View style={{ minHeight: 500 }}></View>
         </View >}
 
@@ -388,22 +358,41 @@ export default function Groceries() {
       {/* Random Goods Column */}
       {
         isBestSeller == false &&
-          allExploreData.loading ?
-          <View>
-            <ActivityIndicator size="large" />
-          </View>
-          :
-          <FlatList
-            style={{ backgroundColor: 'white' }}
-            contentContainerStyle={{ flexGrow: 1 }}
-            data={allExploreData}
-            renderItem={renderItem}
-            ListFooterComponent={renderFooter}
-            ListEmptyComponent={renderEmpty}
-            onEndReachedThreshold={0.2}
-            onEndReached={fetchMoreDataOnPageEnd}
-          />
+        // allExploreData.loading ?
+        // <View>
+        //   <ActivityIndicator size="large" />
+        // </View>
+        // :
 
+        <FlatList<any[]>
+          contentContainerStyle={styles.exploreProductList}
+          data={exploreProductsInRedux}
+          renderItem={(item: any) => (
+            <GroceriesRandomItems key={`rand_${item.id}`} item={item.item} />
+          )}
+          key={1}
+          numColumns={3}
+          ListFooterComponent={renderFooter}
+          ListEmptyComponent={renderEmpty}
+        // onEndReachedThreshold={0.2}
+        // onEndReached={fetchMoreDataOnPageEnd}
+        />
+
+
+        // <ScrollView style={{ backgroundColor: 'white', width: '100%' }}>
+        //   <View style={styles.randomItemsContainer}>
+        //     <View>
+        //       <Text style={styles.text}>Explore</Text>
+        //     </View>
+        //     <View style={styles.topItemsCards}>
+        //       <View style={styles.container3}>
+        //         {allExploreData.map((item: any, idx: number) => (
+        //           <GroceriesRandomItems item={item} key={idx} />
+        //         ))}
+        //       </View>
+        //     </View>
+        //   </View>
+        // </ScrollView>
 
 
       }

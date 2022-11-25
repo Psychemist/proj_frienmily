@@ -74,7 +74,7 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
         titleContainer: {
             justifyContent: "space-between",
             flexDirection: "column",
-            maxWidth: 150,
+            // maxWidth: 150,
             height: 50,
         },
         supermarketprice: {
@@ -87,6 +87,7 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
     })
 
 
+    // console.log("props: ", props.item)
     return (
         <TouchableOpacity style={styles.categoriesItemContainer} onPress={() => navigation.navigate('GroceriesDetails' as never, { info: props.item } as never)}>
             <View style={styles.categoriesPhotoContainer}><Image source={{ uri: props.item.goods_picture }} style={{ width: 120, height: 120 }}></Image></View>

@@ -1,26 +1,33 @@
+import { REACT_APP_API_SERVER } from "@env";
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
-export const fetchProductData: any = createAsyncThunk("product/updateEmail", async (params: {
-  username: string, email: string
+export const fetchProductData: any = createAsyncThunk("product/fetchProductData", async (params: {
+  categoryArray: any
 }, thunkAPI: any) => {
   try {
-    // const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/updateEmail`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     username: params.username,
-    //     email: params.email
-    //   })
-    // })
-    // const data = await res.json()
-    // console.log('data from thunk :', data)
-    // console.log(res)
-    // console.log('ok ?', res.ok)
-    // if (!res.ok) {
-    //   throw data.msg
-    // }
+    console.log("categoryArray received at thunk=", params.categoryArray)
+    let catIds = params.categoryArray
 
-    // return thunkAPI.fulfillWithValue(data)
+    if (catIds) {
+      const res = await fetch(
+        `${REACT_APP_API_SERVER}/goods/productByBatchAndCatId/`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            qtyInOneBatch: 30,
+            ItemsToBeSkipped: 0,
+            catIds: catIds
+          }),
+        },
+      );
+      const data = await res.json()
+      if (!res.ok) {
+        throw data.msg
+      }
+
+      return thunkAPI.fulfillWithValue(data)
+    }
 
   } catch (e) {
     console.log('catch error in thunk ', e)

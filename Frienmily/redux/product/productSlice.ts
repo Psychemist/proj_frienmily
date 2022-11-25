@@ -13,7 +13,8 @@ export interface ProductState {
   error: string | null,
   moreError: string | null,
   isListEnd: boolean,
-  data: Array<any>
+  exploreProductData: Array<any>,
+  top5ProductData: Array<any>
 }
 
 const initialState: ProductState = {
@@ -22,7 +23,8 @@ const initialState: ProductState = {
   error: null,
   moreError: null,
   isListEnd: false,
-  data: []
+  exploreProductData: [],
+  top5ProductData: []
 }
 
 
@@ -47,6 +49,7 @@ export const productSlice = createSlice({
       state.error = action.payload.error
     })
     build.addCase(fetchProductData.fulfilled, fetchMoreData)
+    console.log("fulfilled")
 
   }
 
@@ -56,39 +59,56 @@ export default productSlice.reducer
 
 
 const fetchMoreData = (state: ProductState = initialState, action: any) => {
-  switch (action.type) {
-    case "API_REQUEST":
-      if (action.payload.page === 1) {
-        return { ...state, loading: true }
-      } else {
-        return { ...state, moreLoading: true }
-      }
-    case "API_SUCCESS":
-      return {
-        ...state,
-        data: [...state.data, ...action.data.articles],
-        error: "",
-        loading: false,
-        moreLoading: false
-      }
-    case "API_FAILURE":
-      return {
-        ...state,
-        error: action.error,
-        loading: false,
-        moreLoading: false
-      }
-    case "API_LIST_END":
-      return {
-        ...state,
-        isListEnd: true,
-        loading: false,
-        moreLoading: false
-      }
-
-
-
-
+  const exploreResults = action.payload.result.exploreResults
+  const top5Results = action.payload.result.top5Results
+  console.log("exploreResults reveiced at productSlice : ", exploreResults)
+  console.log("number of Explore product fetched = ", exploreResults.length)
+  console.log("top5Results reveiced at productSlice : ", top5Results)
+  console.log("number of Top 5 product fetched = ", top5Results.length)
+  return {
+    ...state,
+    exploreProductData: [...exploreResults],
+    top5ProductData: [...top5Results],
+    error: "",
+    // loading: false,
+    // moreLoading: false
   }
+
+
+
+
+
+
+  // switch (action.type) {
+  //   case "API_REQUEST":
+  //     if (action.payload.page === 1) {
+  //       return { ...state, loading: true }
+  //     } else {
+  //       return { ...state, moreLoading: true }
+  //     }
+  //   case "API_SUCCESS":
+  //     return {
+  //       ...state,
+  //       data: [...state.data, ...action.payload.result.exploreResults],
+  //       error: "",
+  //       loading: false,
+  //       moreLoading: false
+  //     }
+  //   case "API_FAILURE":
+  //     return {
+  //       ...state,
+  //       error: action.error,
+  //       loading: false,
+  //       moreLoading: false
+  //     }
+  //   case "API_LIST_END":
+  //     return {
+  //       ...state,
+  //       isListEnd: true,
+  //       loading: false,
+  //       moreLoading: false
+  //     }
+
+  // }
 
 }
