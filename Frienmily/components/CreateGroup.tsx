@@ -1,5 +1,6 @@
 import {
   Alert,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -188,14 +189,18 @@ export default function CreateGroup() {
     loadFriendList();
   }, []);
 
+  const enlargeProfilePicture = () => {
+    navigation.navigate('UserProfilePicuture' as never)
+  }
+
   const styles = StyleSheet.create({
     input: {
-      height: '5%',
+      height: 30,
       margin: 12,
       borderWidth: 1,
       padding: 10,
-      minWidth: 300,
-      maxWidth: 300,
+      minWidth: 200,
+      maxWidth: 200,
       borderRadius: 10,
     },
     input2: {
@@ -294,6 +299,21 @@ export default function CreateGroup() {
       fontSize: 25,
       // top: "110%",
     },
+    userImage: {
+      width: 100,
+      height: 100,
+      borderRadius: 150,
+      borderColor: "#47b4b1",
+      borderWidth: 1,
+      postion: "absolute",
+      right: 5
+    },
+    groupNameAndPhotoContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingTop: '5%',
+      paddingBottom: '5%'
+    }
   });
 
   return (
@@ -307,14 +327,23 @@ export default function CreateGroup() {
 
         <Text style={styles.text}>Create Group</Text>
       </View>
-      <Text>1. Enter a group name:</Text>
-      <TextInput
-        placeholder="New Group Name"
-        autoCapitalize="none"
-        value={groupName}
-        onChangeText={setGroupName}
-        style={styles.input}
-      />
+      {/* <TouchableOpacity onPress={enlargeProfilePicture}>
+        <Image style={styles.userImage} source={{ uri: "https://iconandreceipt.s3.ap-southeast-1.amazonaws.com/c3269ab8c2949b1e0614dad00" }} ></Image>
+      </TouchableOpacity> */}
+      <Text>1. Enter a group name and select a group photo:</Text>
+      <View style={styles.groupNameAndPhotoContainer}>
+        <TouchableOpacity onPress={enlargeProfilePicture}>
+          <Image style={styles.userImage} source={{ uri: "https://iconandreceipt.s3.ap-southeast-1.amazonaws.com/c3269ab8c2949b1e0614dad00" }} ></Image>
+        </TouchableOpacity>
+        <TextInput
+          placeholder="New Group Name"
+          autoCapitalize="none"
+          value={groupName}
+          onChangeText={setGroupName}
+          style={styles.input}
+        />
+      </View>
+
       <Text>2. Select a group type:</Text>
       <View style={styles.groupTypeButtonContainer}>
         <TouchableOpacity style={styles.friendButton} onPress={friendsButton}>
