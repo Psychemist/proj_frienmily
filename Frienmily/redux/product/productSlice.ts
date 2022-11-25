@@ -75,6 +75,10 @@ const fetchMoreData = (state: ProductState = initialState, action: any) => {
 
   return {
     ...state,
+    // FIXME: 如果categoryArray有變動，就應該是initial loading（overwrite 原本的 state）, 
+    // 需要有機制判斷是loading triggered by button, 還是load more
+    // A. listen on "button" & "page"
+    // B. 
     exploreProductData: [...state.exploreProductData, ...exploreResults],
     top5ProductData: [...top5Results],
     error: "",
