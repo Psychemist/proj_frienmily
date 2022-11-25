@@ -4,8 +4,9 @@ import { Icon } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 interface GroceriesCategoriesProps {
-    fetchData: (array: any) => void,
-    getCategoryArrayFromChild: (array: any) => void
+    fetchData: (array: any, page: number) => void,
+    page: number
+    // getCategoryArrayFromChild: (array: any) => void
 }
 
 export default function GroceriesCategories(props: GroceriesCategoriesProps) {
@@ -19,6 +20,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
     const [button8, setButton8] = useState(false)
     const [button9, setButton9] = useState(false)
     const [button10, setButton10] = useState(false)
+    const [page, setPage] = useState(props.page)
 
     const styles = StyleSheet.create({
         text: {
@@ -187,14 +189,17 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
                 finalSelectedCategoriesArray.push(item.id)
             }
         }
+        console.log("######## categoryArray: ", finalSelectedCategoriesArray)
+        console.log("######## page: ", page)
+
         if (finalSelectedCategoriesArray.length == 0) {
-            props.fetchData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-            props.getCategoryArrayFromChild([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+            props.fetchData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], page)
+            // props.getCategoryArrayFromChild([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
         } else {
-            props.fetchData(finalSelectedCategoriesArray)
-            props.getCategoryArrayFromChild(finalSelectedCategoriesArray)
+            props.fetchData(finalSelectedCategoriesArray, page)
+            // props.getCategoryArrayFromChild(finalSelectedCategoriesArray)
         }
-    }, [button1, button2, button3, button4, button5, button6, button7, button8, button9, button10]);
+    }, [button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, page]);
 
 
 

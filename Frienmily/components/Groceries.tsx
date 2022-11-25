@@ -32,9 +32,6 @@ import SearchBarItem from './SearchBarItem';
 
 export default function Groceries() {
   const navigation = useNavigation();
-
-  // FIXME: the state now is empty there's no fetching . How to get the latest state?
-
   const exploreProductsInRedux = useSelector((state: RootState) => state.product.exploreProductData)
   const top5ProductsInRedux = useSelector((state: RootState) => state.product.top5ProductData)
 
@@ -42,7 +39,7 @@ export default function Groceries() {
   const [allExploreData, setAllExploreData]: any = useState([]);
   const [allTop5Data, setAllTop5Data]: any = useState([]);
   const [groupName, setGroupName] = React.useState('');
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(0)
   const [categoryArray, setCategoryArray] = useState([])
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const [shoppingCartNum, setShoppingCartNum] = React.useState<number>(0);
@@ -153,58 +150,65 @@ export default function Groceries() {
     }
   };
 
-  const getCategoryArrayFromChild = (categoryArray: any) => {
-    console.log("THIS IS ARRAY", categoryArray);
-    setCategoryArray(categoryArray)
-    dispatch(fetchProductData(categoryArray))
-  }
+  // const getCategoryArrayFromChild = (categoryArray: any) => {
+  //   console.log("THIS IS ARRAY", categoryArray);
+  //   setCategoryArray(categoryArray)
+  //   console.log("11111111 fetch at getCategoryArrayFromChild")
+  //   dispatch(fetchProductData(categoryArray))
+  // }
 
-  const fetchData = async (categoryArray: any) => {
+  const fetchData = async (categoryArray: any, page: number) => {
     try {
       console.log("@@@@@@@ fetch data")
+      console.log("@@@@@@@ categoryArray: ", categoryArray)
+      // FIXME: page should be 0 at the beginning
+      console.log("@@@@@@@ page: ", page)
       let fetchResult = await dispatch(fetchProductData({
-        categoryArray: categoryArray
+        categoryArray: categoryArray,
+        page: page
       })).unwrap();
 
     } catch (error) {
       console.log('error', error);
     }
   }
-  // console.log("exploreResults :", allExploreData);
-  // console.log("top5Results :", allTop5Data);
 
 
-  const renderEmpty = () => (
-    <View>
-      <Text>No Data at the Moment</Text>
-      <TouchableOpacity onPress={getCategoryArrayFromChild}>
-        <Text>Refresh</Text>
-      </TouchableOpacity>
-    </View>
-  )
-  const renderFooter = () => (
-    <View>
-      {allExploreData.moreLoading && <ActivityIndicator />}
-      {allExploreData.isListEnd && <Text>No more products at the moment</Text>}
-    </View>
-  )
-
-  // const onChangePage = () => {
-  //   setPage(page + 1)
-  // }
-  // const fetchMoreDataOnPageEnd = () => {
-  //   console.log("touched the end of the page")
-  //   if (!allExploreData.isListEnd && !allExploreData.moreLoading) {
-  //     onChangePage()
-  //   }
-  // }
+  // const renderEmpty = () => (
+  //   <View>
+  //     <Text>No Data at the Moment</Text>
+  //     <TouchableOpacity onPress={getCategoryArrayFromChild}>
+  //       <Text>Refresh</Text>
+  //     </TouchableOpacity>
+  //   </View>
+  // )
+  // const renderFooter = () => (
+  //   <View>
+  //     {allExploreData.moreLoading && <ActivityIndicator />}
+  //     {allExploreData.isListEnd && <Text>No more products at the moment</Text>}
+  //   </View>
+  // )
 
 
-  // useEffect(() => {
-  //   console.log("categoryArray--------: ", categoryArray)
-  //   console.log("The current page number: ", page)
-  //   // fetchData(categoryArray)
-  // }, [])
+  // TODO: 能夠根據page轉變而trigger fetch data，但沒有fetch回來東西 (becoz categoryArray is empty)
+  const onChangePage = () => {
+    setPage(page + 1)
+    console.log("The coming page is Page ", page)
+  }
+  const fetchMoreDataOnPageEnd = () => {
+    console.log("touched the end of the page")
+    // if (!allExploreData.isListEnd && !allExploreData.moreLoading) {
+    onChangePage()
+    // }
+  }
+
+
+  useEffect(() => {
+    console.log("categoryArray--------: ", categoryArray)
+    console.log("The current page number: ", page)
+    console.log("222222222 fetch at userEffect")
+    fetchData(categoryArray, page)
+  }, [page])
   // =================================================================
 
 
@@ -445,16 +449,8 @@ export default function Groceries() {
     }
   });
 
-  // FIXME: CSS: make it 3 columns
-  // FIXME: It should re-render the items when clicking categories buttons
+
   // FIXME: Encountered two children with the same key
-
-  // TODO: 按自己思路來
-
-
-
-  // console.log("searchResult :", searchResult)
-
 
 
   return (
@@ -497,7 +493,10 @@ export default function Groceries() {
       {/* Categories Column */}
       <View style={styles.catergoriesContainer}>
         <Text>
-          <GroceriesCategories fetchData={fetchData} getCategoryArrayFromChild={getCategoryArrayFromChild} />
+          <GroceriesCategories
+            fetchData={fetchData} page={page}
+          // getCategoryArrayFromChild={getCategoryArrayFromChild}
+          />
         </Text>
       </View>
 
@@ -550,28 +549,11 @@ export default function Groceries() {
           )}
           key={1}
           numColumns={3}
-          ListFooterComponent={renderFooter}
-          ListEmptyComponent={renderEmpty}
-        // onEndReachedThreshold={0.2}
-        // onEndReached={fetchMoreDataOnPageEnd}
+          // ListFooterComponent={renderFooter}
+          // ListEmptyComponent={renderEmpty}
+          onEndReachedThreshold={0.2}
+          onEndReached={fetchMoreDataOnPageEnd}
         />
-
-
-        // <ScrollView style={{ backgroundColor: 'white', width: '100%' }}>
-        //   <View style={styles.randomItemsContainer}>
-        //     <View>
-        //       <Text style={styles.text}>Explore</Text>
-        //     </View>
-        //     <View style={styles.topItemsCards}>
-        //       <View style={styles.container3}>
-        //         {allExploreData.map((item: any, idx: number) => (
-        //           <GroceriesRandomItems item={item} key={idx} />
-        //         ))}
-        //       </View>
-        //     </View>
-        //   </View>
-        // </ScrollView>
-
 
       }
 
