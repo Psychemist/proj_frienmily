@@ -7,6 +7,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input'
 import { REACT_APP_API_SERVER } from '@env';
 
+
 interface ShoppingListItemProps {
     items: any;
     key: number;
@@ -14,6 +15,7 @@ interface ShoppingListItemProps {
 
 export default function ShoppingListItem(props: ShoppingListItemProps) {
     const [isSelected, setIsSelected] = React.useState(false);
+    const [assigneeName, setAssigneeName] = React.useState('');
     const isFocused = useIsFocused();
 
 
@@ -39,12 +41,32 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
             const getIsCompleted = async () => {
                 console.log(props.items.is_completed);
                 setIsSelected(props.items.is_completed)
+            }
+            const getAssigneeName = async () => {
+                console.log("props.items.assignee_id :", props.items.assignee_id);
+
+                const response = await fetch(`${REACT_APP_API_SERVER}/user/getUserName/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: props.items.assignee_id,
+                    }),
+                });
+                let result;
+                if (response) {
+                    result = await response.json();
+                }
+
+                setAssigneeName(result.username)
+
+
 
             }
 
 
             if (isFocused) {
                 getIsCompleted()
+                getAssigneeName()
             }
 
         } catch (error) {
@@ -129,14 +151,15 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 <Text style={styles.buttonFontSize}><FontAwesome name='circle-o' size={20} /></Text>
             </TouchableOpacity>
             <View ><Text style={styles.text}>x{props.items.quantity}</Text></View>
-            <Pressable onPress={() => navigation.navigate('Groceries' as never)}>
+            <TouchableOpacity onPress={() => navigation.navigate('Groceries' as never)}>
                 {/* change navigation to product details */}
                 <View><Image source={{ uri: props.items.goods_picture }}
                     style={{ width: 50, height: 50 }} /></View>
-            </Pressable>
+            </TouchableOpacity>
             <View style={{ width: 200 }}>
                 <View><Text style={styles.text}>{props.items.name}</Text></View>
                 <View><Text style={styles.text}>{getLowest().shop}</Text></View>
+                <View><Text style={styles.text}>added by {assigneeName}</Text></View>
             </View>
             <View ><Text style={styles.text}>HK${addZeroes(getLowest().price * props.items.quantity)}</Text></View>
         </View>

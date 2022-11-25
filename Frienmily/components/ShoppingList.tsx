@@ -172,7 +172,8 @@ export default function ShoppingList() {
       // top: 140,
       width: "98%",
       height: 500,
-      padding: 5
+      paddingLeft: 5,
+      paddingRight: 5,
     },
   });
   const navigation = useNavigation();
