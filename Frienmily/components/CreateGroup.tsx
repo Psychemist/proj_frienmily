@@ -190,22 +190,22 @@ export default function CreateGroup() {
 
   const styles = StyleSheet.create({
     input: {
-      height: '5%',
+      height: 45,
       margin: 12,
-      borderWidth: 1,
+      borderWidth: 2.5,
       padding: 10,
       minWidth: 300,
       maxWidth: 300,
-      borderRadius: 10,
-    },
-    input2: {
-      height: '60%',
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-      minWidth: 200,
-      maxWidth: 200,
-      borderRadius: 10,
+      borderRadius: 15,
+      backgroundColor: 'white',
+      borderColor: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
+
     },
     createBtn: {
       backgroundColor: '#47b4b1',
@@ -227,6 +227,7 @@ export default function CreateGroup() {
       paddingTop: 10,
       paddingBottom: 10,
       alignItems: 'center',
+      flexWrap: "wrap"
     },
     friendButton: {
       margin: 5,
@@ -294,6 +295,15 @@ export default function CreateGroup() {
       fontSize: 25,
       // top: "110%",
     },
+    stepsContainer:{
+      position: 'relative',
+      padding: 10
+    },
+    stepText: {
+      fontSize: 20,
+      fontWeight: "bold"
+  
+    },
   });
 
   return (
@@ -307,7 +317,8 @@ export default function CreateGroup() {
 
         <Text style={styles.text}>Create Group</Text>
       </View>
-      <Text>1. Enter a group name:</Text>
+      <View style={styles.stepsContainer}>
+      <Text style={styles.stepText}>1. Enter a group name:</Text>
       <TextInput
         placeholder="New Group Name"
         autoCapitalize="none"
@@ -315,20 +326,20 @@ export default function CreateGroup() {
         onChangeText={setGroupName}
         style={styles.input}
       />
-      <Text>2. Select a group type:</Text>
+      <Text style={styles.stepText}>2. Select a group type:</Text>
       <View style={styles.groupTypeButtonContainer}>
         <TouchableOpacity style={styles.friendButton} onPress={friendsButton}>
           <Text style={styles.buttonFontSize}>
-            <FontAwesome name="group" size={35} /> Friends
+            <FontAwesome name="group" size={20} /> Friends
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.familyButton} onPress={familyButton}>
           <Text style={styles.buttonFontSize}>
-            Family <FontAwesome name="home" size={40} />
+            Family <FontAwesome name="home" size={25} />
           </Text>
         </TouchableOpacity>
       </View>
-      <Text>3. Invite group members: (members: {numOfMembers()})</Text>
+      <Text style={styles.stepText}>3. Invite group members: (members: {numOfMembers()})</Text>
       <View style={styles.groupTypeButtonContainer}>
         <TextInput
           placeholder="Search username..."
@@ -336,20 +347,20 @@ export default function CreateGroup() {
           autoCapitalize="none"
           value={friendSearchBar}
           onChangeText={setFriendSearchBar}
-          style={styles.input2}
+          style={styles.input}
         />
         <TouchableOpacity
-          style={styles.searchAndClearButton}
+          style={styles.input}
           onPress={searchBarEnter}>
           <Text style={styles.searchAndClearText}>Search</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.searchAndClearButton}
+          style={styles.input}
           onPress={clearSearchBar}>
           <Text style={styles.searchAndClearText}>Clear</Text>
         </TouchableOpacity>
       </View>
-
+    </View>
       <ScrollView style={styles.resultContainer}>
         {friendItemList.map((item: any, index: number) => (
           <FriendItemInCreateGroup
