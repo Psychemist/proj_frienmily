@@ -207,7 +207,7 @@ export default function Groceries() {
   )
 
 
-  // TODO: 如果categoryArray有變動，就應該是initial loading（overwrite 原本的 state）, 需要有機制判斷是哪種loading
+
   const onChangePage = () => {
     setPage(page + 1)
     console.log("The coming page is Page ", page)
@@ -233,7 +233,6 @@ export default function Groceries() {
 
 
   useEffect(() => {
-    // FIXME: 現在每次fetch都會出現60個item而不是30個
     const booleanArray = [{ isSelected: button1, id: 1 }, { isSelected: button2, id: 2 }, { isSelected: button3, id: 3 }, { isSelected: button4, id: 4 }, { isSelected: button5, id: 5 }, { isSelected: button6, id: 6 }, { isSelected: button7, id: 7 }, { isSelected: button8, id: 8 }, { isSelected: button9, id: 9 }, { isSelected: button10, id: 10 }]
     const finalSelectedCategoriesArray = []
     for (let item of booleanArray) {
