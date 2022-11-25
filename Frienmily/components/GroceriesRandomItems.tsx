@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import React from 'react';
 import { Icon } from 'react-native-elements'
@@ -90,6 +90,7 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
     // console.log("props: ", props.item)
     return (
         <TouchableOpacity style={styles.categoriesItemContainer} onPress={() => navigation.navigate('GroceriesDetails' as never, { info: props.item } as never)}>
+            <StatusBar barStyle="light-content" />
             <View style={styles.categoriesPhotoContainer}><Image source={{ uri: props.item.goods_picture }} style={{ width: 120, height: 120 }}></Image></View>
             <View style={styles.cardContainer}>
                 <View style={styles.titleContainer}><Text style={styles.text}>{props.item.goods_name}</Text></View>
