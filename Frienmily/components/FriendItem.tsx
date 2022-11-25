@@ -114,7 +114,7 @@ export default function FriendItem(props: FriendItemProps) {
             height: 60,
             borderRadius: 50,
             backgroundColor: 'grey',
-            marginRight: 20
+            marginRight: 10
         },
         arrowIcon: {
             position: 'absolute',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,9 +11,10 @@ import {
   FlatList,
   Button,
   ActivityIndicator,
+  StatusBar,
 } from 'react-native';
 import FriendItem from './FriendItem';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import GroceriesCategories from './GroceriesCategories';
 import GroceriesRandomItems from './GroceriesRandomItems';
@@ -24,6 +25,10 @@ import { createIconSetFromFontello } from 'react-native-vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductData } from '../redux/product/thunk';
 import { RootState } from '../redux/store';
+
+
+import useDebounce from './useDebounce';
+import SearchBarItem from './SearchBarItem';
 
 export default function Groceries() {
   const navigation = useNavigation();
@@ -39,6 +44,100 @@ export default function Groceries() {
   const [groupName, setGroupName] = React.useState('');
   const [page, setPage] = useState(1)
   const [categoryArray, setCategoryArray] = useState([])
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
+  const [shoppingCartNum, setShoppingCartNum] = React.useState<number>(0);
+
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    try {
+      const shoppingCartInitNum = async () => {
+        const quantity = await fetch(`${REACT_APP_API_SERVER}/goods/getShoppingCartInitNum/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user_id: userIdInRedux
+          }),
+        });
+        let json = await quantity.json()
+        console.log("shoppingCart :", json.shoppingCartInit)
+        if (json.shoppingCartInit == null) {
+          setShoppingCartNum(0)
+        } else {
+          setShoppingCartNum(json.shoppingCartInit)
+        }
+
+      };
+
+
+
+      if (isFocused) {
+        shoppingCartInitNum()
+      }
+
+    } catch (error) {
+      console.log('error', error);
+    }
+
+  }, [isFocused]);
+
+  //---------------SEARCH BAR--------------------//
+  const [searchKeyword, setSearchKeyword] = useState<string>('')
+  const [isShow, setIsShow] = useState<boolean>(false)
+  const [searchResult, setSearchResult] = useState([])
+  const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 500)
+  const textChange = () => {
+    // console.log("value: ", debouncedSearchKeyword)
+    if (debouncedSearchKeyword && debouncedSearchKeyword.length >= 2) {
+      console.log('i am now searching :', debouncedSearchKeyword)
+
+      const loadSearchResult = async () => {
+        try {
+          console.log('Seraching Result...');
+          const response = await fetch(
+            `${REACT_APP_API_SERVER}/goods/searchKeyword/`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                name: debouncedSearchKeyword,
+              }),
+            },
+          );
+
+          let json = [];
+          if (response) {
+            json = await response.json();
+          }
+          // console.log("json :", json.searchResult);
+          setSearchResult(json.searchResult);
+          setIsShow(true)
+
+        } catch (error) {
+          console.log('error', error);
+          setIsShow(false)
+
+        }
+      };
+      if (isFocused) {
+        loadSearchResult();
+      }
+    } else {
+      setIsShow(false)
+
+    }
+
+    // console.log(searchKeyword);
+
+    // if (searchKeyword == '') {
+    //   setIsShow(false)
+    // } else {
+    //   setIsShow(true)
+    // }
+  }
+  useEffect(() => {
+    textChange()
+  }, [debouncedSearchKeyword])
+  //---------------SEARCH BAR--------------------//
 
   const dispatch = useDispatch()
 
@@ -71,6 +170,8 @@ export default function Groceries() {
       console.log('error', error);
     }
   }
+  // console.log("exploreResults :", allExploreData);
+  // console.log("top5Results :", allTop5Data);
 
 
   const renderEmpty = () => (
@@ -108,10 +209,33 @@ export default function Groceries() {
 
 
   const styles = StyleSheet.create({
+    dropDown: {
+      position: "absolute",
+      left: "6%",
+      maxHeight: "50%",
+      minHeight: "50%",
+      width: "88%",
+      top: "16%",
+      zIndex: 9,
+      padding: 10,
+      backgroundColor: '#F5F5F5',
+      borderRadius: 10,
+      shadowOpacity: 0.1,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
+
+    },
     text: {
       fontSize: 25,
       fontWeight: 'bold',
       paddingLeft: 20,
+    },
+    cartNumText: {
+      fontSize: 9,
+
     },
     cartQty: {
       justifyContent: "center",
@@ -122,9 +246,16 @@ export default function Groceries() {
       backgroundColor: "#f79f24",
       position: "absolute",
       top: -10,
-      right: -10
+      right: -10,
+      shadowOpacity: 0.3,
+      shadowRadius: 1,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
     },
     container: {
+      position: "relative",
       justifyContent: 'space-around',
       alignItems: 'center',
       flexDirection: 'row',
@@ -142,14 +273,22 @@ export default function Groceries() {
       // }
     },
     input: {
-      height: 40,
+      height: 45,
       margin: 12,
-      borderWidth: 1,
+      borderWidth: 2.5,
       padding: 10,
       minWidth: 300,
       maxWidth: 300,
-      borderRadius: 10,
+      borderRadius: 15,
       backgroundColor: 'white',
+      borderColor: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
+
     },
     searchButton: {
       margin: 5,
@@ -193,41 +332,56 @@ export default function Groceries() {
     },
     bestSellerButton: {
       // margin: 5,
-      fontSize: 20,
+      // fontSize: 50,
       backgroundColor: 'white',
       width: '40%',
       height: 35,
-      // borderRadius: 10,
-      // borderWidth: 1,
-      // borderColor: isBestSeller ? '#47b4b1' : 'white',
-      // borderColor: 'grey',
+      shadowOpacity: 1,
+      shadowColor: isBestSeller ? "#47b4b1" : "lightgray",
+      shadowRadius: 1,
+      shadowOffset: {
+        height: isBestSeller ? -4 : -4,
+        width: isBestSeller ? 4 : 4
+      },
       justifyContent: 'center',
       alignItems: 'center',
+      borderTopRightRadius: 20,
+      borderTopLeftRadius: 20,
+      margin: 2
     },
     exploreButton
 
       : {
       // margin: 5,
-      fontSize: 20,
+      // fontSize: 100,
       backgroundColor: 'white',
       width: '40%',
       height: 35,
-      // borderRadius: 10,
-      // borderWidth: 1,
-      // borderColor: isBestSeller ? 'white' : '#47b4b1',
-      // borderColor: 'grey',
+      shadowOpacity: 1,
+      shadowColor: isBestSeller ? "lightgray" : "#47b4b1",
+      shadowRadius: 1,
+      shadowOffset: {
+        height: isBestSeller ? -4 : -4,
+        width: isBestSeller ? 4 : 4
+      },
       justifyContent: 'center',
       alignItems: 'center',
+      borderTopRightRadius: 20,
+      borderTopLeftRadius: 20,
+      margin: 2
     },
 
     bestSellerButtonText: {
-      fontSize: isBestSeller ? 15 : 12,
+      fontSize: isBestSeller ? 20 : 20,
+      fontWeight: "bold"
+
     },
     exploreButtonText: {
-      fontSize: isBestSeller ? 15 : 18,
+      fontSize: isBestSeller ? 20 : 20,
+      fontWeight: "bold"
     },
     groupTypeButtonContainer: {
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       flexDirection: 'row',
       width: '100%',
       paddingTop: 10,
@@ -280,7 +434,15 @@ export default function Groceries() {
       fontWeight: '300',
       color: 'white',
     },
-
+    shoppingCartIcon: {
+      color: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
+    }
   });
 
   // FIXME: CSS: make it 3 columns
@@ -291,25 +453,44 @@ export default function Groceries() {
 
 
 
+  // console.log("searchResult :", searchResult)
+
+
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1' }}>
+    //---------------SEARCH BAR--------------------//
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
+      <StatusBar barStyle="light-content" />
+      {isShow ? <ScrollView style={styles.dropDown}>
+        {searchResult.map((item: any, idx: number) => (
+          <SearchBarItem item={item} key={idx} />
+        ))}
+      </ScrollView> : (null)}
       <View style={styles.container}>
-        <View>
+        <View >
           <TextInput
             placeholder="Search Products"
-            value={groupName}
-            onChangeText={setGroupName}
+            value={searchKeyword}
+            // onChangeText={setSearchKeyword}
             style={styles.input}
+            onChangeText={(value) => {
+              console.log('on change value = ', value)
+              setSearchKeyword(value)
+            }}
           />
+
         </View>
+        {/* //---------------SEARCH BAR--------------------// */}
         <View>
           <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
-            <FontAwesome name="shopping-cart" size={30} />
+            <FontAwesome name="shopping-cart" size={28} style={styles.shoppingCartIcon} />
             <View style={styles.cartQty}>
-              <Text>0</Text>
+              <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
             </View>
           </TouchableOpacity>
         </View>
+
+
       </View>
 
 
@@ -339,9 +520,6 @@ export default function Groceries() {
 
       {isBestSeller == true &&
         <View style={{ backgroundColor: 'white' }}>
-          <View >
-            <Text style={styles.text}>Best Seller</Text>
-          </View>
 
           <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '100%' }}>
             <View style={styles.container2}>

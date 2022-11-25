@@ -106,6 +106,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
+      <StatusBar barStyle="dark-content"/>
         {/* <SafeAreaView> */}
         <NavigationContainer>
           {/* isLoggedIn? */}
@@ -120,7 +121,6 @@ const App = () => {
             />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
-            <Stack.Screen name="Groceries" component={Groceries} />
             <Stack.Screen
               name="GroceriesTopItems"
               component={GroceriesTopItems}

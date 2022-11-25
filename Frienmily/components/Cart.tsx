@@ -1,6 +1,7 @@
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -10,10 +11,106 @@ import {
 } from 'react-native';
 import CartItem from './CartItem';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { REACT_APP_API_SERVER } from '@env';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 
 
 export default function Cart() {
+
+  const isFocused = useIsFocused();
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
+  const [shoppingListArray, setShoppingListArray] = useState([])
+  const [estimatedTotal, setEstimatedTotal] = useState(0)
+
+  const reCalculateAmount = (value: number) => {
+    setEstimatedTotal((amount) => amount + value)
+  }
+
+  useEffect(() => {
+    try {
+      const shoppingList = async () => {
+        console.log("Load shoppingList...");
+        const response = await fetch(`${REACT_APP_API_SERVER}/goods/getShoppingListItems/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user_id: userIdInRedux
+          }),
+        });
+        let json;
+        if (response) {
+          json = await response.json();
+        }
+        setShoppingListArray(json.shoppingList)
+        console.log("json.shoppingList :", json.shoppingList)
+        let total = 0
+        for (let item of json.shoppingList) {
+          const getLowest = () => {
+            let allPriceArray = [
+              { price: parseFloat(item.wellcome_price), shop: "惠康" },
+              { price: parseFloat(item.parknshop_price), shop: "百佳" },
+              { price: parseFloat(item.jasons_price), shop: "Jasons" },
+              { price: parseFloat(item.watsons_price), shop: "屈臣氏" },
+              { price: parseFloat(item.mannings_price), shop: "萬寧" },
+              { price: parseFloat(item.aeon_price), shop: "AEON" },
+              { price: parseFloat(item.dch_price), shop: "大昌食品" },
+              { price: parseFloat(item.ztore_price), shop: "士多" }
+            ]
+            let filtered = allPriceArray.filter(function (e) {
+              return e.price != NaN;
+            });
+            const lowest = filtered.reduce((previous, current) => {
+              return current.price < previous.price ? current : previous;
+            });
+            return lowest
+          }
+          console.log(getLowest().price * item.quantity)
+          total += getLowest().price * item.quantity
+        }
+        setEstimatedTotal(total)
+      };
+
+
+      if (isFocused) {
+        shoppingList()
+      }
+
+    } catch (error) {
+      console.log('error', error);
+    }
+
+  }, [isFocused]);
+
+
+  function addZeroes(num: number) {
+    return (Math.round(num * 100) / 100).toFixed(2)
+  }
+
+  const assignToGroup = () => {
+    if (shoppingListArray.length == 0) {
+      showAlert()
+      return
+    }
+    navigation.navigate('AssignGroup' as never)
+  }
+
+  const showAlert = () => {
+    Alert.alert('Please at least grab something to your cart', '', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
+
+
+
+
+
   const styles = StyleSheet.create({
     addMoreText: {
       fontSize: 15,
@@ -119,7 +216,7 @@ export default function Cart() {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", width: "100%" }}>
 
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('HomeTab' as never)}>
@@ -140,7 +237,7 @@ export default function Cart() {
           <View style={[styles.circle, styles.circleFilled, { left: 50, top: -21.5 }]}>
             <Text style={{ fontWeight: "bold", color: "white" }}>1</Text>
           </View>
-          <View style={[styles.circle, styles.circleUnfilled, { left: "45%", top: -21.5 }]}>
+          <View style={[styles.circle, styles.circleUnfilled, { left: "45%", top: -21.5, borderColor: '#f79f24' }]}>
             <Text style={{ fontWeight: "bold", color: "#939493" }}>2</Text>
           </View>
           <View style={[styles.circle, styles.circleUnfilled, { right: 50, top: -21.5 }]}>
@@ -154,55 +251,13 @@ export default function Cart() {
 
 
 
-      <ScrollView style={{ backgroundColor: 'white' }}>
-        <Text>
+      <ScrollView style={{ backgroundColor: 'white', width: "100%" }}>
+        {shoppingListArray.map((item: any, idx: number) => (
+          <CartItem items={item} reCalculateAmount={reCalculateAmount} key={idx} />
+        ))}
+        {/* <Text>
           <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
-        <Text>
-          <CartItem />
-        </Text>
+        </Text> */}
       </ScrollView>
       <View style={{ width: "100%" }}>
         <View>
@@ -216,7 +271,7 @@ export default function Cart() {
           </TouchableOpacity>
         </View>
         <View>
-          <Text style={styles.totalText}>Estimated Total: HKD$ 800</Text>
+          <Text style={styles.totalText}>Estimated Total: HKD$ {addZeroes(estimatedTotal)}</Text>
         </View>
       </View>
 
@@ -224,7 +279,7 @@ export default function Cart() {
         <TouchableOpacity
           style={styles.assignGroupButton}
           onPress={() => {
-            navigation.navigate('AssignGroup' as never);
+            assignToGroup();
           }}>
           <Text style={styles.buttonText}>Assign Group</Text>
         </TouchableOpacity>
