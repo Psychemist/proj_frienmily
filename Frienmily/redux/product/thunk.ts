@@ -14,7 +14,7 @@ export const fetchProductData: any = createAsyncThunk("product/fetchProductData"
     let catIds = params.categoryArray
     let page = params.page
 
-    if (!catIds || isNaN(page)) {
+    if (catIds.length == 0 || isNaN(page) || page == undefined) {
       console.log("catIds or page is not valid at thunk. No fetching")
       return
     }

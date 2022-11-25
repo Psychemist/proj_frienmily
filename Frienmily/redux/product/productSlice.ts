@@ -42,7 +42,7 @@ export const productSlice = createSlice({
 
     // NOTE: Specify the handling for pending, fulfill and rejected cases
     build.addCase(fetchProductData.pending, (state: ProductState) => {
-      console.log("pending: ", state.loading)
+      console.log("pending")
     })
     build.addCase(fetchProductData.rejected, (state: ProductState, action: PayloadAction<{ error: string }>) => {
       console.log("rejected: ", action.payload.error)
@@ -65,11 +65,20 @@ const fetchMoreData = (state: ProductState = initialState, action: any) => {
   console.log("number of Explore product fetched = ", exploreResults.length)
   console.log("top5Results reveiced at productSlice : ", top5Results)
   console.log("number of Top 5 product fetched = ", top5Results.length)
+  let isNoMoreProduct;
+  if (exploreResults.length == 0) {
+    isNoMoreProduct = true
+  } else {
+    isNoMoreProduct = false
+  }
+
+
   return {
     ...state,
-    exploreProductData: [...exploreResults],
+    exploreProductData: [...state.exploreProductData, ...exploreResults],
     top5ProductData: [...top5Results],
     error: "",
+    isListEnd: isNoMoreProduct
     // loading: false,
     // moreLoading: false
   }
