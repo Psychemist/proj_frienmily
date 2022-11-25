@@ -16,6 +16,7 @@ import { isAnyOf } from '@reduxjs/toolkit';
 import { REACT_APP_API_SERVER } from '@env';
 import { RootState } from '../redux/store';
 import { useSelector } from 'react-redux';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 export default function CreateGroup() {
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
@@ -48,20 +49,24 @@ export default function CreateGroup() {
         showAlert2();
         return;
       }
-      console.log('groupName :', groupName);
-      console.log('isFamilyGroup :', isFamilyGroup);
-      console.log('groupIdArray :', idArray);
+      if (imgs == null) {
+        showAlert3();
+        return;
+      }
+
+
+      console.log("idArray :", idArray)
+      const formData = new FormData();
+      formData.append('groupName', groupName);
+      formData.append('is_family_group', isFamilyGroup);
+      formData.append('image', imgs[0]);
+      formData.append('groupMemberId', [idArray]);
+      formData.append('userID', userIdInRedux);
+      console.log("formData :", formData)
 
       const res = await fetch(`${REACT_APP_API_SERVER}/groups/`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          groupName: groupName,
-          is_family_group: isFamilyGroup,
-          profile_picture: 'testing',
-          groupMemberId: idArray,
-          userID: userIdInRedux,
-        }),
+        body: formData
       });
       let result = await res.json();
       console.log(result);
@@ -81,6 +86,11 @@ export default function CreateGroup() {
     if (isFriendsButtonSelected == true) {
       setIsFriendsButtonSelected(false);
     }
+  };
+  const showAlert3 = () => {
+    Alert.alert('Please upload a profile picture', '', [
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
   };
   const showAlert2 = () => {
     Alert.alert('Please at least select one group member', '', [
@@ -152,9 +162,23 @@ export default function CreateGroup() {
     setFriendItemList(tempArray);
   };
 
+  const addPhoto = () => {
+    launchImageLibrary(
+      {
+        mediaType: 'photo', // 'photo' or 'video' or 'mixed'
+        selectionLimit: 1, // 1为一张，0不限制数量
+        includeBase64: true,
+      },
+      res => {
+        setImgs(res.assets);
+      },
+    );
+  };
+
   // const REACT_APP_API_SERVER = process.env.REACT_APP_API_SERVER
   let fetchResult: any;
   const [friendItemList, setFriendItemList]: any = useState([]);
+  const [imgs, setImgs]: any = useState(null);
 
   useEffect(() => {
     console.log('useEffect');
@@ -211,7 +235,7 @@ export default function CreateGroup() {
         height: 1,
         width: 1
       }
-
+      
     },
     searchUserNameTextBox: {
       height: 55,
@@ -230,7 +254,7 @@ export default function CreateGroup() {
         height: 1,
         width: 1
       }
-
+      
     },
     createBtn: {
       backgroundColor: '#47b4b1',
@@ -316,7 +340,7 @@ export default function CreateGroup() {
       fontSize: 25,
     },
     searchButton: {
-
+      
       margin: 5,
       fontSize: 20,
       backgroundColor: "#47b4b1",
@@ -428,9 +452,25 @@ export default function CreateGroup() {
       </TouchableOpacity> */}
         {/* <Text style={styles.stepText}>1. Enter a group name and select a group photo:</Text> */}
         <View style={styles.groupNameAndPhotoContainer}>
-          <TouchableOpacity onPress={enlargeProfilePicture}>
-            <Image style={styles.userImage} source={{ uri: "https://iconandreceipt.s3.ap-southeast-1.amazonaws.com/c3269ab8c2949b1e0614dad00" }} ></Image>
-          </TouchableOpacity>
+          {/* <TouchableOpacity onPress={enlargeProfilePicture}>
+          <Image style={styles.userImage} source={{ uri: "https://iconandreceipt.s3.ap-southeast-1.amazonaws.com/c3269ab8c2949b1e0614dad00" }} ></Image>
+        </TouchableOpacity> */}
+          {imgs == undefined || imgs == null ? (
+            <TouchableOpacity onPress={() => addPhoto()}>
+              <View style={styles.userImage}>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            imgs.map((item: any, index: number) => {
+              return (
+                <TouchableOpacity key={index} onPress={() => addPhoto()}>
+                  <Image
+                    style={styles.userImage}
+                    source={{ uri: item.uri }}></Image>
+                </TouchableOpacity>
+              );
+            })
+          )}
           <TextInput
             placeholder="New Group Name"
             autoCapitalize="none"

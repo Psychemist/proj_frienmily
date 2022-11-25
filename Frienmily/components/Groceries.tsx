@@ -34,15 +34,27 @@ export default function Groceries() {
   const navigation = useNavigation();
   const exploreProductsInRedux = useSelector((state: RootState) => state.product.exploreProductData)
   const top5ProductsInRedux = useSelector((state: RootState) => state.product.top5ProductData)
+  const isListEnd = useSelector((state: RootState) => state.product.isListEnd)
 
   const [isBestSeller, setIsBestSeller] = useState(true)
-  const [allExploreData, setAllExploreData]: any = useState([]);
-  const [allTop5Data, setAllTop5Data]: any = useState([]);
-  const [groupName, setGroupName] = React.useState('');
+  // const [allExploreData, setAllExploreData]: any = useState([]);
+  // const [allTop5Data, setAllTop5Data]: any = useState([]);
+  // const [groupName, setGroupName] = React.useState('');
   const [page, setPage] = useState(0)
   const [categoryArray, setCategoryArray] = useState([])
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const [shoppingCartNum, setShoppingCartNum] = React.useState<number>(0);
+
+  const [button1, setButton1] = useState(false)
+  const [button2, setButton2] = useState(false)
+  const [button3, setButton3] = useState(false)
+  const [button4, setButton4] = useState(false)
+  const [button5, setButton5] = useState(false)
+  const [button6, setButton6] = useState(false)
+  const [button7, setButton7] = useState(false)
+  const [button8, setButton8] = useState(false)
+  const [button9, setButton9] = useState(false)
+  const [button10, setButton10] = useState(false)
 
   const isFocused = useIsFocused();
   useEffect(() => {
@@ -161,7 +173,6 @@ export default function Groceries() {
     try {
       console.log("@@@@@@@ fetch data")
       console.log("@@@@@@@ categoryArray: ", categoryArray)
-      // FIXME: page should be 0 at the beginning
       console.log("@@@@@@@ page: ", page)
       let fetchResult = await dispatch(fetchProductData({
         categoryArray: categoryArray,
@@ -182,15 +193,21 @@ export default function Groceries() {
   //     </TouchableOpacity>
   //   </View>
   // )
-  // const renderFooter = () => (
-  //   <View>
-  //     {allExploreData.moreLoading && <ActivityIndicator />}
-  //     {allExploreData.isListEnd && <Text>No more products at the moment</Text>}
-  //   </View>
-  // )
+  const renderFooter = () => (
+    <View>
+      {/* {allExploreData.moreLoading && <ActivityIndicator />}
+      {allExploreData.isListEnd && <Text>No more products at the moment</Text>} */}
+      {!isListEnd && <ActivityIndicator style={{ margin: 10 }} />}
+      {isListEnd &&
+        <View style={{ margin: 10 }}>
+          <Text style={{ textAlign: "center" }}>No more products at the moment</Text>
+        </View>
+      }
+    </View>
+  )
 
 
-  // TODO: 能夠根據page轉變而trigger fetch data，但沒有fetch回來東西 (becoz categoryArray is empty)
+
   const onChangePage = () => {
     setPage(page + 1)
     console.log("The coming page is Page ", page)
@@ -203,12 +220,39 @@ export default function Groceries() {
   }
 
 
+  // useEffect(() => {
+  //   console.log("categoryArray--------: ", categoryArray)
+  //   console.log("The current page number: ", page)
+  //   console.log("222222222 fetch at userEffect")
+  //   fetchData(categoryArray, page)
+  // }, [page])
+
+  // =================================================================
+
+
+
+
   useEffect(() => {
-    console.log("categoryArray--------: ", categoryArray)
-    console.log("The current page number: ", page)
-    console.log("222222222 fetch at userEffect")
-    fetchData(categoryArray, page)
-  }, [page])
+    const booleanArray = [{ isSelected: button1, id: 1 }, { isSelected: button2, id: 2 }, { isSelected: button3, id: 3 }, { isSelected: button4, id: 4 }, { isSelected: button5, id: 5 }, { isSelected: button6, id: 6 }, { isSelected: button7, id: 7 }, { isSelected: button8, id: 8 }, { isSelected: button9, id: 9 }, { isSelected: button10, id: 10 }]
+    const finalSelectedCategoriesArray = []
+    for (let item of booleanArray) {
+      if (item.isSelected == true) {
+        finalSelectedCategoriesArray.push(item.id)
+      }
+    }
+    console.log("######## categoryArray: ", finalSelectedCategoriesArray)
+    console.log("######## page: ", page)
+
+    if (finalSelectedCategoriesArray.length == 0) {
+      fetchData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], page)
+      // props.getCategoryArrayFromChild([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    } else {
+      fetchData(finalSelectedCategoriesArray, page)
+      // props.getCategoryArrayFromChild(finalSelectedCategoriesArray)
+    }
+  }, [button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, page]);
+
+
   // =================================================================
 
 
@@ -450,8 +494,6 @@ export default function Groceries() {
   });
 
 
-  // FIXME: Encountered two children with the same key
-
 
   return (
     //---------------SEARCH BAR--------------------//
@@ -494,7 +536,26 @@ export default function Groceries() {
       <View style={styles.catergoriesContainer}>
         <Text>
           <GroceriesCategories
-            fetchData={fetchData} page={page}
+            setButton1={setButton1}
+            setButton2={setButton2}
+            setButton3={setButton3}
+            setButton4={setButton4}
+            setButton5={setButton5}
+            setButton6={setButton6}
+            setButton7={setButton7}
+            setButton8={setButton8}
+            setButton9={setButton9}
+            setButton10={setButton10}
+            button1={button1}
+            button2={button2}
+            button3={button3}
+            button4={button4}
+            button5={button5}
+            button6={button6}
+            button7={button7}
+            button8={button8}
+            button9={button9}
+            button10={button10}
           // getCategoryArrayFromChild={getCategoryArrayFromChild}
           />
         </Text>
@@ -549,7 +610,7 @@ export default function Groceries() {
           )}
           key={1}
           numColumns={3}
-          // ListFooterComponent={renderFooter}
+          ListFooterComponent={renderFooter}
           // ListEmptyComponent={renderEmpty}
           onEndReachedThreshold={0.2}
           onEndReached={fetchMoreDataOnPageEnd}
