@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Alert,
   SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -128,6 +129,7 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.body}>
+            <StatusBar barStyle="dark-content"/>
         <View> 
             <Text style={styles.appName}>Frienmily</Text>
         </View>
