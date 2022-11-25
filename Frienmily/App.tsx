@@ -48,18 +48,35 @@ import GroceriesTest from './components/GroceriesTest';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient()
+const styles = StyleSheet.create({
+
+shoppingCartIcon: {
+  color: "white",
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  shadowOffset: {
+    height: 1,
+    width: 1
+  }
+}})
 
 const HomeTab = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator screenOptions={{ 
+      headerShown: false,
+      tabBarActiveTintColor: "#47b4b1",
+      tabBarInactiveTintColor: "gray",
+  }} >
       <Tab.Screen
         name="Groups"
         component={Groups}
         options={{
-          tabBarLabel: 'Groups',
+          tabBarLabel: ({focused, color}) => (
+            <Text style={{color: focused ? '#47b4b1' : color, fontSize: 11}}>Groups</Text>
+          ),
           unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
-            <FontAwesomeIcon name="spinner" color={color} size={23} />
+            <FontAwesomeIcon name="spinner" color={color} size={20} />
             // <MaterialCommunityIcons name="account-multiple" size={24} color="grey" />r
           ),
         }}
@@ -68,10 +85,12 @@ const HomeTab = () => {
         name="Friends"
         component={Friends}
         options={{
-          tabBarLabel: 'Friends',
+          tabBarLabel: ({focused, color}) => (
+            <Text style={{color: focused ? '#47b4b1' : color, fontSize: 11}}>Friends</Text>
+          ),
           unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
-            <FontAwesomeIcon name="smile-o" color={color} size={25} />
+            <FontAwesomeIcon name="smile-o" color={color} size={24} />
             // <MaterialCommunityIcons name="robot-happy-outline" size={24} color="grey" />
           ),
         }}
@@ -80,7 +99,9 @@ const HomeTab = () => {
         name="Groceries"
         component={Groceries}
         options={{
-          tabBarLabel: 'Groceries',
+          tabBarLabel: ({focused, color}) => (
+            <Text style={{color: focused ? '#47b4b1' : color, fontSize: 11}}>Groceries</Text>
+          ),
           tabBarIcon: ({ color, size }) => (
             // <FontAwesomeIcon name="braille" color={color} size={20} />
             <FontAwesomeIcon name="cubes" color={color} size={20} />
@@ -91,7 +112,9 @@ const HomeTab = () => {
         name="Account"
         component={Account}
         options={{
-          tabBarLabel: 'Account',
+          tabBarLabel: ({focused, color}) => (
+            <Text style={{color: focused ? '#47b4b1' : color, fontSize: 11}}>Account</Text>
+          ),
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon name="user-o" color={color} size={20} />
             // <MaterialCommunityIcons name="account-multiple" size={24} color="black" />
@@ -106,7 +129,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-      <StatusBar barStyle="dark-content"/>
+      <StatusBar barStyle="light-content"/>
         {/* <SafeAreaView> */}
         <NavigationContainer>
           {/* isLoggedIn? */}

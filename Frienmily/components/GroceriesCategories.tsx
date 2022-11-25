@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Icon } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -202,8 +202,9 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
 
 
     return (
-        <View style={styles.container}>
 
+        <View style={styles.container}>
+            <StatusBar barStyle="light-content" />
             <View style={styles.container1}>
                 <View style={styles.categoriesItemContainer}>
                     <TouchableOpacity style={styles.categoriesPhotoContainer1} onPress={() => { setButton1(!button1) }}>
