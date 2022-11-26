@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Alert,
   SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -72,42 +73,72 @@ export default function LoginScreen() {
     },
     logoWrapper: {
       // position: 'absolute',
-      top: 80,
-      height: 200,
-      width: 300,
-      backgroundColor: '#47b4b1',
+      // top: "10%",
+      // height: 200,
+      // width: "100%",
+      // backgroundColor: '#47b4b1',
     },
     inputFieldWrapper: {
-      height: 40,
-      width: 300,
-      borderColor: '#47b4b1',
-      borderWidth: 1,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 10,
+      height: 55,
+      // margin: 12,
+      // marginTop: "10%",
+      marginBottom: "5%",
+      borderWidth: 2.5,
+      // padding: 10,
+      minWidth: "50%",
+      maxWidth: "99%",
+      borderRadius: 15,
+      backgroundColor: 'white',
+      borderColor: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
+
     },
     loginBtn: {
       backgroundColor: '#47b4b1',
-      height: 40,
+      height: 55,
       width: 300,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 10,
+      margin: 3,
+      borderRadius: 15,
+      borderColor: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
     },
+    appName: {
+      fontSize: 42,
+      fontWeight: "bold",
+      color: "#47b4b1",
+      marginTop:"40%",
+      maxWidth:"100%"
+  },
   });
 
   return (
     <SafeAreaView style={styles.body}>
-      <View style={styles.logoWrapper}>
-        <Text>LOGO here</Text>
-      </View>
+            <StatusBar barStyle="dark-content"/>
+        <View> 
+            <Text style={styles.appName}>Frienmily</Text>
+        </View>
 
       <View
         style={{
           position: 'absolute',
-          marginTop: 350,
+          marginTop: "90%",
+          maxWidth: "100%"
         }}>
         <View style={styles.inputFieldWrapper}>
           <TextInput
@@ -136,7 +167,7 @@ export default function LoginScreen() {
 
         <TouchableOpacity
           onPress={onLogin}
-          style={[styles.loginBtn, { marginBottom: 30 }]}>
+          style={[styles.loginBtn, { marginBottom: "50%"}]}>
           <Text
             style={{
               color: 'white',
@@ -151,7 +182,8 @@ export default function LoginScreen() {
         <TouchableOpacity onPress={onCreateAccount} style={styles.loginBtn}>
           <Text
             style={{
-              fontSize: 20,
+              fontSize: 18,
+              color: 'white',
             }}>
             Create a New Account
           </Text>

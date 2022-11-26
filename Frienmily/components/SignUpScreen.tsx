@@ -13,12 +13,13 @@ import {
 import {RootState} from '../redux/store';
 import {fetchLogin} from '../redux/user/thunk';
 import {useNavigation} from '@react-navigation/native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function SignUpScreen() {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [mobileNumber, setMobileNumber] = React.useState('');
-
+  const [email, setEmail] = React.useState('');
   // NOTE: Remember to add this line before using dispatch
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -91,46 +92,80 @@ export default function SignUpScreen() {
       backgroundColor: '#47b4b1',
     },
     inputFieldWrapper: {
-      height: 40,
-      width: 300,
-      borderColor: '#47b4b1',
-      borderWidth: 1,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 10,
+      height: 55,
+      // margin: 12,
+      // marginTop: "10%",
+      marginBottom: "5%",
+      borderWidth: 2.5,
+      // padding: 10,
+      minWidth: "50%",
+      maxWidth: "99%",
+      borderRadius: 15,
+      backgroundColor: 'white',
+      borderColor: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
+
     },
     signUpBtn: {
       backgroundColor: '#47b4b1',
-      height: 40,
+      height: 55,
       width: 300,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 10,
+      margin: 3,
+      borderRadius: 15,
+      borderColor: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
     },
+    appName: {
+      fontSize: 42,
+      fontWeight: "bold",
+      color: "#47b4b1",
+      marginTop:"32%",
+      maxWidth:"100%"
+  },
+  backIcon: {
+    textAlign: "left",
+    color: "#47b4b1",
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    shadowOffset: {
+        height: 1,
+        width: 1
+    },
+    marginRight: "60%"
+    
+}
   });
 
   return (
     <SafeAreaView style={styles.body}>
-      <TouchableOpacity onPress={onClickBackBtn} style={styles.backBtn}>
-        <Text
-          style={{
-            textAlign: 'center',
-          }}>
-          {' '}
-          Back{' '}
-        </Text>
-      </TouchableOpacity>
+                <TouchableOpacity style={styles.backIcon} onPress={() => navigation.goBack()}>
+                    <FontAwesome name='angle-left' size={35} style={styles.backIcon} />
+                </TouchableOpacity>
 
-      <View style={styles.logoWrapper}>
-        <Text>LOGO here</Text>
-      </View>
+      <View> 
+            <Text style={styles.appName}>Frienmily</Text>
+        </View>
 
       <View
         style={{
           position: 'absolute',
-          marginTop: 330,
+          marginTop: 310,
         }}>
         <View style={[styles.inputFieldWrapper, {marginTop: 80}]}>
           <TextInput
@@ -189,12 +224,25 @@ export default function SignUpScreen() {
           />
         </View>
 
+        <View style={styles.inputFieldWrapper}>
+          <TextInput
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+            style={{
+              margin: 5,
+              fontSize: 20,
+            }}
+          />
+        </View>
+
         <TouchableOpacity
           onPress={onSignUp}
           style={[styles.signUpBtn, {marginBottom: 30}]}>
           <Text
             style={{
               fontSize: 20,
+              color: "white"
             }}>
             Sign Up
           </Text>

@@ -113,7 +113,7 @@ export default function FriendItem(props: FriendItemProps) {
             width: 60,
             height: 60,
             borderRadius: 50,
-            backgroundColor: 'grey',
+            // backgroundColor: 'grey',
             marginRight: 10
         },
         arrowIcon: {

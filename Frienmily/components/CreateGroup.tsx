@@ -16,6 +16,7 @@ import { isAnyOf } from '@reduxjs/toolkit';
 import { REACT_APP_API_SERVER } from '@env';
 import { RootState } from '../redux/store';
 import { useSelector } from 'react-redux';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 export default function CreateGroup() {
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
@@ -48,20 +49,24 @@ export default function CreateGroup() {
         showAlert2();
         return;
       }
-      console.log('groupName :', groupName);
-      console.log('isFamilyGroup :', isFamilyGroup);
-      console.log('groupIdArray :', idArray);
+      if (imgs == null) {
+        showAlert3();
+        return;
+      }
+
+
+      console.log("idArray :", idArray)
+      const formData = new FormData();
+      formData.append('groupName', groupName);
+      formData.append('is_family_group', isFamilyGroup);
+      formData.append('image', imgs[0]);
+      formData.append('groupMemberId', [idArray]);
+      formData.append('userID', userIdInRedux);
+      console.log("formData :", formData)
 
       const res = await fetch(`${REACT_APP_API_SERVER}/groups/`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          groupName: groupName,
-          is_family_group: isFamilyGroup,
-          profile_picture: 'testing',
-          groupMemberId: idArray,
-          userID: userIdInRedux,
-        }),
+        body: formData
       });
       let result = await res.json();
       console.log(result);
@@ -81,6 +86,11 @@ export default function CreateGroup() {
     if (isFriendsButtonSelected == true) {
       setIsFriendsButtonSelected(false);
     }
+  };
+  const showAlert3 = () => {
+    Alert.alert('Please upload a profile picture', '', [
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
   };
   const showAlert2 = () => {
     Alert.alert('Please at least select one group member', '', [
@@ -152,9 +162,23 @@ export default function CreateGroup() {
     setFriendItemList(tempArray);
   };
 
+  const addPhoto = () => {
+    launchImageLibrary(
+      {
+        mediaType: 'photo', // 'photo' or 'video' or 'mixed'
+        selectionLimit: 1, // 1为一张，0不限制数量
+        includeBase64: true,
+      },
+      res => {
+        setImgs(res.assets);
+      },
+    );
+  };
+
   // const REACT_APP_API_SERVER = process.env.REACT_APP_API_SERVER
   let fetchResult: any;
   const [friendItemList, setFriendItemList]: any = useState([]);
+  const [imgs, setImgs]: any = useState(null);
 
   useEffect(() => {
     console.log('useEffect');
@@ -196,11 +220,12 @@ export default function CreateGroup() {
   const styles = StyleSheet.create({
     input: {
       height: 55,
-      margin: 12,
+      // marginLeft: "8%",
+      marginBottom:"8%",
       borderWidth: 2.5,
       padding: 10,
-      minWidth: "60%",
-      maxWidth: "60%",
+      minWidth: "50%",
+      maxWidth: "50%",
       borderRadius: 15,
       backgroundColor: 'white',
       borderColor: "white",
@@ -265,7 +290,7 @@ export default function CreateGroup() {
       borderRadius: 10,
       justifyContent: 'center',
       alignItems: 'center',
-      shadowColor:isFriendsButtonSelected? "lightgray": "lightgray",
+      shadowColor: isFriendsButtonSelected ? "lightgray" : "lightgray",
       shadowOpacity: 1,
       shadowRadius: 1,
       shadowOffset: {
@@ -276,7 +301,7 @@ export default function CreateGroup() {
     familyButton: {
       margin: 5,
       fontSize: 20,
-      backgroundColor: isFamilyButtonSelected ? "#47b4b1": "lightgray",
+      backgroundColor: isFamilyButtonSelected ? "#47b4b1" : "lightgray",
       // borderColor: isFamilyButtonSelected ? 'black' : '',
       // borderWidth: isFamilyButtonSelected ? 3 : 0,
       width: '40%',
@@ -284,12 +309,12 @@ export default function CreateGroup() {
       borderRadius: 10,
       justifyContent: 'center',
       alignItems: 'center',
-      shadowColor:isFamilyButtonSelected ?  "lightgray": "lightgray",
+      shadowColor: isFamilyButtonSelected ? "lightgray" : "lightgray",
       shadowOpacity: 1,
       shadowRadius: 1,
       shadowOffset: {
-        height: isFamilyButtonSelected ?  4 : 0,
-        width: isFamilyButtonSelected ?  4 : 0,
+        height: isFamilyButtonSelected ? 4 : 0,
+        width: isFamilyButtonSelected ? 4 : 0,
       },
     },
     buttonFontSize: {
@@ -301,8 +326,8 @@ export default function CreateGroup() {
       maxHeight: "38%",
       width: '100%',
       flexGrow: 1,
-      paddingLeft: "9%",
-      // paddingRight: "20%",
+      paddingLeft: "10%",
+      paddingRight: "10%",
     },
     header: {
       height: '14%',
@@ -325,7 +350,7 @@ export default function CreateGroup() {
       justifyContent: 'center',
       alignItems: 'center',
       shadowOpacity: 1,
-      shadowColor:"#47b4b1",
+      shadowColor: "#47b4b1",
       shadowRadius: 2,
       shadowOffset: {
         height: 0,
@@ -333,7 +358,7 @@ export default function CreateGroup() {
       },
     },
     clearButton: {
-      
+
       margin: 5,
       fontSize: 20,
       backgroundColor: "lightgray",
@@ -343,7 +368,7 @@ export default function CreateGroup() {
       justifyContent: 'center',
       alignItems: 'center',
       shadowOpacity: 1,
-      shadowColor:"lightgray",
+      shadowColor: "lightgray",
       shadowRadius: 2,
       shadowOffset: {
         height: 0,
@@ -365,6 +390,7 @@ export default function CreateGroup() {
     userImage: {
       width: 100,
       height: 100,
+      marginRight: "10%",
       borderRadius: 150,
       borderColor: "#47b4b1",
       borderWidth: 4,
@@ -372,7 +398,7 @@ export default function CreateGroup() {
       right: "-20%",
       top: "-20%",
       shadowOpacity: 3,
-      shadowColor:"lightgray",
+      shadowColor: "lightgray",
       shadowRadius: 2,
       shadowOffset: {
         height: 0,
@@ -391,7 +417,7 @@ export default function CreateGroup() {
       // paddingBottom: '5%'
       maxHeight: "30%"
     },
-    stepsContainer:{
+    stepsContainer: {
       position: 'relative',
       alignItems: 'center',
       // paddingLeft: "10%"
@@ -400,17 +426,17 @@ export default function CreateGroup() {
     stepText: {
       fontSize: 25,
       fontWeight: "bold"
-  
+
     },
     memberNumText: {
       fontSize: 15,
       // fontWeight: "bold"
-  
+
     },
   });
 
   return (
-    <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1 }}>
+    <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1, maxHeight: "100%" }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -421,75 +447,91 @@ export default function CreateGroup() {
         <Text style={styles.text}>Create Group</Text>
       </View>
       <View style={styles.stepsContainer}>
-      {/* <TouchableOpacity onPress={enlargeProfilePicture}>
+        {/* <TouchableOpacity onPress={enlargeProfilePicture}>
         <Image style={styles.userImage} source={{ uri: "https://iconandreceipt.s3.ap-southeast-1.amazonaws.com/c3269ab8c2949b1e0614dad00" }} ></Image>
       </TouchableOpacity> */}
-      {/* <Text style={styles.stepText}>1. Enter a group name and select a group photo:</Text> */}
-      <View style={styles.groupNameAndPhotoContainer}>
-        <TouchableOpacity onPress={enlargeProfilePicture}>
+        {/* <Text style={styles.stepText}>1. Enter a group name and select a group photo:</Text> */}
+        <View style={styles.groupNameAndPhotoContainer}>
+          {/* <TouchableOpacity onPress={enlargeProfilePicture}>
           <Image style={styles.userImage} source={{ uri: "https://iconandreceipt.s3.ap-southeast-1.amazonaws.com/c3269ab8c2949b1e0614dad00" }} ></Image>
-        </TouchableOpacity>
-        <TextInput
-          placeholder="New Group Name"
-          autoCapitalize="none"
-          value={groupName}
-          onChangeText={setGroupName}
-          style={styles.input}
-        />
-      </View>
-
-      {/* <Text style={styles.stepText}>2. Select a group type:</Text> */}
-      <View style={styles.groupTypeButtonContainer}>
-        <TouchableOpacity style={styles.friendButton} onPress={friendsButton}>
-          <Text style={styles.buttonFontSize}>
-            <FontAwesome name="group" size={15} /> Friends
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.familyButton} onPress={familyButton}>
-          <Text style={styles.buttonFontSize}>
-            Family <FontAwesome name="home" size={20} />
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.groupMemberContainer}>
-      <Text style={styles.stepText}>Add Group Members </Text>
-      <Text style={styles.memberNumText}>Current members number in group: {numOfMembers()}</Text>
-      <View style={styles.groupTypeButtonContainer}>
-        <TextInput
-          placeholder="Search username..."
-          maxLength={18}
-          autoCapitalize="none"
-          value={friendSearchBar}
-          onChangeText={setFriendSearchBar}
-          style={styles.searchUserNameTextBox}
-        />
-        <TouchableOpacity
-          style={styles.searchButton}
-          onPress={searchBarEnter}>
-          <Text style={styles.searchAndClearText}>Search</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.clearButton}
-          onPress={clearSearchBar}>
-          <Text style={styles.searchAndClearText}>Clear</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-      <ScrollView style={styles.resultContainer}>
-        {friendItemList.map((item: any, index: number) => (
-          <FriendItemInCreateGroup
-            key={index}
-            items={item}
-            arrayIndex={index}
-            itemPress={itemPress}
+        </TouchableOpacity> */}
+          {imgs == undefined || imgs == null ? (
+            <TouchableOpacity onPress={() => addPhoto()}>
+              <View style={styles.userImage}>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            imgs.map((item: any, index: number) => {
+              return (
+                <TouchableOpacity key={index} onPress={() => addPhoto()}>
+                  <Image
+                    style={styles.userImage}
+                    source={{ uri: item.uri }}></Image>
+                </TouchableOpacity>
+              );
+            })
+          )}
+          <TextInput
+            placeholder="New Group Name"
+            autoCapitalize="none"
+            value={groupName}
+            onChangeText={setGroupName}
+            style={styles.input}
           />
-        ))}
-      </ScrollView>
+        </View>
 
-      <TouchableOpacity style={styles.createBtn} onPress={submitButton}>
-        <Text style={styles.buttonFontSize}>Create Group</Text>
-      </TouchableOpacity>
-    </View>
+        {/* <Text style={styles.stepText}>2. Select a group type:</Text> */}
+        <View style={styles.groupTypeButtonContainer}>
+          <TouchableOpacity style={styles.friendButton} onPress={friendsButton}>
+            <Text style={styles.buttonFontSize}>
+              <FontAwesome name="group" size={15} /> Friends
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.familyButton} onPress={familyButton}>
+            <Text style={styles.buttonFontSize}>
+              Family <FontAwesome name="home" size={20} />
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.groupMemberContainer}>
+          <Text style={styles.stepText}>Add Group Members </Text>
+          <Text style={styles.memberNumText}>Current members number in group: {numOfMembers()}</Text>
+          <View style={styles.groupTypeButtonContainer}>
+            <TextInput
+              placeholder="Search username..."
+              maxLength={18}
+              autoCapitalize="none"
+              value={friendSearchBar}
+              onChangeText={setFriendSearchBar}
+              style={styles.searchUserNameTextBox}
+            />
+            <TouchableOpacity
+              style={styles.searchButton}
+              onPress={searchBarEnter}>
+              <Text style={styles.searchAndClearText}>Search</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.clearButton}
+              onPress={clearSearchBar}>
+              <Text style={styles.searchAndClearText}>Clear</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <ScrollView style={styles.resultContainer}>
+          {friendItemList.map((item: any, index: number) => (
+            <FriendItemInCreateGroup
+              key={index}
+              items={item}
+              arrayIndex={index}
+              itemPress={itemPress}
+            />
+          ))}
+        </ScrollView>
+
+        <TouchableOpacity style={styles.createBtn} onPress={submitButton}>
+          <Text style={styles.buttonFontSize}>Create Group</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

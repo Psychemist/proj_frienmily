@@ -84,16 +84,14 @@ export default function GroupItem(props: GroupItemProps) {
       }>
       {/* <FontAwesome name="users" size={30} /> */}
       <View style={styles.miniWrapper}>
-        <Image style={styles.groupImage} source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} ></Image>
+        <Image style={styles.groupImage} source={{ uri: props.items.profile_picture }} ></Image>
         <View>
           <Text style={styles.groupName}>{props.items.group_name}</Text>
         </View>
       </View>
 
       <View style={styles.miniWrapper}>
-        <View>
-          <Text style={styles.settle}>settled up</Text>
-        </View>
+
         {/* <Pressable onPress={()=> navigation.navigate('ShoppingList' as never)}>  */}
         {/* Dummy nav to Groceries first, going to change navigation to 'Group Detail' - Ronson 13Nov2022 17:48 */}
         <FontAwesome name="angle-right" size={30} color={"#81848b"} style={styles.arrowIcon} />

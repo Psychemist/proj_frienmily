@@ -20,6 +20,7 @@ import { RootState } from '../redux/store';
 export default function AddFriends() {
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const [searchBar, setSearchBar] = React.useState('');
+  const [isShow, setIsShow] = React.useState(false);
 
   const navigation = useNavigation();
   const [addFriendStatus, setAddFriendStatus] = React.useState(0);
@@ -39,6 +40,7 @@ export default function AddFriends() {
           userID: userIdInRedux,
         }),
       });
+      setIsShow(true)
 
       let result = await res.json();
       setAddFriendStatus(result.type);
@@ -50,6 +52,11 @@ export default function AddFriends() {
 
       // navigation.navigate('Friends' as never)
     }
+  };
+
+  const clearSearchBar = () => {
+    setSearchBar('');
+    setIsShow(false)
   };
 
   const showAlert = () => {
@@ -79,31 +86,91 @@ export default function AddFriends() {
 
   const styles = StyleSheet.create({
     input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
+      height: 55,
+      // margin: 12,
+      marginTop: "10%",
+      marginBottom: "10%",
+      borderWidth: 2.5,
       padding: 10,
-      minWidth: 300,
-      maxWidth: 300,
-      borderRadius: 10,
+      minWidth: "95%",
+      maxWidth: "99%",
+      borderRadius: 15,
+      backgroundColor: 'white',
+      borderColor: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
+
+    },
+    groupTypeButtonContainer: {
+      height: "50%",
+      justifyContent: "flex-start",
+      flexDirection: 'row',
+      width: '100%',
+      padding: "10%",
+      // marginBottom: "10%",
+      // paddingTop: 10,
+      // paddingBottom: "2%",
+      // alignItems: 'center',
+      flexWrap: "wrap",
+      // paddingRight: "5%"
+    },
+    searchClearContainer: {
+      justifyContent: "center",
+      alignItems: 'center',
     },
     searchButton: {
+
       margin: 5,
       fontSize: 20,
-      backgroundColor: '#47b4b1',
-      width: 120,
-      height: 45,
-      borderRadius: 100,
+      backgroundColor: "#47b4b1",
+      width: '47%',
+      height: '12%',
+      borderRadius: 20,
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: 20,
+      shadowOpacity: 1,
+      shadowColor: "#47b4b1",
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 0,
+        width: 0,
+      },
     },
+    clearButton: {
+
+      margin: 5,
+      fontSize: 20,
+      backgroundColor: "lightgray",
+      width: '47%',
+      height: '12%',
+      borderRadius: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowOpacity: 1,
+      shadowColor: "lightgray",
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 0,
+        width: 0,
+      },
+    },
+    searchAndClearText: {
+      fontSize: 20,
+      color: "white"
+    },
+
     resultContainer: {
       // backgroundColor: "pink",
       width: '100%',
       flexGrow: 1,
-      paddingLeft: 40,
-      paddingRight: 40,
+      // paddingLeft: 40,
+      // paddingRight: 40,
+      height: "80%",
+      marginTop: "10%"
     },
     text: {
       fontSize: 25,
@@ -112,7 +179,7 @@ export default function AddFriends() {
       height: '14%',
       alignItems: 'center',
       paddingTop: '15%',
-      marginBottom: '35%',
+      // marginBottom: '35%',
       width: '100%',
     },
     backButton: {
@@ -123,33 +190,77 @@ export default function AddFriends() {
       fontSize: 25,
       // top: "110%",
     },
-    itemContainer: {
-      width: '100%',
-      backgroundColor: 'pink',
-      justifyContent: 'space-between',
-      flexDirection: 'row',
+
+    messageText: {
+      fontSize: 20,
+      color: "gray",
+      padding: "2%",
+      fontWeight:"300"
+    },
+    nameText: {
+      fontSize: 20,
+      color: buttonIsClicked ? "#47b4b1":"gray",
+      fontWeight:"300"
+      // padding: "2%"
+    },
+    mobileText: {
+      fontSize: 15,
+      color: buttonIsClicked ? "#47b4b1":"gray",
+      fontWeight:"200"
+      // padding: "2%"
+    },
+    plusButton:{
+      fontSize: 35,
+      color: "gray",
+      fontWeight:"300"
+    },
+    checkIcon: {
+      color: "#47b4b1",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
+    },
+    successAddBox:{
+      display: "flex",
+      width: "100%",
+      height: "53%",
+      backgroundColor: "white",
+      shadowOffset: {
+        height: 1,
+        width: 1,
+      },
+      shadowOpacity: 0.8,
+      shadowRadius: 3,
+      elevation: 9,
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
       padding: 10,
-      paddingTop: 35,
-      paddingBottom: 32,
+      paddingTop: 20,
+      paddingBottom: 20,
+      borderColor: "#47b4b1",
+      shadowColor: "#47b4b1",
       borderRadius: 15,
       marginTop: 5,
       marginBottom: 5,
-    },
-    messageText: {
-      fontSize: 18,
+
     },
     alertBox: {
-      width: "75%",
-      height: "13%",
+      display: "flex",
+      width: "100%",
+      height: "53%",
       backgroundColor: "white",
       shadowOffset: {
-        width: 0,
-        height: 0,
+        height: 1,
+        width: 1,
       },
-      shadowOpacity: 0.32,
-      shadowRadius: 5.46,
+      shadowOpacity: 0.8,
+      shadowRadius: 3,
       elevation: 9,
-      flexDirection: "row",
+      flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
       padding: 10,
@@ -161,23 +272,32 @@ export default function AddFriends() {
 
     },
     container2: {
-      justifyContent: 'space-between',
+      justifyContent: "space-around",
       alignItems: 'center',
       flexDirection: 'row',
-      width: 320,
-      height: 100,
+      width: "100%",
+      height: "53%",
+      borderColor: buttonIsClicked ? "#47b4b1":"gray",
+      shadowColor: buttonIsClicked ? "#47b4b1":"gray",
       borderRadius: 25,
+      borderWidth: 1,
       padding: 10,
-      paddingTop: 32,
-      paddingBottom: 32,
-      backgroundColor: '#E2D8CF',
+      paddingLeft:"8%",
+      paddingRight:"8%",
+      paddingTop: 20,
+      paddingBottom: 20,
+      backgroundColor: 'white',
+      
       //SHADOW
-      shadowOpacity: 0.8,
-      shadowRadius: 3,
+      shadowOpacity: 10,
+      shadowRadius: 1,
       shadowOffset: {
-        height: 1,
-        width: 1,
+        height: 0,
+        width: 0,
       },
+    },
+    nameMobileContainer:{
+      paddingRight:"40%"
     },
     userImage: {
       width: 60,
@@ -185,6 +305,23 @@ export default function AddFriends() {
       borderRadius: 50,
       backgroundColor: 'grey',
       marginRight: 20
+    },
+    groupMemberContainer: {
+      display: "flex",
+      alignItems: 'flex-start',
+      // paddingBottom: '5%'
+      maxHeight: "30%",
+      justifyContent: "flex-start",
+    },
+    stepText: {
+      fontSize: 30,
+      fontWeight: "bold"
+
+    },
+    memberNumText: {
+      fontSize: 15,
+      // fontWeight: "bold"
+
     },
   });
 
@@ -199,86 +336,109 @@ export default function AddFriends() {
 
         <Text style={styles.text}>Add Friends</Text>
       </View>
-      <Text>
-        <FontAwesome name="mobile" size={50} />
-        Add a new contact to Frienmily
-      </Text>
-      <TextInput
-        autoCapitalize="none"
-        placeholder="Phone number or Email"
-        value={searchBar}
-        onChangeText={setSearchBar}
-        style={styles.input}
-      />
 
-      <TouchableOpacity style={styles.searchButton} onPress={submitButton}>
-        <Text>Search</Text>
-      </TouchableOpacity>
 
-      {addFriendStatus == 1 ? (
-        <View style={styles.alertBox}>
-          <View>
-            <FontAwesome
-              name="exclamation-triangle"
-              size={30}
-              style={{ color: '#47b4b1', marginRight: '2%' }}
-            />
-          </View>
-          <Text style={styles.messageText}>No user found</Text>
+
+
+      <View style={styles.groupTypeButtonContainer}>
+        <View style={styles.groupMemberContainer}>
+          <Text style={styles.stepText}>Add Users </Text>
+          <Text style={styles.memberNumText}>
+            Add a new contact to Frienmily
+          </Text>
         </View>
-      ) : addFriendStatus == 2 ? (
-        <View style={styles.alertBox}>
-          <View>
-            <FontAwesome
-              name="exclamation-triangle"
-              size={30}
-              style={{ color: '#47b4b1', marginRight: '2%' }}
-            />
-          </View>
-          <Text style={styles.messageText}>Cannot add yourself</Text>
-        </View>
-      ) : addFriendStatus == 3 ? (
-        <View style={styles.alertBox}>
-          <View>
-            <FontAwesome
-              name="exclamation-triangle"
-              size={30}
-              style={{ color: '#47b4b1', marginRight: '2%' }}
-            />
-          </View>
-          <Text style={styles.messageText}>He/She is your friend already!</Text>
-        </View>
-      ) : addFriendStatus == 4 ? (
-        <View>
-          {userDetail ? (
-            <View style={styles.container2}>
+
+        <TextInput
+          autoCapitalize="none"
+          placeholder="Search by mobile number or email "
+          value={searchBar}
+          onChangeText={setSearchBar}
+          style={styles.input}
+        />
+        <View style={styles.searchClearContainer}></View>
+        <TouchableOpacity
+          style={styles.searchButton}
+          onPress={submitButton}>
+          <Text style={styles.searchAndClearText}>Search</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.clearButton}
+          onPress={clearSearchBar}>
+          <Text style={styles.searchAndClearText}>Clear</Text>
+        </TouchableOpacity>
+
+        {isShow ? (<View style={styles.resultContainer}>
+          {addFriendStatus == 1 ? (
+            <View style={styles.alertBox}>
               <View>
-                <Image style={styles.userImage} source={{ uri: userDetail.profile_picture }} ></Image>
+                <FontAwesome
+                  name="exclamation-triangle"
+                  size={30}
+                  style={{ color: '#47b4b1', marginRight: '2%' }}
+                />
               </View>
+              <Text style={styles.messageText}>No user found</Text>
+            </View>
+          ) : addFriendStatus == 2 ? (
+            <View style={styles.alertBox}>
               <View>
-                <Text style={styles.messageText}>
-                  mobile: {userDetail.mobile}
-                </Text>
-                <Text style={styles.messageText}>
-                  username: {userDetail.username}
-                </Text>
+                <FontAwesome
+                  name="exclamation-triangle"
+                  size={30}
+                  style={{ color: '#47b4b1', marginRight: '2%' }}
+                />
               </View>
+              <Text style={styles.messageText}>Cannot add yourself</Text>
+            </View>
+          ) : addFriendStatus == 3 ? (
+            <View style={styles.successAddBox}>
+              <View>
+                <FontAwesome
+                  name="exclamation-triangle"
+                  size={30}
+                  style={{ color: '#47b4b1', marginRight: '2%' }}
+                />
+              </View>
+              <Text style={styles.messageText}>User is your friend already!</Text>
+            </View>
+          ) : addFriendStatus == 4 ? (
+            <View>
+              {userDetail ? (
+                <View style={styles.container2}>
+                  <View>
+                    <Image style={styles.userImage} source={{ uri: userDetail.profile_picture }} ></Image>
+                  </View>
 
-              <TouchableOpacity onPress={addFriendButton}>
-                {buttonIsClicked ? (
-                  <FontAwesome name="check-square-o" size={30} />
-                ) : (
-                  <FontAwesome name="plus-square-o" size={30} />
-                )}
-              </TouchableOpacity>
+                  <View style={styles.nameMobileContainer}>
+                    <Text style={styles.nameText}>
+                      {userDetail.username}
+                    </Text>
+                    <Text style={styles.mobileText}>
+                      {userDetail.mobile}
+                    </Text>
+                  </View>
+                  
+                  <TouchableOpacity onPress={addFriendButton}>
+                    {buttonIsClicked ? (
+                      <FontAwesome name="check" size={25} style={styles.checkIcon}/>
+                    ) : (
+                      <Text style={styles.plusButton}>+</Text>
+                    )}
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <Text></Text>
+              )}
             </View>
           ) : (
             <Text></Text>
           )}
-        </View>
-      ) : (
-        <Text></Text>
-      )}
+        </View>) : (<View></View>)}
+
+
+
+
+      </View>
     </View>
   );
 }
