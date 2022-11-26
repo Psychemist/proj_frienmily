@@ -3,13 +3,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 
 
 export const fetchProductData: any = createAsyncThunk("product/fetchProductData", async (params: {
-  categoryArray: any, page: number
+  categoryArray: any, page: number, isRenewList: boolean
 }, thunkAPI: any) => {
   try {
     const QTY_IN_ONE_BATCH = 30
 
     console.log("categoryArray received at thunk=", params.categoryArray)
     console.log("page number received at thunk=", params.page)
+    console.log("isNewList received at thunk=", params.isRenewList)
 
     let catIds = params.categoryArray
     let page = params.page
@@ -32,11 +33,12 @@ export const fetchProductData: any = createAsyncThunk("product/fetchProductData"
       },
     );
     const data = await res.json()
+    const isRenewList = params.isRenewList
     if (!res.ok) {
       throw data.msg
     }
 
-    return thunkAPI.fulfillWithValue(data)
+    return thunkAPI.fulfillWithValue({ data, isRenewList })
 
 
   } catch (e) {
