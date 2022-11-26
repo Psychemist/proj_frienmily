@@ -425,8 +425,12 @@ export default function GroceriesDetails() {
 
             <View style={styles.contentContainer}>
                 <View style={styles.topWrapper}>
-                    <Image source={{ uri: info.goods_picture }}
-                        style={styles.imageWrapper} />
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate('ImagePreview' as never, { image: info.goods_picture } as never)
+                    }}>
+                        <View><Image source={{ uri: info.goods_picture }}
+                            style={styles.imageWrapper} /></View>
+                    </TouchableOpacity>
                     <View style={styles.nameWrapper}>
                         <View >
                             <Text style={styles.text}>{info.goods_name}</Text>

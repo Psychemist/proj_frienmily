@@ -203,8 +203,9 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 <Text style={styles.buttonFontSize}><FontAwesome name='circle-o' size={20} /></Text>
             </TouchableOpacity>
             <View ><Text style={styles.text}>x{props.items.quantity}</Text></View>
-            <TouchableOpacity onPress={() => navigation.navigate('Groceries' as never)}>
-                {/* change navigation to product details */}
+            <TouchableOpacity onPress={() => {
+                navigation.navigate('ImagePreview' as never, { image: props.items.goods_picture } as never)
+            }}>
                 <View><Image source={{ uri: props.items.goods_picture }}
                     style={{ width: 50, height: 50 }} /></View>
             </TouchableOpacity>
