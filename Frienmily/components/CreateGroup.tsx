@@ -70,7 +70,11 @@ export default function CreateGroup() {
       });
       let result = await res.json();
       console.log(result);
-      navigation.navigate('HomeTab' as never);
+      // navigation.navigate('Groups' as never);
+
+      navigation.goBack()
+
+
     }
   };
   const friendsButton = () => {
@@ -221,7 +225,7 @@ export default function CreateGroup() {
     input: {
       height: 55,
       // marginLeft: "8%",
-      marginBottom:"8%",
+      marginBottom: "8%",
       borderWidth: 2.5,
       padding: 10,
       minWidth: "50%",
@@ -235,7 +239,7 @@ export default function CreateGroup() {
         height: 1,
         width: 1
       }
-      
+
     },
     searchUserNameTextBox: {
       height: 55,
@@ -254,7 +258,7 @@ export default function CreateGroup() {
         height: 1,
         width: 1
       }
-      
+
     },
     createBtn: {
       backgroundColor: '#47b4b1',
@@ -340,7 +344,7 @@ export default function CreateGroup() {
       fontSize: 25,
     },
     searchButton: {
-      
+
       margin: 5,
       fontSize: 20,
       backgroundColor: "#47b4b1",
@@ -440,7 +444,7 @@ export default function CreateGroup() {
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.navigate('HomeTab' as never)}>
+          onPress={() => navigation.goBack()}>
           <FontAwesome name="angle-left" size={35} />
         </TouchableOpacity>
 
