@@ -41,8 +41,11 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
 
     })
 
-    const logPress = (pressType: string) => {
-        console.log(pressType)
+    const remarks = () => {
+        if (props.items.remarks == "undefined") {
+            return "N/A"
+        }
+        return props.items.remarks
     }
     const navigation = useNavigation()
 
@@ -58,7 +61,7 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
                 </TouchableOpacity>
                 <View >
                     <View><Text style={styles.text}>Payer: {props.items.userName}</Text></View>
-                    <View><Text style={styles.text}>Remarks: {props.items.remarks}</Text></View>
+                    <View><Text style={styles.text}>Remarks: {remarks()}</Text></View>
                 </View>
             </View>
 
