@@ -98,22 +98,26 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 setAssigneeName(result.username)
             }
             const getBuyerName = async () => {
+                console.log("buyer_id :", props.items.buyer_id);
+                if (props.items.buyer_id == null) {
+                    return
+                }
 
-                const response = await fetch(`${REACT_APP_API_SERVER}/user/getUserName/`, {
+
+                const newResponse = await fetch(`${REACT_APP_API_SERVER}/user/getUserName/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         user_id: props.items.buyer_id,
                     }),
                 });
-                let result;
-                if (response) {
-                    result = await response.json();
+
+                let newResult
+                if (newResponse) {
+                    newResult = await newResponse.json();
                 }
-                setBuyerName(result.username)
+                setBuyerName(newResult.username)
             }
-
-
             if (isFocused) {
                 getIsCompleted()
                 getAssigneeName()
@@ -191,9 +195,6 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         },
     })
 
-    const logPress = (pressType: string) => {
-        console.log(pressType)
-    }
     const navigation = useNavigation()
 
     return (
