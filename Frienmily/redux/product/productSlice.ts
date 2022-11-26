@@ -64,7 +64,7 @@ const fetchMoreData = (state: ProductState = initialState, action: any) => {
 
   console.log("*************** action.payload: ", action.payload)
 
-  console.log("========================= action.payload.isRenewList: ", action.payload.isNewList.isRenewList)
+  console.log("========================= action.payload.isRenewList: ", action.payload.isRenewList.isRenewList)
   console.log("exploreResults reveiced at productSlice : ", exploreResults)
   console.log("number of Explore product fetched = ", exploreResults.length)
   console.log("top5Results reveiced at productSlice : ", top5Results)
