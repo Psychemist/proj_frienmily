@@ -1,6 +1,6 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { REACT_APP_API_SERVER } from '@env';
@@ -258,7 +258,7 @@ export default function AssignGroup() {
           <TouchableOpacity style={styles.itemContainer} key={idx} onPress={() => {
             selectedGroup(item.group_id)
           }}>
-            <View style={styles.groupImage}></View>
+            <View><Image style={styles.groupImage} source={{ uri: item.profile_picture }} ></Image></View>
             <Text style={styles.groupName}>{item.group_name}</Text>
           </TouchableOpacity>
         ))}
