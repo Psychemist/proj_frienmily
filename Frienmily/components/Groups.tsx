@@ -73,6 +73,7 @@ export default function Groups() {
         let json = [];
         if (response) {
           json = await response.json();
+          console.log("Group list details get from server: ", json)
         }
         // console.log(json);
         setGroupItemList(json);

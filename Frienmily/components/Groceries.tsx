@@ -169,14 +169,15 @@ export default function Groceries() {
   //   dispatch(fetchProductData(categoryArray))
   // }
 
-  const fetchData = async (categoryArray: any, page: number) => {
+  const fetchData = async (categoryArray: any, page: number, isRenewList: boolean) => {
     try {
       console.log("@@@@@@@ fetch data")
       console.log("@@@@@@@ categoryArray: ", categoryArray)
       console.log("@@@@@@@ page: ", page)
       let fetchResult = await dispatch(fetchProductData({
         categoryArray: categoryArray,
-        page: page
+        page: page,
+        isRenewList: isRenewList
       })).unwrap();
 
     } catch (error) {
@@ -233,7 +234,25 @@ export default function Groceries() {
 
 
   useEffect(() => {
-    const booleanArray = [{ isSelected: button1, id: 1 }, { isSelected: button2, id: 2 }, { isSelected: button3, id: 3 }, { isSelected: button4, id: 4 }, { isSelected: button5, id: 5 }, { isSelected: button6, id: 6 }, { isSelected: button7, id: 7 }, { isSelected: button8, id: 8 }, { isSelected: button9, id: 9 }, { isSelected: button10, id: 10 }]
+    onChangeFetchData(true)
+  }, [button1, button2, button3, button4, button5, button6, button7, button8, button9, button10]);
+
+  useEffect(() => {
+    onChangeFetchData(false)
+  }, [page]);
+
+  const onChangeFetchData = (isRenewList: boolean) => {
+    const booleanArray = [
+      { isSelected: button1, id: 1 },
+      { isSelected: button2, id: 2 },
+      { isSelected: button3, id: 3 },
+      { isSelected: button4, id: 4 },
+      { isSelected: button5, id: 5 },
+      { isSelected: button6, id: 6 },
+      { isSelected: button7, id: 7 },
+      { isSelected: button8, id: 8 },
+      { isSelected: button9, id: 9 },
+      { isSelected: button10, id: 10 }]
     const finalSelectedCategoriesArray = []
     for (let item of booleanArray) {
       if (item.isSelected == true) {
@@ -244,13 +263,13 @@ export default function Groceries() {
     console.log("######## page: ", page)
 
     if (finalSelectedCategoriesArray.length == 0) {
-      fetchData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], page)
-      // props.getCategoryArrayFromChild([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+      console.log("isRenewList: ", isRenewList)
+      fetchData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], page, isRenewList)
     } else {
-      fetchData(finalSelectedCategoriesArray, page)
-      // props.getCategoryArrayFromChild(finalSelectedCategoriesArray)
+      console.log("isRenewList: ", isRenewList)
+      fetchData(finalSelectedCategoriesArray, page, isRenewList)
     }
-  }, [button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, page]);
+  }
 
 
   // =================================================================

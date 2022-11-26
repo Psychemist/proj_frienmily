@@ -220,11 +220,12 @@ export default function CreateGroup() {
   const styles = StyleSheet.create({
     input: {
       height: 55,
-      margin: 12,
+      // marginLeft: "8%",
+      marginBottom:"8%",
       borderWidth: 2.5,
       padding: 10,
-      minWidth: "60%",
-      maxWidth: "60%",
+      minWidth: "50%",
+      maxWidth: "50%",
       borderRadius: 15,
       backgroundColor: 'white',
       borderColor: "white",
@@ -234,7 +235,7 @@ export default function CreateGroup() {
         height: 1,
         width: 1
       }
-
+      
     },
     searchUserNameTextBox: {
       height: 55,
@@ -253,7 +254,7 @@ export default function CreateGroup() {
         height: 1,
         width: 1
       }
-
+      
     },
     createBtn: {
       backgroundColor: '#47b4b1',
@@ -325,8 +326,8 @@ export default function CreateGroup() {
       maxHeight: "38%",
       width: '100%',
       flexGrow: 1,
-      paddingLeft: "9%",
-      // paddingRight: "20%",
+      paddingLeft: "10%",
+      paddingRight: "10%",
     },
     header: {
       height: '14%',
@@ -339,7 +340,7 @@ export default function CreateGroup() {
       fontSize: 25,
     },
     searchButton: {
-
+      
       margin: 5,
       fontSize: 20,
       backgroundColor: "#47b4b1",
@@ -389,6 +390,7 @@ export default function CreateGroup() {
     userImage: {
       width: 100,
       height: 100,
+      marginRight: "10%",
       borderRadius: 150,
       borderColor: "#47b4b1",
       borderWidth: 4,
@@ -434,7 +436,7 @@ export default function CreateGroup() {
   });
 
   return (
-    <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1 }}>
+    <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1, maxHeight: "100%" }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}

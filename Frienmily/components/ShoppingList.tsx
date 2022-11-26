@@ -147,11 +147,25 @@ export default function ShoppingList() {
       color: 'white',
     },
     header: {
+      position: 'relative',
       height: '14%',
       alignItems: 'center',
       // paddingTop: "1%",
       marginBottom: 0,
       width: '100%',
+    },
+    reportBtnWrapper: {
+      position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#FFFFFF',
+      borderColor: '#47b4b1',
+      borderRadius: 20,
+      borderWidth: 2,
+      right: 10,
+      bottom: 7,
+      height: 50,
+      width: 80
     },
     backButton: {
       position: 'absolute',
@@ -190,6 +204,9 @@ export default function ShoppingList() {
         </TouchableOpacity>
 
         <Text style={styles.text}>Shopping List</Text>
+        <TouchableOpacity style={styles.reportBtnWrapper}>
+          <Text>Expense Report</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.groupNameWrapper}>

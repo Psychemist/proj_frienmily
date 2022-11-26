@@ -59,8 +59,12 @@ export default productSlice.reducer
 
 
 const fetchMoreData = (state: ProductState = initialState, action: any) => {
-  const exploreResults = action.payload.result.exploreResults
-  const top5Results = action.payload.result.top5Results
+  const exploreResults = action.payload.data.result.exploreResults
+  const top5Results = action.payload.data.result.top5Results
+
+  console.log("*************** action.payload: ", action.payload)
+
+  console.log("========================= action.payload.isRenewList: ", action.payload.isRenewList.isRenewList)
   console.log("exploreResults reveiced at productSlice : ", exploreResults)
   console.log("number of Explore product fetched = ", exploreResults.length)
   console.log("top5Results reveiced at productSlice : ", top5Results)
