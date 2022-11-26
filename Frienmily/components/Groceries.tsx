@@ -120,6 +120,9 @@ export default function Groceries() {
           // console.log("json :", json.searchResult);
           setSearchResult(json.searchResult);
           setIsShow(true)
+          if (searchResult.length == 0) {
+            setIsShow(false)
+          }
 
         } catch (error) {
           console.log('error', error);
@@ -279,8 +282,9 @@ export default function Groceries() {
     dropDown: {
       position: "absolute",
       left: "6%",
-      maxHeight: "50%",
-      minHeight: "50%",
+      maxHeight: 200,
+      // minHeight: 0,
+      // height: "30%",
       width: "88%",
       top: "16%",
       zIndex: 9,
@@ -518,7 +522,7 @@ export default function Groceries() {
     //---------------SEARCH BAR--------------------//
     <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
       <StatusBar barStyle="light-content" />
-      {isShow ? <ScrollView style={styles.dropDown}>
+      {isShow && searchResult.length != 0 ? <ScrollView style={styles.dropDown}>
         {searchResult.map((item: any, idx: number) => (
           <SearchBarItem item={item} key={idx} />
         ))}
