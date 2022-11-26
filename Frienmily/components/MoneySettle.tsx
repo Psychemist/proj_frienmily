@@ -20,6 +20,7 @@ import { RootState } from '../redux/store';
 export default function MoneySettle() {
     const route = useRoute<any>()
     const isFocused = useIsFocused();
+    const [json, setJson] = useState([]);
     let settleDetails = route.params.settleDetails || ''
     let username = route.params.username || ''
     let thisUserID = route.params.thisUserID || ''
@@ -55,8 +56,31 @@ export default function MoneySettle() {
                 console.log('error', error);
             }
         };
+        const getAllTxnRecord = async () => {
+            try {
+                const response = await fetch(
+                    `${REACT_APP_API_SERVER}/friends/getAllTxnRecord/`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            user_id: thisUserID,
+                            user_friend_id: friendUserID,
+                        }),
+                    },
+                );
+                let json;
+                if (response) {
+                    json = await response.json();
+                }
+                setJson(json)
+            } catch (error) {
+                console.log('error', error);
+            }
+        }
         if (isFocused) {
             loadFriendList();
+            getAllTxnRecord()
         }
     }, [isFocused]);
 
@@ -77,6 +101,15 @@ export default function MoneySettle() {
         setShowButton(<Text></Text>)
 
     };
+
+    const amount = (item: any) => {
+        if (item.debitor_id == thisUserID) {
+            return <View style={styles.txnDetails}><Text>-${item.transcations_amount}</Text><Text> from group {item.group_name}</Text></View>
+        } else {
+            return <View style={styles.txnDetails}><Text>+${item.transcations_amount}</Text><Text> from group {item.group_name}</Text></View>
+        }
+
+    }
 
     const styles = StyleSheet.create({
         searchButton: {
@@ -108,6 +141,11 @@ export default function MoneySettle() {
             fontSize: 25,
             // top: "110%",
         },
+        txnDetails: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: 300
+        }
     });
 
     return (
@@ -121,6 +159,11 @@ export default function MoneySettle() {
 
                 <Text style={styles.text}>Settlement</Text>
             </View>
+            <ScrollView style={{ minHeight: 100, maxHeight: 100 }}>
+                {json.map((item: any, idx: number) => (
+                    <View key={idx}>{amount(item)}</View>
+                ))}
+            </ScrollView>
             <Image source={require('./img/money.gif')}
                 style={{ width: 250, height: 250, borderRadius: 15 }} />
             <Text>{showResult}</Text>

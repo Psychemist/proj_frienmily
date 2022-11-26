@@ -56,7 +56,7 @@ export default function UploadReceipt() {
   //   };
 
   const submitButton = async () => {
-    console.log(remarks)
+    navigation.goBack()
     if (imgs == undefined || imgs == null) {
       showAlert();
       return;
@@ -92,9 +92,6 @@ export default function UploadReceipt() {
       method: 'POST',
       body: formData,
     });
-    setImgs(null)
-    setNumber('')
-    setRemarks()
 
   };
 
