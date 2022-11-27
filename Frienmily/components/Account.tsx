@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, StatusBar} from "react-native";
+import { Alert, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, StatusBar } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
@@ -169,19 +169,22 @@ export default function Account() {
             height: "17%",
             backgroundColor: "white",
             shadowOffset: {
-                width: 0,
-                height: 0,
+                height: 4,
+                width: 2,
             },
-            shadowOpacity: 0.32,
-            shadowRadius: 5.46,
+            borderBottomColor: 'grey',
+            borderBottomWidth: 0.2,
+            shadowOpacity: 0.1,
+            shadowRadius: 1,
             elevation: 9,
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            padding: 10,
-            paddingTop: 20,
-            paddingBottom: 20,
-            borderRadius: 15,
+            paddingRight: 20,
+            paddingLeft: 20,
+            paddingTop: "5%",
+            paddingBottom: "5%",
+            borderRadius: 20,
             marginTop: 5,
             marginBottom: 5,
 
@@ -201,8 +204,8 @@ export default function Account() {
             shadowColor: "lightgray",
             shadowRadius: 2,
             shadowOffset: {
-              height: 0,
-              width: 0,
+                height: 0,
+                width: 0,
             },
         },
         leftContainer: {
@@ -212,33 +215,107 @@ export default function Account() {
         fieldHeader: {
             fontSize: 20,
             paddingLeft: 10,
-            marginBottom: 10
+            marginBottom: 10,
+            fontWeight: "300"
         },
         fieldContentText: {
             paddingLeft: 10,
-            fontSize: 16,
+            fontSize: 20,
             padding: 10,
-            fontWeight: 'bold',
+            fontWeight: '300',
             color: '#47b4b1'
         },
         inputField: {
             boxSizing: 'border-box',
             backgroundColor: "rgba(71, 180, 177, 0.3)",
             fontSize: 16,
-            shadowColor: "#47b4b1",
+            // shadowColor: "#47b4b1",
             borderRadius: 10,
-            minWidth: 270,
-            maxWidth: 270,
+            minWidth: 250,
+            maxWidth: 250,
             padding: 10,
-            marginTop: 1
+            marginTop: 1,
+            shadowColor: "lightgray",
+            shadowRadius: 2,
+            shadowOffset: {
+                height: 0,
+                width: 0,
+            },
         },
         editBtn: {
-            fontSize: 22,
-            color: "#47b4b1"
+            fontSize: 15,
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: "white",
+
         },
         BtnText: {
             fontSize: 20,
-            paddingLeft: 10
+            paddingLeft: 10,
+            color: "white",
+            fontWeight:"300"
+        },
+
+        tickBtn: {
+            fontSize: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: "white",
+
+        },
+        editTickButton: {
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 100,
+            marginRight: "9%",
+            backgroundColor: '#47b4b1',
+            opacity: 1,
+        },
+
+        logoutBtn: {
+            fontSize: 22,
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: "crimson",
+        },
+
+        logoutButton: {
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 100,
+
+            marginRight: "9%",
+            backgroundColor: 'white',
+            // opacity: 1,
+        },
+        logoutItemContainer:{
+            width: "90%",
+            height: "17%",
+            backgroundColor: "crimson",
+            shadowOffset: {
+                height: 4,
+                width: 2,
+            },
+            borderBottomColor: 'grey',
+            borderBottomWidth: 0.2,
+            shadowOpacity: 0.1,
+            shadowRadius: 1,
+            elevation: 9,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingRight: 20,
+            paddingLeft: 20,
+            paddingTop: "5%",
+            paddingBottom: "5%",
+            borderRadius: 20,
+            marginTop: 5,
+            marginBottom: 5,
+
         }
     });
 
@@ -277,10 +354,10 @@ export default function Account() {
                             </View>
                         }
                     </View>
-                    <View>
+                    <View style={styles.editTickButton}>
                         <Text>
                             {isGenderEditable ?
-                                <FontAwesome name='check' onPress={changeGender} style={styles.editBtn} />
+                                <FontAwesome name='check' onPress={changeGender} style={styles.tickBtn} />
                                 :
                                 <FontAwesome name='pencil' onPress={changeGender} style={styles.editBtn} />}
                         </Text>
@@ -306,10 +383,10 @@ export default function Account() {
                             )
                         }
                     </View>
-                    <View>
+                    <View style={styles.editTickButton}>
                         <Text>
                             {isMobileEditable ?
-                                <FontAwesome name='check' onPress={changeMobile} style={styles.editBtn} />
+                                <FontAwesome name='check' onPress={changeMobile} style={styles.tickBtn} />
                                 :
                                 <FontAwesome name='pencil' onPress={changeMobile} style={styles.editBtn} />}
                         </Text>
@@ -334,10 +411,10 @@ export default function Account() {
                             )
                         }
                     </View>
-                    <View>
+                    <View style={styles.editTickButton}>
                         <Text>
                             {isEmailEditable ?
-                                <FontAwesome name='check' onPress={changeEmail} style={styles.editBtn} />
+                                <FontAwesome name='check' onPress={changeEmail} style={styles.tickBtn} />
                                 :
                                 <FontAwesome name='pencil' onPress={changeEmail} style={styles.editBtn} />}
                         </Text>
@@ -346,12 +423,12 @@ export default function Account() {
 
             </View>
 
-            <Text style={styles.title}>Options</Text>
+            {/* <Text style={styles.title}>Options</Text> */}
 
             <View style={{ alignItems: "center" }}>
-                <TouchableOpacity style={[styles.itemContainer, { height: "30%" }]} onPress={onLogout}>
-                    <Text style={styles.BtnText}>Logout</Text>
-                    <Icon name='ios-exit-outline' size={28} color={"#47b4b1"} />
+                <TouchableOpacity style={[styles.logoutItemContainer, { height: "30%" }]} onPress={onLogout}>
+                    <View ><Text style={styles.BtnText}>Logout</Text></View>
+                    <View style={styles.logoutButton}><Icon name='ios-exit-outline' style={styles.logoutBtn} /></View>
                 </TouchableOpacity>
 
             </View>
