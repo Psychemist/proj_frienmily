@@ -99,7 +99,6 @@ export default function Groups() {
           // console.log(json);
           setGroupItemList(json);
 
-
         }, 5000);
       } catch (error) {
         console.log('error', error);

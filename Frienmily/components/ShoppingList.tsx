@@ -100,8 +100,36 @@ export default function ShoppingList() {
     return (Math.round(num * 100) / 100).toFixed(2)
   }
 
+  const loadGroupBuyingRecord = async () => {
+    try {
+      console.log('loadExpenseReports...');
+      const response = await fetch(
+        `${REACT_APP_API_SERVER}/groups/groupBuyingRecord`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            groupId: groupId,
+            month: 11,
+            year: 2022
+          }),
+        },
+      );
+      console.log("response from server: " + response)
+      let expenseRecord = await response.json()
+      console.log("Group buying record get from server: ", expenseRecord)
 
 
+
+      navigation.navigate(
+        'ExpenseReport' as never,
+        { groupName: groupName, groupId: groupId, expenseRecord: expenseRecord } as never,
+      );
+
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   const styles = StyleSheet.create({
     addMoreText: {
@@ -208,12 +236,7 @@ export default function ShoppingList() {
         <Text style={styles.text}>Shopping List</Text>
         {isFamilyGroup ?
           <TouchableOpacity style={styles.reportBtnWrapper}
-            onPress={() => {
-              navigation.navigate(
-                'ExpenseReport' as never,
-                { groupName: groupName } as never,
-              );
-            }}>
+            onPress={loadGroupBuyingRecord}>
             <Text>Expense Report</Text>
           </TouchableOpacity>
           : <View></View>

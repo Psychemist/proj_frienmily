@@ -214,7 +214,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
 
                 <View style={styles.categoriesItemContainer}>
                     <TouchableOpacity style={styles.categoriesPhotoContainer4} onPress={() => { props.setButton4(!props.button4) }}>
-                        <Image source={require('./img/stables.png')}
+                        <Image source={require('./img/staples.png')}
                             style={{ width: 70, height: 70, borderRadius: 15 }} /></TouchableOpacity>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Staples</Text></View></View>
