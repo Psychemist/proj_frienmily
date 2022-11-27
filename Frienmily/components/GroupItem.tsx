@@ -25,11 +25,29 @@ export default function GroupItem(props: GroupItemProps) {
       width: 60,
       height: 60,
       borderRadius: 50,
-      backgroundColor: 'grey',
-      marginRight: 20
+      // backgroundColor: 'grey',
+      marginRight: 10,
+      borderColor: "#47b4b1",
+      borderWidth: 3,
+      postion: "absolute",
+      // right: "-20%",
+      // top: "-20%",
+      shadowOpacity: 0.8,
+      shadowColor: "#47b4b1",
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 10,
+        width: 10,
+      },
+
     },
     groupName: {
-      fontSize: 20
+      fontSize: 20,
+      paddingLeft:"2%",
+      fontWeight:"300",
+      color:"gray",
+      // paddingTop: "5%",
+      // paddingBottom:"5%",
     },
     settle: {
       color: '#81848b',
@@ -39,19 +57,21 @@ export default function GroupItem(props: GroupItemProps) {
       justifyContent: 'space-between',
       alignItems: 'center',
       flexDirection: 'row',
-      width: '100%',
-      height: 100,
-      padding: 10,
-      paddingTop: 32,
-      paddingBottom: 32,
-      // backgroundColor: '#E2D8CF',
-      // //SHADOW
-      // shadowOpacity: 0.8,
-      // shadowRadius: 3,
-      // shadowOffset: {
-      //   height: 1,
-      //   width: 1,
-      // },
+      margin: "1%",
+      width: '98%',
+      height: 120,
+      padding: 20,
+      paddingTop: "5%",
+      paddingBottom:"5%",
+      backgroundColor: 'white',
+      //SHADOW
+      borderRadius: 20,
+      shadowOpacity: 0.1,
+      shadowRadius: 1,
+      shadowOffset: {
+          height: 4,
+          width: 2,
+      },
       borderBottomColor: 'grey',
       borderBottomWidth: 0.2,
     },
@@ -59,12 +79,11 @@ export default function GroupItem(props: GroupItemProps) {
       display: 'flex',
       position: 'relative',
       flexDirection: 'row',
-      alignItems: 'center'
+      alignItems: 'center',
+      // padding:5
     },
     arrowIcon: {
-      position: 'absolute',
-      right: 0,
-      top: -7
+
     }
   });
 
@@ -94,7 +113,7 @@ export default function GroupItem(props: GroupItemProps) {
 
         {/* <Pressable onPress={()=> navigation.navigate('ShoppingList' as never)}>  */}
         {/* Dummy nav to Groceries first, going to change navigation to 'Group Detail' - Ronson 13Nov2022 17:48 */}
-        <FontAwesome name="angle-right" size={30} color={"#81848b"} style={styles.arrowIcon} />
+        <FontAwesome name="angle-right" size={30} color={"#47b4b1"} style={styles.arrowIcon} />
       </View>
       {/* </Pressable> */}
     </TouchableOpacity>

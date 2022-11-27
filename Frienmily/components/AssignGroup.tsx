@@ -211,7 +211,7 @@ export default function AssignGroup() {
   }
 
   const showAlert = () => {
-    Alert.alert('Item(s) assigned~~', '', [
+    Alert.alert('Cart items assigned!', '', [
       {
         text: 'OK', onPress: () => navigation.navigate('ShoppingList' as never, { groupId: groupNumber } as never)
       },
