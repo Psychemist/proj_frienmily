@@ -159,10 +159,11 @@ export default function Account() {
             backgroundColor: "#F5F5F5"
         },
         title: {
-            padding: 10,
+            padding: 20,
             borderRadius: 10,
-            fontSize: 22,
-            marginLeft: 10
+            fontSize: 30,
+            fontWeight:"bold",
+            marginLeft: 20
         },
         itemContainer: {
             width: "90%",
@@ -326,7 +327,7 @@ export default function Account() {
                 <Text style={{ fontSize: 25, paddingBottom: "1%" }}>Account</Text>
             </View> */}
 
-            <Text style={styles.title}>Personal Profile</Text>
+            <Text style={styles.title}>Profile</Text>
 
             <View style={{ alignItems: "center" }}>
 

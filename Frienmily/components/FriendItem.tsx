@@ -133,8 +133,8 @@ export default function FriendItem(props: FriendItemProps) {
             shadowColor: "#47b4b1",
             shadowRadius: 2,
             shadowOffset: {
-              height: 10,
-              width: 10,
+              height: 0,
+              width: 0,
             },
 
         },

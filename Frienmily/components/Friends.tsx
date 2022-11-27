@@ -42,6 +42,14 @@ export default function Friends() {
       bottom: 30,
       opacity: 0.8,
     },
+    title: {
+      padding: 20,
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "bold",
+      marginLeft: 20
+
+    }
   });
   const navigation = useNavigation();
 
@@ -74,9 +82,9 @@ export default function Friends() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
-      <StatusBar barStyle="dark-content"/>
-      <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5' }}>
-        <Text style={{ fontSize: 25, paddingBottom: '1%' }}>Friends</Text>
+      <StatusBar barStyle="dark-content" />
+      <View style={{ backgroundColor: '#F5F5F5' }}>
+        <Text style={styles.title}>Friends</Text>
       </View>
       <ScrollView style={{ backgroundColor: '#F5F5F5' }}>
         {friendItemList.map((item: any, idx: number) => (
