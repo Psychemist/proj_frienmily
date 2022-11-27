@@ -253,7 +253,7 @@ export default function Account() {
             fontSize: 20,
             paddingLeft: 10,
             color: "white",
-            fontWeight:"300"
+            fontWeight: "300"
         },
 
         tickBtn: {
@@ -292,7 +292,7 @@ export default function Account() {
             backgroundColor: 'white',
             // opacity: 1,
         },
-        logoutItemContainer:{
+        logoutItemContainer: {
             width: "90%",
             height: "17%",
             backgroundColor: "darkorange",
@@ -354,14 +354,19 @@ export default function Account() {
                             </View>
                         }
                     </View>
-                    <View style={styles.editTickButton}>
-                        <Text>
-                            {isGenderEditable ?
-                                <FontAwesome name='check' onPress={changeGender} style={styles.tickBtn} />
-                                :
-                                <FontAwesome name='pencil' onPress={changeGender} style={styles.editBtn} />}
-                        </Text>
-                    </View>
+                    {isGenderEditable ?
+                        <TouchableOpacity style={styles.editTickButton} onPress={changeGender}>
+                            <Text>
+                                <FontAwesome name='check' style={styles.tickBtn} />
+                            </Text>
+                        </TouchableOpacity>
+                        :
+                        <TouchableOpacity style={styles.editTickButton} onPress={changeGender}>
+                            <Text>
+                                <FontAwesome name='pencil' style={styles.editBtn} />
+                            </Text>
+                        </TouchableOpacity>
+                    }
                 </View>
 
 
@@ -383,14 +388,19 @@ export default function Account() {
                             )
                         }
                     </View>
-                    <View style={styles.editTickButton}>
-                        <Text>
-                            {isMobileEditable ?
-                                <FontAwesome name='check' onPress={changeMobile} style={styles.tickBtn} />
-                                :
-                                <FontAwesome name='pencil' onPress={changeMobile} style={styles.editBtn} />}
-                        </Text>
-                    </View>
+                    {isMobileEditable ?
+                        <TouchableOpacity style={styles.editTickButton} onPress={changeMobile}>
+                            <Text>
+                                <FontAwesome name='check' style={styles.tickBtn} />
+                            </Text>
+                        </TouchableOpacity>
+                        :
+                        <TouchableOpacity style={styles.editTickButton} onPress={changeMobile}>
+                            <Text>
+                                <FontAwesome name='pencil' style={styles.editBtn} />
+                            </Text>
+                        </TouchableOpacity>
+                    }
                 </View>
 
 
@@ -411,27 +421,34 @@ export default function Account() {
                             )
                         }
                     </View>
-                    <View style={styles.editTickButton}>
-                        <Text>
-                            {isEmailEditable ?
-                                <FontAwesome name='check' onPress={changeEmail} style={styles.tickBtn} />
-                                :
-                                <FontAwesome name='pencil' onPress={changeEmail} style={styles.editBtn} />}
-                        </Text>
-                    </View>
-                </View>
 
+                    {isEmailEditable ?
+                        <TouchableOpacity style={styles.editTickButton} onPress={changeEmail}>
+                            <Text>
+                                <FontAwesome name='check' style={styles.tickBtn} />
+                            </Text>
+                        </TouchableOpacity>
+                        :
+                        <TouchableOpacity style={styles.editTickButton} onPress={changeEmail}>
+                            <Text>
+                                <FontAwesome name='pencil' style={styles.editBtn} />
+                            </Text>
+                        </TouchableOpacity>
+                    }
+                
             </View>
 
-            {/* <Text style={styles.title}>Options</Text> */}
+        </View>
 
-            <View style={{ alignItems: "center" }}>
-                <TouchableOpacity style={[styles.logoutItemContainer, { height: "30%" }]} onPress={onLogout}>
-                    <View ><Text style={styles.BtnText}>Logout</Text></View>
-                    <View style={styles.logoutButton}><Icon name='ios-exit-outline' style={styles.logoutBtn} /></View>
-                </TouchableOpacity>
+            {/* <Text style={styles.title}>Options</Text> */ }
 
-            </View>
-        </SafeAreaView>
+    <View style={{ alignItems: "center" }}>
+        <TouchableOpacity style={[styles.logoutItemContainer, { height: "30%" }]} onPress={onLogout}>
+            <View ><Text style={styles.BtnText}>Logout</Text></View>
+            <View style={styles.logoutButton}><Icon name='ios-exit-outline' style={styles.logoutBtn} /></View>
+        </TouchableOpacity>
+
+    </View>
+        </SafeAreaView >
     )
 }
