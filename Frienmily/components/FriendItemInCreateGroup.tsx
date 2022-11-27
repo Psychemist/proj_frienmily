@@ -12,27 +12,26 @@ export default function FriendItemInCreateGroup(props: FriendItemInCreateGroupPr
 
     const styles = StyleSheet.create({
         itemContainer: {
-            width: "100%",
-            // height: "40%",
-            backgroundColor: "white",
-            alignItems: "center",
-            flexDirection: "row",
             justifyContent: "flex-start",
+            alignItems: 'center',
+            flexDirection: 'row',
+            margin: "1%",
+            width: '100%',
+            height: 80,
             padding: 20,
-            // paddingTop: 20,
-            // paddingBottom: 20,
-            borderRadius: 15,
-            // marginTop: 5,
-            marginBottom: 5,
-            borderColor: props.items.isSelected ? "#47b4b1":"gray",
-            borderWidth: 1,
-            shadowColor: props.items.isSelected ? "#47b4b1":"gray",
-            shadowOpacity: 10,
+            paddingTop: "5%",
+            paddingBottom:"5%",
+            backgroundColor: 'white',
+            //SHADOW
+            borderRadius: 20,
+            shadowOpacity: 0.1,
             shadowRadius: 1,
             shadowOffset: {
-              height: 0,
-              width: 0,
+                height: 4,
+                width: 2,
             },
+            borderBottomColor: 'grey',
+            borderBottomWidth: 0.2,
         },
         userImage: {
             width: 60,
@@ -55,8 +54,11 @@ export default function FriendItemInCreateGroup(props: FriendItemInCreateGroupPr
     })
     const boo = true
     return (
-        <View style={styles.userNamePictureContainer}>{props.items.isShow ? <TouchableOpacity style={styles.itemContainer} onPress={() => { props.itemPress(props.arrayIndex) }}>
-            <View><Image style={styles.userImage} source={{ uri: props.items.profile_picture }} ></Image>
+        <View style={styles.userNamePictureContainer}>
+            {props.items.isShow ? 
+            <TouchableOpacity style={styles.itemContainer} onPress={() => { props.itemPress(props.arrayIndex) }}>
+            <View>
+                <Image style={styles.userImage} source={{ uri: props.items.profile_picture }} ></Image>
             </View>
             <View><Text style={styles.userNameText}>     {props.items.username}</Text>
             </View>
