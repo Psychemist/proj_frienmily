@@ -51,7 +51,7 @@ export default function FriendItem(props: FriendItemProps) {
                 setJson(json)
                 console.log("json :", json);
                 if (json.case == 1) {
-                    setShowResult(<Text>No txn</Text>);
+                    setShowResult(<Text>Settled</Text>);
                 } else if (json.case == 2) {
                     setShowResult(
                         <Text style={styles.green}>
@@ -76,30 +76,38 @@ export default function FriendItem(props: FriendItemProps) {
 
     const styles = StyleSheet.create({
         text: {
-            fontSize: 16,
+            fontSize: 20,
             marginRight: 20,
-            color: '#81848b'
+            color: '#47b4b1',
+            fontWeight:"300",
         },
         friendName: {
             fontSize: 20,
+            paddingLeft:"2%",
+            fontWeight:"300",
+            color:"gray",
+            // paddingTop: "5%",
+            // paddingBottom:"5%",
         },
         container: {
             justifyContent: 'space-between',
             alignItems: 'center',
             flexDirection: 'row',
-            width: '100%',
-            height: 100,
-            padding: 10,
-            paddingTop: 32,
-            paddingBottom: 32,
-            // backgroundColor: '#E2D8CF',
-            // //SHADOW
-            // shadowOpacity: 0.8,
-            // shadowRadius: 3,
-            // shadowOffset: {
-            //     height: 1,
-            //     width: 1,
-            // },
+            margin: "1%",
+            width: '98%',
+            height: 80,
+            padding: 20,
+            paddingTop: "5%",
+            paddingBottom:"5%",
+            backgroundColor: 'white',
+            //SHADOW
+            borderRadius: 20,
+            shadowOpacity: 0.1,
+            shadowRadius: 1,
+            shadowOffset: {
+                height: 4,
+                width: 2,
+            },
             borderBottomColor: 'grey',
             borderBottomWidth: 0.2,
         },
@@ -107,19 +115,31 @@ export default function FriendItem(props: FriendItemProps) {
             display: 'flex',
             position: 'relative',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            // padding:5
         },
         userImage: {
             width: 60,
             height: 60,
             borderRadius: 50,
             // backgroundColor: 'grey',
-            marginRight: 10
+            marginRight: 10,
+            borderColor: "#47b4b1",
+            borderWidth: 3,
+            postion: "absolute",
+            // right: "-20%",
+            // top: "-20%",
+            shadowOpacity: 0.8,
+            shadowColor: "#47b4b1",
+            shadowRadius: 2,
+            shadowOffset: {
+              height: 10,
+              width: 10,
+            },
+
         },
         arrowIcon: {
-            position: 'absolute',
-            right: 0,
-            top: -7
+
         },
         green: {
             color: 'green',
@@ -150,7 +170,7 @@ export default function FriendItem(props: FriendItemProps) {
                 <View>
                     <Text style={styles.text}>{showResult}</Text>
                 </View>
-                <FontAwesome name="angle-right" size={30} color={"#81848b"} style={styles.arrowIcon} />
+                <FontAwesome name="angle-right" size={30} color={"#47b4b1"} style={styles.arrowIcon} />
 
             </View>
         </TouchableOpacity>

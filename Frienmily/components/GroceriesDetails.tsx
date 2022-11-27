@@ -223,7 +223,8 @@ export default function GroceriesDetails() {
             width: "100%"
         },
         text: {
-            fontSize: 25,
+            fontSize: 22,
+            marginRight: 20
         },
         backButton: {
             left: 8,
@@ -294,15 +295,15 @@ export default function GroceriesDetails() {
 
         },
         imageWrapper: {
-            width: 120,
-            height: 120
+            width: 150,
+            height: 150
         },
         nameWrapper: {
             justifyContent: "space-between",
             flexDirection: "column",
             width: "65%",
             height: 120,
-            paddingLeft: 10,
+            paddingLeft: 20,
         },
         contentContainer: {
             backgroundColor: 'white',
@@ -323,47 +324,90 @@ export default function GroceriesDetails() {
         },
         supermarketWrapper: {
             padding: 10,
-            marginTop: 50,
+            marginTop: "5%",
             flexDirection: "column",
             alignItems: "center",
             width: "100%"
         },
         supermarket: {
-            backgroundColor: "#f1f3f2",
+            backgroundColor: "white",
             width: "95%",
-            height: 41,
-            borderRadius: 5,
+            height: "8.5%",
+            borderRadius: 15,
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
             padding: 10,
             margin: 5,
+            shadowOpacity: 1,
+            shadowColor: "lightgray",
+            shadowRadius: 2,
+            shadowOffset: {
+              height: 1,
+              width: 1,
+            },
         },
+        supermarketNameText:{
+            fontSize: 17,
+            // fontWeight:"300",
+            paddingLeft: "10%",
+            color: "gray"
+        },
+        supermarketNamePrice:{
+            fontSize: 17,
+            fontWeight:"500",
+            marginRight: 12,
+            color: "#47b4b1"
+        },
+
         colorDot: {
             position: "absolute",
             left: 10,
             height: 7,
             width: 7,
             borderRadius: 5,
+            padding:5,
+            marginLeft:10
         },
         counter: {
             flexDirection: "row",
+            marginTop:"5%",
+            fontSize: 20,
+            backgroundColor: "white",
+            width: '70%',
+            height: '37%',
+            borderWidth: 0.4,
+            borderColor: "lightgray",
+            borderRadius: 30,
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            shadowOpacity:1,
+            shadowColor: "#47b4b1",
+            shadowRadius:2,
+            shadowOffset: {
+              height: 4,
+              width: 4,
+            },
         },
         minusAndPlusBox: {
             padding: 10,
-            borderRadius: 0,
-            borderWidth: 1,
+            backgroundColor: "white",
             borderColor: 'grey',
+            borderRadius: 30,
         },
         counterNumber: {
-            padding: 10,
-            fontSize: 15,
+            padding: 0,
             width: '20%',
             justifyContent: 'center',
             alignItems: "center",
             borderRadius: 0,
-            borderWidth: 1,
-            borderColor: 'grey',
+            // borderWidth: 1,
+            // borderColor: 'gray',
+            backgroundColor: "white"
+        },
+        counterNumberFont: {
+            fontSize: 20,
+            fontWeight:"300"
         },
         cartNumText: {
             fontSize: 9,
@@ -377,9 +421,13 @@ export default function GroceriesDetails() {
                 height: 1,
                 width: 1
             }
-        }
+        },
 
-    });
+        minusAndPlusIcon: {
+            color: "#47b4b1",
+        },
+    }
+    );
 
 
     return (
@@ -437,14 +485,14 @@ export default function GroceriesDetails() {
                         </View>
                         <View style={styles.counter}>
                             <TouchableOpacity style={styles.minusAndPlusBox} onPress={minusOneToCounter}>
-                                <FontAwesome name="minus" size={18} />
+                                <FontAwesome name="minus" size={20} style={styles.minusAndPlusIcon} />
                             </TouchableOpacity>
                             <View style={styles.counterNumber}>
-                                <Text>{initNum}</Text>
+                                <Text style={styles.counterNumberFont}>{initNum}</Text>
                             </View>
 
                             <TouchableOpacity style={styles.minusAndPlusBox} onPress={addOneToCounter}>
-                                <FontAwesome name="plus" size={18} />
+                                <FontAwesome name="plus" size={20} style={styles.minusAndPlusIcon}/>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -453,43 +501,43 @@ export default function GroceriesDetails() {
                 <View style={styles.supermarketWrapper}>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#7dbfe9" }]}></View>
-                        <Text style={{ marginLeft: 12 }}>惠康</Text>
-                        <Text style={{ marginRight: 12 }}>{info.wellcome_price == null ? <Text>--</Text> : <Text>${addZeroes(info.wellcome_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNameText}>惠康</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.wellcome_price == null ? <Text>--</Text> : <Text>${addZeroes(info.wellcome_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#fdbb1b" }]}></View>
-                        <Text style={{ marginLeft: 12 }}>百佳</Text>
-                        <Text style={{ marginRight: 12 }}>{info.parknshop_price == null ? <Text>--</Text> : <Text>${addZeroes(info.parknshop_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNameText}>百佳</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.parknshop_price == null ? <Text>--</Text> : <Text>${addZeroes(info.parknshop_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#9772ef" }]}></View>
-                        <Text style={{ marginLeft: 12 }}>Market Place by Jasons</Text>
-                        <Text style={{ marginRight: 12 }}>{info.jasons_price == null ? <Text>--</Text> : <Text>${addZeroes(info.jasons_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNameText}>Market Place by Jasons</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.jasons_price == null ? <Text>--</Text> : <Text>${addZeroes(info.jasons_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#fd3b02" }]}></View>
-                        <Text style={{ marginLeft: 12 }}>屈臣氏</Text>
-                        <Text style={{ marginRight: 12 }}>{info.watsons_price == null ? <Text>--</Text> : <Text>${addZeroes(info.watsons_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNameText}>屈臣氏</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.watsons_price == null ? <Text>--</Text> : <Text>${addZeroes(info.watsons_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#93bf03" }]}></View>
-                        <Text style={{ marginLeft: 12 }}>萬寧</Text>
-                        <Text style={{ marginRight: 12 }}>{info.mannings_price == null ? <Text>--</Text> : <Text>${addZeroes(info.mannings_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNameText}>萬寧</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.mannings_price == null ? <Text>--</Text> : <Text>${addZeroes(info.mannings_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#ff893d" }]}></View>
-                        <Text style={{ marginLeft: 12 }}>AEON</Text>
-                        <Text style={{ marginRight: 12 }}>{info.aeon_price == null ? <Text>--</Text> : <Text>${addZeroes(info.aeon_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNameText}>AEON</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.aeon_price == null ? <Text>--</Text> : <Text>${addZeroes(info.aeon_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#035033" }]}></View>
-                        <Text style={{ marginLeft: 12 }}>大昌食品</Text>
-                        <Text style={{ marginRight: 12 }}>{info.dch_price == null ? <Text>--</Text> : <Text>${addZeroes(info.dch_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNameText}>大昌食品</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.dch_price == null ? <Text>--</Text> : <Text>${addZeroes(info.dch_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "grey" }]}></View>
-                        <Text style={{ marginLeft: 12 }}>士多</Text>
-                        <Text style={{ marginRight: 12 }}>{info.ztore_price == null ? <Text>--</Text> : <Text>${addZeroes(info.ztore_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNameText}>士多</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.ztore_price == null ? <Text>--</Text> : <Text>${addZeroes(info.ztore_price)}</Text>}</Text>
                     </View>
                 </View>
             </View>
