@@ -278,7 +278,7 @@ export default function Account() {
             fontSize: 22,
             justifyContent: 'center',
             alignItems: 'center',
-            color: "crimson",
+            color: "darkorange",
         },
 
         logoutButton: {
@@ -295,7 +295,7 @@ export default function Account() {
         logoutItemContainer:{
             width: "90%",
             height: "17%",
-            backgroundColor: "crimson",
+            backgroundColor: "darkorange",
             shadowOffset: {
                 height: 4,
                 width: 2,
