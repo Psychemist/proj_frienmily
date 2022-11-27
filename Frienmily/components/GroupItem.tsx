@@ -98,7 +98,11 @@ export default function GroupItem(props: GroupItemProps) {
       onPress={() =>
         navigation.navigate(
           'ShoppingList' as never,
-          { groupId: props.items.group_id } as never,
+          {
+            groupId: props.items.group_id,
+            isFamilyGroup: props.items.is_family_group,
+            groupName: props.items.group_name
+          } as never,
         )
       }>
       {/* <FontAwesome name="users" size={30} /> */}
