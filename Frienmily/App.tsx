@@ -43,6 +43,7 @@ import UserProfilePicuture from './components/UserProfilePicuture';
 import GroupMember from './components/GroupMember';
 import ReceiptImage from './components/ReceiptImage';
 import GroceriesTest from './components/GroceriesTest';
+import ExpenseReport from './components/ExpenseReport';
 
 
 const Tab = createBottomTabNavigator();
@@ -50,29 +51,30 @@ const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient()
 const styles = StyleSheet.create({
 
-shoppingCartIcon: {
-  color: "white",
-  shadowOpacity: 0.2,
-  shadowRadius: 2,
-  shadowOffset: {
-    height: 1,
-    width: 1
+  shoppingCartIcon: {
+    color: "white",
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 1
+    }
   }
-}})
+})
 
 const HomeTab = () => {
   return (
-    <Tab.Navigator screenOptions={{ 
+    <Tab.Navigator screenOptions={{
       headerShown: false,
       tabBarActiveTintColor: "#47b4b1",
       tabBarInactiveTintColor: "gray",
-  }} >
+    }} >
       <Tab.Screen
         name="Groups"
         component={Groups}
         options={{
-          tabBarLabel: ({focused, color}) => (
-            <Text style={{color: focused ? '#47b4b1' : color, fontSize: 11}}>Groups</Text>
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={{ color: focused ? '#47b4b1' : color, fontSize: 11 }}>Groups</Text>
           ),
           unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
@@ -85,8 +87,8 @@ const HomeTab = () => {
         name="Friends"
         component={Friends}
         options={{
-          tabBarLabel: ({focused, color}) => (
-            <Text style={{color: focused ? '#47b4b1' : color, fontSize: 11}}>Friends</Text>
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={{ color: focused ? '#47b4b1' : color, fontSize: 11 }}>Friends</Text>
           ),
           unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
@@ -99,8 +101,8 @@ const HomeTab = () => {
         name="Groceries"
         component={Groceries}
         options={{
-          tabBarLabel: ({focused, color}) => (
-            <Text style={{color: focused ? '#47b4b1' : color, fontSize: 11}}>Groceries</Text>
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={{ color: focused ? '#47b4b1' : color, fontSize: 11 }}>Groceries</Text>
           ),
           tabBarIcon: ({ color, size }) => (
             // <FontAwesomeIcon name="braille" color={color} size={20} />
@@ -112,8 +114,8 @@ const HomeTab = () => {
         name="Account"
         component={Account}
         options={{
-          tabBarLabel: ({focused, color}) => (
-            <Text style={{color: focused ? '#47b4b1' : color, fontSize: 11}}>Account</Text>
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={{ color: focused ? '#47b4b1' : color, fontSize: 11 }}>Account</Text>
           ),
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon name="user-o" color={color} size={20} />
@@ -129,7 +131,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-      <StatusBar barStyle="light-content"/>
+        <StatusBar barStyle="light-content" />
         {/* <SafeAreaView> */}
         <NavigationContainer>
           {/* isLoggedIn? */}
@@ -186,7 +188,7 @@ const App = () => {
             <Stack.Screen name="UserProfilePicuture" component={UserProfilePicuture} />
             <Stack.Screen name="GroupMember" component={GroupMember} />
             <Stack.Screen name="ReceiptImage" component={ReceiptImage} />
-            <Stack.Screen name="GroceriesTest" component={GroceriesTest} />
+            <Stack.Screen name="ExpenseReport" component={ExpenseReport} />
 
           </Stack.Navigator>
         </NavigationContainer>

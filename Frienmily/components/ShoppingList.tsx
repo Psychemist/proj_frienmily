@@ -15,6 +15,7 @@ import { REACT_APP_API_SERVER } from '@env';
 export default function ShoppingList() {
   const route = useRoute<any>()
   let groupId = route.params.groupId || ''
+  let isFamilyGroup = route.params.isFamilyGroup
 
   const isFocused = useIsFocused();
   const [groupName, setGroupName] = useState();
@@ -98,6 +99,7 @@ export default function ShoppingList() {
   function addZeroes(num: number) {
     return (Math.round(num * 100) / 100).toFixed(2)
   }
+
 
 
 
@@ -204,9 +206,19 @@ export default function ShoppingList() {
         </TouchableOpacity>
 
         <Text style={styles.text}>Shopping List</Text>
-        <TouchableOpacity style={styles.reportBtnWrapper}>
-          <Text>Expense Report</Text>
-        </TouchableOpacity>
+        {isFamilyGroup ?
+          <TouchableOpacity style={styles.reportBtnWrapper}
+            onPress={() => {
+              navigation.navigate(
+                'ExpenseReport' as never,
+                { groupName: groupName } as never,
+              );
+            }}>
+            <Text>Expense Report</Text>
+          </TouchableOpacity>
+          : <View></View>
+        }
+
       </View>
 
       <View style={styles.groupNameWrapper}>
