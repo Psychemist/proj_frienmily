@@ -4,7 +4,7 @@ import { Alert, Image, Modal, SafeAreaView, ScrollView, StyleSheet, Text, Toucha
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import ImageViewer from 'react-native-image-zoom-viewer';
 
-export default function ReceiptImage() {
+export default function ImagePreview() {
 
     const route = useRoute<any>()
     let image = route.params.image || ''

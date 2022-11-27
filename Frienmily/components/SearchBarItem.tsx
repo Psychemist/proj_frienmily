@@ -12,7 +12,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { REACT_APP_API_SERVER } from '@env';
 // import { json } from 'express';
 interface SearchBarItemProps {
-   item: any,
+    item: any,
 }
 
 
@@ -28,19 +28,26 @@ export default function SearchBarItem(props: SearchBarItemProps) {
             marginRight: 20,
             color: '#81848b'
         },
-        searchItemBox:{
-            padding:10,
+        searchItemBox: {
+            padding: 10,
         }
     });
+    console.log(props.item)
+    let tempObject = { ...props.item }
+
+    tempObject['goods_name'] = tempObject['name'];
+    delete tempObject['name'];
+
+
 
     // TODO: Show the user image of each friend
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('GroceriesDetails' as never, { info: props.item } as never)}>
+        <TouchableOpacity onPress={() => navigation.navigate('GroceriesDetails' as never, { info: tempObject } as never)}>
             <View style={styles.searchItemBox}>
                 <View><Text style={styles.text}>{props.item.name}</Text></View>
             </View>
         </TouchableOpacity>
-        
+
     );
 }

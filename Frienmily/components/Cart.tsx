@@ -107,6 +107,19 @@ export default function Cart() {
     ]);
   };
 
+  const clearCart = async () => {
+    console.log("clearCart");
+    setShoppingListArray([])
+    setEstimatedTotal(0)
+    await fetch(`${REACT_APP_API_SERVER}/goods/clearCart/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        user_id: userIdInRedux
+      }),
+    });
+  }
+
 
 
 
@@ -247,8 +260,14 @@ export default function Cart() {
           <Text style={[styles.caption, { left: "46%" }]}>Cart</Text>
           <Text style={[styles.caption, { right: 25 }]}>Assign Group</Text>
         </View>
+
       </View>
 
+      <TouchableOpacity style={{ width: '100%', alignItems: 'flex-end' }}>
+        <Text style={{ fontSize: 20, paddingRight: 10 }} onPress={clearCart}>
+          Clear cart
+        </Text>
+      </TouchableOpacity>
 
 
       <ScrollView style={{ backgroundColor: 'white', width: "100%" }}>

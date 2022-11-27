@@ -6,6 +6,8 @@ import { Button, Icon } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input'
 import { REACT_APP_API_SERVER } from '@env';
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 
 interface ShoppingListItemProps {
@@ -14,23 +16,60 @@ interface ShoppingListItemProps {
 }
 
 export default function ShoppingListItem(props: ShoppingListItemProps) {
+    const userIdInRedux = useSelector((state: RootState) => state.user.userId);
     const [isSelected, setIsSelected] = React.useState(false);
     const [assigneeName, setAssigneeName] = React.useState('');
+    const [buyerName, setBuyerName] = React.useState('');
     const isFocused = useIsFocused();
 
 
     const selectButton = async () => {
-        setIsSelected(!isSelected)
-        console.log(props.items.cart_id);
-        // console.log(props.items)
+        // setIsSelected(!isSelected)
+        // console.log(props.items.cart_id);
 
-        await fetch(`${REACT_APP_API_SERVER}/goods/changeIsCompleted/`, {
+        const response = await fetch(`${REACT_APP_API_SERVER}/goods/changeIsCompleted/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 cart_id: props.items.cart_id,
+                user_id: userIdInRedux
             }),
         });
+        let result;
+        if (response) {
+            result = await response.json();
+        }
+        console.log(result);
+        if (result.isChanged == true) {
+            setIsSelected(!isSelected)
+
+
+            if (result.userID != null) {
+                // update buyer
+                const res = await fetch(`${REACT_APP_API_SERVER}/user/getUserName/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: result.userID,
+                    }),
+                });
+                let results;
+                if (res) {
+                    results = await res.json();
+                }
+                console.log("resultresult :", results)
+                setBuyerName(results.username)
+            }
+            if (result.userID == null) {
+                setBuyerName('')
+            }
+
+
+        }
+
+
+
+
 
 
 
@@ -56,17 +95,33 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 if (response) {
                     result = await response.json();
                 }
-
                 setAssigneeName(result.username)
-
-
-
             }
+            const getBuyerName = async () => {
+                console.log("buyer_id :", props.items.buyer_id);
+                if (props.items.buyer_id == null) {
+                    return
+                }
 
 
+                const newResponse = await fetch(`${REACT_APP_API_SERVER}/user/getUserName/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: props.items.buyer_id,
+                    }),
+                });
+
+                let newResult
+                if (newResponse) {
+                    newResult = await newResponse.json();
+                }
+                setBuyerName(newResult.username)
+            }
             if (isFocused) {
                 getIsCompleted()
                 getAssigneeName()
+                getBuyerName()
             }
 
         } catch (error) {
@@ -104,7 +159,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         },
         itemContainer: {
             width: "100%",
-            height: 100,
+            height: 120,
             backgroundColor: "white",
             shadowOffset: {
                 width: 0,
@@ -140,9 +195,6 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         },
     })
 
-    const logPress = (pressType: string) => {
-        console.log(pressType)
-    }
     const navigation = useNavigation()
 
     return (
@@ -151,15 +203,17 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 <Text style={styles.buttonFontSize}><FontAwesome name='circle-o' size={20} /></Text>
             </TouchableOpacity>
             <View ><Text style={styles.text}>x{props.items.quantity}</Text></View>
-            <TouchableOpacity onPress={() => navigation.navigate('Groceries' as never)}>
-                {/* change navigation to product details */}
+            <TouchableOpacity onPress={() => {
+                navigation.navigate('ImagePreview' as never, { image: props.items.goods_picture } as never)
+            }}>
                 <View><Image source={{ uri: props.items.goods_picture }}
                     style={{ width: 50, height: 50 }} /></View>
             </TouchableOpacity>
             <View style={{ width: 200 }}>
                 <View><Text style={styles.text}>{props.items.name}</Text></View>
                 <View><Text style={styles.text}>{getLowest().shop}</Text></View>
-                <View><Text style={styles.text}>added by {assigneeName}</Text></View>
+                <View><Text style={styles.text}>Item added by {assigneeName}</Text></View>
+                <View><Text style={styles.text}>Brought by {buyerName}</Text></View>
             </View>
             <View ><Text style={styles.text}>HK${addZeroes(getLowest().price * props.items.quantity)}</Text></View>
         </View>

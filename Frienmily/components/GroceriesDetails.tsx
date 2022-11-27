@@ -203,7 +203,7 @@ export default function GroceriesDetails() {
                 height: 1,
                 width: 1
             }
-            
+
         },
         searchBarcontainer: {
             top: 0, right: 12,
@@ -323,6 +323,7 @@ export default function GroceriesDetails() {
         },
         supermarketWrapper: {
             padding: 10,
+            marginTop: 50,
             flexDirection: "column",
             alignItems: "center",
             width: "100%"
@@ -412,7 +413,7 @@ export default function GroceriesDetails() {
                 {/* //---------------SEARCH BAR--------------------// */}
                 <View>
                     <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
-                        <FontAwesome name="shopping-cart" size={28} style={styles.shoppingCartIcon}/>
+                        <FontAwesome name="shopping-cart" size={28} style={styles.shoppingCartIcon} />
                         <View style={styles.cartQty}>
                             <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
                         </View>
@@ -424,8 +425,12 @@ export default function GroceriesDetails() {
 
             <View style={styles.contentContainer}>
                 <View style={styles.topWrapper}>
-                    <Image source={{ uri: info.goods_picture }}
-                        style={styles.imageWrapper} />
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate('ImagePreview' as never, { image: info.goods_picture } as never)
+                    }}>
+                        <View><Image source={{ uri: info.goods_picture }}
+                            style={styles.imageWrapper} /></View>
+                    </TouchableOpacity>
                     <View style={styles.nameWrapper}>
                         <View >
                             <Text style={styles.text}>{info.goods_name}</Text>

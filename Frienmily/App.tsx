@@ -41,7 +41,7 @@ import UploadReceipt from './components/UploadReceipt';
 import MoneySettle from './components/MoneySettle';
 import UserProfilePicuture from './components/UserProfilePicuture';
 import GroupMember from './components/GroupMember';
-import ReceiptImage from './components/ReceiptImage';
+import ImagePreview from './components/ImagePreview';
 import GroceriesTest from './components/GroceriesTest';
 import ExpenseReport from './components/ExpenseReport';
 
@@ -187,8 +187,10 @@ const App = () => {
             <Stack.Screen name="MoneySettle" component={MoneySettle} />
             <Stack.Screen name="UserProfilePicuture" component={UserProfilePicuture} />
             <Stack.Screen name="GroupMember" component={GroupMember} />
-            <Stack.Screen name="ReceiptImage" component={ReceiptImage} />
+            {/* <Stack.Screen name="ReceiptImage" component={ReceiptImage} /> */}
             <Stack.Screen name="ExpenseReport" component={ExpenseReport} />
+            <Stack.Screen name="ImagePreview" component={ImagePreview} />
+            <Stack.Screen name="GroceriesTest" component={GroceriesTest} />
 
           </Stack.Navigator>
         </NavigationContainer>

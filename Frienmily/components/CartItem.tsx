@@ -149,9 +149,12 @@ export default function CartItem(props: CartItemProps) {
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity onPress={() => navigation.navigate('Groceries' as never)}>
-                        {/* change navigation to product details */}
-                        <View><Image source={{ uri: props.items.goods_picture }}
-                            style={{ width: 50, height: 50 }} /></View>
+                        <TouchableOpacity onPress={() => {
+                            navigation.navigate('ImagePreview' as never, { image: props.items.goods_picture } as never)
+                        }}>
+                            <View><Image source={{ uri: props.items.goods_picture }}
+                                style={{ width: 50, height: 50 }} /></View>
+                        </TouchableOpacity>
                     </TouchableOpacity>
                     <View style={{ width: 150 }}>
                         <View><Text style={styles.text}>{props.items.name}</Text></View>
