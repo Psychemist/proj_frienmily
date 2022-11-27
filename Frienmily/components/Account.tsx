@@ -187,13 +187,23 @@ export default function Account() {
 
         },
         userImage: {
-            width: 60,
-            height: 60,
+            width: 70,
+            height: 70,
             borderRadius: 50,
             borderColor: "#47b4b1",
-            borderWidth: 1,
+            // right: 5,
+            marginRight: "5%",
+            borderWidth: 4,
             postion: "absolute",
-            right: 5
+            // right: "-20%",
+            // top: "-20%",
+            shadowOpacity: 3,
+            shadowColor: "lightgray",
+            shadowRadius: 2,
+            shadowOffset: {
+              height: 0,
+              width: 0,
+            },
         },
         leftContainer: {
             maxWidth: "100%",
