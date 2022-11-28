@@ -170,25 +170,30 @@ export default function SignUpScreen() {
         <View style={[styles.inputFieldWrapper, { marginTop: 80 }]}>
           <TextInput
             autoCapitalize="none"
-            placeholder="Username"
+            placeholder="Username*"
             value={username}
             onChangeText={setUsername}
             style={{
               margin: 5,
               fontSize: 20,
+              minWidth:"20%",
+              maxWidth:"60%"
             }}
           />
         </View>
 
         <View style={styles.inputFieldWrapper}>
           <TextInput
+           secureTextEntry={true}
             autoCapitalize="none"
-            placeholder="Password"
+            placeholder="Password*"
             value={password}
             onChangeText={setPassword}
             style={{
               margin: 5,
               fontSize: 20,
+              minWidth:"20%",
+              maxWidth:"60%"
             }}
           />
         </View>
@@ -214,12 +219,14 @@ export default function SignUpScreen() {
 
         <View style={styles.inputFieldWrapper}>
           <TextInput
-            placeholder="Mobile Number"
+            placeholder="Mobile Number*"
             value={mobileNumber}
             onChangeText={setMobileNumber}
             style={{
               margin: 5,
               fontSize: 20,
+              minWidth:"20%",
+              maxWidth:"60%"
             }}
           />
         </View>
@@ -233,6 +240,8 @@ export default function SignUpScreen() {
             style={{
               margin: 5,
               fontSize: 20,
+              minWidth:"10%",
+              maxWidth:"60%"
             }}
           />
         </View>

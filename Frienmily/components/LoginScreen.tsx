@@ -149,6 +149,9 @@ export default function LoginScreen() {
             style={{
               margin: 5,
               fontSize: 20,
+              minWidth:"20%",
+              maxWidth:"60%"
+
             }}
           />
         </View>
@@ -162,6 +165,8 @@ export default function LoginScreen() {
             style={{
               margin: 5,
               fontSize: 20,
+              minWidth:"20%",
+              maxWidth:"60%"
             }}
           />
         </View>
