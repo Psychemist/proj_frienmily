@@ -131,23 +131,93 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
     }, [isFocused]);
 
     const getLowest = () => {
+
+        let wellcome_price
+        if (props.items.wellcome_price == null) {
+            wellcome_price = null
+        } else {
+            wellcome_price = parseFloat(props.items.wellcome_price)
+        }
+        let parknshop_price
+        if (props.items.parknshop_price == null) {
+            parknshop_price = null
+        } else {
+            parknshop_price = parseFloat(props.items.parknshop_price)
+        }
+        let jasons_price
+        if (props.items.jasons_price == null) {
+            jasons_price = null
+        } else {
+            jasons_price = parseFloat(props.items.jasons_price)
+        }
+        let watsons_price
+        if (props.items.watsons_price == null) {
+            watsons_price = null
+        } else {
+            watsons_price = parseFloat(props.items.watsons_price)
+        }
+        let mannings_price
+        if (props.items.mannings_price == null) {
+            mannings_price = null
+        } else {
+            mannings_price = parseFloat(props.items.mannings_price)
+        }
+        let aeon_price
+        if (props.items.aeon_price == null) {
+            aeon_price = null
+        } else {
+            aeon_price = parseFloat(props.items.aeon_price)
+        }
+        let dch_price
+        if (props.items.dch_price == null) {
+            dch_price = null
+        } else {
+            dch_price = parseFloat(props.items.dch_price)
+        }
+        let ztore_price
+        if (props.items.ztore_price == null) {
+            ztore_price = null
+        } else {
+            ztore_price = parseFloat(props.items.ztore_price)
+        }
+
         let allPriceArray = [
-            { price: parseFloat(props.items.wellcome_price), shop: "惠康" },
-            { price: parseFloat(props.items.parknshop_price), shop: "百佳" },
-            { price: parseFloat(props.items.jasons_price), shop: "Jasons" },
-            { price: parseFloat(props.items.watsons_price), shop: "屈臣氏" },
-            { price: parseFloat(props.items.mannings_price), shop: "萬寧" },
-            { price: parseFloat(props.items.aeon_price), shop: "AEON" },
-            { price: parseFloat(props.items.dch_price), shop: "大昌食品" },
-            { price: parseFloat(props.items.ztore_price), shop: "士多" }
+            { price: wellcome_price, shop: "惠康" },
+            { price: parknshop_price, shop: "百佳" },
+            { price: jasons_price, shop: "Jasons" },
+            { price: watsons_price, shop: "屈臣氏" },
+            { price: mannings_price, shop: "萬寧" },
+            { price: aeon_price, shop: "AEON" },
+            { price: dch_price, shop: "大昌食品" },
+            { price: ztore_price, shop: "士多" }
         ]
+
+        console.log("props.items :", props.items)
+
+        
+        
         let filtered = allPriceArray.filter(function (e) {
-            return e.price != NaN;
+            return e.price != null;
         });
+        console.log("filtered :", filtered)
+
         const lowest = filtered.reduce((previous, current) => {
-            return current.price < previous.price ? current : previous;
+            return current.price! < previous.price! ? current : previous;
         });
+        let tempArray = []
+        for (let item of filtered) {
+            if (item.price == lowest.price) {
+                tempArray.push(item)
+            }
+        }
+        console.log(tempArray)
+        if (tempArray.length > 1) {
+            console.log({"price": lowest.price, "shop": "多間同價"})
+            return {"price": lowest.price, "shop": "多間同價"}
+        }
+        console.log("lowest :", lowest)
         return lowest
+
     }
     function addZeroes(num: number) {
         return (Math.round(num * 100) / 100).toFixed(2)
@@ -215,7 +285,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 <View><Text style={styles.text}>Item added by {assigneeName}</Text></View>
                 <View><Text style={styles.text}>Brought by {buyerName}</Text></View>
             </View>
-            <View ><Text style={styles.text}>HK${addZeroes(getLowest().price * props.items.quantity)}</Text></View>
+            <View ><Text style={styles.text}>HK${addZeroes(getLowest().price! * props.items.quantity)}</Text></View>
         </View>
     )
 }

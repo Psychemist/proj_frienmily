@@ -65,21 +65,26 @@ export default function ShoppingList() {
         for (let item of result) {
           const getLowest = () => {
             let allPriceArray = [
-              { price: parseFloat(item.wellcome_price), shop: "惠康" },
-              { price: parseFloat(item.parknshop_price), shop: "百佳" },
-              { price: parseFloat(item.jasons_price), shop: "Jasons" },
-              { price: parseFloat(item.watsons_price), shop: "屈臣氏" },
-              { price: parseFloat(item.mannings_price), shop: "萬寧" },
-              { price: parseFloat(item.aeon_price), shop: "AEON" },
-              { price: parseFloat(item.dch_price), shop: "大昌食品" },
-              { price: parseFloat(item.ztore_price), shop: "士多" }
+              { price: +(item.wellcome_price) || 999      ,shop: "惠康" },
+              { price: +(item.parknshop_price)|| 999       ,shop: "百佳" },
+              { price: +(item.jasons_price)   || 999    ,shop: "Jasons" },
+              { price: +(item.watsons_price)  || 999     ,shop: "屈臣氏" },
+              { price: +(item.mannings_price) || 999      ,shop: "萬寧" },
+              { price: +(item.aeon_price)     || 999  ,shop: "AEON" },
+              { price: +(item.dch_price)      || 999 ,shop: "大昌食品" },
+              { price: +(item.ztore_price)    || 999   ,shop: "士多" }
             ]
             let filtered = allPriceArray.filter(function (e) {
-              return e.price != NaN;
+              return e.price;
             });
-            const lowest = filtered.reduce((previous, current) => {
+            const lowest = filtered.reduce<any>((previous, current) => {
+              console.log('checking', {previous,current})
+              if (!Object.keys(previous).length){
+                return current
+              }
               return current.price < previous.price ? current : previous;
-            });
+            },[]);
+
             return lowest
           }
           console.log(getLowest().price * item.quantity)
