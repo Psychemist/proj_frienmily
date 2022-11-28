@@ -192,7 +192,7 @@ export default function MoneySettle() {
             paddingBottom:"5%",
             backgroundColor: 'white',
             //SHADOW
-            borderRadius: 20,
+            borderRadius: 10,
             shadowOpacity: 0.1,
             shadowRadius: 1,
             shadowOffset: {
@@ -269,7 +269,7 @@ export default function MoneySettle() {
             // paddingTop: "5%",
             // paddingBottom:"5%",
             //SHADOW
-            borderRadius: 20,
+            borderRadius: 10,
             shadowOpacity: 0.1,
             shadowRadius: 1,
             shadowOffset: {
