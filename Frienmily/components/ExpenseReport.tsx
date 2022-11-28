@@ -13,17 +13,19 @@ export default function ExpenseReport() {
   const isFocused = useIsFocused();
   const route = useRoute<any>()
   console.log("route:", route)
-  let groupName = route.params.groupName
   let groupId = route.params.groupId
-  let expenseRecord = route.params.expenseRecord
-  console.log("expenseRecord get at ExpenseReport Page: ", expenseRecord)
+  // let expenseRecord = route.params.expenseRecord
+  // console.log("expenseRecord get at ExpenseReport Page: ", expenseRecord)
 
   const date = new Date();
   let currentMonth = date.getMonth() + 1;
   let currentYear = date.getFullYear();
+  console.log({ currentMonth, currentYear })
 
   const [month, setMonth] = useState<number>(currentMonth)
   const [year, setYear] = useState<number>(currentYear)
+  const [submit, setSubmit] = useState<boolean>(false)
+  const [expenseRecords, setExpenseRecords] = useState<any>([])
 
   // TODO: 根據日期選擇紀錄
   const changeMonth = () => {
@@ -31,14 +33,64 @@ export default function ExpenseReport() {
     console.log("new month: ", month)
   }
 
-  const changeYear = () => {
-    setYear(year)
-    console.log("new year: ", year)
+  const changeYear = (index: number) => {
+
+    let actualYear = YEARS[index]
+    setYear(actualYear)
   }
+
+  const fetchExpenseReport = async () => {
+    try {
+      const response = await fetch(
+        `${REACT_APP_API_SERVER}/groups/groupBuyingRecord`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            groupId: groupId,
+            month: month,
+            year: year
+          }),
+        },
+      );
+      console.log("response from server: " + response)
+      let data = await response.json()
+      console.log("Group buying record get from server: ", data)
+      setExpenseRecords(data)
+
+      // console.log('load ExpenseReports of other months');
+      // const response = await fetch(
+      //   `${REACT_APP_API_SERVER}/groups/groupBuyingRecord`,
+      //   {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({
+      //       groupId: groupId,
+      //       month: month,
+      //       year: year
+      //     }),
+      //   },
+      // );
+      // console.log("response from server: " + response)
+      // let expenseRecord = await response.json()
+      // console.log(`expense report of ${month}(month) ${year}(year): `, expenseRecord)
+
+      // setSubmit(!submit)
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    fetchExpenseReport()
+  }, [])
+
+
 
 
   // For loop the 10 categories
-  for (let record of expenseRecord) {
+  for (let record of expenseRecords) {
     let categorySavedMoney: number = 0
     let categoryExpense: number = 0
 
@@ -58,7 +110,7 @@ export default function ExpenseReport() {
             floatPrices.push(parseFloat(value))
           }
         }
-
+        // calculate the categorySavedMoney and categoryExpense
         let maxPrice = Math.max(...floatPrices)
         let minPrice = Math.min(...floatPrices)
         let moneySaved: number = parseFloat((maxPrice - minPrice).toFixed(2))
@@ -68,13 +120,13 @@ export default function ExpenseReport() {
       record["categorySavedMoney"] = categorySavedMoney
       record["categoryExpense"] = categoryExpense
     }
-
   }
 
+  // Get the expenseSum and moneySavedSum by adding up all 10 categories
   let expenseSum: number = 0
   let moneySavedSum: number = 0
 
-  for (let record of expenseRecord) {
+  for (let record of expenseRecords) {
     for (let [key, value] of Object.entries(record)) {
       if (typeof value === "number") {
         if (key.includes("categoryExpense")) {
@@ -122,6 +174,15 @@ export default function ExpenseReport() {
       borderRadius: 10,
       padding: 10,
       margin: 5,
+    },
+    submitBtn: {
+      boxSizing: 'border-box',
+      backgroundColor: "#47b4b1",
+      fontSize: 16,
+      borderRadius: 10,
+      padding: 10,
+      margin: 5,
+      width: 70,
     },
 
     tableHeaderFooter: {
@@ -180,14 +241,6 @@ export default function ExpenseReport() {
 
 
       <View style={styles.datePickerWrapper}>
-        {/* <Text style={{ fontSize: 18 }}>Month:</Text>
-        <TextInput autoCapitalize='none' maxLength={2} style={[styles.inputField, { width: 50 }]}
-          value={month} defaultValue={"11"} placeholder="MM" onChangeText={() => changeMonth}
-        />
-        <Text style={{ fontSize: 18 }}>Year:</Text>
-        <TextInput autoCapitalize='none' maxLength={4} style={[styles.inputField, { width: 70 }]}
-          value={year} defaultValue={"2022"} placeholder="YYYY" onChangeText={() => changeYear}
-        /> */}
         <View style={{ flexDirection: "row" }}>
           <View style={{ marginRight: 20 }}>
             <Text>{month}</Text>
@@ -198,29 +251,14 @@ export default function ExpenseReport() {
         </View>
 
         <View style={{ flexDirection: "row" }}>
-          <ModalDropdown options={MONTHS} defaultValue={"MM"} onSelect={(a) => { console.log("selected a month") }}
+          <ModalDropdown options={MONTHS} defaultValue={"MM"} onSelect={(a) => { setMonth(Number(a + 1)) }}
             style={[styles.inputField, { width: 41 }]} dropdownTextStyle={{ fontSize: 14 }} />
-          <ModalDropdown options={YEARS} defaultValue={"YYYY"} onSelect={(a) => { console.log("selected a year") }}
+          <ModalDropdown options={YEARS} defaultValue={"YYYY"} onSelect={(a) => { changeYear(Number(a)) }}
             style={[styles.inputField, { width: 56 }]} dropdownTextStyle={{ fontSize: 14 }} />
+          <TouchableOpacity style={styles.submitBtn}>
+            <Text style={{ color: "#FFFFFF", textAlign: "center" }} onPress={fetchExpenseReport}>Submit</Text>
+          </TouchableOpacity>
         </View>
-
-
-
-
-        {/* {isGenderEditable ?
-            <TouchableOpacity style={styles.editTickButton} onPress={changeGender}>
-              <Text>
-                <FontAwesome name='check' style={styles.tickBtn} />
-              </Text>
-            </TouchableOpacity>
-            :
-            <TouchableOpacity style={styles.editTickButton} onPress={changeGender}>
-              <Text>
-                <FontAwesome name='pencil' style={styles.editBtn} />
-              </Text>
-            </TouchableOpacity>
-          } */}
-
 
       </View>
 
@@ -247,7 +285,7 @@ export default function ExpenseReport() {
 
 
       <View style={{ backgroundColor: '#F5F5F5' }}>
-        {expenseRecord.map((item: any) => (
+        {expenseRecords.map((item: any) => (
           <ExpenseReportItem items={item} key={item.categoryId} />
         ))}
       </View>
