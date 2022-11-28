@@ -100,6 +100,12 @@ export default function ShoppingList() {
     return (Math.round(num * 100) / 100).toFixed(2)
   }
 
+  // Fetch records based on the current month and year
+  const date = new Date();
+  let currentMonth = date.getMonth() + 1;
+  let currentYear = date.getFullYear();
+  console.log({ currentMonth, currentYear })
+
   const loadGroupBuyingRecord = async () => {
     try {
       console.log('loadExpenseReports...');
@@ -110,8 +116,8 @@ export default function ShoppingList() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             groupId: groupId,
-            month: 11,
-            year: 2022
+            month: currentMonth,
+            year: currentYear
           }),
         },
       );
