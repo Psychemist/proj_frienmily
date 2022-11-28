@@ -176,7 +176,7 @@ export default function SignUpScreen() {
             style={{
               margin: 5,
               fontSize: 20,
-              minWidth:"20%",
+              // minWidth:"20%",
               maxWidth:"60%"
             }}
           />
@@ -192,7 +192,7 @@ export default function SignUpScreen() {
             style={{
               margin: 5,
               fontSize: 20,
-              minWidth:"20%",
+              minWidth:"5%",
               maxWidth:"60%"
             }}
           />
@@ -225,7 +225,7 @@ export default function SignUpScreen() {
             style={{
               margin: 5,
               fontSize: 20,
-              minWidth:"20%",
+              // minWidth:"20%",
               maxWidth:"60%"
             }}
           />
@@ -240,7 +240,7 @@ export default function SignUpScreen() {
             style={{
               margin: 5,
               fontSize: 20,
-              minWidth:"10%",
+              // minWidth:"10%",
               maxWidth:"60%"
             }}
           />
