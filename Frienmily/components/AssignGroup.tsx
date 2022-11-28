@@ -191,11 +191,21 @@ export default function AssignGroup() {
     }
   }, [isFocused]);
 
+  let isSelectGroupFamilyGroup: boolean
+
   const selectedGroup = async (group_id: number) => {
     console.log("groupItemList :", groupItemList)
     console.log("userIdInRedux :", userIdInRedux);
     console.log("groupId :", group_id);
     groupNumber = group_id
+
+    for (let item of groupItemList) {
+      if (item["group_id"] == group_id) {
+        isSelectGroupFamilyGroup = item["is_family_group"]
+      }
+    }
+
+
     // assign items to group
     await fetch(`${REACT_APP_API_SERVER}/goods/assignToGroup/`, {
       method: 'POST',
@@ -213,7 +223,7 @@ export default function AssignGroup() {
   const showAlert = () => {
     Alert.alert('Cart items assigned!', '', [
       {
-        text: 'OK', onPress: () => navigation.navigate('ShoppingList' as never, { groupId: groupNumber } as never)
+        text: 'OK', onPress: () => navigation.navigate('ShoppingList' as never, { groupId: groupNumber, isFamilyGroup: isSelectGroupFamilyGroup } as never)
       },
     ]);
   };

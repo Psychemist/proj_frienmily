@@ -1,6 +1,6 @@
 import React from 'react';
-import {useForm} from 'react-hook-form';
-import {useDispatch} from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import {
   Alert,
   SafeAreaView,
@@ -10,9 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {RootState} from '../redux/store';
-import {fetchLogin} from '../redux/user/thunk';
-import {useNavigation} from '@react-navigation/native';
+import { RootState } from '../redux/store';
+import { fetchLogin } from '../redux/user/thunk';
+import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function SignUpScreen() {
@@ -32,7 +32,7 @@ export default function SignUpScreen() {
     try {
       const res = await fetch('http://localhost:8000/user/register', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           username: username,
           password: password,
@@ -50,7 +50,7 @@ export default function SignUpScreen() {
             onPress: () => console.log('Cancel Pressed'),
             style: 'cancel',
           },
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
         ]);
         navigation.navigate('Login' as never);
         setUsername('');
@@ -63,7 +63,7 @@ export default function SignUpScreen() {
             onPress: () => console.log('Cancel Pressed'),
             style: 'cancel',
           },
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
         ]);
       }
     } catch (e) {
@@ -135,39 +135,39 @@ export default function SignUpScreen() {
       fontSize: 42,
       fontWeight: "bold",
       color: "#47b4b1",
-      marginTop:"32%",
-      maxWidth:"100%"
-  },
-  backIcon: {
-    textAlign: "left",
-    color: "#47b4b1",
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    shadowOffset: {
+      marginTop: "32%",
+      maxWidth: "100%"
+    },
+    backIcon: {
+      textAlign: "left",
+      color: "#47b4b1",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
         height: 1,
         width: 1
-    },
-    marginRight: "60%"
-    
-}
+      },
+      marginRight: "60%"
+
+    }
   });
 
   return (
     <SafeAreaView style={styles.body}>
-                <TouchableOpacity style={styles.backIcon} onPress={() => navigation.goBack()}>
-                    <FontAwesome name='angle-left' size={35} style={styles.backIcon} />
-                </TouchableOpacity>
+      <TouchableOpacity style={styles.backIcon} onPress={() => navigation.goBack()}>
+        <FontAwesome name='angle-left' size={35} style={styles.backIcon} />
+      </TouchableOpacity>
 
-      <View> 
-            <Text style={styles.appName}>Frienmily</Text>
-        </View>
+      <View>
+        <Text style={styles.appName}>Frienmily</Text>
+      </View>
 
       <View
         style={{
           position: 'absolute',
           marginTop: 310,
         }}>
-        <View style={[styles.inputFieldWrapper, {marginTop: 80}]}>
+        <View style={[styles.inputFieldWrapper, { marginTop: 80 }]}>
           <TextInput
             autoCapitalize="none"
             placeholder="Username"
@@ -229,6 +229,7 @@ export default function SignUpScreen() {
             placeholder="Email"
             value={email}
             onChangeText={setEmail}
+            autoCapitalize="none"
             style={{
               margin: 5,
               fontSize: 20,
@@ -238,7 +239,7 @@ export default function SignUpScreen() {
 
         <TouchableOpacity
           onPress={onSignUp}
-          style={[styles.signUpBtn, {marginBottom: 30}]}>
+          style={[styles.signUpBtn, { marginBottom: 30 }]}>
           <Text
             style={{
               fontSize: 20,
