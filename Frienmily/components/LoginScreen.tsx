@@ -154,6 +154,7 @@ export default function LoginScreen() {
         </View>
         <View style={styles.inputFieldWrapper}>
           <TextInput
+            secureTextEntry={true}
             autoCapitalize="none"
             placeholder="Password"
             value={password}
