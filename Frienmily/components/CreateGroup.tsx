@@ -1,5 +1,8 @@
 import {
+  ActivityIndicator,
   Alert,
+  Animated,
+  Easing,
   Image,
   ScrollView,
   StyleSheet,
@@ -21,6 +24,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 export default function CreateGroup() {
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const [groupName, setGroupName] = React.useState('');
+  const [isLoadingShow, setIsLoadingShow] = React.useState(false);
   const [isFamilyGroup, setIsFamilyGroup] = React.useState<boolean | null>(
     null,
   );
@@ -69,10 +73,14 @@ export default function CreateGroup() {
         body: formData
       });
       let result = await res.json();
-      console.log(result);
+      console.log("resultHERE :", result);
       // navigation.navigate('Groups' as never);
+      setIsLoadingShow(true)
+      setTimeout(() => {
+        navigation.goBack()
+      }, 4000)
 
-      navigation.goBack()
+
 
 
     }
@@ -217,9 +225,6 @@ export default function CreateGroup() {
     loadFriendList();
   }, []);
 
-  const enlargeProfilePicture = () => {
-    navigation.navigate('UserProfilePicuture' as never)
-  }
 
   const styles = StyleSheet.create({
     input: {
@@ -273,7 +278,7 @@ export default function CreateGroup() {
       marginRight: 'auto',
       color: 'white',
       bottomTop: "20%"
-      
+
     },
     groupTypeButtonContainer: {
       justifyContent: "flex-start",
@@ -284,7 +289,7 @@ export default function CreateGroup() {
       // alignItems: 'center',
       // flexWrap: "wrap",
       // paddingRight: "5%"
-      
+
     },
 
 
@@ -373,9 +378,9 @@ export default function CreateGroup() {
         width: 4,
       },
       marginTop: 30,
-      marginBottom:10
+      marginBottom: 10
     },
-    
+
     searchButton: {
 
       // margin: 5,
@@ -438,7 +443,7 @@ export default function CreateGroup() {
       alignItems: 'flex-start',
       // paddingBottom: '5%'
       maxHeight: "30%"
-      
+
     },
     stepsContainer: {
       position: 'relative',
@@ -455,16 +460,16 @@ export default function CreateGroup() {
       fontSize: 20,
       // marginRight: 20,
       color: '#47b4b1',
-      fontWeight:"300",
+      fontWeight: "300",
       position: 'relative',
       alignItems: 'flex-start',
-      justifyContent:"flex-start",
+      justifyContent: "flex-start",
       flexDirection: 'row',
       width: '100%',
       height: 25,
       marginTop: 5,
-      marginBottom:20,
-      marginLeft:25
+      marginBottom: 20,
+      marginLeft: 25
     },
   });
 
@@ -541,8 +546,8 @@ export default function CreateGroup() {
             <TouchableOpacity
               style={styles.clearButton}
               onPress={clearSearchBar}>
-              <Text style={styles.searchAndClearText}><FontAwesome name="close" size={19} color={"gray"}/></Text>
-            </TouchableOpacity>            
+              <Text style={styles.searchAndClearText}><FontAwesome name="close" size={19} color={"gray"} /></Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.searchButton}
               onPress={searchBarEnter}>
@@ -566,7 +571,12 @@ export default function CreateGroup() {
         <TouchableOpacity style={styles.createBtn} onPress={submitButton}>
           <Text style={styles.buttonFontSize}>Create Group</Text>
         </TouchableOpacity>
+
+        {isLoadingShow ? <View><ActivityIndicator size="large" /></View> : null}
+
       </View>
     </View>
+
   );
+
 }

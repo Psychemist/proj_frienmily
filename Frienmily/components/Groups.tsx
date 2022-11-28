@@ -86,28 +86,28 @@ export default function Groups() {
         // console.log(json);
         setGroupItemList(json);
 
-        setTimeout(async () => {
-          console.log("reloading GroupList...")
-          const response = await fetch(
-            `${REACT_APP_API_SERVER}/groups/getGroups/`,
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                userID: userIdInRedux,
-              }),
-            },
-          );
+        // setTimeout(async () => {
+        //   console.log("reloading GroupList...")
+        //   const response = await fetch(
+        //     `${REACT_APP_API_SERVER}/groups/getGroups/`,
+        //     {
+        //       method: 'POST',
+        //       headers: { 'Content-Type': 'application/json' },
+        //       body: JSON.stringify({
+        //         userID: userIdInRedux,
+        //       }),
+        //     },
+        //   );
 
-          let json = [];
-          if (response) {
-            json = await response.json();
-            console.log("Group list details get from server: ", json)
-          }
-          // console.log(json);
-          setGroupItemList(json);
+        //   let json = [];
+        //   if (response) {
+        //     json = await response.json();
+        //     console.log("Group list details get from server: ", json)
+        //   }
+        //   // console.log(json);
+        //   setGroupItemList(json);
 
-        }, 5000);
+        // }, 1000);
       } catch (error) {
         console.log('error', error);
       }
