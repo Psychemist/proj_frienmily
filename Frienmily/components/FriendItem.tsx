@@ -51,17 +51,17 @@ export default function FriendItem(props: FriendItemProps) {
                 setJson(json)
                 console.log("json :", json);
                 if (json.case == 1) {
-                    setShowResult(<Text>Settled</Text>);
+                    setShowResult(<Text><FontAwesome name="check" size={20} color="#47b4b1"/>  Settled</Text>);
                 } else if (json.case == 2) {
                     setShowResult(
                         <Text style={styles.green}>
-                            +{Math.round(json.amount * 10) / 10}
+                            +${Math.round(json.amount * 10) / 10}
                         </Text>,
                     );
                 } else if (json.case == 3) {
                     setShowResult(
                         <Text style={styles.red}>
-                            -{Math.round(json.amount * 10) / 10}
+                            -${Math.round(json.amount * 10) / 10}
                         </Text>,
                     );
                 }
@@ -134,10 +134,10 @@ export default function FriendItem(props: FriendItemProps) {
 
         },
         green: {
-            color: 'green',
+            color: '#02CD9C',
         },
         red: {
-            color: 'red',
+            color: '#F84C27',
         },
 
     });

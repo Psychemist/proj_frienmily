@@ -47,14 +47,16 @@ export default function MoneySettle() {
                         <Text style={styles.text}>All Settled</Text></View>)
                     // setShowButton()
                 } else if (settleDetails.case == 2) {
-                    setShowResult(<Text>Have you received ${settleDetails.amount} from {username}?</Text>)
+                    setShowResult(<Text style={styles.text}>{username} owes you ${settleDetails.amount}</Text>)
                     setShowButton(
                         <TouchableOpacity style={styles.searchButton} onPress={moneySettle}>
-                            <Text>Settled</Text>
+                            <View style={styles.settledbutton}>
+                                <Text style={styles.settledButtonText}>Press to Settle</Text>
+                            </View>
                         </TouchableOpacity>
                     )
                 } else if (settleDetails.case == 3) {
-                    setShowResult(<Text>Did you paid ${settleDetails.amount} to {username}?</Text>)
+                    setShowResult(<Text style={styles.text}>You owe {username} ${settleDetails.amount}</Text>)
                 }
             } catch (error) {
                 console.log('error', error);
@@ -101,7 +103,7 @@ export default function MoneySettle() {
                 payerID: friendUserID,
             }),
         });
-        setShowResult(<Text>Transactions settled</Text>)
+        setShowResult(<Text style={styles.text}>Transactions Settled!</Text>)
         setShowButton(<Text></Text>)
 
     };
@@ -109,10 +111,10 @@ export default function MoneySettle() {
     const amount = (item: any) => {
         if (item.debitor_id == thisUserID) {
             return <View style={styles.txnDetails}>
-                <Text>-${item.transcations_amount}</Text><Text> from group {item.group_name}</Text></View>
+                <Text style={styles.youOweRed}>-${item.transcations_amount}</Text><Text style={styles.oweGroupName}>{item.group_name}</Text></View>
         } else {
             return <View style={styles.txnDetails}>
-                <Text>+${item.transcations_amount}</Text><Text> from group {item.group_name}</Text></View>
+                <Text style={styles.oweYouGreen}>+${item.transcations_amount}</Text><Text style={styles.oweGroupName}>{item.group_name}</Text></View>
         }
 
     }
@@ -127,24 +129,34 @@ export default function MoneySettle() {
              flexDirection: 'column',
         },
         searchButton: {
-            margin: 5,
+            // margin: 5,
             fontSize: 20,
             backgroundColor: '#47b4b1',
-            width: 120,
-            height: 45,
-            borderRadius: 100,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: 20,
+            // width: 120,
+            // height: 45,
+            // borderRadius: 100,
+            // marginBottom: 20,
         },
         text: {
             padding: 20,
             borderRadius: 10,
-            fontSize: 30,
+            // fontSize: 23,
             marginLeft: 20,
             marginRight: 20,
             color: 'white',
             // fontWeight:"300",
+            fontSize: 28,
+            fontWeight: "bold",
+            // color: "#47b4b1",
+        },
+        oweText:{
+            paddingBottom: 10,
+            borderRadius: 10,
+            fontSize: 25,
+            // marginLeft: 20,
+            marginRight: 20,
+            color: 'white',
+            fontWeight: "300",
         },
         backButton: {
             position: 'absolute',
@@ -172,8 +184,8 @@ export default function MoneySettle() {
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
-            margin: "1%",
-            width: '98%',
+            marginTop: "1%",
+            width: '100%',
             height: 80,
             padding: 20,
             paddingTop: "5%",
@@ -189,6 +201,51 @@ export default function MoneySettle() {
             },
             borderBottomColor: 'grey',
             borderBottomWidth: 0.2,
+            fontSize: 40,
+            paddingRight:"10%",
+            fontWeight:"300",
+            color:"gray",
+        },
+        settledbutton: {
+            display: "flex",
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            marginTop: "4%",
+            marginBottom: "1%",
+            width: "100%",
+            height: 50,
+            // padding: 20,
+            // paddingTop: "5%",
+            // paddingBottom:"5%",
+            backgroundColor: '#02CD9C',
+            // //SHADOW
+            // borderTopLeftRadius:20,
+            // borderTopRightRadius:20,
+            // borderBottomLeftRadius:20,
+            // borderBottomRightRadius:20,
+            borderRadius:10,
+            shadowOpacity: 0.1,
+            shadowRadius: 1,
+            shadowOffset: {
+                height: 4,
+                width: 2,
+            },
+            borderBottomColor: 'grey',
+            borderBottomWidth: 0.2,
+            fontSize: 40,
+            // paddingRight:"10%",
+            fontWeight:"300",
+            color:"gray",
+        },
+        settledButtonText: {
+            // padding: 20,
+            // borderRadius: 10,
+            fontSize: 20,
+            // marginLeft: 20,
+            // marginRight: 20,
+            color: 'white',
+            fontWeight:"bold",
         },
         resultContainer:{
             display: "flex",
@@ -222,7 +279,33 @@ export default function MoneySettle() {
             // borderBottomColor: 'grey',
             // borderBottomWidth: 0.2,
 
-        }
+        },
+        groupName: {
+            fontSize: 40,
+            paddingRight:"10%",
+            fontWeight:"300",
+            color:"gray",
+            // paddingTop: "5%",
+            // paddingBottom:"5%",
+          },
+          oweGroupName:{
+            fontSize: 20,
+            // paddingRight:"10%",
+            fontWeight:"300",
+            color:"gray",
+          },
+          youOweRed:{
+            fontSize: 20,
+            // paddingRight:"10%",
+            fontWeight:"300",
+            color:"#F84C27",
+          },
+          oweYouGreen:{
+            fontSize: 20,
+            // paddingRight:"10%",
+            fontWeight:"300",
+            color:"#02CD9C",
+          }
     });
 
     return (
@@ -241,15 +324,17 @@ export default function MoneySettle() {
 
             <View style={styles.mainContainer}>
             <View style={styles.resultContainer}><Text>{showResult}</Text></View>
-            <View>{showButton}</View>   
+
             {/* <Image source={require('./img/money.gif')}
                 style={{ width: 250, height: 250, borderRadius: 15 }} /> */}
 
-            {/* <ScrollView style={{ minHeight: 100, maxHeight: 100 }}> */}
+            <ScrollView style={{ minHeight: 100, maxHeight: 200 }}>
+            <View>{showButton}</View>   
                 {json.map((item: any, idx: number) => (
-                    <View style={styles.container} key={idx}>{amount(item)}</View>
+                    <View style={styles.container} key={idx}><Text>{amount(item)}</Text></View>
                 ))}
-            {/* </ScrollView> */}
+            </ScrollView>
+
         </View>
         </SafeAreaView>
     );
