@@ -149,11 +149,15 @@ export default function LoginScreen() {
             style={{
               margin: 5,
               fontSize: 20,
+              minWidth:"20%",
+              maxWidth:"60%"
+
             }}
           />
         </View>
         <View style={styles.inputFieldWrapper}>
           <TextInput
+            secureTextEntry={true}
             autoCapitalize="none"
             placeholder="Password"
             value={password}
@@ -161,6 +165,8 @@ export default function LoginScreen() {
             style={{
               margin: 5,
               fontSize: 20,
+              minWidth:"20%",
+              maxWidth:"60%"
             }}
           />
         </View>
