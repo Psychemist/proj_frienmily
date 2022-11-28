@@ -15,7 +15,7 @@ import { REACT_APP_API_SERVER } from '@env';
 export default function ShoppingList() {
   const route = useRoute<any>()
   let groupId = route.params.groupId || ''
-  let isFamilyGroup = route.params.isFamilyGroup
+  let isFamilyGroup = route.params.isFamilyGroup || ''
 
   const isFocused = useIsFocused();
   const [groupName, setGroupName] = useState();

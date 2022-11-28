@@ -159,13 +159,14 @@ export default function Account() {
             backgroundColor: "#F5F5F5"
         },
         title: {
-            padding: 10,
+            padding: 20,
             borderRadius: 10,
-            fontSize: 22,
-            marginLeft: 10
+            fontSize: 30,
+            fontWeight:"bold",
+            marginLeft: 20
         },
         itemContainer: {
-            width: "90%",
+            width: "98%",
             height: "17%",
             backgroundColor: "white",
             shadowOffset: {
@@ -251,9 +252,9 @@ export default function Account() {
         },
         BtnText: {
             fontSize: 20,
-            paddingLeft: 10,
+            // paddingRight: 10,
             color: "white",
-            fontWeight: "300"
+            fontWeight: "bold"
         },
 
         tickBtn: {
@@ -293,7 +294,7 @@ export default function Account() {
             // opacity: 1,
         },
         logoutItemContainer: {
-            width: "90%",
+            width: "96%",
             height: "17%",
             backgroundColor: "darkorange",
             shadowOffset: {
@@ -306,10 +307,10 @@ export default function Account() {
             shadowRadius: 1,
             elevation: 9,
             flexDirection: "row",
-            justifyContent: "space-between",
+            justifyContent: "space-around",
             alignItems: "center",
-            paddingRight: 20,
-            paddingLeft: 20,
+            // paddingRight: 20,
+            paddingLeft: "29%",
             paddingTop: "5%",
             paddingBottom: "5%",
             borderRadius: 20,
@@ -326,7 +327,7 @@ export default function Account() {
                 <Text style={{ fontSize: 25, paddingBottom: "1%" }}>Account</Text>
             </View> */}
 
-            <Text style={styles.title}>Personal Profile</Text>
+            <Text style={styles.title}>Profile</Text>
 
             <View style={{ alignItems: "center" }}>
 

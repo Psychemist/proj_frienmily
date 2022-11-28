@@ -49,6 +49,14 @@ export default function Groups() {
       fontSize: 25,
     },
 
+    title: {
+      padding: 20,
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "bold",
+      marginLeft: 20
+
+    }
 
   });
   const navigation = useNavigation();
@@ -78,28 +86,28 @@ export default function Groups() {
         // console.log(json);
         setGroupItemList(json);
 
-        setTimeout(async () => {
-          console.log("reloading GroupList...")
-          const response = await fetch(
-            `${REACT_APP_API_SERVER}/groups/getGroups/`,
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                userID: userIdInRedux,
-              }),
-            },
-          );
+        // setTimeout(async () => {
+        //   console.log("reloading GroupList...")
+        //   const response = await fetch(
+        //     `${REACT_APP_API_SERVER}/groups/getGroups/`,
+        //     {
+        //       method: 'POST',
+        //       headers: { 'Content-Type': 'application/json' },
+        //       body: JSON.stringify({
+        //         userID: userIdInRedux,
+        //       }),
+        //     },
+        //   );
 
-          let json = [];
-          if (response) {
-            json = await response.json();
-            console.log("Group list details get from server: ", json)
-          }
-          // console.log(json);
-          setGroupItemList(json);
+        //   let json = [];
+        //   if (response) {
+        //     json = await response.json();
+        //     console.log("Group list details get from server: ", json)
+        //   }
+        //   // console.log(json);
+        //   setGroupItemList(json);
 
-        }, 5000);
+        // }, 1000);
       } catch (error) {
         console.log('error', error);
       }
@@ -112,8 +120,8 @@ export default function Groups() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
       <StatusBar barStyle="dark-content" />
-      <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5' }}>
-        <Text style={{ fontSize: 25, paddingBottom: '1%' }}>Groups</Text>
+      <View style={{ backgroundColor: '#F5F5F5' }}>
+        <Text style={styles.title}>Groups</Text>
       </View>
 
       <ScrollView style={{ backgroundColor: '#F5F5F5' }}>

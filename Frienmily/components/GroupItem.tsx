@@ -43,7 +43,7 @@ export default function GroupItem(props: GroupItemProps) {
     },
     groupName: {
       fontSize: 20,
-      paddingLeft:"2%",
+      paddingRight:"10%",
       fontWeight:"300",
       color:"gray",
       // paddingTop: "5%",
