@@ -100,36 +100,30 @@ export default function ShoppingList() {
     return (Math.round(num * 100) / 100).toFixed(2)
   }
 
-  // Fetch records based on the current month and year
-  const date = new Date();
-  let currentMonth = date.getMonth() + 1;
-  let currentYear = date.getFullYear();
-  console.log({ currentMonth, currentYear })
-
   const loadGroupBuyingRecord = async () => {
     try {
-      console.log('loadExpenseReports...');
-      const response = await fetch(
-        `${REACT_APP_API_SERVER}/groups/groupBuyingRecord`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            groupId: groupId,
-            month: currentMonth,
-            year: currentYear
-          }),
-        },
-      );
-      console.log("response from server: " + response)
-      let expenseRecord = await response.json()
-      console.log("Group buying record get from server: ", expenseRecord)
+      // console.log('loadExpenseReports...');
+      // const response = await fetch(
+      //   `${REACT_APP_API_SERVER}/groups/groupBuyingRecord`,
+      //   {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({
+      //       groupId: groupId,
+      //       month: currentMonth,
+      //       year: currentYear
+      //     }),
+      //   },
+      // );
+      // console.log("response from server: " + response)
+      // let expenseRecord = await response.json()
+      // console.log("Group buying record get from server: ", expenseRecord)
 
 
 
       navigation.navigate(
         'ExpenseReport' as never,
-        { groupName: groupName, groupId: groupId, expenseRecord: expenseRecord } as never,
+        { groupName: groupName, groupId: groupId } as never,
       );
 
     } catch (error) {

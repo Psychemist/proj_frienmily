@@ -73,7 +73,8 @@ export default function ExpenseReportItem(props: Props) {
       <View style={styles.category}>
 
         <View style={styles.leftWrapper}>
-          {/* FIXME: 在require內用 string concatenation會出錯*/}
+          {/* FIXME: 在require內用 string concatenation會出錯 */}
+          {/* FIXME: Louie要upload icon相到 S3 */}
           <Image source={require(`./img/bakery.png`)} style={styles.catIcon} />
           <Text>{props.items.categoryName}</Text>
         </View>
@@ -85,7 +86,6 @@ export default function ExpenseReportItem(props: Props) {
           <View style={styles.amountWrapper}>
             <Text style={styles.totalSavedMoney}>${categorySavedMoney}</Text>
           </View>
-
         </View>
       </View>
     </View>
