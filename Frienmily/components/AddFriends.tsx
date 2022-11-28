@@ -1,6 +1,7 @@
 import {
   Alert,
   Image,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -326,7 +327,7 @@ export default function AddFriends() {
   });
 
   return (
-    <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1 }}>
+    <SafeAreaView style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1 }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -439,6 +440,6 @@ export default function AddFriends() {
 
 
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

@@ -4,6 +4,7 @@ import {
   Animated,
   Easing,
   Image,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -474,7 +475,7 @@ export default function CreateGroup() {
   });
 
   return (
-    <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1, maxHeight: "100%" }}>
+    <SafeAreaView style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1, maxHeight: "100%" }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -575,7 +576,7 @@ export default function CreateGroup() {
         {isLoadingShow ? <View><ActivityIndicator size="large" /></View> : null}
 
       </View>
-    </View>
+    </SafeAreaView>
 
   );
 
