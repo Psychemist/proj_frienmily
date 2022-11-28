@@ -118,6 +118,14 @@ export default function MoneySettle() {
     }
 
     const styles = StyleSheet.create({
+        pageContainer:{
+             alignItems: 'center',
+             backgroundColor: '#47b4b1',
+             flex: 1,
+             display: "flex",
+             justifyContent: 'center',
+             flexDirection: 'column',
+        },
         searchButton: {
             margin: 5,
             fontSize: 20,
@@ -138,16 +146,10 @@ export default function MoneySettle() {
             color: 'white',
             // fontWeight:"300",
         },
-        header: {
-            height: '14%',
-            alignItems: 'center',
-            paddingTop: '15%',
-            // marginBottom: '10%',
-            width: '100%',
-        },
         backButton: {
             position: 'absolute',
-            left: 0,
+            left: 20,
+            top: 20,
             paddingTop: '65%',
             paddingLeft: '20%',
             fontSize: 25,
@@ -163,7 +165,7 @@ export default function MoneySettle() {
             display: "flex",
             justifyContent: 'center',
             alignItems: 'center',
-            flexDirection: 'row',
+            flexDirection: 'column',
         },
         container: {
             display: "flex",
@@ -217,23 +219,23 @@ export default function MoneySettle() {
                 height: 4,
                 width: 2,
             },
-            borderBottomColor: 'grey',
-            borderBottomWidth: 0.2,
+            // borderBottomColor: 'grey',
+            // borderBottomWidth: 0.2,
 
         }
     });
 
     return (
-        <SafeAreaView style={{ alignItems: 'center', backgroundColor: 'grey', flex: 1 }}>
+        
+        <SafeAreaView style={styles.pageContainer}>
             <StatusBar barStyle="light-content" />
-            <View style={styles.header}>
-                <TouchableOpacity
+            <TouchableOpacity
                     style={styles.backButton}
                     onPress={() => navigation.navigate('Friends' as never)}>
                     <FontAwesome name="angle-left" size={35} color="white"/>
                 </TouchableOpacity>
                 {/* <Text style={styles.text}>Settlement</Text> */}
-            </View>
+
 
 
 

@@ -174,7 +174,11 @@ export default function AddFriends() {
       marginTop: "10%"
     },
     text: {
-      fontSize: 25,
+      padding: 20,
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "bold",
+      marginLeft: 20
     },
     header: {
       height: '14%',
@@ -328,7 +332,7 @@ export default function AddFriends() {
 
   return (
     <SafeAreaView style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1 }}>
-      <View style={styles.header}>
+      {/* <View style={styles.header}> */}
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.navigate('Friends' as never)}>
@@ -336,7 +340,7 @@ export default function AddFriends() {
         </TouchableOpacity>
 
         <Text style={styles.text}>Add Friends</Text>
-      </View>
+      {/* </View> */}
 
 
 
