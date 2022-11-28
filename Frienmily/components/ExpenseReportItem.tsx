@@ -8,40 +8,39 @@ export interface Props {
 }
 
 export default function ExpenseReportItem(props: Props) {
-
-  console.log("props at ExpenseReportItem: ", props.items)
   const categoryIcon = props.items.categoryIcon
 
-  // TODO: 每條紀錄都計算最高價格和最低價格
-  // see if the key matches "_price"
-  let priceObj = {
-    "aeon_price": "4.5",
-    "dch_price": "6.9",
-    "jasons_price": "8",
-    "parknshop_price": "7.8",
-    "wellcome_price": "9",
-    "mannings_price": null,
-    "watsons_price": null,
-    "ztore_price": null,
-    "report_lower_price": null
-  }
-
-  const floatPrices = []
-  const stringPrices: Array<string | null> = Object.values(priceObj);
+  const results: any[] = props.items.result
+  console.log("@@@@@@@@@@@@@@@ props at ExpenseReportItem: ", results)
+  let totalSavedMoney: number = 0
+  let totalExpense: number = 0
 
 
-  for (let stringPrice of stringPrices) {
-    if (stringPrice != null) {
-      floatPrices.push(parseFloat(stringPrice))
+  if (results.length == 0) {
+    console.log("no items bought for this category")
+
+  } else if (results.length >= 1) {
+    console.log("results with length more than or equal to 1", results)
+    for (let result of results) {
+      const floatPrices: number[] = []
+      for (let [key, value] of Object.entries(result)) {
+        if (key.includes("_price") && value != null && typeof value == "string") {
+          floatPrices.push(parseFloat(value))
+        }
+      }
+
+      console.log("floatPrices:", floatPrices)
+      let maxPrice = Math.max(...floatPrices)
+      let minPrice = Math.min(...floatPrices)
+      let moneysaved: number = parseFloat((maxPrice - minPrice).toFixed(2))
+      console.log({ maxPrice, minPrice, moneysaved })
+      totalSavedMoney = totalSavedMoney + moneysaved
+      totalExpense = totalExpense + minPrice
     }
   }
-  console.log("floatPrices: ", floatPrices)
 
-
-
-
-
-
+  console.log(`The total amount spent for "${props.items.categoryName}" is $${totalExpense}`)
+  console.log(`The total amount saved for "${props.items.categoryName}" is $${totalSavedMoney}`)
 
 
 
@@ -66,18 +65,58 @@ export default function ExpenseReportItem(props: Props) {
       width: 40,
       marginRight: 10
     },
+    leftWrapper: {
+      flexDirection: "row",
+      alignItems: "center",
+      width: "60%"
+    },
+    rightWrapper: {
+      flexDirection: 'row',
+      position: 'relative',
+      alignItems: "center",
+      justifyContent: "space-between",
+      width: "40%",
+      padding: 5
+    },
+
+    totalExpense: {
+      color: "#47b4b1",
+      fontWeight: "bold",
+      textAlign: "right"
+    },
+    totalSavedMoney: {
+      color: "#f79f24",
+      fontWeight: "bold",
+      textAlign: "right"
+
+
+    },
+    amountWrapper: {
+      width: "50%",
+      alignItems: "center"
+    }
+
 
   })
   return (
     <View>
+
+
       <View style={styles.category}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+
+        <View style={styles.leftWrapper}>
+          {/* FIXME: 在require內用 string concatenation會出錯*/}
           <Image source={require(`./img/bakery.png`)} style={styles.catIcon} />
           <Text>{props.items.categoryName}</Text>
         </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text>$100</Text>
-          <Text>$20</Text>
+
+        <View style={styles.rightWrapper}>
+          <View style={styles.amountWrapper}>
+            <Text style={styles.totalExpense}>${totalExpense}</Text>
+          </View>
+          <View style={styles.amountWrapper}>
+            <Text style={styles.totalSavedMoney}>${totalSavedMoney}</Text>
+          </View>
 
         </View>
       </View>

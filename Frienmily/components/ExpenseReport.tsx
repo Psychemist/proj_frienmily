@@ -14,9 +14,13 @@ export default function ExpenseReport() {
   let groupName = route.params.groupName
   let groupId = route.params.groupId
 
-  let expenseRecord = route.params.expenseRecord
 
+  // TODO: 每條紀錄都計算最高價格和最低價格
+
+  let expenseRecord = route.params.expenseRecord
   console.log("expenseRecord get at ExpenseReport Page: ", expenseRecord)
+
+
 
   const date = new Date();
   let currentMonth = date.getMonth();
@@ -24,7 +28,6 @@ export default function ExpenseReport() {
 
   const [month, setMonth] = useState<number>(currentMonth)
   const [year, setYear] = useState<number>(currentYear)
-
 
 
   const changeMonth = () => {
@@ -75,9 +78,39 @@ export default function ExpenseReport() {
       padding: 10,
       margin: 5
     },
-    categoryWrapper: {
+
+    tableHeader: {
+      flexDirection: "row",
+      width: 360,
+      height: 40,
+      justifyContent: "center",
+      alignItems: "center"
 
     },
+    leftWrapper: {
+      padding: 5,
+      width: "60%",
+    },
+    rightWrapper: {
+      padding: 5,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      width: "40%",
+
+    },
+    totalExpenseWrapper: {
+      alignItems: "center",
+      justifyContent: "center",
+      width: 60,
+      height: 20
+    },
+    totalSavedMoneyWrapper: {
+      alignItems: "center",
+      justifyContent: "center",
+      width: 60,
+      height: 20
+    }
 
 
   })
@@ -103,6 +136,27 @@ export default function ExpenseReport() {
         />
 
       </View> */}
+      <View style={styles.tableHeader}>
+
+
+        <View style={styles.leftWrapper}>
+          <Text style={{ fontWeight: "bold" }}>Categories</Text>
+        </View>
+
+
+        <View style={styles.rightWrapper}>
+          <View style={styles.totalExpenseWrapper}>
+            {/* <Text style={{ fontWeight: "bold", color: "#47b4b1" }}>Total</Text> */}
+            <Text style={{ fontWeight: "bold", color: "#47b4b1" }}>Expense</Text>
+          </View>
+          <View style={styles.totalSavedMoneyWrapper}>
+            <Text style={{ fontWeight: "bold", color: "#f79f24" }}>Money</Text>
+            <Text style={{ fontWeight: "bold", color: "#f79f24" }}>Saved</Text>
+          </View>
+        </View>
+      </View>
+
+
 
 
       <View style={{ backgroundColor: '#F5F5F5' }}>
