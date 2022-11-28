@@ -12,8 +12,6 @@ export default function ExpenseReportItem(props: Props) {
   const categoryIcon = props.items.categoryIcon
   const categoryExpense = props.items.categoryExpense
   const categorySavedMoney = props.items.categorySavedMoney
-  console.log("items received at son: ", props.items)
-
 
 
   const styles = StyleSheet.create({
@@ -73,9 +71,7 @@ export default function ExpenseReportItem(props: Props) {
       <View style={styles.category}>
 
         <View style={styles.leftWrapper}>
-          {/* FIXME: 在require內用 string concatenation會出錯 */}
-          {/* FIXME: Louie要upload icon相到 S3 */}
-          <Image source={require(`./img/bakery.png`)} style={styles.catIcon} />
+          <Image source={{ uri: props.items.categoryIcon }} style={styles.catIcon} />
           <Text>{props.items.categoryName}</Text>
         </View>
 
