@@ -60,7 +60,7 @@ export default function ShoppingList() {
         if (response) {
           result = await response.json();
         }
-        console.log("@@@@@@@@@@@@@ result:", result)
+        console.log("@@@@@@@@@@@@@2 result:", result)
         setAllAssignedItems(result);
         let total = 0
         for (let item of result) {
@@ -79,7 +79,7 @@ export default function ShoppingList() {
               return e.price;
             });
             const lowest = filtered.reduce<any>((previous, current) => {
-              console.log('checking', { previous, current })
+              // console.log('checking', { previous, current })
               if (!Object.keys(previous).length) {
                 return current
               }
@@ -98,6 +98,7 @@ export default function ShoppingList() {
         console.log('error', error);
       }
     };
+
     if (isFocused) {
       getGroupName();
       getAssignedItems()
@@ -133,7 +134,7 @@ export default function ShoppingList() {
     if (response) {
       result = await response.json();
     }
-    console.log("@@@@@@@@@@@@@ result:", result)
+    console.log("@@@@@@@@@@@@@3 result:", result)
     setAllAssignedItems(result);
     let total = 0
     for (let item of result) {
@@ -152,7 +153,7 @@ export default function ShoppingList() {
           return e.price;
         });
         const lowest = filtered.reduce<any>((previous, current) => {
-          console.log('checking', { previous, current })
+          // console.log('checking', { previous, current })
           if (!Object.keys(previous).length) {
             return current
           }
@@ -193,7 +194,7 @@ export default function ShoppingList() {
       // fontWeight: '300',
       color: 'white',
     },
-    groupMemberButtonText:{
+    groupMemberButtonText: {
       fontSize: 20,
       // fontWeight: '300',
       color: 'white',

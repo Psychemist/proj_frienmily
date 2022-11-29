@@ -18,16 +18,14 @@ interface ShoppingListItemProps {
 
 export default function ShoppingListItem(props: ShoppingListItemProps) {
     const userIdInRedux = useSelector((state: RootState) => state.user.userId);
-    const [isSelected, setIsSelected] = React.useState(false);
+    const [isSelected, setIsSelected] = React.useState(props.items.is_completed);
     const [assigneeName, setAssigneeName] = React.useState('');
     const [buyerName, setBuyerName] = React.useState('');
     const isFocused = useIsFocused();
 
 
-    const selectButton = async () => {
-        // setIsSelected(!isSelected)
-        // console.log(props.items.cart_id);
 
+    const selectButton = async () => {
         const response = await fetch(`${REACT_APP_API_SERVER}/goods/changeIsCompleted/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -43,8 +41,6 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         console.log(result);
         if (result.isChanged == true) {
             setIsSelected(!isSelected)
-
-
             if (result.userID != null) {
                 // update buyer
                 const res = await fetch(`${REACT_APP_API_SERVER}/user/getUserName/`, {
@@ -54,11 +50,10 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                         user_id: result.userID,
                     }),
                 });
-                let results;
+                let results: any;
                 if (res) {
                     results = await res.json();
                 }
-                console.log("resultresult :", results)
                 setBuyerName(results.username)
             }
             if (result.userID == null) {
@@ -78,13 +73,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
 
     useEffect(() => {
         try {
-            const getIsCompleted = async () => {
-                console.log(props.items.is_completed);
-                setIsSelected(props.items.is_completed)
-            }
             const getAssigneeName = async () => {
-                console.log("props.items.assignee_id :", props.items.assignee_id);
-
                 const response = await fetch(`${REACT_APP_API_SERVER}/user/getUserName/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -99,7 +88,6 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 setAssigneeName(result.username)
             }
             const getBuyerName = async () => {
-                console.log("buyer_id :", props.items.buyer_id);
                 if (props.items.buyer_id == null) {
                     return
                 }
@@ -117,12 +105,19 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 if (newResponse) {
                     newResult = await newResponse.json();
                 }
-                setBuyerName(newResult.username)
+                if (isSelected == true) {
+                    setBuyerName(newResult.username)
+                }
+            }
+            const initBuyerName = async () => {
+                if (isSelected == false) {
+                    setBuyerName('')
+                }
             }
             if (isFocused) {
-                getIsCompleted()
                 getAssigneeName()
                 getBuyerName()
+                initBuyerName()
             }
 
         } catch (error) {
@@ -193,14 +188,9 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
             { price: ztore_price, shop: "士多" }
         ]
 
-        console.log("props.items :", props.items)
-
-
-
         let filtered = allPriceArray.filter(function (e) {
             return e.price != null;
         });
-        console.log("filtered :", filtered)
 
         const lowest = filtered.reduce((previous, current) => {
             return current.price! < previous.price! ? current : previous;
@@ -213,8 +203,6 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         }
         console.log(tempArray)
         if (tempArray.length > 1) {
-            // console.log({ "price": lowest.price, "shop": "多間同價" })
-            // console.log({ "price": lowest.price, "shop": "多間同價" })
             return { "price": lowest.price, "shop": "多間同價" }
         }
         console.log("lowest :", lowest)
@@ -226,7 +214,6 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
     }
 
     const deleteItem = async () => {
-        console.log(`deleteItem id:`, props.items.cart_id)
         let result = await fetch(`${REACT_APP_API_SERVER}/groups/deleteItemInShoppingList/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -242,10 +229,6 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
     }
 
     const showAlert = () => {
-
-        console.log("isSelected :", isSelected);
-
-
         if (isSelected == true) {
             Alert.alert('Someone bought already, cannot delete this item.', '', [
                 {
