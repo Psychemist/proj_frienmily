@@ -8,7 +8,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { MONTHS, YEARS } from '../utils/dates';
 import ExpenseReportItem from './ExpenseReportItem';
 import { PieChart } from 'react-native-svg-charts'
-// import {ViewPropTypes} from 'deprecated-react-native-prop-types'
+import { Circle, G, Line } from 'react-native-svg'
+import { createIconSetFromFontello } from 'react-native-vector-icons';
 
 export default function ExpenseReport() {
   const navigation = useNavigation();
@@ -89,13 +90,15 @@ export default function ExpenseReport() {
         let maxPrice = Math.max(...floatPrices)
         let minPrice = Math.min(...floatPrices)
         let moneySaved: number = parseFloat((maxPrice - minPrice).toFixed(2))
-        categorySavedMoney = categorySavedMoney + moneySaved
+        categorySavedMoney = parseFloat((categorySavedMoney + moneySaved).toFixed(2))
         categoryExpense = categoryExpense + minPrice
       }
       record["categorySavedMoney"] = categorySavedMoney
       record["categoryExpense"] = categoryExpense
     }
   }
+
+  console.log("@@@@@@@@@@@@@@@@ expenseRecords after calculating the money saved and expense: ", expenseRecords)
 
   // Get the expenseSum and moneySavedSum by adding up all 10 categories
   let expenseSum: number = 0
@@ -114,11 +117,16 @@ export default function ExpenseReport() {
   }
 
   // TODO: Chart View
-  const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
+
+  const categoryExpenseArray: any[] = []
+
+  const data = expenseRecords.map((item: any) => {
+    categoryExpenseArray.push(item.categoryExpense)
+  })
 
   const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7)
 
-  const pieData = data
+  const pieData = categoryExpenseArray
     .filter((value) => value > 0)
     .map((value, index) => ({
       value,
@@ -128,6 +136,10 @@ export default function ExpenseReport() {
       },
       key: `pie-${index}`,
     }))
+
+
+
+
 
 
 
@@ -193,6 +205,10 @@ export default function ExpenseReport() {
     chartViewBtn: {
       borderColor: isChartView ? "#47b4b1" : "#F2F2F2"
 
+    },
+    pieChart: {
+      height: 300,
+      width: 300
     },
     tableHeaderFooter: {
       flexDirection: "row",
@@ -279,12 +295,15 @@ export default function ExpenseReport() {
           <Text>Chart View</Text>
         </TouchableOpacity>
       </View>
+
+
       {isChartView ?
         <View>
           <Text>
             Chart View
           </Text>
-          <PieChart style={{ height: 200 }} data={pieData} />
+          <PieChart style={styles.pieChart} data={pieData} />
+
         </View>
         :
         <View>
