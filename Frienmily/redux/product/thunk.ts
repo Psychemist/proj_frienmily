@@ -14,6 +14,7 @@ export const fetchProductData: any = createAsyncThunk("product/fetchProductData"
 
     let catIds = params.categoryArray
     let page = params.page
+    let isRenewList = params.isRenewList
 
     if (catIds.length == 0 || isNaN(page) || page == undefined) {
       console.log("catIds or page is not valid at thunk. No fetching")
@@ -33,7 +34,6 @@ export const fetchProductData: any = createAsyncThunk("product/fetchProductData"
       },
     );
     const data = await res.json()
-    const isRenewList = params.isRenewList
     if (!res.ok) {
       throw data.msg
     }
