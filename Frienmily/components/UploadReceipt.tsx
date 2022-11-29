@@ -56,7 +56,6 @@ export default function UploadReceipt() {
   //   };
 
   const submitButton = async () => {
-    navigation.goBack()
     if (imgs == undefined || imgs == null) {
       showAlert();
       return;
@@ -71,12 +70,13 @@ export default function UploadReceipt() {
     function containsOnlyNumbers(str: any) {
       return /^[0-9]+$/.test(str);
     }
+    console.log(number)
 
     if (!containsOnlyNumbers(number)) {
-      showAlert2()
-      return
+      // showAlert2()
+      // return
     }
-
+    navigation.goBack()
 
 
 
@@ -97,33 +97,18 @@ export default function UploadReceipt() {
 
   const showAlert = () => {
     Alert.alert('Please upload receipt', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
 
   const showAlert1 = () => {
     Alert.alert('How much you paid?', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
 
   const showAlert2 = () => {
     Alert.alert('Integer only', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
