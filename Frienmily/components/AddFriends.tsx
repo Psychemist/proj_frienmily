@@ -122,6 +122,7 @@ export default function AddFriends() {
     searchClearContainer: {
       justifyContent: "center",
       alignItems: 'center',
+      maxWidth: "90%"
     },
     searchButton: {
 
@@ -129,8 +130,8 @@ export default function AddFriends() {
       fontSize: 20,
       backgroundColor: "#47b4b1",
       width: '47%',
-      height: '12%',
-      borderRadius: 20,
+      height: 50,
+      borderRadius: 10,
       justifyContent: 'center',
       alignItems: 'center',
       shadowOpacity: 1,
@@ -144,11 +145,11 @@ export default function AddFriends() {
     clearButton: {
 
       margin: 5,
-      fontSize: 20,
+      fontSize: 50,
       backgroundColor: "lightgray",
       width: '47%',
-      height: '12%',
-      borderRadius: 20,
+      height: 50,
+      borderRadius: 10,
       justifyContent: 'center',
       alignItems: 'center',
       shadowOpacity: 1,
@@ -215,7 +216,7 @@ export default function AddFriends() {
       // padding: "2%"
     },
     plusButton:{
-      fontSize: 35,
+      fontSize: 43,
       color: "gray",
       fontWeight:"300"
     },
@@ -281,7 +282,7 @@ export default function AddFriends() {
       alignItems: 'center',
       flexDirection: 'row',
       width: "100%",
-      height: "53%",
+      height: 100,
       borderColor: buttonIsClicked ? "#47b4b1":"gray",
       shadowColor: buttonIsClicked ? "#47b4b1":"gray",
       borderRadius: 25,

@@ -98,8 +98,8 @@ export default function CartItem(props: CartItemProps) {
 
         console.log("props.items :", props.items)
 
-        
-        
+
+
         let filtered = allPriceArray.filter(function (e) {
             return e.price != null;
         });
@@ -116,8 +116,8 @@ export default function CartItem(props: CartItemProps) {
         }
         console.log(tempArray)
         if (tempArray.length > 1) {
-            console.log({"price": lowest.price, "shop": "多間同價"})
-            return {"price": lowest.price, "shop": "多間同價"}
+            console.log({ "price": lowest.price, "shop": "多間同價" })
+            return { "price": lowest.price, "shop": "多間同價" }
         }
         console.log("lowest :", lowest)
         return lowest
@@ -160,7 +160,7 @@ export default function CartItem(props: CartItemProps) {
     const styles = StyleSheet.create({
         text: {
             fontSize: 15,
-            color: "#384db7"
+            // color: "#384db7"
         },
         shopText: {
             fontSize: 15,
@@ -173,34 +173,72 @@ export default function CartItem(props: CartItemProps) {
             textAlign: 'right'
         },
         container: {
-            justifyContent: "space-between",
-            alignItems: "center",
+            marginTop:"1%",
+            marginLeft:"1%",
+            backgroundColor: "white",
+            width: "99%",
+            height: 100,
+            borderWidth:1,
+            borderColor:"#F5F5F5",
+            borderRadius: 10,
             flexDirection: "row",
-            width: "100%",
+            alignItems: "center",
+            justifyContent: "space-between",
             padding: 10,
-            paddingTop: 15,
-            paddingBottom: 15,
-
+            // margin: 5,
+            shadowOpacity: 1,
+            shadowColor: "lightgray",
+            shadowRadius: 2,
+            shadowOffset: {
+              height: 1,
+              width: 1,
+            },
         },
         counter: {
             flexDirection: "row",
+            // marginLeft:"2%",
+            fontSize: 20,
+            backgroundColor: "white",
+            width: '22%',
+            height: 30,
+            borderWidth: 0.4,
+            borderColor: "lightgray",
+            borderRadius: 30,
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            shadowOpacity:1,
+            shadowColor: "#47b4b1",
+            shadowRadius:2,
+            shadowOffset: {
+              height: 4,
+              width: 4,
+            },
         },
         minusAndPlusBox: {
-            padding: 10,
-            borderRadius: 0,
-            borderWidth: 1,
+            paddingleft: 2,
+            paddingright: 2,
+            backgroundColor: "white",
             borderColor: 'grey',
+            borderRadius: 30,
         },
         counterNumber: {
             padding: 0,
-            fontSize: 15,
-            width: 30,
+            width: '20%',
             justifyContent: 'center',
             alignItems: "center",
             borderRadius: 0,
-            borderWidth: 1,
-            borderColor: 'grey',
-        }
+            // borderWidth: 1,
+            // borderColor: 'gray',
+            backgroundColor: "white"
+        },
+        minusAndPlusIcon: {
+            color: "#47b4b1",
+        },
+        counterNumberFont: {
+            fontSize: 15,
+            fontWeight:"300"
+        },
+        
     })
 
     const navigation = useNavigation()
@@ -211,14 +249,14 @@ export default function CartItem(props: CartItemProps) {
                 (<View style={styles.container}>
                     <View style={styles.counter}>
                         <TouchableOpacity style={styles.minusAndPlusBox} onPress={minusOneToCounter}>
-                            <FontAwesome name="minus" size={10} />
+                            <FontAwesome name="minus" size={18} style={styles.minusAndPlusIcon} />
                         </TouchableOpacity>
                         <View style={styles.counterNumber}>
-                            <Text>{initNum}</Text>
+                            <Text style={styles.counterNumberFont}>{initNum}</Text>
                         </View>
 
                         <TouchableOpacity style={styles.minusAndPlusBox} onPress={addOneToCounter}>
-                            <FontAwesome name="plus" size={10} />
+                            <FontAwesome name="plus" size={18} style={styles.minusAndPlusIcon} />
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity onPress={() => navigation.navigate('Groceries' as never)}>
