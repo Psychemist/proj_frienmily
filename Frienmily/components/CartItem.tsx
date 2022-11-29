@@ -159,27 +159,33 @@ export default function CartItem(props: CartItemProps) {
 
     const styles = StyleSheet.create({
         text: {
-            fontSize: 15,
-            // color: "#384db7"
+            fontSize: 16,
+            color: "grey",
+            fontWeight: "bold",
         },
         shopText: {
             fontSize: 15,
-            color: "grey"
+            color: "darkgrey",
+            paddingTop:"5%"
         },
         price: {
             fontSize: 13,
-            color: "black",
-            width: 70,
-            textAlign: 'right'
+            // color: "black",
+            width: 80,
+            textAlign: 'left',
+            fontWeight: "bold",
+            color: "#47b4b1",
+            marginLeft:"10%"
+
         },
         container: {
-            marginTop:"1%",
-            marginLeft:"1%",
+            marginTop: "1%",
+            marginLeft: "1%",
             backgroundColor: "white",
             width: "99%",
             height: 100,
-            borderWidth:1,
-            borderColor:"#F5F5F5",
+            borderWidth: 1,
+            borderColor: "#F5F5F5",
             borderRadius: 10,
             flexDirection: "row",
             alignItems: "center",
@@ -190,13 +196,14 @@ export default function CartItem(props: CartItemProps) {
             shadowColor: "lightgray",
             shadowRadius: 2,
             shadowOffset: {
-              height: 1,
-              width: 1,
+                height: 1,
+                width: 1,
             },
         },
         counter: {
             flexDirection: "row",
-            // marginLeft:"2%",
+            marginRight:"5%",
+            padding:5,
             fontSize: 20,
             backgroundColor: "white",
             width: '22%',
@@ -206,24 +213,24 @@ export default function CartItem(props: CartItemProps) {
             borderRadius: 30,
             justifyContent: 'space-around',
             alignItems: 'center',
-            shadowOpacity:1,
+            shadowOpacity: 1,
             shadowColor: "#47b4b1",
-            shadowRadius:2,
+            shadowRadius: 2,
             shadowOffset: {
-              height: 4,
-              width: 4,
+                height: 4,
+                width: 4,
             },
         },
         minusAndPlusBox: {
-            paddingleft: 2,
-            paddingright: 2,
+            paddingLeft: 2,
+            paddingRight: 2,
             backgroundColor: "white",
             borderColor: 'grey',
             borderRadius: 30,
         },
         counterNumber: {
             padding: 0,
-            width: '20%',
+            width: '31%',
             justifyContent: 'center',
             alignItems: "center",
             borderRadius: 0,
@@ -236,9 +243,9 @@ export default function CartItem(props: CartItemProps) {
         },
         counterNumberFont: {
             fontSize: 15,
-            fontWeight:"300"
+            fontWeight: "300"
         },
-        
+
     })
 
     const navigation = useNavigation()
@@ -264,14 +271,14 @@ export default function CartItem(props: CartItemProps) {
                             navigation.navigate('ImagePreview' as never, { image: props.items.goods_picture } as never)
                         }}>
                             <View><Image source={{ uri: props.items.goods_picture }}
-                                style={{ width: 50, height: 50 }} /></View>
+                                style={{ width: 50, height: 50, marginLeft:"5%"}} /></View>
                         </TouchableOpacity>
                     </TouchableOpacity>
                     <View style={{ width: 150 }}>
                         <View><Text style={styles.text}>{props.items.name}</Text></View>
                         <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
                     </View>
-                    <View><Text style={styles.price}>HK${addZeroes(getLowest().price! * initNum)}</Text></View>
+                    <View><Text style={styles.price}>${addZeroes(getLowest().price! * initNum)}</Text></View>
                 </View>) :
                 (null)}
 
