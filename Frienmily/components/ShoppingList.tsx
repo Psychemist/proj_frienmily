@@ -60,33 +60,36 @@ export default function ShoppingList() {
         if (response) {
           result = await response.json();
         }
+        console.log("@@@@@@@@@@@@@ result:", result)
         setAllAssignedItems(result);
         let total = 0
         for (let item of result) {
           const getLowest = () => {
             let allPriceArray = [
-              { price: +(item.wellcome_price) || 999      ,shop: "惠康" },
-              { price: +(item.parknshop_price)|| 999       ,shop: "百佳" },
-              { price: +(item.jasons_price)   || 999    ,shop: "Jasons" },
-              { price: +(item.watsons_price)  || 999     ,shop: "屈臣氏" },
-              { price: +(item.mannings_price) || 999      ,shop: "萬寧" },
-              { price: +(item.aeon_price)     || 999  ,shop: "AEON" },
-              { price: +(item.dch_price)      || 999 ,shop: "大昌食品" },
-              { price: +(item.ztore_price)    || 999   ,shop: "士多" }
+              { price: +(item.wellcome_price) || 999, shop: "惠康" },
+              { price: +(item.parknshop_price) || 999, shop: "百佳" },
+              { price: +(item.jasons_price) || 999, shop: "Jasons" },
+              { price: +(item.watsons_price) || 999, shop: "屈臣氏" },
+              { price: +(item.mannings_price) || 999, shop: "萬寧" },
+              { price: +(item.aeon_price) || 999, shop: "AEON" },
+              { price: +(item.dch_price) || 999, shop: "大昌食品" },
+              { price: +(item.ztore_price) || 999, shop: "士多" }
             ]
             let filtered = allPriceArray.filter(function (e) {
               return e.price;
             });
             const lowest = filtered.reduce<any>((previous, current) => {
-              console.log('checking', {previous,current})
-              if (!Object.keys(previous).length){
+              console.log('checking', { previous, current })
+              if (!Object.keys(previous).length) {
                 return current
               }
               return current.price < previous.price ? current : previous;
-            },[]);
+            }, []);
 
             return lowest
           }
+          // TODO: 計算 Money Saved （要找出 highest）
+
           console.log(getLowest().price * item.quantity)
           total += getLowest().price * item.quantity
         }
@@ -107,25 +110,6 @@ export default function ShoppingList() {
 
   const loadGroupBuyingRecord = async () => {
     try {
-      // console.log('loadExpenseReports...');
-      // const response = await fetch(
-      //   `${REACT_APP_API_SERVER}/groups/groupBuyingRecord`,
-      //   {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: JSON.stringify({
-      //       groupId: groupId,
-      //       month: currentMonth,
-      //       year: currentYear
-      //     }),
-      //   },
-      // );
-      // console.log("response from server: " + response)
-      // let expenseRecord = await response.json()
-      // console.log("Group buying record get from server: ", expenseRecord)
-
-
-
       navigation.navigate(
         'ExpenseReport' as never,
         { groupName: groupName, groupId: groupId } as never,
@@ -228,9 +212,6 @@ export default function ShoppingList() {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
-      {/* <View style={{alignItems: "center"}}>
-                <Text style={{fontSize: 25, paddingBottom: "1%"}}>Shopping List</Text> 
-            </View> */}
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -274,8 +255,6 @@ export default function ShoppingList() {
 
 
       <View style={{
-        // alignItems: 'center',
-        // justifyContent: 'space-around',
         flexDirection: "row",
         width: "90%",
       }}>
@@ -301,8 +280,6 @@ export default function ShoppingList() {
 
 
       <View style={{
-        // alignItems: 'center',
-        // justifyContent: 'space-around',
         flexDirection: "row",
         width: "90%",
       }}>

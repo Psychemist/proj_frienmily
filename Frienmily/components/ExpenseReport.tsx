@@ -10,12 +10,9 @@ import ExpenseReportItem from './ExpenseReportItem';
 
 export default function ExpenseReport() {
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
   const route = useRoute<any>()
   console.log("route:", route)
   let groupId = route.params.groupId
-  // let expenseRecord = route.params.expenseRecord
-  // console.log("expenseRecord get at ExpenseReport Page: ", expenseRecord)
 
   const date = new Date();
   let currentMonth = date.getMonth() + 1;
@@ -24,14 +21,9 @@ export default function ExpenseReport() {
 
   const [month, setMonth] = useState<number>(currentMonth)
   const [year, setYear] = useState<number>(currentYear)
-  const [submit, setSubmit] = useState<boolean>(false)
   const [expenseRecords, setExpenseRecords] = useState<any>([])
 
-  // TODO: 根據日期選擇紀錄
-  const changeMonth = () => {
-    setMonth(month)
-    console.log("new month: ", month)
-  }
+
 
   const changeYear = (index: number) => {
 
@@ -57,25 +49,6 @@ export default function ExpenseReport() {
       let data = await response.json()
       console.log("Group buying record get from server: ", data)
       setExpenseRecords(data)
-
-      // console.log('load ExpenseReports of other months');
-      // const response = await fetch(
-      //   `${REACT_APP_API_SERVER}/groups/groupBuyingRecord`,
-      //   {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: JSON.stringify({
-      //       groupId: groupId,
-      //       month: month,
-      //       year: year
-      //     }),
-      //   },
-      // );
-      // console.log("response from server: " + response)
-      // let expenseRecord = await response.json()
-      // console.log(`expense report of ${month}(month) ${year}(year): `, expenseRecord)
-
-      // setSubmit(!submit)
 
     } catch (err) {
       console.log(err)
