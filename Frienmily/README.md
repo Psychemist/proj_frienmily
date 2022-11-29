@@ -17,7 +17,7 @@ module.exports = {
         android:{}
     },
     assets:['./assets/fonts/'],
-}
+} 
 
 Then run:
 npx react-native-asset
