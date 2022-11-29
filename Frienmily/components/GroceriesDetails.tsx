@@ -206,9 +206,10 @@ export default function GroceriesDetails() {
 
         },
         searchBarcontainer: {
-            top: 0, right: 12,
+            // top: 0, 
+            // right: 12,
             position: "relative",
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'row',
             width: '100%',
@@ -227,7 +228,7 @@ export default function GroceriesDetails() {
             marginRight: 20
         },
         backButton: {
-            left: 8,
+            left: 5,
             fontSize: 25,
         },
         cartQty: {
@@ -239,7 +240,7 @@ export default function GroceriesDetails() {
             backgroundColor: "#f79f24",
             position: "absolute",
             top: -10,
-            right: -10,
+            right: 0,
             shadowOpacity: 0.3,
             shadowRadius: 1,
             shadowOffset: {
@@ -420,7 +421,9 @@ export default function GroceriesDetails() {
             shadowOffset: {
                 height: 1,
                 width: 1
-            }
+            },
+            marginRight: "2%"
+            // paddingRight:"1%"
         },
 
         minusAndPlusIcon: {
@@ -445,7 +448,7 @@ export default function GroceriesDetails() {
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                     <FontAwesome name='angle-left' size={35} style={styles.shoppingCartIcon} />
                 </TouchableOpacity>
-                <View >
+                <View style={{ marginLef: "2%"}}>
                     <TextInput
                         placeholder="Search Products"
                         value={searchKeyword}
@@ -461,7 +464,7 @@ export default function GroceriesDetails() {
                 {/* //---------------SEARCH BAR--------------------// */}
                 <View>
                     <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
-                        <FontAwesome name="shopping-cart" size={28} style={styles.shoppingCartIcon} />
+                        <FontAwesome name="shopping-cart" size={26} style={styles.shoppingCartIcon} />
                         <View style={styles.cartQty}>
                             <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
                         </View>

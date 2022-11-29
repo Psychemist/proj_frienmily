@@ -327,7 +327,7 @@ export default function Groceries() {
     },
     container: {
       position: "relative",
-      justifyContent: 'space-around',
+      justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
       width: '100%',
@@ -528,7 +528,7 @@ export default function Groceries() {
         ))}
       </ScrollView> : (null)}
       <View style={styles.container}>
-        <View >
+        <View style={{ paddingRight: "2%"}} >
           <TextInput
             placeholder="Search Products"
             value={searchKeyword}
@@ -544,7 +544,7 @@ export default function Groceries() {
         {/* //---------------SEARCH BAR--------------------// */}
         <View>
           <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
-            <FontAwesome name="shopping-cart" size={28} style={styles.shoppingCartIcon} />
+            <FontAwesome name="shopping-cart" size={26} style={styles.shoppingCartIcon} />
             <View style={styles.cartQty}>
               <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
             </View>
