@@ -1,1 +1,1 @@
-export const pieSectorColors = ["#c79edf", "#ff9135", "#0098e3", "#68e169", "#f63435", "#36adae", "#dadd85", "#903bbe", "#ffbfcb", "#dafa9b"]
+export const pieSectorColors = ["#F05250", "#FEF25E", "#FF8F52", "#FEC752", "#f63435", "#33B9D1", "#066FA6", "#903bbe", "#383952", "#E52D66"]

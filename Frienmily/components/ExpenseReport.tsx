@@ -226,7 +226,7 @@ export default function ExpenseReport() {
   const styles = StyleSheet.create({
     header: {
       position: 'relative',
-      height: '14%',
+      height: '6%',
       alignItems: 'center',
       marginBottom: 0,
       width: '100%',
@@ -243,22 +243,32 @@ export default function ExpenseReport() {
       fontWeight: "bold",
     },
     datePickerWrapper: {
-      position: "absolute",
-      top: 100,
+      position: "relative",
+      // top: 100,
       padding: '1%',
-      width: "90%",
+      width: "80%",
       flexDirection: "row",
-      justifyContent: "space-between",
+      justifyContent: "center",
       alignItems: "center",
+      marginBottom:"4%",
+      marginLeft: "4%"
     },
     inputField: {
-      boxSizing: 'border-box',
+      boxSizing: 'border-box',      padding: 10,
+      // margin: 5,
       backgroundColor: "rgba(71, 180, 177, 0.3)",
-      fontSize: 16,
       shadowColor: "#47b4b1",
-      borderRadius: 10,
-      padding: 10,
-      margin: 5,
+      borderTopLeftRadius: 10,
+      borderBottomLeftRadius: 10,
+
+    },
+    inputField1: {
+      boxSizing: 'border-box',      padding: 10,
+      // margin: 5,
+      backgroundColor: "rgba(71, 180, 177, 0.3)",
+      shadowColor: "#47b4b1",
+      // borderRadius: 10,
+
     },
     dropdownText: {
       fontSize: 14,
@@ -270,53 +280,61 @@ export default function ExpenseReport() {
       boxSizing: 'border-box',
       backgroundColor: "#47b4b1",
       fontSize: 16,
-      borderRadius: 10,
+      // borderTopRightRadius: 10,
+      borderBottomRightRadius: 10,
       padding: 10,
-      margin: 5,
+      marginRight: "10%",
       width: 70,
+    },
+    thisMonthBtn:{
+       boxSizing: 'border-box',
+      backgroundColor: "#47b4b1",
+      fontSize: 16,
+      // borderTopRightRadius: 10,
+      borderTopRightRadius: 10,
+      borderBottomLeftRadius: 10,
+      borderBottomRightRadius: 10,
+
+      padding: 10,
+      marginRight: "10%",
+      width: 10,
+
     },
     switchBtnWrapper: {
       flexDirection: "row",
       justifyContent: "space-between",
-      width: "90%"
+      width: "90%",
+      marginBottom:"3%"
 
     },
     switchBtn: {
       marginLeft: 10,
       marginRight: 10,
       padding: 10,
-      borderWidth: 2,
-      shadowColor: "gray",
-      borderRadius: 10,
-      shadowOpacity:0.2,
+      backgroundColor: "white",
       shadowOffset: {
-        height: 2,
-        width: 2,
+        width: 3,
+        height: 3,
       },
+      shadowOpacity: 1,
+      shadowRadius: 3,
+      elevation: 9,
+      borderRadius:10
   
     },
     listViewBtn: {
-      borderColor: isChartView ? "white" : "#47b4b1",
-      borderWidth:1,
-
-      shadowColor: "#47b4b1",
-      shadowRadius: 2,
-      shadowOffset: {
-        height: 2,
-        width: 2,
-      },
-
-
+      shadowColor: isChartView ?  "gray":"#47b4b1",
+ 
     },
     chartViewBtn: {
-      borderColor: isChartView ? "#47b4b1" : "white",
-      borderWidth:1,
-      shadowColor: "#47b4b1",
-      shadowRadius: 2,
-      shadowOffset: {
-        height: 2,
-        width: 2,
-      },
+      shadowColor: isChartView ?  "#47b4b1": "gray",
+      // borderWidth:1,
+      // shadowColor: "#47b4b1",
+      // shadowRadius: 2,
+      // shadowOffset: {
+      //   height: 2,
+      //   width: 2,
+      // },
 
 
     },
@@ -343,16 +361,16 @@ export default function ExpenseReport() {
     },
     tableHeaderFooter: {
       flexDirection: "row",
-      width: "97%",
+      width: "98%",
       height: 40,
       justifyContent: "center",
       alignItems: "center",
-      marginLeft: "3%"
+      // marginLeft: "%"
 
 
     },
     leftWrapper: {
-      padding: 5,
+      paddingLeft:"10%",
       width: "60%",
       marginleft: "5%"
     },
@@ -360,9 +378,9 @@ export default function ExpenseReport() {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      width: "40%",
+      // width: "2%",
       padding: 5,
-      marginRight: 10
+      // marginRight: 5
 
     },
     totalExpenseWrapper: {
@@ -381,6 +399,7 @@ export default function ExpenseReport() {
       width: "50%",
       // alignItems: "stretch",
       padding: 5,
+      paddingRight:"20%",
       // marginRight:"1%"
     },
 
@@ -406,12 +425,12 @@ export default function ExpenseReport() {
           <ModalDropdown options={MONTHS_MMM} defaultValue={"MMM"} onSelect={(a) => { setMonth(Number(a + 1)) }}
             style={[styles.inputField, { width: 55 }]} dropdownTextStyle={styles.dropdownText} />
           <ModalDropdown options={YEARS} defaultValue={"YYYY"} onSelect={(a) => { changeYear(Number(a)) }}
-            style={[styles.inputField, { width: 56 }]} dropdownTextStyle={styles.dropdownText} />
+            style={[styles.inputField1, { width: 56 }]} dropdownTextStyle={styles.dropdownText} />
           <TouchableOpacity style={styles.submitBtn}>
             <Text style={{ color: "#FFFFFF", textAlign: "center" }} onPress={getExpenseReport}>Submit</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.submitBtn, { width: 93 }]} onPress={setToThisMonth}>
-            <Text style={{ color: "#FFFFFF", textAlign: "center" }}>This Month</Text>
+          <TouchableOpacity style={[styles.thisMonthBtn, { width: "40%" }]} onPress={setToThisMonth}>
+            <Text style={{ color: "#FFFFFF", textAlign: "center" }}>Current Month</Text>
           </TouchableOpacity>
         </View>
 
@@ -420,10 +439,10 @@ export default function ExpenseReport() {
       <View style={styles.switchBtnWrapper}>
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity style={[styles.switchBtn, styles.listViewBtn]} onPress={() => { setIsChartView(false) }}>
-            <Text>List View</Text>
+            <Text style={{ fontSize: 15, color:"gray", fontWeight:"300"}}>List View</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.switchBtn, styles.chartViewBtn]} onPress={() => { setIsChartView(true) }}>
-            <Text>Chart View</Text>
+          <Text style={{ fontSize: 15, color:"gray", fontWeight:"300"}}>Chart View</Text>
           </TouchableOpacity>
         </View>
 
@@ -453,7 +472,7 @@ export default function ExpenseReport() {
         <View>
           <View style={styles.tableHeaderFooter}>
             <View style={styles.leftWrapper}>
-              <Text style={{ fontWeight: "bold", fontSize: 14 }}>Categories</Text>
+              <Text style={{ fontWeight: "bold", fontSize: 14, color: "gray"}}>Categories</Text>
             </View>
             <View style={styles.rightWrapper}>
               <View style={styles.totalExpenseWrapper}>
@@ -466,10 +485,10 @@ export default function ExpenseReport() {
             </View>
           </View>
 
-          <View style={{ backgroundColor: '#F5F5F5' }}>
-            {expenseRecords.map((item: any) => (
+          <View style={{ backgroundColor: 'white' }}>
+            <Text style={{ fontWeight: "300", color: "gray", fontSize: 14 }}>{expenseRecords.map((item: any) => (
               <ExpenseReportItem items={item} key={item.categoryId} />
-            ))}
+            ))}</Text>
           </View>
 
           <View style={styles.tableHeaderFooter}>
