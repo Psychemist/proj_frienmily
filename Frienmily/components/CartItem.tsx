@@ -116,7 +116,7 @@ export default function CartItem(props: CartItemProps) {
         }
         console.log(tempArray)
         if (tempArray.length > 1) {
-            console.log({ "price": lowest.price, "shop": "多間同價" })
+            // console.log({ "price": lowest.price, "shop": "多間同價" })
             return { "price": lowest.price, "shop": "多間同價" }
         }
         console.log("lowest :", lowest)
@@ -203,10 +203,10 @@ export default function CartItem(props: CartItemProps) {
 
         },
         container: {
-            marginTop: "1%",
+            marginTop: "2%",
             marginLeft: "1%",
             backgroundColor: "white",
-            width: "99%",
+            width: "98%",
             height: 100,
             borderWidth: 1,
             borderColor: "#F5F5F5",

@@ -214,6 +214,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         console.log(tempArray)
         if (tempArray.length > 1) {
             console.log({ "price": lowest.price, "shop": "多間同價" })
+            // console.log({ "price": lowest.price, "shop": "多間同價" })
             return { "price": lowest.price, "shop": "多間同價" }
         }
         console.log("lowest :", lowest)
@@ -269,30 +270,26 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
 
 
     const styles = StyleSheet.create({
-        text: {
-            fontSize: 15,
-        },
-        itemContainer: {
-            width: "100%",
-            height: 120,
-            backgroundColor: "white",
-            shadowOffset: {
-                width: 0,
-                height: 0,
-            },
-            shadowOpacity: 0.32,
-            shadowRadius: 5.46,
-            elevation: 9,
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: 10,
-            paddingTop: 20,
-            paddingBottom: 20,
-            borderRadius: 15,
-            marginTop: 5,
-            marginBottom: 5,
 
+        itemContainer: {
+            backgroundColor: "white",
+            width: "100%",
+            height: 100,
+            borderWidth: 1,
+            borderColor: "#F5F5F5",
+            borderRadius: 10,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: 10,
+            // margin: 5,
+            shadowOpacity: 1,
+            shadowColor: "lightgray",
+            shadowRadius: 2,
+            shadowOffset: {
+                height: 1,
+                width: 1,
+            },
         },
         selectButton: {
             // margin: 5,
@@ -308,6 +305,25 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
             fontSize: 25,
 
         },
+        text: {
+            fontSize: 16,
+            color: "grey",
+            fontWeight: "bold",
+        },
+        shopText: {
+            fontSize: 15,
+            color: "darkgrey",
+            // paddingTop:"5%"
+        },
+        price: {
+            fontSize: 13,
+            // color: "black",
+            width: 80,
+            textAlign: 'left',
+            fontWeight: "bold",
+            color: "#47b4b1",
+            // marginLeft:"10%"
+        },
     })
 
     const navigation = useNavigation()
@@ -317,7 +333,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
             <TouchableOpacity style={styles.selectButton} onPress={selectButton}>
                 <Text style={styles.buttonFontSize}><FontAwesome name='circle-o' size={20} /></Text>
             </TouchableOpacity>
-            <View ><Text style={styles.text}>x{props.items.quantity}</Text></View>
+            <View ><Text style={styles.shopText}>x{props.items.quantity}</Text></View>
             <TouchableOpacity onPress={() => {
                 navigation.navigate('ImagePreview' as never, { image: props.items.goods_picture } as never)
             }}>
@@ -326,12 +342,12 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
             </TouchableOpacity>
             <View style={{ width: 200 }}>
                 <View><Text style={styles.text}>{props.items.name}</Text></View>
-                <View><Text style={styles.text}>{getLowest().shop}</Text></View>
-                <View><Text style={styles.text}>Item added by {assigneeName}</Text></View>
-                <View><Text style={styles.text}>Brought by {buyerName}</Text></View>
+                <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
+                <View><Text style={styles.shopText}>Item added by {assigneeName}</Text></View>
+                <View><Text style={styles.shopText}>Brought by {buyerName}</Text></View>
             </View>
             <View ><Text style={styles.text}>HK${addZeroes(getLowest().price! * props.items.quantity)}</Text></View>
             <TouchableOpacity onPress={showAlert}><Text >X</Text></TouchableOpacity>
-        </View>
+        </View >
     )
 }
