@@ -203,11 +203,7 @@ export default function CartItem(props: CartItemProps) {
 
         },
         container: {
-<<<<<<< HEAD
-            marginTop: "1%",
-=======
             marginTop: "2%",
->>>>>>> 19e2b64e149a1b94fac1054b8738163d12102f1d
             marginLeft: "1%",
             backgroundColor: "white",
             width: "98%",

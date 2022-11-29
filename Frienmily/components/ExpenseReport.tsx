@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import ModalDropdown from 'react-native-modal-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { MONTHS, YEARS } from '../utils/dates';
+import { MONTHS, YEARS, MONTHS_MMM } from '../utils/dates';
 import ExpenseReportItem from './ExpenseReportItem';
 import { PieChart } from 'react-native-svg-charts'
 import { Circle, G, Line } from 'react-native-svg'
@@ -27,7 +27,7 @@ export default function ExpenseReport() {
 
   const [month, setMonth] = useState<number>(currentMonth)
   const [year, setYear] = useState<number>(currentYear)
-  const [displayedMonth, setDisplayedMonth] = useState<number>(month)
+  const [displayedMonth, setDisplayedMonth] = useState<string>(MONTHS_MMM[month - 1])
   const [displayedYear, setDisplayedYear] = useState<number>(year)
   const [expenseRecords, setExpenseRecords] = useState<any>([])
   const [isChartView, setIsChartView] = useState<boolean>(false)
@@ -42,10 +42,10 @@ export default function ExpenseReport() {
 
   useEffect(() => {
     async function fetch() {
-      setDisplayedMonth(month)
+      setDisplayedMonth(MONTHS_MMM[month - 1])
       setDisplayedYear(year)
       await fetchExpenseReport()
-      setDisplayedMonth(month)
+      setDisplayedMonth(MONTHS_MMM[month - 1])
       setDisplayedYear(year)
     }
     fetch()
@@ -60,7 +60,7 @@ export default function ExpenseReport() {
   const getExpenseReport = async () => {
     try {
       await fetchExpenseReport()
-      setDisplayedMonth(month)
+      setDisplayedMonth(MONTHS_MMM[month - 1])
       setDisplayedYear(year)
 
     } catch (err) {
@@ -179,7 +179,7 @@ export default function ExpenseReport() {
     }
   }
 
-  // TODO: Chart View
+
 
   console.log("############ original data - expenseRecords: ", expenseRecords)
   const coloredCategoryExpenseArray: any[] = []
@@ -190,7 +190,7 @@ export default function ExpenseReport() {
     let pieSectorColor = item.pieSectorColor
     let categoryId = item.categoryId
     let categoryName = item.categoryName
-    let percentage = item.categoryExpense / expenseSum
+    let percentage = item.categoryExpense / expenseSum || 0
     coloredCategoryExpenseArray.push({ categoryExpense, pieSectorColor, categoryId, categoryName, percentage })
   })
   console.log("@@@@@@@@@@@@@@ coloredCategoryExpenseArray:", coloredCategoryExpenseArray)
@@ -207,7 +207,7 @@ export default function ExpenseReport() {
     }))
   console.log("pieData: ", pieData)
 
-  // TODO: 計算各個cat的百分比
+
 
 
 
@@ -248,6 +248,12 @@ export default function ExpenseReport() {
       padding: 10,
       margin: 5,
     },
+    dropdownText: {
+      fontSize: 14,
+      width: 60,
+      height: 40,
+      textAlign: "center"
+    },
     submitBtn: {
       boxSizing: 'border-box',
       backgroundColor: "#47b4b1",
@@ -259,8 +265,8 @@ export default function ExpenseReport() {
     },
     switchBtnWrapper: {
       flexDirection: "row",
-      justifyContent: "flex-start",
-      width: "98%"
+      justifyContent: "space-between",
+      width: "90%"
 
     },
     switchBtn: {
@@ -276,6 +282,10 @@ export default function ExpenseReport() {
     chartViewBtn: {
       borderColor: isChartView ? "#47b4b1" : "#F2F2F2"
 
+    },
+    dateDisplayer: {
+      justifyContent: "center",
+      alignItems: "center",
     },
     chartViewContainer: {
       flexDirection: "column",
@@ -351,34 +361,35 @@ export default function ExpenseReport() {
 
       <View style={styles.datePickerWrapper}>
         <View style={{ flexDirection: "row" }}>
-          <View>
-            <Text>{displayedMonth} /{displayedYear}</Text>
-          </View>
-
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <ModalDropdown options={MONTHS} defaultValue={"MM"} onSelect={(a) => { setMonth(Number(a + 1)) }}
-            style={[styles.inputField, { width: 41 }]} dropdownTextStyle={{ fontSize: 14 }} />
+          <ModalDropdown options={MONTHS_MMM} defaultValue={"MMM"} onSelect={(a) => { setMonth(Number(a + 1)) }}
+            style={[styles.inputField, { width: 55 }]} dropdownTextStyle={styles.dropdownText} />
           <ModalDropdown options={YEARS} defaultValue={"YYYY"} onSelect={(a) => { changeYear(Number(a)) }}
-            style={[styles.inputField, { width: 56 }]} dropdownTextStyle={{ fontSize: 14 }} />
+            style={[styles.inputField, { width: 56 }]} dropdownTextStyle={styles.dropdownText} />
           <TouchableOpacity style={styles.submitBtn}>
             <Text style={{ color: "#FFFFFF", textAlign: "center" }} onPress={getExpenseReport}>Submit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.submitBtn, { width: 93 }]} onPress={setToThisMonth}>
+            <Text style={{ color: "#FFFFFF", textAlign: "center" }}>This Month</Text>
           </TouchableOpacity>
         </View>
 
       </View>
 
       <View style={styles.switchBtnWrapper}>
-        <TouchableOpacity style={[styles.switchBtn, styles.listViewBtn]} onPress={() => { setIsChartView(false) }}>
-          <Text>List View</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.switchBtn, styles.chartViewBtn]} onPress={() => { setIsChartView(true) }}>
-          <Text>Chart View</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.submitBtn, { width: 93 }]} onPress={setToThisMonth}>
-          <Text style={{ color: "#FFFFFF", textAlign: "center" }}>This Month</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity style={[styles.switchBtn, styles.listViewBtn]} onPress={() => { setIsChartView(false) }}>
+            <Text>List View</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.switchBtn, styles.chartViewBtn]} onPress={() => { setIsChartView(true) }}>
+            <Text>Chart View</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.dateDisplayer}>
+          <Text style={{ fontSize: 20 }}>{displayedMonth} {displayedYear}</Text>
+        </View>
+
+
       </View>
 
 
