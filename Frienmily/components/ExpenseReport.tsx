@@ -226,7 +226,7 @@ export default function ExpenseReport() {
   const styles = StyleSheet.create({
     header: {
       position: 'relative',
-      height: '6%',
+      height: '5%',
       alignItems: 'center',
       marginBottom: 0,
       width: '100%',
@@ -250,7 +250,7 @@ export default function ExpenseReport() {
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
-      marginBottom:"2%",
+      marginBottom:"1%",
       marginLeft: "4%"
     },
     inputField: {
