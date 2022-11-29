@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Pressable } from "react-native";
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Pressable, Alert } from "react-native";
 import React, { useEffect } from 'react';
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -13,6 +13,7 @@ import { RootState } from "../redux/store";
 interface ShoppingListItemProps {
     items: any;
     key: number;
+    reloadPage: () => void
 }
 
 export default function ShoppingListItem(props: ShoppingListItemProps) {
@@ -194,8 +195,8 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
 
         console.log("props.items :", props.items)
 
-        
-        
+
+
         let filtered = allPriceArray.filter(function (e) {
             return e.price != null;
         });
@@ -212,8 +213,9 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         }
         console.log(tempArray)
         if (tempArray.length > 1) {
-            console.log({"price": lowest.price, "shop": "多間同價"})
-            return {"price": lowest.price, "shop": "多間同價"}
+            console.log({ "price": lowest.price, "shop": "多間同價" })
+            // console.log({ "price": lowest.price, "shop": "多間同價" })
+            return { "price": lowest.price, "shop": "多間同價" }
         }
         console.log("lowest :", lowest)
         return lowest
@@ -222,6 +224,50 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
     function addZeroes(num: number) {
         return (Math.round(num * 100) / 100).toFixed(2)
     }
+
+    const deleteItem = async () => {
+        console.log(`deleteItem id:`, props.items.cart_id)
+        let result = await fetch(`${REACT_APP_API_SERVER}/groups/deleteItemInShoppingList/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                cart_id: props.items.cart_id,
+            }),
+        });
+        let res = await result.json()
+        console.log(res)
+
+        props.reloadPage()
+
+    }
+
+    const showAlert = () => {
+
+        console.log("isSelected :", isSelected);
+
+
+        if (isSelected == true) {
+            Alert.alert('Someone bought already, cannot delete this item.', '', [
+                {
+                    text: 'OK', onPress: () => console.log("OK!")
+                },
+            ]);
+            return
+        }
+
+
+
+        Alert.alert('Are you sure to delete', '', [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            { text: 'OK', onPress: () => deleteItem() },
+        ]);
+    };
+
+
 
     const styles = StyleSheet.create({
 
@@ -242,7 +288,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
             shadowRadius: 2,
             shadowOffset: {
                 height: 1,
-                width: 1,   
+                width: 1,
             },
         },
         selectButton: {
@@ -300,7 +346,8 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 <View><Text style={styles.shopText}>Item added by {assigneeName}</Text></View>
                 <View><Text style={styles.shopText}>Brought by {buyerName}</Text></View>
             </View>
-            <View ><Text style={styles.price}>HK${addZeroes(getLowest().price! * props.items.quantity)}</Text></View>
-        </View>
+            <View ><Text style={styles.text}>HK${addZeroes(getLowest().price! * props.items.quantity)}</Text></View>
+            <TouchableOpacity onPress={showAlert}><Text >X</Text></TouchableOpacity>
+        </View >
     )
 }

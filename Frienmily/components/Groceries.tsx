@@ -44,6 +44,7 @@ export default function Groceries() {
   const [categoryArray, setCategoryArray] = useState([])
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const [shoppingCartNum, setShoppingCartNum] = React.useState<number>(0);
+  const [isRenewList, setIsRenewList] = useState<boolean>(false)
 
   const [button1, setButton1] = useState(false)
   const [button2, setButton2] = useState(false)
@@ -234,14 +235,16 @@ export default function Groceries() {
   // =================================================================
 
 
-
+  // FIXME: 會fetch 兩次
 
   useEffect(() => {
-    onChangeFetchData(true)
+    setIsRenewList(true)
+    onChangeFetchData(isRenewList)
   }, [button1, button2, button3, button4, button5, button6, button7, button8, button9, button10]);
 
   useEffect(() => {
-    onChangeFetchData(false)
+    setIsRenewList(false)
+    onChangeFetchData(isRenewList)
   }, [page]);
 
   const onChangeFetchData = (isRenewList: boolean) => {
@@ -262,8 +265,6 @@ export default function Groceries() {
         finalSelectedCategoriesArray.push(item.id)
       }
     }
-    console.log("######## categoryArray: ", finalSelectedCategoriesArray)
-    console.log("######## page: ", page)
 
     if (finalSelectedCategoriesArray.length == 0) {
       console.log("isRenewList: ", isRenewList)
@@ -632,7 +633,7 @@ export default function Groceries() {
           renderItem={(item: any) => (
             <GroceriesRandomItems key={`rand_${item.id}`} item={item.item} />
           )}
-          key={1}
+          keyExtractor={(item: any, index: any) => index.toString()}
           numColumns={3}
           ListFooterComponent={renderFooter}
           // ListEmptyComponent={renderEmpty}

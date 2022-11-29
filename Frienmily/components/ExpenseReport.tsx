@@ -5,13 +5,16 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import ModalDropdown from 'react-native-modal-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { MONTHS, YEARS } from '../utils/dates';
+import { MONTHS, YEARS, MONTHS_MMM } from '../utils/dates';
 import ExpenseReportItem from './ExpenseReportItem';
 import { PieChart } from 'react-native-svg-charts'
 import { Circle, G, Line } from 'react-native-svg'
 import { createIconSetFromFontello } from 'react-native-vector-icons';
+import { logout } from '../redux/user/userSlice';
+import ExpenseReportSectorItem from './ExpenseReportSectorItem';
 
 export default function ExpenseReport() {
+  const pieSectorColors = ["#c79edf", "#ff9135", "#0098e3", "#68e169", "#f63435", "#36adae", "#dadd85", "#903bbe", "#ffbfcb", "#dafa9b"]
   const navigation = useNavigation();
   const route = useRoute<any>()
   console.log("route:", route)
@@ -24,8 +27,11 @@ export default function ExpenseReport() {
 
   const [month, setMonth] = useState<number>(currentMonth)
   const [year, setYear] = useState<number>(currentYear)
+  const [displayedMonth, setDisplayedMonth] = useState<string>(MONTHS_MMM[month - 1])
+  const [displayedYear, setDisplayedYear] = useState<number>(year)
   const [expenseRecords, setExpenseRecords] = useState<any>([])
   const [isChartView, setIsChartView] = useState<boolean>(false)
+  const [onClickSubmit, setOnClickSubmit] = useState<boolean>(false)
 
 
 
@@ -34,6 +40,33 @@ export default function ExpenseReport() {
     setYear(actualYear)
   }
 
+  useEffect(() => {
+    async function fetch() {
+      setDisplayedMonth(MONTHS_MMM[month - 1])
+      setDisplayedYear(year)
+      await fetchExpenseReport()
+      setDisplayedMonth(MONTHS_MMM[month - 1])
+      setDisplayedYear(year)
+    }
+    fetch()
+  }, [onClickSubmit])
+
+  const setToThisMonth = async () => {
+    setOnClickSubmit(!onClickSubmit)
+    setMonth(currentMonth)
+    setYear(currentYear)
+  }
+
+  const getExpenseReport = async () => {
+    try {
+      await fetchExpenseReport()
+      setDisplayedMonth(MONTHS_MMM[month - 1])
+      setDisplayedYear(year)
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
   const fetchExpenseReport = async () => {
     try {
       const response = await fetch(
@@ -56,22 +89,54 @@ export default function ExpenseReport() {
     } catch (err) {
       console.log(err)
     }
+
+  }
+
+  // TODO: 比較超越了多少個家庭group
+  // 每個family的money saved
+  // family group 的數量
+  const fetchAvgFamiliesMoneySaved = async () => {
+    try {
+      //   const response = await fetch(
+      //     `${REACT_APP_API_SERVER}/groups/`,
+      //     {
+      //       method: 'POST',
+      //       headers: { 'Content-Type': 'application/json' },
+      //       body: JSON.stringify({
+      //         groupId: groupId,
+      //         month: month,
+      //         year: year
+      //       }),
+      //     },
+      //   );
+      //   console.log("response from server: " + response)
+      //   let data = await response.json()
+      //   console.log("Group buying record get from server: ", data)
+      //   setExpenseRecords(data)
+
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   useEffect(() => {
-    fetchExpenseReport()
+    getExpenseReport()
   }, [])
 
 
 
 
   // For loop the 10 categories
+  let i = 0
   for (let record of expenseRecords) {
     let categorySavedMoney: number = 0
     let categoryExpense: number = 0
 
     let recordResults = record.result
 
+
+    record["pieSectorColor"] = pieSectorColors[i]
+    i = i + 1
     if (recordResults.length == 0) {
       record["categorySavedMoney"] = 0
       record["categoryExpense"] = 0
@@ -98,8 +163,6 @@ export default function ExpenseReport() {
     }
   }
 
-  console.log("@@@@@@@@@@@@@@@@ expenseRecords after calculating the money saved and expense: ", expenseRecords)
-
   // Get the expenseSum and moneySavedSum by adding up all 10 categories
   let expenseSum: number = 0
   let moneySavedSum: number = 0
@@ -116,27 +179,33 @@ export default function ExpenseReport() {
     }
   }
 
-  // TODO: Chart View
 
-  const categoryExpenseArray: any[] = []
+
+  console.log("############ original data - expenseRecords: ", expenseRecords)
+  const coloredCategoryExpenseArray: any[] = []
+
 
   const data = expenseRecords.map((item: any) => {
-    categoryExpenseArray.push(item.categoryExpense)
+    let categoryExpense = item.categoryExpense
+    let pieSectorColor = item.pieSectorColor
+    let categoryId = item.categoryId
+    let categoryName = item.categoryName
+    let percentage = item.categoryExpense / expenseSum || 0
+    coloredCategoryExpenseArray.push({ categoryExpense, pieSectorColor, categoryId, categoryName, percentage })
   })
+  console.log("@@@@@@@@@@@@@@ coloredCategoryExpenseArray:", coloredCategoryExpenseArray)
 
-  const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7)
-
-  const pieData = categoryExpenseArray
-    .filter((value) => value > 0)
+  const pieData = coloredCategoryExpenseArray
+    .filter((element) => element.categoryExpense > 0)
     .map((value, index) => ({
-      value,
+      value: value.categoryExpense,
       svg: {
-        fill: randomColor(),
+        fill: value.pieSectorColor,
         onPress: () => console.log('press', index),
       },
       key: `pie-${index}`,
     }))
-
+  console.log("pieData: ", pieData)
 
 
 
@@ -179,6 +248,12 @@ export default function ExpenseReport() {
       padding: 10,
       margin: 5,
     },
+    dropdownText: {
+      fontSize: 14,
+      width: 60,
+      height: 40,
+      textAlign: "center"
+    },
     submitBtn: {
       boxSizing: 'border-box',
       backgroundColor: "#47b4b1",
@@ -190,6 +265,8 @@ export default function ExpenseReport() {
     },
     switchBtnWrapper: {
       flexDirection: "row",
+      justifyContent: "space-between",
+      width: "90%"
 
     },
     switchBtn: {
@@ -206,9 +283,26 @@ export default function ExpenseReport() {
       borderColor: isChartView ? "#47b4b1" : "#F2F2F2"
 
     },
+    dateDisplayer: {
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    chartViewContainer: {
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center"
+    },
     pieChart: {
-      height: 300,
-      width: 300
+      height: 250,
+      width: 250,
+      marginTop: 20,
+      marginBottom: 20,
+
+    },
+    sectorItemWrapper: {
+      width: "98%",
+      flexDirection: "row",
+      flexWrap: "wrap"
     },
     tableHeaderFooter: {
       flexDirection: "row",
@@ -267,43 +361,47 @@ export default function ExpenseReport() {
 
       <View style={styles.datePickerWrapper}>
         <View style={{ flexDirection: "row" }}>
-          <View>
-            <Text>{month} /{year}</Text>
-          </View>
-          <TouchableOpacity style={styles.submitBtn}>
-            <Text style={{ color: "#FFFFFF", textAlign: "center" }}>Now</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <ModalDropdown options={MONTHS} defaultValue={"MM"} onSelect={(a) => { setMonth(Number(a + 1)) }}
-            style={[styles.inputField, { width: 41 }]} dropdownTextStyle={{ fontSize: 14 }} />
+          <ModalDropdown options={MONTHS_MMM} defaultValue={"MMM"} onSelect={(a) => { setMonth(Number(a + 1)) }}
+            style={[styles.inputField, { width: 55 }]} dropdownTextStyle={styles.dropdownText} />
           <ModalDropdown options={YEARS} defaultValue={"YYYY"} onSelect={(a) => { changeYear(Number(a)) }}
-            style={[styles.inputField, { width: 56 }]} dropdownTextStyle={{ fontSize: 14 }} />
+            style={[styles.inputField, { width: 56 }]} dropdownTextStyle={styles.dropdownText} />
           <TouchableOpacity style={styles.submitBtn}>
-            <Text style={{ color: "#FFFFFF", textAlign: "center" }} onPress={fetchExpenseReport}>Submit</Text>
+            <Text style={{ color: "#FFFFFF", textAlign: "center" }} onPress={getExpenseReport}>Submit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.submitBtn, { width: 93 }]} onPress={setToThisMonth}>
+            <Text style={{ color: "#FFFFFF", textAlign: "center" }}>This Month</Text>
           </TouchableOpacity>
         </View>
 
       </View>
 
       <View style={styles.switchBtnWrapper}>
-        <TouchableOpacity style={[styles.switchBtn, styles.listViewBtn]} onPress={() => { setIsChartView(false) }}>
-          <Text>List View</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.switchBtn, styles.chartViewBtn]} onPress={() => { setIsChartView(true) }}>
-          <Text>Chart View</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity style={[styles.switchBtn, styles.listViewBtn]} onPress={() => { setIsChartView(false) }}>
+            <Text>List View</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.switchBtn, styles.chartViewBtn]} onPress={() => { setIsChartView(true) }}>
+            <Text>Chart View</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.dateDisplayer}>
+          <Text style={{ fontSize: 20 }}>{displayedMonth} {displayedYear}</Text>
+        </View>
+
+
       </View>
 
 
       {isChartView ?
-        <View>
-          <Text>
-            Chart View
-          </Text>
+        <View style={styles.chartViewContainer}>
           <PieChart style={styles.pieChart} data={pieData} />
-
+          {/* <Text>You have bested { } of families in saving money!</Text> */}
+          <View style={styles.sectorItemWrapper}>
+            {coloredCategoryExpenseArray.map((item: any) => (
+              <ExpenseReportSectorItem items={item} key={item.categoryId} />
+            ))}
+          </View>
         </View>
         :
         <View>

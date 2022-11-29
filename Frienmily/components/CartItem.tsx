@@ -116,7 +116,7 @@ export default function CartItem(props: CartItemProps) {
         }
         console.log(tempArray)
         if (tempArray.length > 1) {
-            console.log({ "price": lowest.price, "shop": "多間同價" })
+            // console.log({ "price": lowest.price, "shop": "多間同價" })
             return { "price": lowest.price, "shop": "多間同價" }
         }
         console.log("lowest :", lowest)
