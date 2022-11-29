@@ -250,7 +250,7 @@ export default function ExpenseReport() {
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
-      marginBottom:"4%",
+      marginBottom:"2%",
       marginLeft: "4%"
     },
     inputField: {
@@ -304,7 +304,7 @@ export default function ExpenseReport() {
       flexDirection: "row",
       justifyContent: "space-between",
       width: "90%",
-      marginBottom:"3%"
+      marginBottom:"1%"
 
     },
     switchBtn: {
@@ -404,7 +404,7 @@ export default function ExpenseReport() {
   })
 
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: 'white' }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: 'white'}}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
