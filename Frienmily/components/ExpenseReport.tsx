@@ -12,9 +12,9 @@ import { Circle, G, Line } from 'react-native-svg'
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import { logout } from '../redux/user/userSlice';
 import ExpenseReportSectorItem from './ExpenseReportSectorItem';
+import { pieSectorColors } from '../utils/color'
 
 export default function ExpenseReport() {
-  const pieSectorColors = ["#c79edf", "#ff9135", "#0098e3", "#68e169", "#f63435", "#36adae", "#dadd85", "#903bbe", "#ffbfcb", "#dafa9b"]
   const navigation = useNavigation();
   const route = useRoute<any>()
   console.log("route:", route)
@@ -156,7 +156,7 @@ export default function ExpenseReport() {
         let minPrice = Math.min(...floatPrices)
         let moneySaved: number = parseFloat((maxPrice - minPrice).toFixed(2))
         categorySavedMoney = parseFloat((categorySavedMoney + moneySaved).toFixed(2))
-        categoryExpense = categoryExpense + minPrice
+        categoryExpense = categoryExpense + minPrice * recordResult.quantity
       }
       record["categorySavedMoney"] = categorySavedMoney
       record["categoryExpense"] = categoryExpense
