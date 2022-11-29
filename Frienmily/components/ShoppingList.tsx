@@ -122,9 +122,11 @@ export default function ShoppingList() {
 
   const styles = StyleSheet.create({
     addMoreText: {
-      fontSize: 15,
+      fontSize: 16,
       padding: 5,
       color: '#47b4b1',
+      fontWeight: "300",
+      marginRight: '7%'
     },
 
     totalText: {
@@ -133,11 +135,16 @@ export default function ShoppingList() {
       padding: 10,
       fontWeight: "bold",
       color: "gray",
-      marginRight:"5%"
+      marginRight: "5%"
 
     },
 
     buttonText: {
+      fontSize: 18,
+      // fontWeight: '300',
+      color: 'white',
+    },
+    groupMemberButtonText:{
       fontSize: 20,
       // fontWeight: '300',
       color: 'white',
@@ -187,19 +194,19 @@ export default function ShoppingList() {
       borderColor: '#F5F5F5',
       borderRadius: 15,
       borderWidth: 1,
-      marginBottom:"5%",
+      marginBottom: "5%",
       // right: 10,
       // bottom: 7,
       // height: 50,
       width: "90%",
-      height:70,
+      height: 70,
       backgroundColor: 'white',
       shadowOpacity: 1,
       shadowColor: "#47b4b1",
       shadowRadius: 0.8,
       shadowOffset: {
-        height:4,
-        width:4
+        height: 4,
+        width: 4
       },
       // margin: 2
     },
@@ -207,8 +214,8 @@ export default function ShoppingList() {
     reportButtonText: {
       fontWeight: "bold",
       color: "#606467",
-      fontSize:20
-      },
+      fontSize: 20
+    },
 
     backButton: {
       position: 'absolute',
@@ -237,7 +244,7 @@ export default function ShoppingList() {
   });
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor:"white" }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: "white" }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -250,15 +257,15 @@ export default function ShoppingList() {
 
       </View>
       {isFamilyGroup ?
-          <TouchableOpacity style={styles.reportBtnWrapper}
-            onPress={loadGroupBuyingRecord}>
-            <Text style={styles.reportButtonText}>Spending Analysis </Text>
-            <FontAwesome name='pie-chart' size={30} color={"#47b4b1"}/>
-          </TouchableOpacity>
-          : <View></View>
-        }
+        <TouchableOpacity style={styles.reportBtnWrapper}
+          onPress={loadGroupBuyingRecord}>
+          <Text style={styles.reportButtonText}>Spending Analysis </Text>
+          <FontAwesome name='pie-chart' size={30} color={"#47b4b1"} />
+        </TouchableOpacity>
+        : <View></View>
+      }
       <View style={styles.groupNameWrapper}>
-        <Text style={{ fontSize: 23, fontWeight: "300"}}>{groupName}</Text>
+        <Text style={{ fontSize: 23, fontWeight: "300" }}>{groupName}</Text>
       </View>
       <ScrollView style={styles.scrollWrapper}>
         {allAssignedItems.map((item: any, idx: number) => (
@@ -268,7 +275,7 @@ export default function ShoppingList() {
       <View style={{ width: "100%" }}>
         <View>
           <TouchableOpacity
-            style={styles.addMoreText}
+            style={{ alignItems: 'flex-end' }}
             onPress={() => {
               navigation.navigate('Groceries' as never);
             }}>
@@ -315,7 +322,7 @@ export default function ShoppingList() {
           onPress={() => {
             navigation.navigate('GroupMember' as never, { groupId: groupId, groupName: groupName } as never)
           }}>
-          <Text style={styles.buttonText}>Group Members</Text>
+          <Text style={styles.groupMemberButtonText}>Group Members</Text>
         </TouchableOpacity>
       </View>
 
