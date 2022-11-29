@@ -392,15 +392,12 @@ export default function ExpenseReport() {
     totalSavedMoneyWrapper: {
       alignItems: "center",
       justifyContent: "center",
-      width: 60,
+      width: 90,
       height: 20
     },
     amountWrapper: {
-      width: "50%",
-      // alignItems: "stretch",
-      padding: 5,
-      paddingRight:"20%",
-      // marginRight:"1%"
+
+      marginRight:35
     },
 
 
