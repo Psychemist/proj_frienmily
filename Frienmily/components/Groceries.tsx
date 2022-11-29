@@ -177,7 +177,7 @@ export default function Groceries() {
 
   const fetchData = async (categoryArray: any, page: number, isRenewList: boolean) => {
     try {
-      console.log("@@@@@@@ fetch data")
+      console.log("@@@@@@@ now fetch data")
       console.log("@@@@@@@ categoryArray: ", categoryArray)
       console.log("@@@@@@@ page: ", page)
       let fetchResult = await dispatch(fetchProductData({
@@ -244,11 +244,14 @@ export default function Groceries() {
 
   useEffect(() => {
     setIsRenewList(true)
+    console.log("######## fetch because buttons change")
     onChangeFetchData(isRenewList)
   }, [button1, button2, button3, button4, button5, button6, button7, button8, button9, button10]);
 
   useEffect(() => {
     setIsRenewList(false)
+    // FIXME: ******** 即使這個useEffect被觸發，但thunk收到的isRenewList是true ********
+    console.log("######## fetch because page changes")
     onChangeFetchData(isRenewList)
   }, [page]);
 
@@ -270,7 +273,6 @@ export default function Groceries() {
         finalSelectedCategoriesArray.push(item.id)
       }
     }
-
     if (finalSelectedCategoriesArray.length == 0) {
       console.log("isRenewList: ", isRenewList)
       fetchData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], page, isRenewList)
