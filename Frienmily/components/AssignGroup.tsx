@@ -50,7 +50,9 @@ export default function AssignGroup() {
       width: "100%"
     },
     text: {
-      fontSize: 25,
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "bold",
     },
     backButton: {
       position: 'absolute',
@@ -97,7 +99,7 @@ export default function AssignGroup() {
 
     },
     circleFilled: {
-      backgroundColor: "#f79f24",
+      backgroundColor: "#47b4b1",
     },
     circleUnfilled: {
       backgroundColor: "white",
@@ -129,11 +131,11 @@ export default function AssignGroup() {
       height: 100,
       backgroundColor: "white",
       shadowOffset: {
-        width: 0,
-        height: 0,
+        width: 3,
+        height: 3,
       },
       shadowOpacity: 0.32,
-      shadowRadius: 5.46,
+      shadowRadius: 4,
       elevation: 9,
       flexDirection: "row",
       alignItems: "center",
@@ -229,7 +231,7 @@ export default function AssignGroup() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor:"white" }}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Cart' as never)}>
           <FontAwesome name='angle-left' size={35} />
@@ -252,7 +254,7 @@ export default function AssignGroup() {
           <View style={[styles.circle, styles.circleFilled, { left: "45%", top: -21.5 }]}>
             <Text style={{ fontWeight: "bold", color: "white" }}>2</Text>
           </View>
-          <View style={[styles.circle, styles.circleUnfilled, { right: 50, top: -21.5, borderColor: '#f79f24' }]}>
+          <View style={[styles.circle, styles.circleUnfilled, { right: 50, top: -21.5, borderColor: '#47b4b1' }]}>
             <Text style={{ fontWeight: "bold", color: "#939493" }}>3</Text>
           </View>
           <Text style={[styles.caption, { left: 50 }]}>Menu</Text>
