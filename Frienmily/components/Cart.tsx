@@ -4,6 +4,7 @@ import {
   Alert,
   SafeAreaView,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -49,25 +50,25 @@ export default function Cart() {
         for (let item of json.shoppingList) {
           const getLowest = () => {
             let allPriceArray = [
-              { price: +(item.wellcome_price) || 999      ,shop: "惠康" },
-              { price: +(item.parknshop_price)|| 999       ,shop: "百佳" },
-              { price: +(item.jasons_price)   || 999    ,shop: "Jasons" },
-              { price: +(item.watsons_price)  || 999     ,shop: "屈臣氏" },
-              { price: +(item.mannings_price) || 999      ,shop: "萬寧" },
-              { price: +(item.aeon_price)     || 999  ,shop: "AEON" },
-              { price: +(item.dch_price)      || 999 ,shop: "大昌食品" },
-              { price: +(item.ztore_price)    || 999   ,shop: "士多" }
+              { price: +(item.wellcome_price) || 999, shop: "惠康" },
+              { price: +(item.parknshop_price) || 999, shop: "百佳" },
+              { price: +(item.jasons_price) || 999, shop: "Jasons" },
+              { price: +(item.watsons_price) || 999, shop: "屈臣氏" },
+              { price: +(item.mannings_price) || 999, shop: "萬寧" },
+              { price: +(item.aeon_price) || 999, shop: "AEON" },
+              { price: +(item.dch_price) || 999, shop: "大昌食品" },
+              { price: +(item.ztore_price) || 999, shop: "士多" }
             ]
             let filtered = allPriceArray.filter(function (e) {
               return e.price;
             });
             const lowest = filtered.reduce<any>((previous, current) => {
-              console.log('checking', {previous,current})
-              if (!Object.keys(previous).length){
+              console.log('checking', { previous, current })
+              if (!Object.keys(previous).length) {
                 return current
               }
               return current.price < previous.price ? current : previous;
-            },[]);
+            }, []);
 
             return lowest
           }
@@ -131,15 +132,26 @@ export default function Cart() {
 
   const styles = StyleSheet.create({
     addMoreText: {
-      fontSize: 15,
+      fontSize: 16,
       padding: 5,
-      color: '#384db7',
+      color: '#47b4b1',
+      fontWeight: "300",
+      marginRight: '4%'
     },
-
+    clearCartText: {
+      fontSize: 16,
+      padding: 5,
+      color: '#47b4b1',
+      fontWeight: "300",
+      marginLeft: '4%'
+    },
     totalText: {
-      fontSize: 15,
+      fontSize: 18,
       textAlign: 'right',
       padding: 20,
+      fontWeight: "bold",
+      color: "gray"
+
     },
 
     buttonText: {
@@ -150,22 +162,25 @@ export default function Cart() {
 
     assignGroupButton: {
       backgroundColor: '#47b4b1',
-      height: 40,
+      height: 60,
       width: 360,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 10,
+      margin: "3%",
       borderRadius: 15,
       marginLeft: 'auto',
       marginRight: 'auto',
       color: 'white',
+      bottomTop: "20%"
+
     },
     header: {
       height: "14%",
       alignItems: "center",
       marginBottom: "10%",
-      width: "100%"
+      width: "100%",
+      backgroundColor: "white"
     },
     text: {
       fontSize: 25,
@@ -215,7 +230,7 @@ export default function Cart() {
 
     },
     circleFilled: {
-      backgroundColor: "#f79f24",
+      backgroundColor: "#47b4b1",
     },
     circleUnfilled: {
       backgroundColor: "white",
@@ -225,8 +240,8 @@ export default function Cart() {
     },
     caption: {
       position: "absolute",
-      fontWeight: "bold",
-      color: "#939493",
+      fontWeight: "300",
+      color: "gray",
       top: 21.5
     }
 
@@ -234,8 +249,8 @@ export default function Cart() {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", width: "100%" }}>
-
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", width: "100%", backgroundColor: 'white' }}>
+      <StatusBar barStyle="dark-content" />
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('HomeTab' as never)}>
           <FontAwesome name='angle-left' size={35} />
@@ -255,25 +270,18 @@ export default function Cart() {
           <View style={[styles.circle, styles.circleFilled, { left: 50, top: -21.5 }]}>
             <Text style={{ fontWeight: "bold", color: "white" }}>1</Text>
           </View>
-          <View style={[styles.circle, styles.circleUnfilled, { left: "45%", top: -21.5, borderColor: '#f79f24' }]}>
+          <View style={[styles.circle, styles.circleUnfilled, { left: "45%", top: -21.5, borderColor: '#47b4b1' }]}>
             <Text style={{ fontWeight: "bold", color: "#939493" }}>2</Text>
           </View>
-          <View style={[styles.circle, styles.circleUnfilled, { right: 50, top: -21.5 }]}>
+          <View style={[styles.circle, styles.circleUnfilled, { right: 52, top: -21.5 }]}>
             <Text style={{ fontWeight: "bold", color: "#939493" }}>3</Text>
           </View>
-          <Text style={[styles.caption, { left: 50 }]}>Menu</Text>
-          <Text style={[styles.caption, { left: "46%" }]}>Cart</Text>
+          <Text style={[styles.caption, { left: 51 }]}>Menu</Text>
+          <Text style={[styles.caption, { left: "46.5%" }]}>Cart</Text>
           <Text style={[styles.caption, { right: 25 }]}>Assign Group</Text>
         </View>
 
       </View>
-
-      <TouchableOpacity style={{ width: '100%', alignItems: 'flex-end' }}>
-        <Text style={{ fontSize: 20, paddingRight: 10 }} onPress={clearCart}>
-          Clear cart
-        </Text>
-      </TouchableOpacity>
-
 
       <ScrollView style={{ backgroundColor: 'white', width: "100%" }}>
         {shoppingListArray.map((item: any, idx: number) => (
@@ -285,14 +293,21 @@ export default function Cart() {
       </ScrollView>
       <View style={{ width: "100%" }}>
         <View>
+          <TouchableOpacity style={{ width: '100%', alignItems: 'flex-start'}}>
+            <Text style={styles.clearCartText} onPress={clearCart}>
+              <FontAwesome name="trash-o" size={15} color={"#47b4b1"} style={{marginLeft:"8%"}}/>
+              Clear Cart
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity
-            style={styles.addMoreText}
+            style={{ width: '100%', alignItems: 'flex-end'}}
             onPress={() => {
               // navigation.navigate('Groceries' as never);
               navigation.navigate('HomeTab' as never);
             }}>
             <Text style={styles.addMoreText}>+ Add more items</Text>
           </TouchableOpacity>
+
         </View>
         <View>
           <Text style={styles.totalText}>Estimated Total: HKD$ {addZeroes(estimatedTotal)}</Text>
