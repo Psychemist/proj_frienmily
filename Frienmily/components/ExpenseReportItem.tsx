@@ -17,7 +17,7 @@ export default function ExpenseReportItem(props: Props) {
   const styles = StyleSheet.create({
     category: {
       backgroundColor: "white",
-      width: "90%",
+      width: "92%",
       height: 55,
       borderWidth: 1,
       borderColor: "#F5F5F5",

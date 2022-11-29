@@ -257,7 +257,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         itemContainer: {
             backgroundColor: "white",
             width: "100%",
-            height: 120,
+            height: 150,
             borderWidth: 1,
             borderColor: "#F5F5F5",
             borderRadius: 10,

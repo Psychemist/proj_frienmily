@@ -361,7 +361,7 @@ export default function ExpenseReport() {
     },
     tableHeaderFooter: {
       flexDirection: "row",
-      width: "97%",
+      width: "98%",
       height: 40,
       justifyContent: "center",
       alignItems: "center",
@@ -378,9 +378,9 @@ export default function ExpenseReport() {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      width: "40%",
+      // width: "2%",
       padding: 5,
-      marginRight: 10
+      // marginRight: 5
 
     },
     totalExpenseWrapper: {
@@ -399,7 +399,7 @@ export default function ExpenseReport() {
       width: "50%",
       // alignItems: "stretch",
       padding: 5,
-      paddingRight:"9%",
+      paddingRight:"20%",
       // marginRight:"1%"
     },
 
