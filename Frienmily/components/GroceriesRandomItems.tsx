@@ -103,8 +103,9 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
 
     const styles = StyleSheet.create({
         text: {
-            fontSize: 15,
-            fontWeight: "500",
+            fontSize: 16,
+            color: "grey",
+            fontWeight: "bold",
         },
         container: {
             justifyContent: "flex-start",
@@ -154,6 +155,15 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
             flexDirection: "row",
             padding: 0,
         },
+        shopText: {
+            fontSize: 15,
+            color: "darkgrey",
+        },
+        price: {
+            fontSize: 15,
+            fontWeight: "bold",
+            color: "#47b4b1",
+        },
     })
 
 
@@ -165,8 +175,8 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
             <View style={styles.cardContainer}>
                 <View style={styles.titleContainer}><Text style={styles.text}>{props.item.goods_name}</Text></View>
                 <View style={styles.supermarketprice}>
-                    <View><Text>{getLowest().shop}</Text></View>
-                    <View><Text>${getLowest().price}</Text></View>
+                    <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
+                    <View><Text  style={styles.price}>${getLowest().price}</Text></View>
                 </View>
             </View>
         </TouchableOpacity>

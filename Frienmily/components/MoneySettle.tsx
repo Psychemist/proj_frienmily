@@ -32,7 +32,7 @@ export default function MoneySettle() {
     console.log(thisUserID);
     console.log(friendUserID);
 
-
+    let oweAmount = parseFloat(settleDetails.amount).toFixed(1)
 
 
     const [showResult, setShowResult] = useState(<Text></Text>);
@@ -47,7 +47,7 @@ export default function MoneySettle() {
                         <Text style={styles.text}>All Settled</Text></View>)
                     // setShowButton()
                 } else if (settleDetails.case == 2) {
-                    setShowResult(<Text style={styles.text}>{username} owes you ${settleDetails.amount}</Text>)
+                    setShowResult(<Text style={styles.text}>{username} owes you ${oweAmount}</Text>)
                     setShowButton(
                         <TouchableOpacity style={styles.searchButton} onPress={moneySettle}>
                             <View style={styles.settledbutton}>
@@ -56,7 +56,7 @@ export default function MoneySettle() {
                         </TouchableOpacity>
                     )
                 } else if (settleDetails.case == 3) {
-                    setShowResult(<Text style={styles.text}>You owe {username} ${settleDetails.amount}</Text>)
+                    setShowResult(<Text style={styles.text}>You owe {username} ${oweAmount}</Text>)
                 }
             } catch (error) {
                 console.log('error', error);
@@ -144,9 +144,9 @@ export default function MoneySettle() {
             marginLeft: 20,
             marginRight: 20,
             color: 'white',
-            // fontWeight:"300",
-            fontSize: 28,
-            fontWeight: "bold",
+            fontWeight:"300",
+            fontSize: 35,
+            // fontWeight: "bold",
             // color: "#47b4b1",
         },
         oweText:{
@@ -163,7 +163,7 @@ export default function MoneySettle() {
             left: 20,
             top: 20,
             paddingTop: '65%',
-            paddingLeft: '20%',
+            paddingLeft: '10%',
             fontSize: 25,
             // top: "110%",
             color:"white"
@@ -251,6 +251,12 @@ export default function MoneySettle() {
             display: "flex",
             justifyContent: 'center',
             alignItems: 'center',
+            flexWrap: "wrap",
+            paddingLeft:"5%",
+            paddingRight:"5%",
+            paddingBottom: "2%",
+            paddingTop: "10%"
+            
             // positon: "absolute",
 
             // height:200
@@ -328,7 +334,7 @@ export default function MoneySettle() {
             {/* <Image source={require('./img/money.gif')}
                 style={{ width: 250, height: 250, borderRadius: 15 }} /> */}
 
-            <ScrollView style={{ minHeight: 100, maxHeight: 200 }}>
+            <ScrollView style={{ minHeight: 400, maxHeight: "80%" }}>
             <View>{showButton}</View>   
                 {json.map((item: any, idx: number) => (
                     <View style={styles.container} key={idx}><Text>{amount(item)}</Text></View>
