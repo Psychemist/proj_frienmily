@@ -89,6 +89,20 @@ export default function Cart() {
 
   }, [isFocused]);
 
+  const showAlert1 = () => {
+    if (shoppingListArray.length == 0) {
+      return
+    }
+    Alert.alert('Are you sure to delete the whole cart?', '', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: () => clearCart() },
+    ]);
+  };
+
 
   function addZeroes(num: number) {
     return (Math.round(num * 100) / 100).toFixed(2)
@@ -103,12 +117,8 @@ export default function Cart() {
   }
 
   const showAlert = () => {
+
     Alert.alert('Please at least grab something to your cart', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
@@ -151,7 +161,7 @@ export default function Cart() {
       padding: 10,
       fontWeight: "bold",
       color: "gray",
-      marginRight:"5%"
+      marginRight: "5%"
 
     },
 
@@ -249,14 +259,14 @@ export default function Cart() {
       color: "gray",
       top: 21.5
     },
-    clearCartContainer:{
+    clearCartContainer: {
       display: "flex",
       flexDirection: "row",
       justifyContent: "flex-start",
       alignItems: "center",
-      width:200,
+      width: 200,
       marginLeft: "3%",
-      marginBottom:"10%"
+      marginBottom: "10%"
     }
 
   });
@@ -309,11 +319,11 @@ export default function Cart() {
         <View>
           <View style={styles.clearCartContainer}>
             <TouchableOpacity>
-              <Text onPress={clearCart} style={styles.clearCartText}><FontAwesome name="trash-o" size={15} color={"#47b4b1"}/>  Clear Cart</Text>
+              <Text onPress={showAlert1} style={styles.clearCartText}><FontAwesome name="trash-o" size={15} color={"#47b4b1"} />  Clear Cart</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity
-            style={{ alignItems: 'flex-end'}}
+            style={{ alignItems: 'flex-end' }}
             onPress={() => {
               // navigation.navigate('Groceries' as never);
               navigation.navigate('HomeTab' as never);

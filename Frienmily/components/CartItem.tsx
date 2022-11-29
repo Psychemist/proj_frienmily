@@ -149,6 +149,30 @@ export default function CartItem(props: CartItemProps) {
             return e - 1
         })
     }
+
+    const deleteThisItem = () => {
+        console.log("deleteThisItem");
+
+        console.log("getLowest :", getLowest().price!)
+        console.log("initNum :", initNum);
+        console.log("getLowest().price!*initNum :", getLowest().price! * initNum);
+
+
+
+        props.reCalculateAmount(0 - (getLowest().price! * initNum))
+        if (initNum - 1 < 0) {
+
+            return
+        }
+        // if (initNum - 1 == 0) {
+        setIsShow(false)
+        // }
+        setInitNum(() => {
+            updateCounter(0)
+            return 0
+        })
+    }
+
     function addZeroes(num: number) {
         return (Math.round(num * 100) / 100).toFixed(2)
     }
@@ -166,7 +190,7 @@ export default function CartItem(props: CartItemProps) {
         shopText: {
             fontSize: 15,
             color: "darkgrey",
-            paddingTop:"5%"
+            paddingTop: "5%"
         },
         price: {
             fontSize: 13,
@@ -175,7 +199,7 @@ export default function CartItem(props: CartItemProps) {
             textAlign: 'left',
             fontWeight: "bold",
             color: "#47b4b1",
-            marginLeft:"10%"
+            marginLeft: "10%"
 
         },
         container: {
@@ -202,8 +226,8 @@ export default function CartItem(props: CartItemProps) {
         },
         counter: {
             flexDirection: "row",
-            marginRight:"5%",
-            padding:5,
+            marginRight: "5%",
+            padding: 5,
             fontSize: 20,
             backgroundColor: "white",
             width: '22%',
@@ -271,14 +295,15 @@ export default function CartItem(props: CartItemProps) {
                             navigation.navigate('ImagePreview' as never, { image: props.items.goods_picture } as never)
                         }}>
                             <View><Image source={{ uri: props.items.goods_picture }}
-                                style={{ width: 50, height: 50, marginLeft:"5%"}} /></View>
+                                style={{ width: 50, height: 50, marginLeft: "5%" }} /></View>
                         </TouchableOpacity>
                     </TouchableOpacity>
-                    <View style={{ width: 150 }}>
+                    <View style={{ width: 100 }}>
                         <View><Text style={styles.text}>{props.items.name}</Text></View>
                         <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
                     </View>
                     <View><Text style={styles.price}>${addZeroes(getLowest().price! * initNum)}</Text></View>
+                    <TouchableOpacity onPress={deleteThisItem}><Text>X</Text></TouchableOpacity>
                 </View>) :
                 (null)}
 

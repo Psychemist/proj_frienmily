@@ -26,6 +26,7 @@ export default function CreateGroup() {
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const [groupName, setGroupName] = React.useState('');
   const [isLoadingShow, setIsLoadingShow] = React.useState(false);
+  const [isShowRealSubmitButton, setIsShowRealSubmitButton] = React.useState(true);
   const [isFamilyGroup, setIsFamilyGroup] = React.useState<boolean | null>(
     null,
   );
@@ -58,6 +59,7 @@ export default function CreateGroup() {
         showAlert3();
         return;
       }
+      setIsShowRealSubmitButton(false)
 
 
       console.log("idArray :", idArray)
@@ -107,32 +109,17 @@ export default function CreateGroup() {
   };
   const showAlert2 = () => {
     Alert.alert('Please at least select one group member', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
 
   const showAlert1 = () => {
     Alert.alert('Please select a group type', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
   const showAlert = () => {
     Alert.alert('Please enter a group name', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
@@ -477,13 +464,19 @@ export default function CreateGroup() {
   return (
     <SafeAreaView style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1, maxHeight: "100%" }}>
       {/* <View style={styles.header}> */}
+      {isShowRealSubmitButton ?
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}>
           <FontAwesome name="angle-left" size={35} />
-        </TouchableOpacity>
+        </TouchableOpacity> :
+        <TouchableOpacity
+          style={styles.backButton}>
+          <FontAwesome name="angle-left" size={35} />
+        </TouchableOpacity>}
 
-        <Text style={styles.text}>Create Group</Text>
+
+      <Text style={styles.text}>Create Group</Text>
       {/* </View> */}
       <View style={styles.stepsContainer}>
         {/* <TouchableOpacity onPress={enlargeProfilePicture}>
@@ -568,10 +561,16 @@ export default function CreateGroup() {
             />
           ))}
         </ScrollView>
+        {isShowRealSubmitButton ?
+          <TouchableOpacity style={styles.createBtn} onPress={submitButton}>
+            <Text style={styles.buttonFontSize}>Create Group</Text>
+          </TouchableOpacity> :
+          <TouchableOpacity style={styles.createBtn}>
+            <Text style={styles.buttonFontSize}>Create Group</Text>
+          </TouchableOpacity>}
 
-        <TouchableOpacity style={styles.createBtn} onPress={submitButton}>
-          <Text style={styles.buttonFontSize}>Create Group</Text>
-        </TouchableOpacity>
+
+
 
         {isLoadingShow ? <View><ActivityIndicator size="large" /></View> : null}
 
