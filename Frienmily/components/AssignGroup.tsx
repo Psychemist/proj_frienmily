@@ -154,7 +154,9 @@ export default function AssignGroup() {
       marginRight: 20
     },
     groupName: {
-      fontSize: 20
+      fontSize: 20,
+      color:"gray",
+      fontWeight:"300"
     }
   });
 
