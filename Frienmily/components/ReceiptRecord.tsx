@@ -61,7 +61,9 @@ export default function ReceiptRecord() {
             width: "100%"
         },
         text: {
+            borderRadius: 10,
             fontSize: 30,
+            fontWeight: "bold",
         },
         backButton: {
             position: 'absolute',
@@ -88,7 +90,7 @@ export default function ReceiptRecord() {
 
         buttonText: {
             fontSize: 20,
-            fontWeight: '300',
+            // fontWeight: '300',
             color: 'white',
         },
         scrollWrapper: {
@@ -98,21 +100,23 @@ export default function ReceiptRecord() {
         },
         receiptBtn: {
             backgroundColor: '#47b4b1',
-            height: 40,
+            height: 60,
             width: 360,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            margin: 10,
+            margin: "3%",
             borderRadius: 15,
             marginLeft: 'auto',
             marginRight: 'auto',
             color: 'white',
+            bottomTop: "20%"
+      
         },
     })
 
     return (
-        <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
+        <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: "white"}}>
 
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
@@ -122,7 +126,7 @@ export default function ReceiptRecord() {
             </View>
 
             <View style={styles.groupNameWrapper}>
-                <Text style={{ fontSize: 20 }}>{groupName}</Text>
+                <Text style={{ fontSize: 23, fontWeight: "300" }}>{groupName}</Text>
             </View>
 
             <ScrollView style={styles.scrollWrapper}>
