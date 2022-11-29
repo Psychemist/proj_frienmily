@@ -179,10 +179,10 @@ export default function CartItem(props: CartItemProps) {
 
         },
         container: {
-            marginTop: "1%",
+            marginTop: "2%",
             marginLeft: "1%",
             backgroundColor: "white",
-            width: "99%",
+            width: "98%",
             height: 100,
             borderWidth: 1,
             borderColor: "#F5F5F5",
