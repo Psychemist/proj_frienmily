@@ -16,18 +16,26 @@ export default function ExpenseReportItem(props: Props) {
 
   const styles = StyleSheet.create({
     category: {
-      // backgroundColor: "#FFFFFF",
-      width: 360,
-      height: 50,
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      flexDirection: 'row',
-      borderTopColor: 'grey',
-      borderBottomColor: 'grey',
-      borderTopWidth: 0.2,
-      borderBottomWidth: 0.2,
-      margin: 2,
-      padding: 5
+      backgroundColor: "white",
+      width: "98%",
+      height: 55,
+      borderWidth: 1,
+      borderColor: "#F5F5F5",
+      borderRadius: 10,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: 10,
+      margin: 1,
+      marginLeft: "1%",
+      shadowOpacity: 1,
+      shadowColor: "lightgray",
+      shadowRadius: 2,
+      shadowOffset: {
+          height: 1,
+          width: 1,
+      },
+      
     },
     catIcon: {
       height: 40,

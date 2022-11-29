@@ -228,7 +228,9 @@ export default function ExpenseReport() {
       fontSize: 25,
     },
     text: {
-      fontSize: 25,
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "bold",
     },
     datePickerWrapper: {
       position: "absolute",
@@ -306,15 +308,18 @@ export default function ExpenseReport() {
     },
     tableHeaderFooter: {
       flexDirection: "row",
-      width: 360,
+      width: "97%",
       height: 40,
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      marginLeft: "3%"
+      
 
     },
     leftWrapper: {
       padding: 5,
       width: "60%",
+      marginleft:"5%"
     },
     rightWrapper: {
       flexDirection: "row",
@@ -322,6 +327,7 @@ export default function ExpenseReport() {
       justifyContent: "space-between",
       width: "40%",
       padding: 5,
+      marginRight: 10
 
     },
     totalExpenseWrapper: {
@@ -338,15 +344,16 @@ export default function ExpenseReport() {
     },
     amountWrapper: {
       width: "50%",
-      alignItems: "stretch",
-      padding: 5
+      // alignItems: "stretch",
+      padding: 5,
+      // marginRight:"1%"
     },
 
 
   })
 
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: 'white' }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
