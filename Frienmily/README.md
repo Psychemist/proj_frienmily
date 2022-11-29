@@ -33,7 +33,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
         </View>
 
 
-Louie notes:
+Louie notes: 
 all of them should add friends tgt when creating groups 
 
 
