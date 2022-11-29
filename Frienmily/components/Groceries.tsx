@@ -444,12 +444,13 @@ export default function Groceries() {
 
     bestSellerButtonText: {
       fontSize: isBestSeller ? 20 : 20,
-      fontWeight: "bold"
-
+      fontWeight: "bold",
+      color: "#606467",
     },
     exploreButtonText: {
       fontSize: isBestSeller ? 20 : 20,
-      fontWeight: "bold"
+      fontWeight: "bold",
+      color: "#606467",
     },
     groupTypeButtonContainer: {
       justifyContent: 'flex-start',
