@@ -1,7 +1,9 @@
 import {
     Alert,
     Image,
+    SafeAreaView,
     ScrollView,
+    StatusBar,
     StyleSheet,
     Text,
     TextInput,
@@ -40,17 +42,21 @@ export default function MoneySettle() {
         const loadFriendList = async () => {
             try {
                 if (settleDetails.case == 1) {
-                    setShowResult(<Text>No transaction</Text>)
+                    setShowResult(<View style={styles.noTranscationContainer}>
+                        <FontAwesome name="check" size={35} color="white"/>
+                        <Text style={styles.text}>All Settled</Text></View>)
                     // setShowButton()
                 } else if (settleDetails.case == 2) {
-                    setShowResult(<Text>Have you received ${settleDetails.amount} from {username}?</Text>)
+                    setShowResult(<Text style={styles.text}>{username} owes you ${settleDetails.amount}</Text>)
                     setShowButton(
                         <TouchableOpacity style={styles.searchButton} onPress={moneySettle}>
-                            <Text>Settled</Text>
+                            <View style={styles.settledbutton}>
+                                <Text style={styles.settledButtonText}>Press to Settle</Text>
+                            </View>
                         </TouchableOpacity>
                     )
                 } else if (settleDetails.case == 3) {
-                    setShowResult(<Text>Did you paid ${settleDetails.amount} to {username}?</Text>)
+                    setShowResult(<Text style={styles.text}>You owe {username} ${settleDetails.amount}</Text>)
                 }
             } catch (error) {
                 console.log('error', error);
@@ -97,78 +103,239 @@ export default function MoneySettle() {
                 payerID: friendUserID,
             }),
         });
-        setShowResult(<Text>Transactions settled</Text>)
+        setShowResult(<Text style={styles.text}>Transactions Settled!</Text>)
         setShowButton(<Text></Text>)
 
     };
 
     const amount = (item: any) => {
         if (item.debitor_id == thisUserID) {
-            return <View style={styles.txnDetails}><Text>-${item.transcations_amount}</Text><Text> from group {item.group_name}</Text></View>
+            return <View style={styles.txnDetails}>
+                <Text style={styles.youOweRed}>-${item.transcations_amount}</Text><Text style={styles.oweGroupName}>{item.group_name}</Text></View>
         } else {
-            return <View style={styles.txnDetails}><Text>+${item.transcations_amount}</Text><Text> from group {item.group_name}</Text></View>
+            return <View style={styles.txnDetails}>
+                <Text style={styles.oweYouGreen}>+${item.transcations_amount}</Text><Text style={styles.oweGroupName}>{item.group_name}</Text></View>
         }
 
     }
 
     const styles = StyleSheet.create({
+        pageContainer:{
+             alignItems: 'center',
+             backgroundColor: '#47b4b1',
+             flex: 1,
+             display: "flex",
+             justifyContent: 'center',
+             flexDirection: 'column',
+        },
         searchButton: {
-            margin: 5,
+            // margin: 5,
             fontSize: 20,
-            backgroundColor: '#907651',
-            width: 120,
-            height: 45,
-            borderRadius: 100,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: 20,
+            backgroundColor: '#47b4b1',
+            // width: 120,
+            // height: 45,
+            // borderRadius: 100,
+            // marginBottom: 20,
         },
         text: {
-            fontSize: 30,
+            padding: 20,
+            borderRadius: 10,
+            // fontSize: 23,
+            marginLeft: 20,
+            marginRight: 20,
+            color: 'white',
+            // fontWeight:"300",
+            fontSize: 28,
+            fontWeight: "bold",
+            // color: "#47b4b1",
         },
-        header: {
-            height: '14%',
-            alignItems: 'center',
-            paddingTop: '15%',
-            marginBottom: '35%',
-            width: '100%',
+        oweText:{
+            paddingBottom: 10,
+            borderRadius: 10,
+            fontSize: 25,
+            // marginLeft: 20,
+            marginRight: 20,
+            color: 'white',
+            fontWeight: "300",
         },
         backButton: {
             position: 'absolute',
-            left: 0,
+            left: 20,
+            top: 20,
             paddingTop: '65%',
             paddingLeft: '20%',
             fontSize: 25,
             // top: "110%",
+            color:"white"
         },
         txnDetails: {
             flexDirection: 'row',
             justifyContent: 'space-between',
             width: 300
-        }
+        },
+        mainContainer:{
+            display: "flex",
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+        },
+        container: {
+            display: "flex",
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            marginTop: "1%",
+            width: '100%',
+            height: 80,
+            padding: 20,
+            paddingTop: "5%",
+            paddingBottom:"5%",
+            backgroundColor: 'white',
+            //SHADOW
+            borderRadius: 10,
+            shadowOpacity: 0.1,
+            shadowRadius: 1,
+            shadowOffset: {
+                height: 4,
+                width: 2,
+            },
+            borderBottomColor: 'grey',
+            borderBottomWidth: 0.2,
+            fontSize: 40,
+            paddingRight:"10%",
+            fontWeight:"300",
+            color:"gray",
+        },
+        settledbutton: {
+            display: "flex",
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            marginTop: "4%",
+            marginBottom: "1%",
+            width: "100%",
+            height: 50,
+            // padding: 20,
+            // paddingTop: "5%",
+            // paddingBottom:"5%",
+            backgroundColor: '#02CD9C',
+            // //SHADOW
+            // borderTopLeftRadius:20,
+            // borderTopRightRadius:20,
+            // borderBottomLeftRadius:20,
+            // borderBottomRightRadius:20,
+            borderRadius:10,
+            shadowOpacity: 0.1,
+            shadowRadius: 1,
+            shadowOffset: {
+                height: 4,
+                width: 2,
+            },
+            borderBottomColor: 'grey',
+            borderBottomWidth: 0.2,
+            fontSize: 40,
+            // paddingRight:"10%",
+            fontWeight:"300",
+            color:"gray",
+        },
+        settledButtonText: {
+            // padding: 20,
+            // borderRadius: 10,
+            fontSize: 20,
+            // marginLeft: 20,
+            // marginRight: 20,
+            color: 'white',
+            fontWeight:"bold",
+        },
+        resultContainer:{
+            display: "flex",
+            justifyContent: 'center',
+            alignItems: 'center',
+            // positon: "absolute",
+
+            // height:200
+        },
+        noTranscationContainer:{            
+            display: "flex",
+        justifyContent: 'center',
+        alignItems: 'center',
+
+            flexDirection: 'column',
+            // marginBottom: "5%",
+            // // marginBottom:80,
+            // width: '100%',
+            // height: '80%',
+            // padding: 20,
+            // paddingTop: "5%",
+            // paddingBottom:"5%",
+            //SHADOW
+            borderRadius: 10,
+            shadowOpacity: 0.1,
+            shadowRadius: 1,
+            shadowOffset: {
+                height: 4,
+                width: 2,
+            },
+            // borderBottomColor: 'grey',
+            // borderBottomWidth: 0.2,
+
+        },
+        groupName: {
+            fontSize: 40,
+            paddingRight:"10%",
+            fontWeight:"300",
+            color:"gray",
+            // paddingTop: "5%",
+            // paddingBottom:"5%",
+          },
+          oweGroupName:{
+            fontSize: 20,
+            // paddingRight:"10%",
+            fontWeight:"300",
+            color:"gray",
+          },
+          youOweRed:{
+            fontSize: 20,
+            // paddingRight:"10%",
+            fontWeight:"300",
+            color:"#F84C27",
+          },
+          oweYouGreen:{
+            fontSize: 20,
+            // paddingRight:"10%",
+            fontWeight:"300",
+            color:"#02CD9C",
+          }
     });
 
     return (
-        <View style={{ alignItems: 'center', backgroundColor: '#F4E9DF', flex: 1 }}>
-            <View style={styles.header}>
-                <TouchableOpacity
+        
+        <SafeAreaView style={styles.pageContainer}>
+            <StatusBar barStyle="light-content" />
+            <TouchableOpacity
                     style={styles.backButton}
                     onPress={() => navigation.navigate('Friends' as never)}>
-                    <FontAwesome name="angle-left" size={35} />
+                    <FontAwesome name="angle-left" size={35} color="white"/>
                 </TouchableOpacity>
+                {/* <Text style={styles.text}>Settlement</Text> */}
 
-                <Text style={styles.text}>Settlement</Text>
-            </View>
-            <ScrollView style={{ minHeight: 100, maxHeight: 100 }}>
+
+
+
+            <View style={styles.mainContainer}>
+            <View style={styles.resultContainer}><Text>{showResult}</Text></View>
+
+            {/* <Image source={require('./img/money.gif')}
+                style={{ width: 250, height: 250, borderRadius: 15 }} /> */}
+
+            <ScrollView style={{ minHeight: 100, maxHeight: 200 }}>
+            <View>{showButton}</View>   
                 {json.map((item: any, idx: number) => (
-                    <View key={idx}>{amount(item)}</View>
+                    <View style={styles.container} key={idx}><Text>{amount(item)}</Text></View>
                 ))}
             </ScrollView>
-            <Image source={require('./img/money.gif')}
-                style={{ width: 250, height: 250, borderRadius: 15 }} />
-            <Text>{showResult}</Text>
-            <View>{showButton}</View>
 
         </View>
+        </SafeAreaView>
     );
 }

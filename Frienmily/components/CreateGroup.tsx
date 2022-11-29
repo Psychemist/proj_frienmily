@@ -4,6 +4,7 @@ import {
   Animated,
   Easing,
   Image,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -474,8 +475,8 @@ export default function CreateGroup() {
   });
 
   return (
-    <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1, maxHeight: "100%" }}>
-      <View style={styles.header}>
+    <SafeAreaView style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1, maxHeight: "100%" }}>
+      {/* <View style={styles.header}> */}
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}>
@@ -483,7 +484,7 @@ export default function CreateGroup() {
         </TouchableOpacity>
 
         <Text style={styles.text}>Create Group</Text>
-      </View>
+      {/* </View> */}
       <View style={styles.stepsContainer}>
         {/* <TouchableOpacity onPress={enlargeProfilePicture}>
         <Image style={styles.userImage} source={{ uri: "https://iconandreceipt.s3.ap-southeast-1.amazonaws.com/c3269ab8c2949b1e0614dad00" }} ></Image>
@@ -575,7 +576,7 @@ export default function CreateGroup() {
         {isLoadingShow ? <View><ActivityIndicator size="large" /></View> : null}
 
       </View>
-    </View>
+    </SafeAreaView>
 
   );
 
