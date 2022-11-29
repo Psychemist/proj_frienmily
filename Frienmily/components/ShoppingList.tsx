@@ -122,70 +122,101 @@ export default function ShoppingList() {
 
   const styles = StyleSheet.create({
     addMoreText: {
-      fontSize: 15,
+      fontSize: 16,
       padding: 5,
       color: '#47b4b1',
+      fontWeight: "300",
+      marginRight: '7%'
     },
 
     totalText: {
-      fontSize: 15,
+      fontSize: 18,
       textAlign: 'right',
-      padding: 20,
+      padding: 10,
+      fontWeight: "bold",
+      color: "gray",
+      marginRight: "5%"
+
     },
 
     buttonText: {
+      fontSize: 18,
+      // fontWeight: '300',
+      color: 'white',
+    },
+    groupMemberButtonText:{
       fontSize: 20,
-      fontWeight: '300',
+      // fontWeight: '300',
       color: 'white',
     },
 
     receiptBtn: {
       backgroundColor: '#47b4b1',
-      height: 40,
+      height: 60,
       width: "45%",
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 10,
-      borderRadius: 15,
+      margin: 5,
+      borderRadius: 10,
       marginLeft: 'auto',
       marginRight: 'auto',
       color: 'white',
     },
     membersBtn: {
       backgroundColor: '#47b4b1',
-      height: 40,
+      height: 60,
       width: "95%",
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       margin: 10,
-      borderRadius: 15,
+      borderRadius: 10,
       marginLeft: 'auto',
       marginRight: 'auto',
       color: 'white',
     },
     header: {
-      position: 'relative',
-      height: '14%',
-      alignItems: 'center',
-      // paddingTop: "1%",
-      marginBottom: 0,
-      width: '100%',
+      height: "12%",
+      alignItems: "center",
+      marginBottom: "2%",
+      marginRight: "2%",
+      width: "100%",
+      backgroundColor: "white"
     },
+
     reportBtnWrapper: {
-      position: 'absolute',
+      // position: 'absolute',
+      display: "flex",
+      flexDirection: "row",
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#FFFFFF',
-      borderColor: '#47b4b1',
-      borderRadius: 20,
-      borderWidth: 2,
-      right: 10,
-      bottom: 7,
-      height: 50,
-      width: 80
+      borderColor: '#F5F5F5',
+      borderRadius: 15,
+      borderWidth: 1,
+      marginBottom: "5%",
+      // right: 10,
+      // bottom: 7,
+      // height: 50,
+      width: "90%",
+      height: 70,
+      backgroundColor: 'white',
+      shadowOpacity: 1,
+      shadowColor: "#47b4b1",
+      shadowRadius: 0.8,
+      shadowOffset: {
+        height: 4,
+        width: 4
+      },
+      // margin: 2
     },
+
+    reportButtonText: {
+      fontWeight: "bold",
+      color: "#606467",
+      fontSize: 20
+    },
+
     backButton: {
       position: 'absolute',
       left: 0,
@@ -193,7 +224,9 @@ export default function ShoppingList() {
       fontSize: 25,
     },
     text: {
-      fontSize: 25,
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "bold",
     },
     groupNameWrapper: {
       position: "absolute",
@@ -203,7 +236,7 @@ export default function ShoppingList() {
     scrollWrapper: {
       // position: "absolute",
       // top: 140,
-      width: "98%",
+      width: "100%",
       height: 500,
       paddingLeft: 5,
       paddingRight: 5,
@@ -211,7 +244,7 @@ export default function ShoppingList() {
   });
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: "white" }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -220,18 +253,19 @@ export default function ShoppingList() {
         </TouchableOpacity>
 
         <Text style={styles.text}>Shopping List</Text>
-        {isFamilyGroup ?
-          <TouchableOpacity style={styles.reportBtnWrapper}
-            onPress={loadGroupBuyingRecord}>
-            <Text>Expense Report</Text>
-          </TouchableOpacity>
-          : <View></View>
-        }
+
 
       </View>
-
+      {isFamilyGroup ?
+        <TouchableOpacity style={styles.reportBtnWrapper}
+          onPress={loadGroupBuyingRecord}>
+          <Text style={styles.reportButtonText}>Spending Analysis </Text>
+          <FontAwesome name='pie-chart' size={30} color={"#47b4b1"} />
+        </TouchableOpacity>
+        : <View></View>
+      }
       <View style={styles.groupNameWrapper}>
-        <Text style={{ fontSize: 20 }}>{groupName}</Text>
+        <Text style={{ fontSize: 23, fontWeight: "300" }}>{groupName}</Text>
       </View>
       <ScrollView style={styles.scrollWrapper}>
         {allAssignedItems.map((item: any, idx: number) => (
@@ -241,7 +275,7 @@ export default function ShoppingList() {
       <View style={{ width: "100%" }}>
         <View>
           <TouchableOpacity
-            style={styles.addMoreText}
+            style={{ alignItems: 'flex-end' }}
             onPress={() => {
               navigation.navigate('Groceries' as never);
             }}>
@@ -288,7 +322,7 @@ export default function ShoppingList() {
           onPress={() => {
             navigation.navigate('GroupMember' as never, { groupId: groupId, groupName: groupName } as never)
           }}>
-          <Text style={styles.buttonText}>Group Members</Text>
+          <Text style={styles.groupMemberButtonText}>Group Members</Text>
         </TouchableOpacity>
       </View>
 

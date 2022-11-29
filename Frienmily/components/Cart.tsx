@@ -89,6 +89,20 @@ export default function Cart() {
 
   }, [isFocused]);
 
+  const showAlert1 = () => {
+    if (shoppingListArray.length == 0) {
+      return
+    }
+    Alert.alert('Are you sure to delete the whole cart?', '', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: () => clearCart() },
+    ]);
+  };
+
 
   function addZeroes(num: number) {
     return (Math.round(num * 100) / 100).toFixed(2)
@@ -103,12 +117,8 @@ export default function Cart() {
   }
 
   const showAlert = () => {
+
     Alert.alert('Please at least grab something to your cart', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
@@ -136,7 +146,7 @@ export default function Cart() {
       padding: 5,
       color: '#47b4b1',
       fontWeight: "300",
-      marginRight: '4%'
+      marginRight: '7%'
     },
     clearCartText: {
       fontSize: 16,
@@ -148,15 +158,16 @@ export default function Cart() {
     totalText: {
       fontSize: 18,
       textAlign: 'right',
-      padding: 20,
+      padding: 10,
       fontWeight: "bold",
-      color: "gray"
+      color: "gray",
+      marginRight: "5%"
 
     },
 
     buttonText: {
       fontSize: 20,
-      fontWeight: '300',
+      // fontWeight: '300',
       color: 'white',
     },
 
@@ -183,7 +194,11 @@ export default function Cart() {
       backgroundColor: "white"
     },
     text: {
-      fontSize: 25,
+      // padding: 20,
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "bold",
+      // marginLeft: 20
     },
     backButton: {
       position: 'absolute',
@@ -243,6 +258,15 @@ export default function Cart() {
       fontWeight: "300",
       color: "gray",
       top: 21.5
+    },
+    clearCartContainer: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      width: 200,
+      marginLeft: "3%",
+      marginBottom: "10%"
     }
 
   });
@@ -293,14 +317,13 @@ export default function Cart() {
       </ScrollView>
       <View style={{ width: "100%" }}>
         <View>
-          <TouchableOpacity style={{ width: '100%', alignItems: 'flex-start'}}>
-            <Text style={styles.clearCartText} onPress={clearCart}>
-              <FontAwesome name="trash-o" size={15} color={"#47b4b1"} style={{marginLeft:"8%"}}/>
-              Clear Cart
-            </Text>
-          </TouchableOpacity>
+          <View style={styles.clearCartContainer}>
+            <TouchableOpacity>
+              <Text onPress={showAlert1} style={styles.clearCartText}><FontAwesome name="trash-o" size={15} color={"#47b4b1"} />  Clear Cart</Text>
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity
-            style={{ width: '100%', alignItems: 'flex-end'}}
+            style={{ alignItems: 'flex-end' }}
             onPress={() => {
               // navigation.navigate('Groceries' as never);
               navigation.navigate('HomeTab' as never);
@@ -310,7 +333,7 @@ export default function Cart() {
 
         </View>
         <View>
-          <Text style={styles.totalText}>Estimated Total: HKD$ {addZeroes(estimatedTotal)}</Text>
+          <Text style={styles.totalText}>Estimated Total: ${addZeroes(estimatedTotal)}</Text>
         </View>
       </View>
 

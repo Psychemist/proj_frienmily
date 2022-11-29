@@ -36,6 +36,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
         text: {
             fontSize: 10,
             fontWeight: "bold",
+            color: "#606467",
         },
         container: {
             flexDirection: "column",

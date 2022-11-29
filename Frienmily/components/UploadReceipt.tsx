@@ -56,7 +56,6 @@ export default function UploadReceipt() {
   //   };
 
   const submitButton = async () => {
-    navigation.goBack()
     if (imgs == undefined || imgs == null) {
       showAlert();
       return;
@@ -71,12 +70,13 @@ export default function UploadReceipt() {
     function containsOnlyNumbers(str: any) {
       return /^[0-9]+$/.test(str);
     }
+    console.log(number)
 
     if (!containsOnlyNumbers(number)) {
-      showAlert2()
-      return
+      // showAlert2()
+      // return
     }
-
+    navigation.goBack()
 
 
 
@@ -97,33 +97,18 @@ export default function UploadReceipt() {
 
   const showAlert = () => {
     Alert.alert('Please upload receipt', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
 
   const showAlert1 = () => {
     Alert.alert('How much you paid?', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
 
   const showAlert2 = () => {
     Alert.alert('Integer only', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
@@ -136,35 +121,68 @@ export default function UploadReceipt() {
 
   const styles = StyleSheet.create({
     input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-      width: '30%',
-      //   minWidth: 300,
-      //   maxWidth: 300,
-      borderRadius: 10,
-    },
-    input2: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-      width: '60%',
-      //   minWidth: 300,
-      //   maxWidth: 300,
-      borderRadius: 10,
-    },
-    searchButton: {
-      margin: 5,
-      fontSize: 20,
-      backgroundColor: '#907651',
-      width: 120,
-      height: 45,
-      borderRadius: 100,
+      display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: 20,
+      height: 55,
+      // margin: 12,
+      // marginTop: "10%",
+      marginBottom: "5%",
+      borderWidth: 2.5,
+      // padding: 10,
+      minWidth: "50%",
+      maxWidth: "60%",
+      borderRadius: 15,
+      backgroundColor: 'white',
+      borderColor: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      },
+      margin: 5,
+      fontSize: 20,
+      // minWidth:"20%",
+
+    },
+    input2: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 55,
+      // margin: 12,
+      // marginTop: "10%",
+      marginBottom: "5%",
+      borderWidth: 2.5,
+      // padding: 10,
+      minWidth: "50%",
+      maxWidth: "99%",
+      borderRadius: 15,
+      backgroundColor: 'white',
+      borderColor: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      },
+      margin: 5,
+      fontSize: 20,
+    },
+    searchButton: {
+      backgroundColor: '#47b4b1',
+      height: 60,
+      width: 360,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: "3%",
+      borderRadius: 15,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      color: 'white',
+      bottomTop: "20%"
     },
     resultContainer: {
       // backgroundColor: "pink",
@@ -172,9 +190,12 @@ export default function UploadReceipt() {
       flexGrow: 1,
       paddingLeft: 40,
       paddingRight: 40,
+      marginBottom: 20
     },
     text: {
-      fontSize: 25,
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "bold",
     },
     header: {
       height: '14%',
@@ -251,11 +272,45 @@ export default function UploadReceipt() {
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 18,
+
+    },
+    uploadText: {
+      fontSize: 30,
+      fontWeight: "300",
+      color: "gray",
+    },
+    buttonText: {
+      fontSize: 20,
+      // fontWeight: '300',
+      color: 'white',
+    },
+    inputFieldWrapper: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 55,
+      // margin: 12,
+      // marginTop: "10%",
+      marginBottom: "5%",
+      borderWidth: 2.5,
+      // padding: 10,
+      minWidth: "50%",
+      maxWidth: "99%",
+      borderRadius: 15,
+      backgroundColor: 'white',
+      borderColor: "white",
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      }
+
     },
   });
 
   return (
-    <View style={{ alignItems: 'center', backgroundColor: '#F4E9DF', flex: 1 }}>
+    <View style={{ alignItems: 'center', backgroundColor: 'white', flex: 1 }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -263,15 +318,15 @@ export default function UploadReceipt() {
           <FontAwesome name="angle-left" size={35} />
         </TouchableOpacity>
 
-        <Text style={styles.text}>Receipt</Text>
+        <Text style={styles.text}>Upload Receipt</Text>
       </View>
 
       {imgs == undefined || imgs == null ? (
         <TouchableOpacity onPress={() => addPhoto()}>
           <View style={styles.square}>
-            <FontAwesome name="plus" size={25} />
+            <FontAwesome name="plus" size={30} />
             <Text> </Text>
-            <Text>CLICK HERE TO UPLOAD</Text>
+            <Text style={styles.uploadText}>Click Here to Upload</Text>
           </View>
         </TouchableOpacity>
       ) : (
@@ -279,35 +334,45 @@ export default function UploadReceipt() {
           return (
             <TouchableOpacity key={index} onPress={() => addPhoto()}>
               <Image
-                style={{ width: 270, height: 270, borderRadius: 18 }}
+                style={{ width: 270, height: 270, borderRadius: 18, marginBottom:"5%"}}
                 source={{ uri: item.uri }}></Image>
             </TouchableOpacity>
           );
         })
       )}
 
-      {/* <Button title="启动相机拍摄图片" onPress={() => takePhoto()}></Button> */}
-      <Text>
-        <FontAwesome name="money" size={30} /> Enter how much you paid:
-      </Text>
-      <TextInput
-        keyboardType="numeric"
-        placeholder="$$$"
-        style={styles.input}
-        value={number}
-        onChangeText={setNumber}
-        maxLength={8}
-      />
-      <TextInput
-        placeholder="remarks (optional)"
-        style={styles.input2}
-        value={remarks}
-        onChangeText={setRemarks}
-        maxLength={28}
-      />
+      <View style={styles.inputFieldWrapper}>
+        <TextInput
+          keyboardType="numeric"
+          placeholder="Receipt Amount"
+          style={{
+            margin: 5,
+            fontSize: 20,
+            minWidth:"5%",
+            maxWidth:"60%"
+          }}
+          value={number}
+          onChangeText={setNumber}
+          maxLength={8}
 
+        />
+      </View>
+      <View style={styles.inputFieldWrapper}>
+        <TextInput
+          placeholder="Remarks (Optional)"
+          style={{
+            margin: 5,
+            fontSize: 20,
+            minWidth:"5%",
+            maxWidth:"60%"
+          }}
+          value={remarks}
+          onChangeText={setRemarks}
+          maxLength={28}
+        />
+      </View>
       <TouchableOpacity style={styles.searchButton} onPress={submitButton}>
-        <Text>Submit</Text>
+        <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
     </View>
   );
