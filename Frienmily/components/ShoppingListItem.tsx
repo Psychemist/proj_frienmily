@@ -222,7 +222,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
 
     }
     function addZeroes(num: number) {
-        return (Math.round(num * 100) / 100).toFixed(2)
+        return (Math.round(num * 100) / 100).toFixed(1)
     }
 
     const deleteItem = async () => {
@@ -274,7 +274,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         itemContainer: {
             backgroundColor: "white",
             width: "100%",
-            height: 100,
+            height: 120,
             borderWidth: 1,
             borderColor: "#F5F5F5",
             borderRadius: 10,
@@ -316,7 +316,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
             // paddingTop:"5%"
         },
         price: {
-            fontSize: 13,
+            fontSize: 15,
             // color: "black",
             width: 80,
             textAlign: 'left',
@@ -338,16 +338,16 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 navigation.navigate('ImagePreview' as never, { image: props.items.goods_picture } as never)
             }}>
                 <View><Image source={{ uri: props.items.goods_picture }}
-                    style={{ width: 50, height: 50 }} /></View>
+                    style={{ width: 50, height: 50, marginRight:"2%"}} /></View>
             </TouchableOpacity>
-            <View style={{ width: 200 }}>
+            <View style={{ width: 150 }}>
                 <View><Text style={styles.text}>{props.items.name}</Text></View>
                 <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
                 <View><Text style={styles.shopText}>Item added by {assigneeName}</Text></View>
                 <View><Text style={styles.shopText}>Brought by {buyerName}</Text></View>
             </View>
-            <View ><Text style={styles.text}>HK${addZeroes(getLowest().price! * props.items.quantity)}</Text></View>
-            <TouchableOpacity onPress={showAlert}><Text >X</Text></TouchableOpacity>
+            <View ><Text style={styles.price}>${addZeroes(getLowest().price! * props.items.quantity)}</Text></View>
+            <TouchableOpacity onPress={showAlert}><FontAwesome name="trash-o" size={20} color={"#47b4b1"} /></TouchableOpacity>
         </View >
     )
 }
