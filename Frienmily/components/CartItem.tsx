@@ -223,6 +223,7 @@ export default function CartItem(props: CartItemProps) {
                 height: 1,
                 width: 1,
             },
+            paddingRight:"5%"
         },
         counter: {
             flexDirection: "row",
@@ -269,7 +270,14 @@ export default function CartItem(props: CartItemProps) {
             fontSize: 15,
             fontWeight: "300"
         },
-
+        binWrapper:{
+            flexDirection: "row",
+            justifyContent: 'space-around',
+            alignContent: "center",
+            alignItems: "center",
+            height:40,
+            width:80
+        }
     })
 
     const navigation = useNavigation()
@@ -295,15 +303,17 @@ export default function CartItem(props: CartItemProps) {
                             navigation.navigate('ImagePreview' as never, { image: props.items.goods_picture } as never)
                         }}>
                             <View><Image source={{ uri: props.items.goods_picture }}
-                                style={{ width: 50, height: 50, marginLeft: "5%" }} /></View>
+                                style={{ width: 50, height: 50, marginRight:"2%"}} /></View>
                         </TouchableOpacity>
                     </TouchableOpacity>
-                    <View style={{ width: 100 }}>
+                    <View style={{ width: 150 }}>
                         <View><Text style={styles.text}>{props.items.name}</Text></View>
                         <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
                     </View>
-                    <View><Text style={styles.price}>${addZeroes(getLowest().price! * initNum)}</Text></View>
-                    <TouchableOpacity onPress={deleteThisItem}><Text>X</Text></TouchableOpacity>
+                    <View style={styles.binWrapper}><Text style={styles.price}>${addZeroes(getLowest().price! * initNum)}</Text>
+                    <TouchableOpacity onPress={deleteThisItem}><FontAwesome name="trash-o" size={20} color={"#47b4b1"} /></TouchableOpacity>
+                    </View>
+
                 </View>) :
                 (null)}
 
