@@ -30,6 +30,7 @@ export default function SignUpScreen() {
 
   const onSignUp = async () => {
     try {
+      console.log({ username, password, mobileNumber, email })
       const res = await fetch('http://localhost:8000/user/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -37,6 +38,7 @@ export default function SignUpScreen() {
           username: username,
           password: password,
           mobile: mobileNumber,
+          email: email
         }),
       });
 
@@ -56,6 +58,7 @@ export default function SignUpScreen() {
         setUsername('');
         setPassword('');
         setMobileNumber('');
+        setEmail('');
       } else {
         Alert.alert(`${resultMsg}`, '', [
           {
@@ -173,27 +176,36 @@ export default function SignUpScreen() {
             placeholder="Username*"
             value={username}
             onChangeText={setUsername}
+            maxLength={20}
             style={{
               margin: 5,
               fontSize: 20,
               // minWidth:"20%",
-              maxWidth:"60%"
+              // maxWidth: "60%"
+              width: "100%",
+              height: "100%",
+              textAlign: "center"
             }}
           />
         </View>
 
         <View style={styles.inputFieldWrapper}>
           <TextInput
-           secureTextEntry={true}
+            secureTextEntry={true}
             autoCapitalize="none"
             placeholder="Password*"
             value={password}
             onChangeText={setPassword}
+            maxLength={20}
             style={{
               margin: 5,
               fontSize: 20,
-              minWidth:"5%",
-              maxWidth:"60%"
+              // minWidth: "5%",
+              // maxWidth: "60%",
+              width: "100%",
+              height: "100%",
+              textAlign: "center",
+
             }}
           />
         </View>
@@ -221,27 +233,35 @@ export default function SignUpScreen() {
           <TextInput
             placeholder="Mobile Number*"
             value={mobileNumber}
+            keyboardType='numeric'
             onChangeText={setMobileNumber}
             style={{
               margin: 5,
               fontSize: 20,
               // minWidth:"20%",
-              maxWidth:"60%"
+              // maxWidth: "60%"
+              width: "100%",
+              height: "100%",
+              textAlign: "center"
             }}
           />
         </View>
 
         <View style={styles.inputFieldWrapper}>
           <TextInput
-            placeholder="Email"
+            placeholder="Email*"
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
+            maxLength={30}
             style={{
               margin: 5,
               fontSize: 20,
               // minWidth:"10%",
-              maxWidth:"60%"
+              // maxWidth: "60%"
+              width: "100%",
+              height: "100%",
+              textAlign: "center"
             }}
           />
         </View>

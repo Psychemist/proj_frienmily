@@ -48,7 +48,7 @@ export default function LoginScreen() {
       navigation.navigate('HomeTab' as never);
     } catch (error) {
       console.log('error from unwrap = ', error);
-      Alert.alert(`Please enter your username and password`, '', [
+      Alert.alert(`Invalid username or password`, '', [
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
@@ -122,17 +122,17 @@ export default function LoginScreen() {
       fontSize: 42,
       fontWeight: "bold",
       color: "#47b4b1",
-      marginTop:"40%",
-      maxWidth:"100%"
-  },
+      marginTop: "40%",
+      maxWidth: "100%"
+    },
   });
 
   return (
     <SafeAreaView style={styles.body}>
-            <StatusBar barStyle="dark-content"/>
-        <View> 
-            <Text style={styles.appName}>Frienmily</Text>
-        </View>
+      <StatusBar barStyle="dark-content" />
+      <View>
+        <Text style={styles.appName}>Frienmily</Text>
+      </View>
 
       <View
         style={{
@@ -150,7 +150,10 @@ export default function LoginScreen() {
               margin: 5,
               fontSize: 20,
               // minWidth:"20%",
-              maxWidth:"60%"
+              // maxWidth:"60%"
+              width: "100%",
+              height: "100%",
+              textAlign: "center"
 
             }}
           />
@@ -165,15 +168,18 @@ export default function LoginScreen() {
             style={{
               margin: 5,
               fontSize: 20,
-              minWidth:"5%",
-              maxWidth:"60%"
+              // minWidth:"5%",
+              // maxWidth:"60%"
+              width: "100%",
+              height: "100%",
+              textAlign: "center"
             }}
           />
         </View>
 
         <TouchableOpacity
           onPress={onLogin}
-          style={[styles.loginBtn, { marginBottom: "50%"}]}>
+          style={[styles.loginBtn, { marginBottom: "50%" }]}>
           <Text
             style={{
               color: 'white',
