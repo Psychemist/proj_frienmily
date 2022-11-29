@@ -193,7 +193,7 @@ export default function CartItem(props: CartItemProps) {
             paddingTop: "5%"
         },
         price: {
-            fontSize: 13,
+            fontSize: 15,
             // color: "black",
             width: 80,
             textAlign: 'left',
@@ -207,7 +207,7 @@ export default function CartItem(props: CartItemProps) {
             marginLeft: "1%",
             backgroundColor: "white",
             width: "98%",
-            height: 100,
+            height: 120,
             borderWidth: 1,
             borderColor: "#F5F5F5",
             borderRadius: 10,
