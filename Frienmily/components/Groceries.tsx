@@ -173,6 +173,8 @@ export default function Groceries() {
   //   dispatch(fetchProductData(categoryArray))
   // }
 
+
+
   const fetchData = async (categoryArray: any, page: number, isRenewList: boolean) => {
     try {
       console.log("@@@@@@@ fetch data")
@@ -235,7 +237,10 @@ export default function Groceries() {
   // =================================================================
 
 
-  // FIXME: 會fetch 兩次
+
+  // FIXME: Fetch完第一次，Scroll到底的時候會fetch 額外60個product，並會取代掉前30個product；
+
+  // FIXME: 按Category button沒有反應
 
   useEffect(() => {
     setIsRenewList(true)
@@ -530,7 +535,7 @@ export default function Groceries() {
         ))}
       </ScrollView> : (null)}
       <View style={styles.container}>
-        <View style={{ paddingRight: "2%"}} >
+        <View style={{ paddingRight: "2%" }} >
           <TextInput
             placeholder="Search Products"
             value={searchKeyword}
