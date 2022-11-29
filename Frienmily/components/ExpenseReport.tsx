@@ -7,15 +7,14 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { MONTHS, YEARS } from '../utils/dates';
 import ExpenseReportItem from './ExpenseReportItem';
+import { PieChart } from 'react-native-svg-charts'
+// import {ViewPropTypes} from 'deprecated-react-native-prop-types'
 
 export default function ExpenseReport() {
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
   const route = useRoute<any>()
   console.log("route:", route)
   let groupId = route.params.groupId
-  // let expenseRecord = route.params.expenseRecord
-  // console.log("expenseRecord get at ExpenseReport Page: ", expenseRecord)
 
   const date = new Date();
   let currentMonth = date.getMonth() + 1;
@@ -24,17 +23,12 @@ export default function ExpenseReport() {
 
   const [month, setMonth] = useState<number>(currentMonth)
   const [year, setYear] = useState<number>(currentYear)
-  const [submit, setSubmit] = useState<boolean>(false)
   const [expenseRecords, setExpenseRecords] = useState<any>([])
+  const [isChartView, setIsChartView] = useState<boolean>(false)
 
-  // TODO: 根據日期選擇紀錄
-  const changeMonth = () => {
-    setMonth(month)
-    console.log("new month: ", month)
-  }
+
 
   const changeYear = (index: number) => {
-
     let actualYear = YEARS[index]
     setYear(actualYear)
   }
@@ -57,25 +51,6 @@ export default function ExpenseReport() {
       let data = await response.json()
       console.log("Group buying record get from server: ", data)
       setExpenseRecords(data)
-
-      // console.log('load ExpenseReports of other months');
-      // const response = await fetch(
-      //   `${REACT_APP_API_SERVER}/groups/groupBuyingRecord`,
-      //   {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: JSON.stringify({
-      //       groupId: groupId,
-      //       month: month,
-      //       year: year
-      //     }),
-      //   },
-      // );
-      // console.log("response from server: " + response)
-      // let expenseRecord = await response.json()
-      // console.log(`expense report of ${month}(month) ${year}(year): `, expenseRecord)
-
-      // setSubmit(!submit)
 
     } catch (err) {
       console.log(err)
@@ -138,6 +113,23 @@ export default function ExpenseReport() {
     }
   }
 
+  // TODO: Chart View
+  const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
+
+  const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7)
+
+  const pieData = data
+    .filter((value) => value > 0)
+    .map((value, index) => ({
+      value,
+      svg: {
+        fill: randomColor(),
+        onPress: () => console.log('press', index),
+      },
+      key: `pie-${index}`,
+    }))
+
+
 
 
   const styles = StyleSheet.create({
@@ -184,7 +176,24 @@ export default function ExpenseReport() {
       margin: 5,
       width: 70,
     },
+    switchBtnWrapper: {
+      flexDirection: "row",
 
+    },
+    switchBtn: {
+      marginLeft: 10,
+      marginRight: 10,
+      padding: 10,
+      borderWidth: 2,
+    },
+    listViewBtn: {
+      borderColor: isChartView ? "#F2F2F2" : "#47b4b1"
+
+    },
+    chartViewBtn: {
+      borderColor: isChartView ? "#47b4b1" : "#F2F2F2"
+
+    },
     tableHeaderFooter: {
       flexDirection: "row",
       width: 360,
@@ -242,12 +251,12 @@ export default function ExpenseReport() {
 
       <View style={styles.datePickerWrapper}>
         <View style={{ flexDirection: "row" }}>
-          <View style={{ marginRight: 20 }}>
-            <Text>{month}</Text>
-          </View>
           <View>
-            <Text>{year}</Text>
+            <Text>{month} /{year}</Text>
           </View>
+          <TouchableOpacity style={styles.submitBtn}>
+            <Text style={{ color: "#FFFFFF", textAlign: "center" }}>Now</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={{ flexDirection: "row" }}>
@@ -262,50 +271,58 @@ export default function ExpenseReport() {
 
       </View>
 
-      <View style={styles.tableHeaderFooter}>
-
-
-        <View style={styles.leftWrapper}>
-          <Text style={{ fontWeight: "bold", fontSize: 14 }}>Categories</Text>
-        </View>
-
-
-        <View style={styles.rightWrapper}>
-          <View style={styles.totalExpenseWrapper}>
-            <Text style={{ fontWeight: "bold", color: "#47b4b1", fontSize: 14 }}>Expense</Text>
-          </View>
-          <View style={styles.totalSavedMoneyWrapper}>
-            <Text style={{ fontWeight: "bold", color: "#f79f24", fontSize: 14 }}>Money</Text>
-            <Text style={{ fontWeight: "bold", color: "#f79f24", fontSize: 14 }}>Saved</Text>
-          </View>
-        </View>
+      <View style={styles.switchBtnWrapper}>
+        <TouchableOpacity style={[styles.switchBtn, styles.listViewBtn]} onPress={() => { setIsChartView(false) }}>
+          <Text>List View</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.switchBtn, styles.chartViewBtn]} onPress={() => { setIsChartView(true) }}>
+          <Text>Chart View</Text>
+        </TouchableOpacity>
       </View>
-
-
-
-
-      <View style={{ backgroundColor: '#F5F5F5' }}>
-        {expenseRecords.map((item: any) => (
-          <ExpenseReportItem items={item} key={item.categoryId} />
-        ))}
-      </View>
-
-
-      <View style={styles.tableHeaderFooter}>
-
-
-        <View style={[styles.rightWrapper, { width: "52%" }]}></View>
-
-
-        <View style={[styles.rightWrapper, { width: "48%" }]}>
-          <View style={styles.amountWrapper}>
-            <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 20 }}>${expenseSum}</Text>
+      {isChartView ?
+        <View>
+          <Text>
+            Chart View
+          </Text>
+          <PieChart style={{ height: 200 }} data={pieData} />
+        </View>
+        :
+        <View>
+          <View style={styles.tableHeaderFooter}>
+            <View style={styles.leftWrapper}>
+              <Text style={{ fontWeight: "bold", fontSize: 14 }}>Categories</Text>
+            </View>
+            <View style={styles.rightWrapper}>
+              <View style={styles.totalExpenseWrapper}>
+                <Text style={{ fontWeight: "bold", color: "#47b4b1", fontSize: 14 }}>Expense</Text>
+              </View>
+              <View style={styles.totalSavedMoneyWrapper}>
+                <Text style={{ fontWeight: "bold", color: "#f79f24", fontSize: 14 }}>Money</Text>
+                <Text style={{ fontWeight: "bold", color: "#f79f24", fontSize: 14 }}>Saved</Text>
+              </View>
+            </View>
           </View>
-          <View style={styles.amountWrapper}>
-            <Text style={{ fontWeight: "bold", color: "#f79f24", textAlign: "right", fontSize: 20 }}>${moneySavedSum}</Text>
+
+          <View style={{ backgroundColor: '#F5F5F5' }}>
+            {expenseRecords.map((item: any) => (
+              <ExpenseReportItem items={item} key={item.categoryId} />
+            ))}
+          </View>
+
+          <View style={styles.tableHeaderFooter}>
+            <View style={[styles.rightWrapper, { width: "52%" }]}></View>
+            <View style={[styles.rightWrapper, { width: "48%" }]}>
+              <View style={styles.amountWrapper}>
+                <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 20 }}>${expenseSum}</Text>
+              </View>
+              <View style={styles.amountWrapper}>
+                <Text style={{ fontWeight: "bold", color: "#f79f24", textAlign: "right", fontSize: 20 }}>${moneySavedSum}</Text>
+              </View>
+            </View>
           </View>
         </View>
-      </View>
+      }
+
 
     </SafeAreaView>
   )
