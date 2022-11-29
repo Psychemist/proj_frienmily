@@ -213,7 +213,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         }
         console.log(tempArray)
         if (tempArray.length > 1) {
-            console.log({ "price": lowest.price, "shop": "多間同價" })
+            // console.log({ "price": lowest.price, "shop": "多間同價" })
             // console.log({ "price": lowest.price, "shop": "多間同價" })
             return { "price": lowest.price, "shop": "多間同價" }
         }
@@ -338,7 +338,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 navigation.navigate('ImagePreview' as never, { image: props.items.goods_picture } as never)
             }}>
                 <View><Image source={{ uri: props.items.goods_picture }}
-                    style={{ width: 50, height: 50, marginRight:"2%"}} /></View>
+                    style={{ width: 50, height: 50, marginRight: "2%" }} /></View>
             </TouchableOpacity>
             <View style={{ width: 150 }}>
                 <View><Text style={styles.text}>{props.items.name}</Text></View>
