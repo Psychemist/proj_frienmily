@@ -12,9 +12,9 @@ import { Circle, G, Line } from 'react-native-svg'
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import { logout } from '../redux/user/userSlice';
 import ExpenseReportSectorItem from './ExpenseReportSectorItem';
+import { pieSectorColors } from '../utils/color'
 
 export default function ExpenseReport() {
-  const pieSectorColors = ["#c79edf", "#ff9135", "#0098e3", "#68e169", "#f63435", "#36adae", "#dadd85", "#903bbe", "#ffbfcb", "#dafa9b"]
   const navigation = useNavigation();
   const route = useRoute<any>()
   console.log("route:", route)
@@ -95,29 +95,29 @@ export default function ExpenseReport() {
   // TODO: 比較超越了多少個家庭group
   // 每個family的money saved
   // family group 的數量
-  const fetchAvgFamiliesMoneySaved = async () => {
-    try {
-      //   const response = await fetch(
-      //     `${REACT_APP_API_SERVER}/groups/`,
-      //     {
-      //       method: 'POST',
-      //       headers: { 'Content-Type': 'application/json' },
-      //       body: JSON.stringify({
-      //         groupId: groupId,
-      //         month: month,
-      //         year: year
-      //       }),
-      //     },
-      //   );
-      //   console.log("response from server: " + response)
-      //   let data = await response.json()
-      //   console.log("Group buying record get from server: ", data)
-      //   setExpenseRecords(data)
+  // const fetchAvgFamiliesMoneySaved = async () => {
+  //   try {
+  //   const response = await fetch(
+  //     `${REACT_APP_API_SERVER}/groups/`,
+  //     {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         groupId: groupId,
+  //         month: month,
+  //         year: year
+  //       }),
+  //     },
+  //   );
+  //   console.log("response from server: " + response)
+  //   let data = await response.json()
+  //   console.log("Group buying record get from server: ", data)
+  //   setExpenseRecords(data)
 
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
   useEffect(() => {
     getExpenseReport()
@@ -156,7 +156,7 @@ export default function ExpenseReport() {
         let minPrice = Math.min(...floatPrices)
         let moneySaved: number = parseFloat((maxPrice - minPrice).toFixed(2))
         categorySavedMoney = parseFloat((categorySavedMoney + moneySaved).toFixed(2))
-        categoryExpense = categoryExpense + minPrice
+        categoryExpense = categoryExpense + minPrice * recordResult.quantity
       }
       record["categorySavedMoney"] = categorySavedMoney
       record["categoryExpense"] = categoryExpense
@@ -207,6 +207,16 @@ export default function ExpenseReport() {
     }))
   console.log("pieData: ", pieData)
 
+  const emptyColoredCategoryExpenseArray: any[] = [1]
+  const emptyPieData = emptyColoredCategoryExpenseArray
+    .map((value, index) => ({
+      value,
+      svg: {
+        fill: "grey",
+        onPress: () => console.log('press', index),
+      },
+      key: `pie-${index}`,
+    }))
 
 
 
@@ -228,7 +238,9 @@ export default function ExpenseReport() {
       fontSize: 25,
     },
     text: {
-      fontSize: 25,
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "bold",
     },
     datePickerWrapper: {
       position: "absolute",
@@ -274,13 +286,38 @@ export default function ExpenseReport() {
       marginRight: 10,
       padding: 10,
       borderWidth: 2,
+      shadowColor: "gray",
+      borderRadius: 10,
+      shadowOpacity:0.2,
+      shadowOffset: {
+        height: 2,
+        width: 2,
+      },
+  
     },
     listViewBtn: {
-      borderColor: isChartView ? "#F2F2F2" : "#47b4b1"
+      borderColor: isChartView ? "white" : "#47b4b1",
+      borderWidth:1,
+
+      shadowColor: "#47b4b1",
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 2,
+        width: 2,
+      },
+
 
     },
     chartViewBtn: {
-      borderColor: isChartView ? "#47b4b1" : "#F2F2F2"
+      borderColor: isChartView ? "#47b4b1" : "white",
+      borderWidth:1,
+      shadowColor: "#47b4b1",
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 2,
+        width: 2,
+      },
+
 
     },
     dateDisplayer: {
@@ -306,15 +343,18 @@ export default function ExpenseReport() {
     },
     tableHeaderFooter: {
       flexDirection: "row",
-      width: 360,
+      width: "97%",
       height: 40,
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      marginLeft: "3%"
+
 
     },
     leftWrapper: {
       padding: 5,
       width: "60%",
+      marginleft: "5%"
     },
     rightWrapper: {
       flexDirection: "row",
@@ -322,6 +362,7 @@ export default function ExpenseReport() {
       justifyContent: "space-between",
       width: "40%",
       padding: 5,
+      marginRight: 10
 
     },
     totalExpenseWrapper: {
@@ -338,15 +379,16 @@ export default function ExpenseReport() {
     },
     amountWrapper: {
       width: "50%",
-      alignItems: "stretch",
-      padding: 5
+      // alignItems: "stretch",
+      padding: 5,
+      // marginRight:"1%"
     },
 
 
   })
 
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative" }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: 'white' }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -386,7 +428,7 @@ export default function ExpenseReport() {
         </View>
 
         <View style={styles.dateDisplayer}>
-          <Text style={{ fontSize: 20 }}>{displayedMonth} {displayedYear}</Text>
+          <Text style={{ fontSize: 30, color:"gray", fontWeight:"300"}}>{displayedMonth} {displayedYear}</Text>
         </View>
 
 
@@ -395,8 +437,12 @@ export default function ExpenseReport() {
 
       {isChartView ?
         <View style={styles.chartViewContainer}>
-          <PieChart style={styles.pieChart} data={pieData} />
-          {/* <Text>You have bested { } of families in saving money!</Text> */}
+          {pieData.length == 0 ?
+            <PieChart style={styles.pieChart} data={emptyPieData} />
+            :
+            <PieChart style={styles.pieChart} data={pieData} />
+          }
+
           <View style={styles.sectorItemWrapper}>
             {coloredCategoryExpenseArray.map((item: any) => (
               <ExpenseReportSectorItem items={item} key={item.categoryId} />

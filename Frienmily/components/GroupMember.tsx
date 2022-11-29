@@ -43,8 +43,19 @@ export default function Friends() {
       fontSize: 25,
     },
     text: {
-      fontSize: 25,
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "bold",
     },
+    groupNameWrapper: {
+      position: "absolute",
+      top: 120,
+      padding: '1%'
+  },
+  totalText:{
+    fontWeight:"300",
+    fontSize: 20,
+  }
   });
   const navigation = useNavigation();
 
@@ -88,17 +99,22 @@ export default function Friends() {
   }, [isFocused]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
+    <SafeAreaView style={{ flex: 1,alignItems: 'center', backgroundColor: '#F5F5F5' }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}>
           <FontAwesome name="angle-left" size={35} />
         </TouchableOpacity>
-        <Text style={styles.text}>{groupName}</Text>
+        <Text style={styles.text}>Receipt Record</Text>
+        </View>
+
+        <View style={styles.groupNameWrapper}>
+        <Text style={{ fontSize: 23, fontWeight: "300" }}>{groupName}</Text>
+            </View>
         <Text style={styles.text}></Text>
-        <Text style={styles.text}>Total expenses: ${totalAmount}</Text>
-      </View>
+        <Text style={styles.totalText}>Total expenses: ${totalAmount}</Text>
+      
       {/* <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5' }}>
         <Text style={{ fontSize: 25, paddingBottom: '1%' }}>Friends</Text>
       </View> */}

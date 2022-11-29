@@ -23,7 +23,7 @@ Then run:
 npx react-native-asset
 
 So you can use it now:
-import FontAwesome from 'react-native-vector-icons/FontAwesome'  
+import FontAwesome from 'react-native-vector-icons/FontAwesome'   
 
 <View style={styles.container}>
             <FontAwesome name='trophy' />
@@ -33,7 +33,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
         </View>
 
 
-Louie notes:
+Louie notes: 
 all of them should add friends tgt when creating groups 
 
 
