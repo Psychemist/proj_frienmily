@@ -207,6 +207,16 @@ export default function ExpenseReport() {
     }))
   console.log("pieData: ", pieData)
 
+  const emptyColoredCategoryExpenseArray: any[] = [1]
+  const emptyPieData = emptyColoredCategoryExpenseArray
+    .map((value, index) => ({
+      value,
+      svg: {
+        fill: "grey",
+        onPress: () => console.log('press', index),
+      },
+      key: `pie-${index}`,
+    }))
 
 
 
@@ -313,13 +323,13 @@ export default function ExpenseReport() {
       justifyContent: "center",
       alignItems: "center",
       marginLeft: "3%"
-      
+
 
     },
     leftWrapper: {
       padding: 5,
       width: "60%",
-      marginleft:"5%"
+      marginleft: "5%"
     },
     rightWrapper: {
       flexDirection: "row",
@@ -402,8 +412,12 @@ export default function ExpenseReport() {
 
       {isChartView ?
         <View style={styles.chartViewContainer}>
-          <PieChart style={styles.pieChart} data={pieData} />
-          {/* <Text>You have bested { } of families in saving money!</Text> */}
+          {pieData.length == 0 ?
+            <PieChart style={styles.pieChart} data={emptyPieData} />
+            :
+            <PieChart style={styles.pieChart} data={pieData} />
+          }
+
           <View style={styles.sectorItemWrapper}>
             {coloredCategoryExpenseArray.map((item: any) => (
               <ExpenseReportSectorItem items={item} key={item.categoryId} />
