@@ -286,13 +286,38 @@ export default function ExpenseReport() {
       marginRight: 10,
       padding: 10,
       borderWidth: 2,
+      shadowColor: "gray",
+      borderRadius: 10,
+      shadowOpacity:0.2,
+      shadowOffset: {
+        height: 2,
+        width: 2,
+      },
+  
     },
     listViewBtn: {
-      borderColor: isChartView ? "#F2F2F2" : "#47b4b1"
+      borderColor: isChartView ? "white" : "#47b4b1",
+      borderWidth:1,
+
+      shadowColor: "#47b4b1",
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 2,
+        width: 2,
+      },
+
 
     },
     chartViewBtn: {
-      borderColor: isChartView ? "#47b4b1" : "#F2F2F2"
+      borderColor: isChartView ? "#47b4b1" : "white",
+      borderWidth:1,
+      shadowColor: "#47b4b1",
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 2,
+        width: 2,
+      },
+
 
     },
     dateDisplayer: {
@@ -403,7 +428,7 @@ export default function ExpenseReport() {
         </View>
 
         <View style={styles.dateDisplayer}>
-          <Text style={{ fontSize: 20 }}>{displayedMonth} {displayedYear}</Text>
+          <Text style={{ fontSize: 30, color:"gray", fontWeight:"300"}}>{displayedMonth} {displayedYear}</Text>
         </View>
 
 

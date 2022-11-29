@@ -16,10 +16,23 @@ export default function ExpenseReportSectorItem(props: Props) {
       width: "45%",
       margin: 5,
       flexDirection: "column",
-      padding: 5,
-      borderWidth: 1,
-      borderColor: "#47b4b1",
-      backgroundColor: "#FFFFFF"
+      padding: 10,
+
+
+
+      fontSize: 20,
+      backgroundColor: "white",
+      borderWidth: 0.4,
+      borderColor: "lightgray",
+      borderRadius: 10,
+
+      shadowOpacity: 1,
+      shadowColor: "lightgray",
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 2,
+        width: 2,
+      },
 
     },
     topWrapper: {
