@@ -116,7 +116,7 @@ export default function CartItem(props: CartItemProps) {
         }
         console.log(tempArray)
         if (tempArray.length > 1) {
-            console.log({ "price": lowest.price, "shop": "多間同價" })
+            // console.log({ "price": lowest.price, "shop": "多間同價" })
             return { "price": lowest.price, "shop": "多間同價" }
         }
         console.log("lowest :", lowest)
@@ -173,13 +173,13 @@ export default function CartItem(props: CartItemProps) {
             textAlign: 'right'
         },
         container: {
-            marginTop:"1%",
-            marginLeft:"1%",
+            marginTop: "1%",
+            marginLeft: "1%",
             backgroundColor: "white",
             width: "99%",
             height: 100,
-            borderWidth:1,
-            borderColor:"#F5F5F5",
+            borderWidth: 1,
+            borderColor: "#F5F5F5",
             borderRadius: 10,
             flexDirection: "row",
             alignItems: "center",
@@ -190,8 +190,8 @@ export default function CartItem(props: CartItemProps) {
             shadowColor: "lightgray",
             shadowRadius: 2,
             shadowOffset: {
-              height: 1,
-              width: 1,
+                height: 1,
+                width: 1,
             },
         },
         counter: {
@@ -206,12 +206,12 @@ export default function CartItem(props: CartItemProps) {
             borderRadius: 30,
             justifyContent: 'space-around',
             alignItems: 'center',
-            shadowOpacity:1,
+            shadowOpacity: 1,
             shadowColor: "#47b4b1",
-            shadowRadius:2,
+            shadowRadius: 2,
             shadowOffset: {
-              height: 4,
-              width: 4,
+                height: 4,
+                width: 4,
             },
         },
         minusAndPlusBox: {
@@ -236,9 +236,9 @@ export default function CartItem(props: CartItemProps) {
         },
         counterNumberFont: {
             fontSize: 15,
-            fontWeight:"300"
+            fontWeight: "300"
         },
-        
+
     })
 
     const navigation = useNavigation()

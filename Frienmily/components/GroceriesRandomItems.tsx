@@ -73,14 +73,14 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
             { price: ztore_price, shop: "士多" }
         ]
 
-        console.log("props.item :", props.item)
+        // console.log("props.item :", props.item)
 
-        
-        
+
+
         let filtered = allPriceArray.filter(function (e) {
             return e.price != null;
         });
-        console.log("filtered :", filtered)
+        // console.log("filtered :", filtered)
 
         const lowest = filtered.reduce((previous, current) => {
             return current.price! < previous.price! ? current : previous;
@@ -93,10 +93,10 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
         }
         console.log(tempArray)
         if (tempArray.length > 1) {
-            console.log({"price": lowest.price, "shop": "多間同價"})
-            return {"price": lowest.price, "shop": "多間同價"}
+            // console.log({ "price": lowest.price, "shop": "多間同價" })
+            return { "price": lowest.price, "shop": "多間同價" }
         }
-        console.log("lowest :", lowest)
+        // console.log("lowest :", lowest)
         return lowest
 
     }

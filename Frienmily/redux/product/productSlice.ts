@@ -64,7 +64,7 @@ const fetchMoreData = (state: ProductState = initialState, action: any) => {
 
   console.log("*************** action.payload: ", action.payload)
 
-  console.log("========================= action.payload.isRenewList: ", action.payload.isRenewList.isRenewList)
+  console.log("========================= action.payload.isRenewList: ", action.payload.isRenewList)
   console.log("exploreResults reveiced at productSlice : ", exploreResults)
   console.log("number of Explore product fetched = ", exploreResults.length)
   console.log("top5Results reveiced at productSlice : ", top5Results)
@@ -83,7 +83,7 @@ const fetchMoreData = (state: ProductState = initialState, action: any) => {
     // 需要有機制判斷是loading triggered by button, 還是load more
     // A. listen on "button" & "page"
     // B. 
-    exploreProductData: [...state.exploreProductData, ...exploreResults],
+    exploreProductData: action.payload.isRenewList ? [...exploreResults] : [...state.exploreProductData, ...exploreResults],
     top5ProductData: [...top5Results],
     error: "",
     isListEnd: isNoMoreProduct

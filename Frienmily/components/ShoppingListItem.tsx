@@ -194,8 +194,8 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
 
         console.log("props.items :", props.items)
 
-        
-        
+
+
         let filtered = allPriceArray.filter(function (e) {
             return e.price != null;
         });
@@ -212,8 +212,8 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         }
         console.log(tempArray)
         if (tempArray.length > 1) {
-            console.log({"price": lowest.price, "shop": "多間同價"})
-            return {"price": lowest.price, "shop": "多間同價"}
+            // console.log({ "price": lowest.price, "shop": "多間同價" })
+            return { "price": lowest.price, "shop": "多間同價" }
         }
         console.log("lowest :", lowest)
         return lowest
