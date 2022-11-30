@@ -55,10 +55,6 @@ export default function CreateGroup() {
         showAlert2();
         return;
       }
-      if (imgs == null) {
-        showAlert3();
-        return;
-      }
       setIsShowRealSubmitButton(false)
 
 
@@ -66,7 +62,6 @@ export default function CreateGroup() {
       const formData = new FormData();
       formData.append('groupName', groupName);
       formData.append('is_family_group', isFamilyGroup);
-      formData.append('image', imgs[0]);
       formData.append('groupMemberId', [idArray]);
       formData.append('userID', userIdInRedux);
       console.log("formData :", formData)
@@ -79,13 +74,7 @@ export default function CreateGroup() {
       console.log("resultHERE :", result);
       // navigation.navigate('Groups' as never);
       setIsLoadingShow(true)
-      setTimeout(() => {
-        navigation.goBack()
-      }, 4000)
-
-
-
-
+      navigation.goBack()
     }
   };
   const friendsButton = () => {
@@ -101,11 +90,6 @@ export default function CreateGroup() {
     if (isFriendsButtonSelected == true) {
       setIsFriendsButtonSelected(false);
     }
-  };
-  const showAlert3 = () => {
-    Alert.alert('Please upload a profile picture', '', [
-      { text: 'OK', onPress: () => console.log('OK Pressed') },
-    ]);
   };
   const showAlert2 = () => {
     Alert.alert('Please at least select one group member', '', [
@@ -487,22 +471,7 @@ export default function CreateGroup() {
           {/* <TouchableOpacity onPress={enlargeProfilePicture}>
           <Image style={styles.userImage} source={{ uri: "https://iconandreceipt.s3.ap-southeast-1.amazonaws.com/c3269ab8c2949b1e0614dad00" }} ></Image>
         </TouchableOpacity> */}
-          {imgs == undefined || imgs == null ? (
-            <TouchableOpacity onPress={() => addPhoto()}>
-              <View style={styles.userImage}>
-              </View>
-            </TouchableOpacity>
-          ) : (
-            imgs.map((item: any, index: number) => {
-              return (
-                <TouchableOpacity key={index} onPress={() => addPhoto()}>
-                  <Image
-                    style={styles.userImage}
-                    source={{ uri: item.uri }}></Image>
-                </TouchableOpacity>
-              );
-            })
-          )}
+
           <TextInput
             placeholder="New Group Name"
             autoCapitalize="none"

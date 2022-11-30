@@ -1,6 +1,7 @@
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
+  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -19,6 +20,7 @@ export default function ShoppingList() {
 
   const isFocused = useIsFocused();
   const [groupName, setGroupName] = useState();
+  const [groupPic, setGroupPic] = useState();
   const [allAssignedItems, setAllAssignedItems] = useState([]);
   const [estimatedTotal, setEstimatedTotal] = useState(0)
   useEffect(() => {
@@ -38,8 +40,8 @@ export default function ShoppingList() {
         if (response) {
           groupName = await response.json();
         }
-        console.log("groupName :", groupName);
-        setGroupName(groupName);
+        setGroupName(groupName.group_name);
+        setGroupPic(groupName.profile_picture)
       } catch (error) {
         console.log('error', error);
       }
@@ -98,10 +100,37 @@ export default function ShoppingList() {
         console.log('error', error);
       }
     };
+    const reloadAgain = () => {
+      try {
+
+        setTimeout(async () => {
+          console.log('get group name');
+          console.log("groupID :", groupId);
+
+          const response = await fetch(`${REACT_APP_API_SERVER}/groups/getGroupName/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              groupID: groupId,
+            }),
+          });
+          let groupName;
+          if (response) {
+            groupName = await response.json();
+          }
+          setGroupName(groupName.group_name);
+          setGroupPic(groupName.profile_picture)
+        }, 1500)
+
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
 
     if (isFocused) {
       getGroupName();
       getAssignedItems()
+      reloadAgain()
     }
   }, [isFocused]);
 
@@ -120,6 +149,10 @@ export default function ShoppingList() {
       console.log('error', error);
     }
   };
+
+  const enlargeProfilePicture = () => {
+    navigation.navigate('GroupPhotoEdit' as never, { groupPic: groupPic, group_id: groupId } as never)
+  }
 
   const reloadPage = async () => {
     console.log("RELOAD")
@@ -281,7 +314,8 @@ export default function ShoppingList() {
     groupNameWrapper: {
       position: "absolute",
       top: 120,
-      padding: '1%'
+      padding: '1%',
+      flexDirection: "row",
     },
     scrollWrapper: {
       // position: "absolute",
@@ -290,6 +324,25 @@ export default function ShoppingList() {
       height: 500,
       paddingLeft: 5,
       paddingRight: 5,
+    },
+    userImage: {
+      width: 70,
+      height: 70,
+      borderRadius: 50,
+      borderColor: "#47b4b1",
+      // right: 5,
+      marginRight: "5%",
+      borderWidth: 4,
+      postion: "absolute",
+      // right: "-20%",
+      // top: "-20%",
+      shadowOpacity: 3,
+      shadowColor: "lightgray",
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 0,
+        width: 0,
+      },
     },
   });
   const navigation = useNavigation();
@@ -315,6 +368,9 @@ export default function ShoppingList() {
         : <View></View>
       }
       <View style={styles.groupNameWrapper}>
+        <TouchableOpacity onPress={enlargeProfilePicture}>
+          <Image style={styles.userImage} source={{ uri: groupPic }} ></Image>
+        </TouchableOpacity>
         <Text style={{ fontSize: 23, fontWeight: "300" }}>{groupName}</Text>
       </View>
       <ScrollView style={styles.scrollWrapper}>
