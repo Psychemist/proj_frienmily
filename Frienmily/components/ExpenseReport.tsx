@@ -92,33 +92,6 @@ export default function ExpenseReport() {
 
   }
 
-  // TODO: 比較超越了多少個家庭group
-  // 每個family的money saved
-  // family group 的數量
-  // const fetchAvgFamiliesMoneySaved = async () => {
-  //   try {
-  //   const response = await fetch(
-  //     `${REACT_APP_API_SERVER}/groups/`,
-  //     {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({
-  //         groupId: groupId,
-  //         month: month,
-  //         year: year
-  //       }),
-  //     },
-  //   );
-  //   console.log("response from server: " + response)
-  //   let data = await response.json()
-  //   console.log("Group buying record get from server: ", data)
-  //   setExpenseRecords(data)
-
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
-
   useEffect(() => {
     getExpenseReport()
   }, [])
