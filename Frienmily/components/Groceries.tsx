@@ -273,6 +273,10 @@ export default function Groceries() {
     }
   }
 
+  const clearSearchBar = () => {
+    setSearchKeyword('')
+  }
+
 
   // =================================================================
 
@@ -334,6 +338,7 @@ export default function Groceries() {
       paddingTop: 2,
       paddingBottom: 2,
       backgroundColor: '#47b4b1',
+      height: '9%',
       //SHADOW
       // shadowOpacity: 0.1,
       // shadowRadius: 2,
@@ -524,7 +529,7 @@ export default function Groceries() {
       <StatusBar barStyle="light-content" />
       {isShow && searchResult.length != 0 ? <ScrollView style={styles.dropDown}>
         {searchResult.map((item: any, idx: number) => (
-          <SearchBarItem item={item} key={idx} />
+          <SearchBarItem item={item} key={idx} clearSearchBar={clearSearchBar} />
         ))}
       </ScrollView> : (null)}
       <View style={styles.container}>
@@ -534,6 +539,7 @@ export default function Groceries() {
             value={searchKeyword}
             // onChangeText={setSearchKeyword}
             style={styles.input}
+            clearButtonMode="always"
             onChangeText={(value) => {
               console.log('on change value = ', value)
               setSearchKeyword(value)

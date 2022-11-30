@@ -208,8 +208,9 @@ export default function GroceriesDetails() {
         searchBarcontainer: {
             // top: 0, 
             // right: 12,
+            height: '8.5%',
             position: "relative",
-            justifyContent: 'center',
+            justifyContent: 'space-between',
             alignItems: 'center',
             flexDirection: 'row',
             width: '100%',
@@ -344,19 +345,19 @@ export default function GroceriesDetails() {
             shadowColor: "lightgray",
             shadowRadius: 2,
             shadowOffset: {
-              height: 1,
-              width: 1,
+                height: 1,
+                width: 1,
             },
         },
-        supermarketNameText:{
+        supermarketNameText: {
             fontSize: 17,
             // fontWeight:"300",
             paddingLeft: "10%",
             color: "gray"
         },
-        supermarketNamePrice:{
+        supermarketNamePrice: {
             fontSize: 17,
-            fontWeight:"500",
+            fontWeight: "500",
             marginRight: 12,
             color: "#47b4b1"
         },
@@ -367,12 +368,12 @@ export default function GroceriesDetails() {
             height: 7,
             width: 7,
             borderRadius: 5,
-            padding:5,
-            marginLeft:10
+            padding: 5,
+            marginLeft: 10
         },
         counter: {
             flexDirection: "row",
-            marginTop:"5%",
+            marginTop: "5%",
             fontSize: 20,
             backgroundColor: "white",
             width: '70%',
@@ -382,12 +383,12 @@ export default function GroceriesDetails() {
             borderRadius: 30,
             justifyContent: 'space-around',
             alignItems: 'center',
-            shadowOpacity:1,
+            shadowOpacity: 1,
             shadowColor: "#47b4b1",
-            shadowRadius:2,
+            shadowRadius: 2,
             shadowOffset: {
-              height: 4,
-              width: 4,
+                height: 4,
+                width: 4,
             },
         },
         minusAndPlusBox: {
@@ -408,7 +409,7 @@ export default function GroceriesDetails() {
         },
         counterNumberFont: {
             fontSize: 20,
-            fontWeight:"300"
+            fontWeight: "300"
         },
         cartNumText: {
             fontSize: 9,
@@ -448,19 +449,6 @@ export default function GroceriesDetails() {
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                     <FontAwesome name='angle-left' size={35} style={styles.shoppingCartIcon} />
                 </TouchableOpacity>
-                <View style={{ marginLef: "2%"}}>
-                    <TextInput
-                        placeholder="Search Products"
-                        value={searchKeyword}
-                        // onChangeText={setSearchKeyword}
-                        style={styles.input}
-                        onChangeText={(value) => {
-                            console.log('on change value = ', value)
-                            setSearchKeyword(value)
-                        }}
-                    />
-
-                </View>
                 {/* //---------------SEARCH BAR--------------------// */}
                 <View>
                     <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
@@ -495,7 +483,7 @@ export default function GroceriesDetails() {
                             </View>
 
                             <TouchableOpacity style={styles.minusAndPlusBox} onPress={addOneToCounter}>
-                                <FontAwesome name="plus" size={20} style={styles.minusAndPlusIcon}/>
+                                <FontAwesome name="plus" size={20} style={styles.minusAndPlusIcon} />
                             </TouchableOpacity>
                         </View>
                     </View>
