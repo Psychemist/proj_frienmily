@@ -174,6 +174,7 @@ const App = () => {
               component={ReceiptRecordItem}
             />
             <Stack.Screen name="Groups" component={Groups} />
+            {/* <Stack.Screen name="Groceries" component={Groceries} /> */}
             <Stack.Screen
               name="Add friends"
               component={AddFriends}

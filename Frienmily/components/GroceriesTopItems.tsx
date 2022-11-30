@@ -88,7 +88,7 @@ export default function GroceriesTopItems(props: GroceriesTopItemsProps) {
                 tempArray.push(item)
             }
         }
-        console.log(tempArray)
+        // console.log(tempArray)
         if (tempArray.length > 1) {
             // console.log({ "price": lowest.price, "shop": "多間同價" })
             return { "price": lowest.price, "shop": "多間同價" }

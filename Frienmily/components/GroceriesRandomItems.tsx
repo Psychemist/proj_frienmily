@@ -91,7 +91,7 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
                 tempArray.push(item)
             }
         }
-        console.log(tempArray)
+        // console.log(tempArray)
         if (tempArray.length > 1) {
             // console.log({ "price": lowest.price, "shop": "多間同價" })
             return { "price": lowest.price, "shop": "多間同價" }
@@ -176,7 +176,7 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
                 <View style={styles.titleContainer}><Text style={styles.text}>{props.item.goods_name}</Text></View>
                 <View style={styles.supermarketprice}>
                     <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
-                    <View><Text  style={styles.price}>${getLowest().price}</Text></View>
+                    <View><Text style={styles.price}>${getLowest().price}</Text></View>
                 </View>
             </View>
         </TouchableOpacity>

@@ -24,15 +24,15 @@ export default function LoadingScreen() {
             const intervalId = setTimeout(() => {
                 if (token) {
                     dispatch(reLogin(token))
-                    // navigation.navigate('HomeTab' as never)
-                    navigation.dispatch(
-                        CommonActions.reset({
-                            index: 1,
-                            routes: [
-                                { name: 'Groceries' }
-                            ],
-                        })
-                    );
+                    navigation.navigate('HomeTab' as never)
+                    // navigation.dispatch(
+                    //     CommonActions.reset({
+                    //         index: 1,
+                    //         routes: [
+                    //             { name: 'Groceries' }
+                    //         ],
+                    //     })
+                    // );
                     console.log("isLoggedIn is true at LoadingScreen. Navigated to Homepage(Groups Page).")
                 } else {
                     navigation.navigate('Login' as never)
