@@ -35,16 +35,18 @@ export default function Groceries() {
   const exploreProductsInRedux = useSelector((state: RootState) => state.product.exploreProductData)
   const top5ProductsInRedux = useSelector((state: RootState) => state.product.top5ProductData)
   const isListEnd = useSelector((state: RootState) => state.product.isListEnd)
+  const isInitialLoading = useSelector((state: RootState) => state.product.isInitialLoading)
+  const isCurrentlyLoading = useSelector((state: RootState) => state.product.isCurrentlyLoading)
 
   const [isBestSeller, setIsBestSeller] = useState(true)
   // const [allExploreData, setAllExploreData]: any = useState([]);
   // const [allTop5Data, setAllTop5Data]: any = useState([]);
   // const [groupName, setGroupName] = React.useState('');
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
   const [categoryArray, setCategoryArray] = useState([])
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const [shoppingCartNum, setShoppingCartNum] = React.useState<number>(0);
-  const [isRenewList, setIsRenewList] = useState<boolean>(false)
+  const [isRenewList, setIsRenewList] = useState<boolean>(isInitialLoading)
 
   const [button1, setButton1] = useState(false)
   const [button2, setButton2] = useState(false)
@@ -216,8 +218,9 @@ export default function Groceries() {
 
 
   const onChangePage = () => {
-    setPage(page + 1)
-    console.log("The coming page is Page ", page)
+    if (!isListEnd && !isCurrentlyLoading) {
+      setPage(page + 1)
+    }
   }
   const fetchMoreDataOnPageEnd = () => {
     console.log("touched the end of the page")
@@ -227,31 +230,21 @@ export default function Groceries() {
   }
 
 
-  // useEffect(() => {
-  //   console.log("categoryArray--------: ", categoryArray)
-  //   console.log("The current page number: ", page)
-  //   console.log("222222222 fetch at userEffect")
-  //   fetchData(categoryArray, page)
-  // }, [page])
 
-  // =================================================================
+  // FIXME: scroll到頂（  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 4040, "dt": 531, "prevDt": 7823}）
 
-
-
-  // FIXME: Fetch完第一次，Scroll到底的時候會fetch 額外60個product，並會取代掉前30個product；
-
-  // FIXME: 按Category button沒有反應
 
   useEffect(() => {
     setIsRenewList(true)
+    setPage(1)
     console.log("######## fetch because buttons change")
     onChangeFetchData(isRenewList)
   }, [button1, button2, button3, button4, button5, button6, button7, button8, button9, button10]);
 
   useEffect(() => {
     setIsRenewList(false)
-    // FIXME: ******** 即使這個useEffect被觸發，但thunk收到的isRenewList是true ********
     console.log("######## fetch because page changes")
+    console.log("######## current page: ", page)
     onChangeFetchData(isRenewList)
   }, [page]);
 
@@ -274,10 +267,8 @@ export default function Groceries() {
       }
     }
     if (finalSelectedCategoriesArray.length == 0) {
-      console.log("isRenewList: ", isRenewList)
       fetchData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], page, isRenewList)
     } else {
-      console.log("isRenewList: ", isRenewList)
       fetchData(finalSelectedCategoriesArray, page, isRenewList)
     }
   }

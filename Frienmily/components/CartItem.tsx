@@ -223,7 +223,7 @@ export default function CartItem(props: CartItemProps) {
                 height: 1,
                 width: 1,
             },
-            paddingRight:"5%"
+            paddingRight: "5%"
         },
         counter: {
             flexDirection: "row",
@@ -270,13 +270,13 @@ export default function CartItem(props: CartItemProps) {
             fontSize: 15,
             fontWeight: "300"
         },
-        binWrapper:{
+        binWrapper: {
             flexDirection: "row",
             justifyContent: 'space-around',
             alignContent: "center",
             alignItems: "center",
-            height:40,
-            width:80
+            height: 40,
+            width: 80
         }
     })
 
@@ -303,7 +303,7 @@ export default function CartItem(props: CartItemProps) {
                             navigation.navigate('ImagePreview' as never, { image: props.items.goods_picture } as never)
                         }}>
                             <View><Image source={{ uri: props.items.goods_picture }}
-                                style={{ width: 50, height: 50, marginRight:"2%"}} /></View>
+                                style={{ width: 50, height: 50, marginRight: "2%" }} /></View>
                         </TouchableOpacity>
                     </TouchableOpacity>
                     <View style={{ width: 150 }}>
@@ -311,7 +311,7 @@ export default function CartItem(props: CartItemProps) {
                         <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
                     </View>
                     <View style={styles.binWrapper}><Text style={styles.price}>${addZeroes(getLowest().price! * initNum)}</Text>
-                    <TouchableOpacity onPress={deleteThisItem}><FontAwesome name="trash-o" size={20} color={"#47b4b1"} /></TouchableOpacity>
+                        <TouchableOpacity onPress={deleteThisItem}><FontAwesome name="trash-o" size={20} color={"#47b4b1"} /></TouchableOpacity>
                     </View>
 
                 </View>) :
