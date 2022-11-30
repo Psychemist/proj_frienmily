@@ -8,8 +8,8 @@ import { fetchProductData } from './thunk';
 
 
 export interface ProductState {
-  loading: boolean,
-  moreLoading: boolean,
+  isInitialLoading: boolean,
+  isCurrentlyLoading: boolean,
   error: string | null,
   moreError: string | null,
   isListEnd: boolean,
@@ -18,8 +18,8 @@ export interface ProductState {
 }
 
 const initialState: ProductState = {
-  loading: false,
-  moreLoading: false,
+  isInitialLoading: true,
+  isCurrentlyLoading: false,
   error: null,
   moreError: null,
   isListEnd: false,
@@ -27,32 +27,32 @@ const initialState: ProductState = {
   top5ProductData: []
 }
 
-
 export const productSlice = createSlice({
   name: "product",
   initialState: initialState,
 
-  reducers: {
-
-
-  },
-
+  reducers: {},
   extraReducers: (build) => {
-
-
-    // NOTE: Specify the handling for pending, fulfill and rejected cases
     build.addCase(fetchProductData.pending, (state: ProductState) => {
       console.log("pending")
+      return {
+        ...state,
+        isCurrentlyLoading: true
+      }
+
     })
     build.addCase(fetchProductData.rejected, (state: ProductState, action: PayloadAction<{ error: string }>) => {
       console.log("rejected: ", action.payload.error)
       state.error = action.payload.error
+      return {
+        ...state,
+        isCurrentlyLoading: false
+      }
+
     })
     build.addCase(fetchProductData.fulfilled, fetchMoreData)
     console.log("fulfilled")
-
   }
-
 })
 
 export default productSlice.reducer
@@ -76,19 +76,23 @@ const fetchMoreData = (state: ProductState = initialState, action: any) => {
     isNoMoreProduct = false
   }
 
+  // TODO: 需要有機制判斷是 Initial Loading 還是 More Loading
+
+  // Initial Loading:
+  // 1. loading triggered by category buttons
+  // 2. First time entering the Groceries Page
+
+  // More Loading:
+  // 1. Scroll to bottom (while the list is not ended)
 
   return {
     ...state,
-    // FIXME: 如果categoryArray有變動，就應該是initial loading（overwrite 原本的 state）, 
-    // 需要有機制判斷是loading triggered by button, 還是load more
-    // A. listen on "button" & "page"
-    // B. 
-    exploreProductData: action.payload.isRenewList ? [...exploreResults] : [...state.exploreProductData, ...exploreResults],
+    // exploreProductData: action.payload.isRenewList ? [...exploreResults] : [...state.exploreProductData, ...exploreResults],
+    exploreProductData: [...exploreResults],
     top5ProductData: [...top5Results],
     error: "",
-    isListEnd: isNoMoreProduct
-    // loading: false,
-    // moreLoading: false
+    isListEnd: isNoMoreProduct,
+    isCurrentlyLoading: false
   }
 
 
