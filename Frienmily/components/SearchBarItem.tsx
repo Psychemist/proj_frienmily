@@ -13,6 +13,7 @@ import { REACT_APP_API_SERVER } from '@env';
 // import { json } from 'express';
 interface SearchBarItemProps {
     item: any,
+    clearSearchBar: () => void
 }
 
 
@@ -43,7 +44,10 @@ export default function SearchBarItem(props: SearchBarItemProps) {
     // TODO: Show the user image of each friend
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('GroceriesDetails' as never, { info: tempObject } as never)}>
+        <TouchableOpacity onPress={() => {
+            navigation.navigate('GroceriesDetails' as never, { info: tempObject } as never)
+            props.clearSearchBar()
+        }}>
             <View style={styles.searchItemBox}>
                 <View><Text style={styles.text}>{props.item.name}</Text></View>
             </View>

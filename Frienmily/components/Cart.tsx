@@ -276,7 +276,7 @@ export default function Cart() {
     <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", width: "100%", backgroundColor: 'white' }}>
       <StatusBar barStyle="dark-content" />
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('HomeTab' as never)}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <FontAwesome name='angle-left' size={35} />
         </TouchableOpacity>
 
