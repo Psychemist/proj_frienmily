@@ -69,6 +69,7 @@ const HomeTab = () => {
       headerShown: false,
       tabBarActiveTintColor: "#47b4b1",
       tabBarInactiveTintColor: "gray",
+
     }} >
       <Tab.Screen
         name="Groceries"
@@ -112,9 +113,11 @@ const HomeTab = () => {
         }}
       />
       <Tab.Screen
+
         name="Account"
         component={Account}
         options={{
+          unmountOnBlur: true,
           tabBarLabel: ({ focused, color }) => (
             <Text style={{ color: focused ? '#47b4b1' : color, fontSize: 11 }}>Account</Text>
           ),

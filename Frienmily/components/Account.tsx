@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useInsertionEffect, useState } from "react";
 import { Alert, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, StatusBar } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -14,15 +14,19 @@ export const GENDERS = ["Male", "Female", "Others"]
 
 export default function Account() {
     // 在 Redux 取資料
-    const usernameInRedux = useSelector((state: RootState) => state.user.username)
-    const genderInRedux = useSelector((state: RootState) => state.user.gender)
-    const mobileInRedux = useSelector((state: RootState) => state.user.mobile)
-    const emailInRedux = useSelector((state: RootState) => state.user.email)
-    const profilePictureInRedux = useSelector((state: RootState) => state.user.profilePicture)
 
-    const genderIndex = GENDERS.indexOf(genderInRedux!)
+    const userStore = useSelector((state: RootState) => state.user)
+    // let { gender, username, email, profilePicture, mobile } = userStore
+    console.log('account userStore : ', userStore)
+    // const usernameInRedux = useSelector((state: RootState) => state.user.username)
+    // const genderInRedux = useSelector((state: RootState) => state.user.gender)
+    // const mobileInRedux = useSelector((state: RootState) => state.user.mobile)
+    // const emailInRedux = useSelector((state: RootState) => state.user.email)
+    // const profilePictureInRedux = useSelector((state: RootState) => state.user.profilePicture)
 
-    console.log("profilePictureInRedux: ", profilePictureInRedux)
+    // const genderIndex = GENDERS.indexOf(genderInRedux!)
+
+    // console.log("profilePictureInRedux: ", profilePictureInRedux)
 
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
     if (isLoggedIn == true) {
@@ -32,10 +36,10 @@ export default function Account() {
     }
 
     // 設定初始值
-    const [username, __] = useState(usernameInRedux)
-    const [gender, setGender] = useState(genderIndex)
-    const [mobile, setMobile] = useState(mobileInRedux)
-    const [email, setEmail] = useState(emailInRedux)
+    const [username, setUsername] = useState('')
+    const [gender, setGender] = useState(0)
+    const [mobile, setMobile] = useState('')
+    const [email, setEmail] = useState('')
 
     const [isGenderEditable, setIsGenderEditable] = useState(false)
     const [isMobileEditable, setIsMobileEditable] = useState(false)
@@ -44,6 +48,15 @@ export default function Account() {
     const navigation = useNavigation()
     const dispatch = useDispatch()
 
+
+    useEffect(() => {
+        console.log('!! i know userstore chanfged')
+        setGender(Number(userStore.gender))
+        setMobile(userStore.mobile!)
+        setEmail(userStore.email!)
+        setUsername(userStore.username!)
+
+    }, [{ ...userStore }])
 
 
     // TODO: 離開此頁時，如果各個isEditable仍是true，則彈出視窗問用戶是否要放棄更改
@@ -162,7 +175,7 @@ export default function Account() {
             padding: 20,
             borderRadius: 10,
             fontSize: 30,
-            fontWeight:"bold",
+            fontWeight: "bold",
             marginLeft: 20
         },
         itemContainer: {
@@ -337,7 +350,7 @@ export default function Account() {
                         <Text style={styles.fieldContentText}>{username}</Text>
                     </View>
                     <TouchableOpacity onPress={enlargeProfilePicture}>
-                        <Image style={styles.userImage} source={{ uri: profilePictureInRedux! }} ></Image>
+                        <Image style={styles.userImage} source={{ uri: userStore.profilePicture! }} ></Image>
                     </TouchableOpacity>
 
                 </View>
@@ -436,20 +449,20 @@ export default function Account() {
                             </Text>
                         </TouchableOpacity>
                     }
-                
+
+                </View>
+
             </View>
 
-        </View>
+            {/* <Text style={styles.title}>Options</Text> */}
 
-            {/* <Text style={styles.title}>Options</Text> */ }
+            <View style={{ alignItems: "center" }}>
+                <TouchableOpacity style={[styles.logoutItemContainer, { height: "30%" }]} onPress={onLogout}>
+                    <View ><Text style={styles.BtnText}>Logout</Text></View>
+                    <View style={styles.logoutButton}><Icon name='ios-exit-outline' style={styles.logoutBtn} /></View>
+                </TouchableOpacity>
 
-    <View style={{ alignItems: "center" }}>
-        <TouchableOpacity style={[styles.logoutItemContainer, { height: "30%" }]} onPress={onLogout}>
-            <View ><Text style={styles.BtnText}>Logout</Text></View>
-            <View style={styles.logoutButton}><Icon name='ios-exit-outline' style={styles.logoutBtn} /></View>
-        </TouchableOpacity>
-
-    </View>
+            </View>
         </SafeAreaView >
     )
 }

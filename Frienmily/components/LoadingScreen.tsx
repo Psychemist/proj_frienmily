@@ -7,32 +7,43 @@ import userSlice, { reLogin } from '../redux/user/userSlice'
 import { getStoredAuth } from '../redux/user/thunk'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-
+import { CommonActions } from '@react-navigation/native';
 export default function LoadingScreen() {
     const navigation = useNavigation()
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
     const userState = useSelector((state: RootState) => state.user)
     const dispatch = useDispatch()
 
+
     useEffect(() => {
+
+        console.log('@@_____'.repeat(200))
         const checkLogin = async () => {
             const token = await AsyncStorage.getItem('token')
 
             const intervalId = setTimeout(() => {
                 if (token) {
                     dispatch(reLogin(token))
-                    navigation.navigate('HomeTab' as never)
+                    // navigation.navigate('HomeTab' as never)
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 1,
+                            routes: [
+                                { name: 'Groceries' }
+                            ],
+                        })
+                    );
                     console.log("isLoggedIn is true at LoadingScreen. Navigated to Homepage(Groups Page).")
                 } else {
                     navigation.navigate('Login' as never)
                     console.log("isLoggedIn is false at LoadingScreen. Navigated to LoginScreen.")
                 }
-            }, 1100)
+            }, 0)
 
         }
         checkLogin()
 
-    }, [isLoggedIn])
+    }, [])
 
     const styles = StyleSheet.create({
         body: {

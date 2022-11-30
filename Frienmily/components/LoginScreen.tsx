@@ -37,9 +37,7 @@ export default function LoginScreen() {
 
   const onLogin = async () => {
     try {
-      let loginResult = await dispatch(
-        fetchLogin({ username, password }),
-      ).unwrap();
+      let loginResult = await dispatch(fetchLogin({ username, password })).unwrap();
 
       console.log('loginResult from unwrap = ', loginResult);
       setUsername('');

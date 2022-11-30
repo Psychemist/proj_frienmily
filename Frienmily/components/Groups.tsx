@@ -64,6 +64,7 @@ export default function Groups() {
   const isFocused = useIsFocused();
   const [groupItemList, setGroupItemList] = useState([]);
   useEffect(() => {
+    console.log('GGGGG'.repeat(100))
     const loadGroupList = async () => {
       try {
         console.log('loadGroupList...');
