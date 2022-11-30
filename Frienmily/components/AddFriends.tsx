@@ -120,9 +120,11 @@ export default function AddFriends() {
       // paddingRight: "5%"
     },
     searchClearContainer: {
-      justifyContent: "center",
+      justifyContent: "space-between",
       alignItems: 'center',
-      maxWidth: "90%"
+      maxWidth: "98%",
+      flexDirection: "row"
+
     },
     searchButton: {
 
@@ -201,24 +203,24 @@ export default function AddFriends() {
       fontSize: 20,
       color: "gray",
       padding: "2%",
-      fontWeight:"300"
+      fontWeight: "300"
     },
     nameText: {
       fontSize: 20,
-      color: buttonIsClicked ? "#47b4b1":"gray",
-      fontWeight:"300"
+      color: buttonIsClicked ? "#47b4b1" : "gray",
+      fontWeight: "300"
       // padding: "2%"
     },
     mobileText: {
       fontSize: 15,
-      color: buttonIsClicked ? "#47b4b1":"gray",
-      fontWeight:"200"
+      color: buttonIsClicked ? "#47b4b1" : "gray",
+      fontWeight: "200"
       // padding: "2%"
     },
-    plusButton:{
+    plusButton: {
       fontSize: 43,
       color: "gray",
-      fontWeight:"300"
+      fontWeight: "300"
     },
     checkIcon: {
       color: "#47b4b1",
@@ -229,7 +231,7 @@ export default function AddFriends() {
         width: 1
       }
     },
-    successAddBox:{
+    successAddBox: {
       display: "flex",
       width: "100%",
       height: "53%",
@@ -283,17 +285,17 @@ export default function AddFriends() {
       flexDirection: 'row',
       width: "100%",
       height: 100,
-      borderColor: buttonIsClicked ? "#47b4b1":"gray",
-      shadowColor: buttonIsClicked ? "#47b4b1":"gray",
+      borderColor: buttonIsClicked ? "#47b4b1" : "gray",
+      shadowColor: buttonIsClicked ? "#47b4b1" : "gray",
       borderRadius: 25,
       borderWidth: 1,
       padding: 10,
-      paddingLeft:"8%",
-      paddingRight:"8%",
+      paddingLeft: "8%",
+      paddingRight: "8%",
       paddingTop: 20,
       paddingBottom: 20,
       backgroundColor: 'white',
-      
+
       //SHADOW
       shadowOpacity: 10,
       shadowRadius: 1,
@@ -302,8 +304,8 @@ export default function AddFriends() {
         width: 0,
       },
     },
-    nameMobileContainer:{
-      paddingRight:"40%"
+    nameMobileContainer: {
+      paddingRight: "40%"
     },
     userImage: {
       width: 60,
@@ -334,13 +336,13 @@ export default function AddFriends() {
   return (
     <SafeAreaView style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1 }}>
       {/* <View style={styles.header}> */}
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.navigate('Friends' as never)}>
-          <FontAwesome name="angle-left" size={35} />
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.navigate('Friends' as never)}>
+        <FontAwesome name="angle-left" size={35} />
+      </TouchableOpacity>
 
-        <Text style={styles.text}>Add Friends</Text>
+      <Text style={styles.text}>Add Friends</Text>
       {/* </View> */}
 
 
@@ -361,18 +363,18 @@ export default function AddFriends() {
           onChangeText={setSearchBar}
           style={styles.input}
         />
-        <View style={styles.searchClearContainer}></View>
-        <TouchableOpacity
-          style={styles.searchButton}
-          onPress={submitButton}>
-          <Text style={styles.searchAndClearText}>Search</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.clearButton}
-          onPress={clearSearchBar}>
-          <Text style={styles.searchAndClearText}>Clear</Text>
-        </TouchableOpacity>
-
+        <View style={styles.searchClearContainer}>
+          <TouchableOpacity
+            style={styles.searchButton}
+            onPress={submitButton}>
+            <Text style={styles.searchAndClearText}>Search</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.clearButton}
+            onPress={clearSearchBar}>
+            <Text style={styles.searchAndClearText}>Clear</Text>
+          </TouchableOpacity>
+        </View>
         {isShow ? (<View style={styles.resultContainer}>
           {addFriendStatus == 1 ? (
             <View style={styles.alertBox}>
@@ -423,10 +425,10 @@ export default function AddFriends() {
                       {userDetail.mobile}
                     </Text>
                   </View>
-                  
+
                   <TouchableOpacity onPress={addFriendButton}>
                     {buttonIsClicked ? (
-                      <FontAwesome name="check" size={25} style={styles.checkIcon}/>
+                      <FontAwesome name="check" size={25} style={styles.checkIcon} />
                     ) : (
                       <Text style={styles.plusButton}>+</Text>
                     )}
