@@ -44,6 +44,7 @@ import GroupMember from './components/GroupMember';
 import ImagePreview from './components/ImagePreview';
 import GroceriesTest from './components/GroceriesTest';
 import ExpenseReport from './components/ExpenseReport';
+import GroupPhotoEdit from './components/GroupPhotoEdit';
 
 
 const Tab = createBottomTabNavigator();
@@ -70,6 +71,19 @@ const HomeTab = () => {
       tabBarInactiveTintColor: "gray",
     }} >
       <Tab.Screen
+        name="Groceries"
+        component={Groceries}
+        options={{
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={{ color: focused ? '#47b4b1' : color, fontSize: 11 }}>Groceries</Text>
+          ),
+          tabBarIcon: ({ color, size }) => (
+            // <FontAwesomeIcon name="braille" color={color} size={20} />
+            <FontAwesomeIcon name="cubes" color={color} size={20} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Groups"
         component={Groups}
         options={{
@@ -94,19 +108,6 @@ const HomeTab = () => {
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon name="smile-o" color={color} size={24} />
             // <MaterialCommunityIcons name="robot-happy-outline" size={24} color="grey" />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Groceries"
-        component={Groceries}
-        options={{
-          tabBarLabel: ({ focused, color }) => (
-            <Text style={{ color: focused ? '#47b4b1' : color, fontSize: 11 }}>Groceries</Text>
-          ),
-          tabBarIcon: ({ color, size }) => (
-            // <FontAwesomeIcon name="braille" color={color} size={20} />
-            <FontAwesomeIcon name="cubes" color={color} size={20} />
           ),
         }}
       />
@@ -191,6 +192,7 @@ const App = () => {
             <Stack.Screen name="ExpenseReport" component={ExpenseReport} />
             <Stack.Screen name="ImagePreview" component={ImagePreview} />
             <Stack.Screen name="GroceriesTest" component={GroceriesTest} />
+            <Stack.Screen name="GroupPhotoEdit" component={GroupPhotoEdit} />
 
           </Stack.Navigator>
         </NavigationContainer>
