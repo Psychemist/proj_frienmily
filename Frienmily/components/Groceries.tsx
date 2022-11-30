@@ -231,8 +231,6 @@ export default function Groceries() {
 
 
 
-  // FIXME: 第一次入這一頁的時候會Fetch兩次
-  // FIXME: 按Category button沒有反應
   // FIXME: scroll到頂（  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 4040, "dt": 531, "prevDt": 7823}）
 
 
@@ -243,13 +241,12 @@ export default function Groceries() {
     onChangeFetchData(isRenewList)
   }, [button1, button2, button3, button4, button5, button6, button7, button8, button9, button10]);
 
-  // useEffect(() => {
-  //   setIsRenewList(false)
-  //   // FIXME: ******** 即使這個useEffect被觸發，但thunk收到的isRenewList是true ********
-  //   console.log("######## fetch because page changes")
-  //   console.log("######## current page: ", page)
-  //   onChangeFetchData(isRenewList)
-  // }, [page]);
+  useEffect(() => {
+    setIsRenewList(false)
+    console.log("######## fetch because page changes")
+    console.log("######## current page: ", page)
+    onChangeFetchData(isRenewList)
+  }, [page]);
 
   const onChangeFetchData = (isRenewList: boolean) => {
     const booleanArray = [

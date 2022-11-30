@@ -64,11 +64,11 @@ const fetchMoreData = (state: ProductState = initialState, action: any) => {
 
   console.log("*************** action.payload: ", action.payload)
 
-  console.log("========================= action.payload.isRenewList: ", action.payload.isRenewList)
-  console.log("exploreResults reveiced at productSlice : ", exploreResults)
-  console.log("number of Explore product fetched = ", exploreResults.length)
-  console.log("top5Results reveiced at productSlice : ", top5Results)
-  console.log("number of Top 5 product fetched = ", top5Results.length)
+  // console.log("========================= action.payload.isRenewList: ", action.payload.isRenewList)
+  // console.log("exploreResults reveiced at productSlice : ", exploreResults)
+  // console.log("number of Explore product fetched = ", exploreResults.length)
+  // console.log("top5Results reveiced at productSlice : ", top5Results)
+  // console.log("number of Top 5 product fetched = ", top5Results.length)
   let isNoMoreProduct;
   if (exploreResults.length == 0) {
     isNoMoreProduct = true
@@ -87,8 +87,8 @@ const fetchMoreData = (state: ProductState = initialState, action: any) => {
 
   return {
     ...state,
-    // exploreProductData: action.payload.isRenewList ? [...exploreResults] : [...state.exploreProductData, ...exploreResults],
-    exploreProductData: [...exploreResults],
+    exploreProductData: action.payload.isRenewList ? [...exploreResults] : [...state.exploreProductData, ...exploreResults],
+    // exploreProductData: [...exploreResults],
     top5ProductData: [...top5Results],
     error: "",
     isListEnd: isNoMoreProduct,
