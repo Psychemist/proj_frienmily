@@ -171,9 +171,9 @@ export default function ExpenseReport() {
     for (let [key, value] of Object.entries(record)) {
       if (typeof value === "number") {
         if (key.includes("categoryExpense")) {
-          expenseSum = expenseSum + value
+          expenseSum = parseFloat((expenseSum + value).toFixed(2))
         } else if (key.includes("categorySavedMoney")) {
-          moneySavedSum = moneySavedSum + value
+          moneySavedSum = parseFloat((moneySavedSum + value).toFixed(2))
         }
       }
     }
@@ -250,11 +250,11 @@ export default function ExpenseReport() {
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
-      marginBottom:"1%",
+      marginBottom: "1%",
       marginLeft: "4%"
     },
     inputField: {
-      boxSizing: 'border-box',      padding: 10,
+      boxSizing: 'border-box', padding: 10,
       // margin: 5,
       backgroundColor: "rgba(71, 180, 177, 0.3)",
       shadowColor: "#47b4b1",
@@ -263,7 +263,7 @@ export default function ExpenseReport() {
 
     },
     inputField1: {
-      boxSizing: 'border-box',      padding: 10,
+      boxSizing: 'border-box', padding: 10,
       // margin: 5,
       backgroundColor: "rgba(71, 180, 177, 0.3)",
       shadowColor: "#47b4b1",
@@ -286,8 +286,8 @@ export default function ExpenseReport() {
       marginRight: "10%",
       width: 70,
     },
-    thisMonthBtn:{
-       boxSizing: 'border-box',
+    thisMonthBtn: {
+      boxSizing: 'border-box',
       backgroundColor: "#47b4b1",
       fontSize: 16,
       // borderTopRightRadius: 10,
@@ -304,7 +304,7 @@ export default function ExpenseReport() {
       flexDirection: "row",
       justifyContent: "space-between",
       width: "90%",
-      marginBottom:"1%"
+      marginBottom: "1%"
 
     },
     switchBtn: {
@@ -319,15 +319,15 @@ export default function ExpenseReport() {
       shadowOpacity: 1,
       shadowRadius: 3,
       elevation: 9,
-      borderRadius:10
-  
+      borderRadius: 10
+
     },
     listViewBtn: {
-      shadowColor: isChartView ?  "gray":"#47b4b1",
- 
+      shadowColor: isChartView ? "gray" : "#47b4b1",
+
     },
     chartViewBtn: {
-      shadowColor: isChartView ?  "#47b4b1": "gray",
+      shadowColor: isChartView ? "#47b4b1" : "gray",
       // borderWidth:1,
       // shadowColor: "#47b4b1",
       // shadowRadius: 2,
@@ -370,14 +370,14 @@ export default function ExpenseReport() {
 
     },
     leftWrapper: {
-      paddingLeft:"10%",
+      paddingLeft: "10%",
       width: "60%",
       marginleft: "5%"
     },
     rightWrapper: {
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "space-between",
+      justifyContent: "flex-start",
       // width: "2%",
       padding: 5,
       // marginRight: 5
@@ -397,14 +397,14 @@ export default function ExpenseReport() {
     },
     amountWrapper: {
 
-      marginRight:35
+      marginRight: 0
     },
 
 
   })
 
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: 'white'}}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: 'white' }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -436,15 +436,15 @@ export default function ExpenseReport() {
       <View style={styles.switchBtnWrapper}>
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity style={[styles.switchBtn, styles.listViewBtn]} onPress={() => { setIsChartView(false) }}>
-            <Text style={{ fontSize: 15, color:"gray", fontWeight:"300"}}>List View</Text>
+            <Text style={{ fontSize: 15, color: "gray", fontWeight: "300" }}>List View</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.switchBtn, styles.chartViewBtn]} onPress={() => { setIsChartView(true) }}>
-          <Text style={{ fontSize: 15, color:"gray", fontWeight:"300"}}>Chart View</Text>
+            <Text style={{ fontSize: 15, color: "gray", fontWeight: "300" }}>Chart View</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.dateDisplayer}>
-          <Text style={{ fontSize: 30, color:"gray", fontWeight:"300"}}>{displayedMonth} {displayedYear}</Text>
+          <Text style={{ fontSize: 30, color: "gray", fontWeight: "300" }}>{displayedMonth} {displayedYear}</Text>
         </View>
 
 
@@ -469,7 +469,7 @@ export default function ExpenseReport() {
         <View>
           <View style={styles.tableHeaderFooter}>
             <View style={styles.leftWrapper}>
-              <Text style={{ fontWeight: "bold", fontSize: 14, color: "gray"}}>Categories</Text>
+              <Text style={{ fontWeight: "bold", fontSize: 14, color: "gray" }}>Categories</Text>
             </View>
             <View style={styles.rightWrapper}>
               <View style={styles.totalExpenseWrapper}>
@@ -491,7 +491,7 @@ export default function ExpenseReport() {
           <View style={styles.tableHeaderFooter}>
             <View style={[styles.rightWrapper, { width: "52%" }]}></View>
             <View style={[styles.rightWrapper, { width: "48%" }]}>
-              <View style={styles.amountWrapper}>
+              <View style={[styles.amountWrapper, { marginRight: 20 }]}>
                 <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 20 }}>${expenseSum}</Text>
               </View>
               <View style={styles.amountWrapper}>
