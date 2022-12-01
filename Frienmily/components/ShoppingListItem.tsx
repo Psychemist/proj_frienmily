@@ -23,7 +23,9 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
     const [buyerName, setBuyerName] = React.useState('');
     const isFocused = useIsFocused();
 
-
+    console.log("cart_id :", props.items.cart_id)
+    console.log("isSelected :", isSelected)
+    console.log("props.items.is_completed:", props.items.is_completed)
 
     const selectButton = async () => {
         const response = await fetch(`${REACT_APP_API_SERVER}/goods/changeIsCompleted/`, {
@@ -38,7 +40,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         if (response) {
             result = await response.json();
         }
-        console.log(result);
+
         if (result.isChanged == true) {
             setIsSelected(!isSelected)
             if (result.userID != null) {
@@ -114,10 +116,18 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                     setBuyerName('')
                 }
             }
+            const initSelectedButton = async () => {
+                // console.log("result :", result);
+                console.log("props.items========== :", props.items)
+                console.log("props.items.is_completed@@@@@@@@@@@@ :", props.items.is_completed)
+                console.log("props.items.cart_id@@@@@@@@@@@@ :", props.items.cart_id)
+                // setIsSelected(props.items.is_completed)
+            }
             if (isFocused) {
                 getAssigneeName()
                 getBuyerName()
                 initBuyerName()
+                initSelectedButton()
             }
 
         } catch (error) {
@@ -201,11 +211,11 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 tempArray.push(item)
             }
         }
-        console.log(tempArray)
+        // console.log(tempArray)
         if (tempArray.length > 1) {
             return { "price": lowest.price, "shop": "多間同價" }
         }
-        console.log("lowest :", lowest)
+        // console.log("lowest :", lowest)
         return lowest
 
     }
@@ -222,7 +232,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
             }),
         });
         let res = await result.json()
-        console.log(res)
+        // console.log(res)
 
         props.reloadPage()
 
