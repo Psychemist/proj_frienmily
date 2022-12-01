@@ -30,6 +30,7 @@ export const fetchProductData: any = createAsyncThunk("product/fetchProductData"
     console.log("isNewList right before fetching=", isRenewList)
     console.log("page number right before fetching=", page)
 
+    console.log(`${REACT_APP_API_SERVER}/goods/productByBatchAndCatId/`)
     const res = await fetch(
       `${REACT_APP_API_SERVER}/goods/productByBatchAndCatId/`,
       {
