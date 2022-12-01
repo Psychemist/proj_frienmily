@@ -81,7 +81,6 @@ export default function ExpenseReport() {
           }),
         },
       );
-      console.log("response from server: " + response)
       let data = await response.json()
       console.log("Group buying record get from server: ", data)
       setExpenseRecords(data)
@@ -151,10 +150,11 @@ export default function ExpenseReport() {
       }
     }
   }
+  console.log(">>>>>>>>>>>>>>>>>>> ", { expenseSum, moneySavedSum })
 
 
 
-  console.log("############ original data - expenseRecords: ", expenseRecords)
+  // console.log("############ expenseRecords after adding expense and moneySaved: ", expenseRecords)
   const coloredCategoryExpenseArray: any[] = []
 
 
@@ -166,7 +166,7 @@ export default function ExpenseReport() {
     let percentage = item.categoryExpense / expenseSum || 0
     coloredCategoryExpenseArray.push({ categoryExpense, pieSectorColor, categoryId, categoryName, percentage })
   })
-  console.log("@@@@@@@@@@@@@@ coloredCategoryExpenseArray:", coloredCategoryExpenseArray)
+  // console.log("@@@@@@@@@@@@@@ coloredCategoryExpenseArray:", coloredCategoryExpenseArray)
 
   const pieData = coloredCategoryExpenseArray
     .filter((element) => element.categoryExpense > 0)
