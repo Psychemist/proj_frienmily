@@ -62,11 +62,6 @@ export default function AddFriends() {
 
   const showAlert = () => {
     Alert.alert('Please enter something to search', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
