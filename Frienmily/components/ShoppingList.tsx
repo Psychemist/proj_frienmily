@@ -277,7 +277,8 @@ export default function ShoppingList() {
       borderColor: '#F5F5F5',
       borderRadius: 15,
       borderWidth: 1,
-      marginBottom: "5%",
+      marginBottom: "3%",
+      marginTop: "3%",
       // right: 10,
       // bottom: 7,
       // height: 50,
@@ -313,13 +314,14 @@ export default function ShoppingList() {
     },
     groupNameWrapper: {
       position: "absolute",
-      top: 120,
+      top: 100,
       padding: '1%',
       flexDirection: "row",
+      // marginBottom: 100,
     },
     scrollWrapper: {
       // position: "absolute",
-      // top: 140,
+      top: 10,
       width: "100%",
       height: 500,
       paddingLeft: 5,
@@ -371,7 +373,8 @@ export default function ShoppingList() {
         <TouchableOpacity onPress={enlargeProfilePicture}>
           <Image style={styles.userImage} source={{ uri: groupPic }} ></Image>
         </TouchableOpacity>
-        <Text style={{ fontSize: 23, fontWeight: "300" }}>{groupName}</Text>
+        <View style={{ justifyContent: 'center' }}><Text style={{ fontSize: 23, fontWeight: "300" }}>{groupName}</Text></View>
+
       </View>
       <ScrollView style={styles.scrollWrapper}>
         {allAssignedItems.map((item: any, idx: number) => (
