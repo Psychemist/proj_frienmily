@@ -23,11 +23,11 @@ export default function ShoppingList() {
   const [groupPic, setGroupPic] = useState();
   const [allAssignedItems, setAllAssignedItems] = useState([]);
   const [estimatedTotal, setEstimatedTotal] = useState(0)
+
+
   useEffect(() => {
     const getGroupName = async () => {
       try {
-        console.log('get group name');
-        console.log("groupID :", groupId);
 
         const response = await fetch(`${REACT_APP_API_SERVER}/groups/getGroupName/`, {
           method: 'POST',
@@ -48,8 +48,6 @@ export default function ShoppingList() {
     };
     const getAssignedItems = async () => {
       try {
-        console.log('getAssignedItems');
-        console.log("groupIdHERE :", groupId)
 
         const response = await fetch(`${REACT_APP_API_SERVER}/goods/getAssignedItems/`, {
           method: 'POST',
@@ -381,8 +379,8 @@ export default function ShoppingList() {
 
       </View>
       <ScrollView style={styles.scrollWrapper}>
-        {allAssignedItems.map((item: any, idx: number) => (
-          <ShoppingListItem items={item} key={idx} reloadPage={reloadPage} />
+        {allAssignedItems.map((item: any) => (
+          <ShoppingListItem items={item} key={item.id} reloadPage={reloadPage} />
         ))}
       </ScrollView>
       <View style={{ width: "100%" }}>
