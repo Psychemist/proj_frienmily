@@ -41,7 +41,7 @@ export default function Account() {
 
     // 設定初始值
     const [username, setUsername] = useState('')
-    const [gender, setGender] = useState(0)
+    const [gender, setGender] = useState('')
     const [mobile, setMobile] = useState('')
     const [email, setEmail] = useState('')
     // const [username, setUsername] = useState(userStore.username!)
@@ -59,13 +59,12 @@ export default function Account() {
     const dispatch = useDispatch()
 
 
-    // FIXME: cannot edit the value of personal info now
     useEffect(() => {
         console.log('!! i know userstore chanfged')
 
 
         console.log('No valud in local states')
-        setGender(Number(userStore.gender))
+        setGender(userStore.gender!)
         setMobile(userStore.mobile!)
         setEmail(userStore.email!)
 
@@ -408,11 +407,11 @@ export default function Account() {
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Gender</Text>
                         {isGenderEditable ?
-                            <ModalDropdown options={GENDERS} defaultValue={GENDERS[gender]} onSelect={(a) => { setGender(Number(a)) }}
+                            <ModalDropdown options={GENDERS} defaultValue={gender} onSelect={(a) => { setGender(GENDERS[Number(a)]) }}
                                 style={styles.inputField} dropdownTextStyle={{ fontSize: 18 }} />
                             :
                             <View>
-                                <Text style={styles.fieldContentText}>{GENDERS[gender]}</Text>
+                                <Text style={styles.fieldContentText}>{gender}</Text>
                             </View>
                         }
                     </View>
