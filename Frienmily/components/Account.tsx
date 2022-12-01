@@ -41,7 +41,7 @@ export default function Account() {
 
     // 設定初始值
     const [username, setUsername] = useState('')
-    const [gender, setGender] = useState(0)
+    const [gender, setGender] = useState('')
     const [mobile, setMobile] = useState('')
     const [email, setEmail] = useState('')
     // const [username, setUsername] = useState(userStore.username!)
@@ -59,13 +59,12 @@ export default function Account() {
     const dispatch = useDispatch()
 
 
-    // FIXME: cannot edit the value of personal info now
     useEffect(() => {
         console.log('!! i know userstore chanfged')
 
 
         console.log('No valud in local states')
-        setGender(Number(userStore.gender))
+        setGender(userStore.gender!)
         setMobile(userStore.mobile!)
         setEmail(userStore.email!)
 
@@ -80,6 +79,7 @@ export default function Account() {
     const changeGender = async () => {
         if (isGenderEditable == true) {
             try {
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ready to fetch and change gender in DB")
                 console.log("@@@@@@@@@@@@ username and gender to be sent to server: ", { username, gender })
                 let updateGenderResult = await dispatch(fetchUpdateGender({ username, gender })).unwrap()
                 console.log('fetchUpdateGender from unwrap = ', updateGenderResult)
@@ -111,7 +111,7 @@ export default function Account() {
                     );
                     return
                 }
-
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ready to fetch and change mobile in DB")
                 let updateMobileNumberResult = await dispatch(fetchUpdateMobileNumber({ username, mobile })).unwrap()
                 console.log('updateMobileNumberResult from unwrap = ', updateMobileNumberResult)
 
@@ -144,7 +144,7 @@ export default function Account() {
 
                     return
                 }
-
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ready to fetch and change email address in DB")
                 let updateEmailResult = await dispatch(fetchUpdateEmail({ username, email })).unwrap()
                 console.log('updateEmailResult from unwrap = ', updateEmailResult)
 
@@ -408,11 +408,11 @@ export default function Account() {
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Gender</Text>
                         {isGenderEditable ?
-                            <ModalDropdown options={GENDERS} defaultValue={GENDERS[gender]} onSelect={(a) => { setGender(Number(a)) }}
+                            <ModalDropdown options={GENDERS} defaultValue={gender} onSelect={(a) => { setGender(GENDERS[Number(a)]) }}
                                 style={styles.inputField} dropdownTextStyle={{ fontSize: 18 }} />
                             :
                             <View>
-                                <Text style={styles.fieldContentText}>{GENDERS[gender]}</Text>
+                                <Text style={styles.fieldContentText}>{gender}</Text>
                             </View>
                         }
                     </View>

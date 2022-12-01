@@ -1,6 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -13,12 +14,13 @@ import dotenv from 'dotenv';
 import { REACT_APP_API_SERVER } from '@env';
 import { useFocusEffect } from '@react-navigation/native';
 import { useIsFocused } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import GroupMemberItem from './GroupMemberItem';
 
 export default function Friends() {
+  const dispatch = useDispatch()
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const route = useRoute<any>()
   let groupID = route.params.groupId || ''
@@ -28,35 +30,6 @@ export default function Friends() {
   const [friendItemList, setFriendItemList] = useState([]);
   const [totalAmount, setTotalAmount]: any = useState();
 
-  const styles = StyleSheet.create({
-    header: {
-      height: '14%',
-      alignItems: 'center',
-      // paddingTop: "1%",
-      marginBottom: 0,
-      width: '100%',
-    },
-    backButton: {
-      position: 'absolute',
-      left: 0,
-      paddingLeft: '20%',
-      fontSize: 25,
-    },
-    text: {
-      borderRadius: 10,
-      fontSize: 30,
-      fontWeight: "bold",
-    },
-    groupNameWrapper: {
-      position: "absolute",
-      top: 120,
-      padding: '1%'
-  },
-  totalText:{
-    fontWeight:"300",
-    fontSize: 20,
-  }
-  });
   const navigation = useNavigation();
 
   const isFocused = useIsFocused();
@@ -98,31 +71,117 @@ export default function Friends() {
     }
   }, [isFocused]);
 
+  const onDeleteGroup = () => {
+    Alert.alert(
+      'Are you sure you want to delete this group?',
+      '',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Yes', onPress: async () => {
+            // dispatch(logout())
+            navigation.navigate('Groups' as never)
+          }
+        },
+      ]
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+  const styles = StyleSheet.create({
+    header: {
+      height: '14%',
+      alignItems: 'center',
+      // paddingTop: "1%",
+      marginBottom: 0,
+      width: '100%',
+    },
+    backButton: {
+      position: 'absolute',
+      left: 0,
+      paddingLeft: '20%',
+      fontSize: 25,
+    },
+    text: {
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "bold",
+    },
+    groupNameWrapper: {
+      position: "absolute",
+      top: 120,
+      padding: '1%'
+    },
+    totalText: {
+      fontWeight: "300",
+      fontSize: 20,
+    },
+    deleteGroupBtn: {
+      borderColor: '#47b4b1',
+      borderWidth: 2,
+      backgroundColor: "white",
+      height: 60,
+      width: "95%",
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: 10,
+      borderRadius: 10,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      color: 'white',
+    },
+    DeleteGroupBtnText: {
+      fontSize: 20,
+      color: 'red',
+      // fontWeight: 'bold',
+    },
+
+  });
   return (
-    <SafeAreaView style={{ flex: 1,alignItems: 'center', backgroundColor: '#F5F5F5' }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', backgroundColor: '#F5F5F5' }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}>
           <FontAwesome name="angle-left" size={35} />
         </TouchableOpacity>
-        <Text style={styles.text}>Receipt Record</Text>
-        </View>
+        <Text style={styles.text}>Group Settings</Text>
+      </View>
 
-        <View style={styles.groupNameWrapper}>
+      <View style={styles.groupNameWrapper}>
         <Text style={{ fontSize: 23, fontWeight: "300" }}>{groupName}</Text>
-            </View>
-        <Text style={styles.text}></Text>
-        <Text style={styles.totalText}>Total expenses: ${totalAmount}</Text>
-      
+      </View>
+      <Text style={styles.text}></Text>
+      <Text style={styles.totalText}>Total expenses: ${totalAmount}</Text>
+
       {/* <View style={{ alignItems: 'center', backgroundColor: '#F5F5F5' }}>
         <Text style={{ fontSize: 25, paddingBottom: '1%' }}>Friends</Text>
       </View> */}
-      <ScrollView style={{ backgroundColor: '#F5F5F5' }}>
+      <ScrollView
+        style={{ width: "100%" }}
+        contentContainerStyle={{ alignItems: "center" }}>
         {friendItemList.map((item: any, idx: number) => (
           <GroupMemberItem items={item} key={idx} />
         ))}
       </ScrollView>
+      <TouchableOpacity
+        style={styles.deleteGroupBtn}
+        onPress={onDeleteGroup}>
+        <Text style={styles.DeleteGroupBtnText}>Delete Group</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

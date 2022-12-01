@@ -386,7 +386,7 @@ export default function ShoppingList() {
       <View style={{ width: "100%" }}>
         <View>
           <TouchableOpacity
-            style={{ alignItems: 'flex-end' }}
+            style={{ alignItems: 'flex-end', marginTop: 15 }}
             onPress={() => {
               navigation.navigate('Groceries' as never);
             }}>
@@ -433,7 +433,7 @@ export default function ShoppingList() {
           onPress={() => {
             navigation.navigate('GroupMember' as never, { groupId: groupId, groupName: groupName } as never)
           }}>
-          <Text style={styles.groupMemberButtonText}>Group Members</Text>
+          <Text style={styles.groupMemberButtonText}>Group Settings</Text>
         </TouchableOpacity>
       </View>
 

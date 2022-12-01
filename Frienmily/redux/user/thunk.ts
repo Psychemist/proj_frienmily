@@ -57,7 +57,7 @@ export const fetchUpdateGender: any = createAsyncThunk("user/fetchUpdateGender",
 }, thunkAPI: any) => {
     try {
         console.log("gender received at thunk: ", params.gender)
-        let genderName = GENDERS[params.gender]
+        let genderName = params.gender
         console.log("gender name: ", genderName)
 
         const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/updateGender`, {
