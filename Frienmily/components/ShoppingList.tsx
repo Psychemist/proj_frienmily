@@ -185,6 +185,10 @@ export default function ShoppingList() {
         let filtered = allPriceArray.filter(function (e) {
           return e.price;
         });
+        // console.log("filtered :", filtered)
+        // let filtered2 = filtered.filter(function (e) {
+        //   return e.price;
+        // });
         const lowest = filtered.reduce<any>((previous, current) => {
           // console.log('checking', { previous, current })
           if (!Object.keys(previous).length) {
