@@ -79,6 +79,7 @@ export default function Account() {
     const changeGender = async () => {
         if (isGenderEditable == true) {
             try {
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ready to fetch and change gender in DB")
                 console.log("@@@@@@@@@@@@ username and gender to be sent to server: ", { username, gender })
                 let updateGenderResult = await dispatch(fetchUpdateGender({ username, gender })).unwrap()
                 console.log('fetchUpdateGender from unwrap = ', updateGenderResult)
@@ -110,7 +111,7 @@ export default function Account() {
                     );
                     return
                 }
-
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ready to fetch and change mobile in DB")
                 let updateMobileNumberResult = await dispatch(fetchUpdateMobileNumber({ username, mobile })).unwrap()
                 console.log('updateMobileNumberResult from unwrap = ', updateMobileNumberResult)
 
@@ -143,7 +144,7 @@ export default function Account() {
 
                     return
                 }
-
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ready to fetch and change email address in DB")
                 let updateEmailResult = await dispatch(fetchUpdateEmail({ username, email })).unwrap()
                 console.log('updateEmailResult from unwrap = ', updateEmailResult)
 
