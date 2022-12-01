@@ -16,8 +16,12 @@ export default function Account() {
     // 在 Redux 取資料
 
     const userStore = useSelector((state: RootState) => state.user)
-    // let { gender, username, email, profilePicture, mobile } = userStore
+    // FIXME: sometimes the profile picture is undefined
     console.log('account userStore : ', userStore)
+
+    // let { gender, username, email, profilePicture, mobile } = userStore
+
+
     // const usernameInRedux = useSelector((state: RootState) => state.user.username)
     // const genderInRedux = useSelector((state: RootState) => state.user.gender)
     // const mobileInRedux = useSelector((state: RootState) => state.user.mobile)
@@ -40,8 +44,13 @@ export default function Account() {
     const [gender, setGender] = useState(0)
     const [mobile, setMobile] = useState('')
     const [email, setEmail] = useState('')
+    // const [username, setUsername] = useState(userStore.username!)
+    // const [gender, setGender] = useState(userStore.gender!)
+    // const [mobile, setMobile] = useState(userStore.mobile!)
+    // const [email, setEmail] = useState(userStore.email!)
 
-    // FIXME: cannot edit the value of personal info now
+    // console.log("################## initial info: ", { username, gender, mobile, email })
+
     const [isGenderEditable, setIsGenderEditable] = useState(false)
     const [isMobileEditable, setIsMobileEditable] = useState(false)
     const [isEmailEditable, setIsEmailEditable] = useState(false)
@@ -50,15 +59,20 @@ export default function Account() {
     const dispatch = useDispatch()
 
 
+    // FIXME: cannot edit the value of personal info now
     useEffect(() => {
         console.log('!! i know userstore chanfged')
+
+
+        console.log('No valud in local states')
         setGender(Number(userStore.gender))
         setMobile(userStore.mobile!)
         setEmail(userStore.email!)
+
+
         setUsername(userStore.username!)
 
-    }, [{ ...userStore }])
-
+    }, [userStore.email, userStore.username, userStore.userId, userStore.profilePicture])
 
     const enlargeProfilePicture = () => {
         navigation.navigate('UserProfilePicuture' as never)
@@ -66,6 +80,7 @@ export default function Account() {
     const changeGender = async () => {
         if (isGenderEditable == true) {
             try {
+                console.log("@@@@@@@@@@@@ username and gender to be sent to server: ", { username, gender })
                 let updateGenderResult = await dispatch(fetchUpdateGender({ username, gender })).unwrap()
                 console.log('fetchUpdateGender from unwrap = ', updateGenderResult)
             }

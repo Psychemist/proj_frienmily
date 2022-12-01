@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
@@ -13,32 +13,39 @@ export default function LoadingScreen() {
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
     const userState = useSelector((state: RootState) => state.user)
     const dispatch = useDispatch()
+    const [isLoadingScreenRendered, setIsLoadingScreenRendered] = useState(false)
 
 
     useEffect(() => {
 
         console.log('@@_____'.repeat(200))
+
         const checkLogin = async () => {
             const token = await AsyncStorage.getItem('token')
 
-            const intervalId = setTimeout(() => {
-                if (token) {
+
+            if (token) {
+                console.log('>>>>>>>>>> loading page is log out flag :', userState.isLoggedOut)
+                if (!userState.isLoggedOut) {
                     dispatch(reLogin(token))
                     navigation.navigate('HomeTab' as never)
-                    // navigation.dispatch(
-                    //     CommonActions.reset({
-                    //         index: 1,
-                    //         routes: [
-                    //             { name: 'Groceries' }
-                    //         ],
-                    //     })
-                    // );
-                    console.log("isLoggedIn is true at LoadingScreen. Navigated to Homepage(Groups Page).")
+                    setIsLoadingScreenRendered(true)
                 } else {
-                    navigation.navigate('Login' as never)
-                    console.log("isLoggedIn is false at LoadingScreen. Navigated to LoginScreen.")
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 1,
+                            routes: [
+                                { name: 'Groceries' }
+                            ],
+                        })
+                    );
                 }
-            }, 0)
+                console.log("isLoggedIn is true at LoadingScreen. Navigated to Homepage(Groups Page).")
+            } else {
+                navigation.navigate('Login' as never)
+                console.log("isLoggedIn is false at LoadingScreen. Navigated to LoginScreen.")
+            }
+
 
         }
         checkLogin()
