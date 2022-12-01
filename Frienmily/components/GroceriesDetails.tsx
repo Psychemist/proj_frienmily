@@ -29,6 +29,8 @@ export default function GroceriesDetails() {
     const [isShow, setIsShow] = useState<boolean>(false)
     const [searchResult, setSearchResult] = useState([])
     const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 500)
+
+    console.log(info)
     const textChange = () => {
         // console.log("value: ", debouncedSearchKeyword)
         if (debouncedSearchKeyword && debouncedSearchKeyword.length >= 2) {
@@ -493,42 +495,42 @@ export default function GroceriesDetails() {
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#7dbfe9" }]}></View>
                         <Text style={styles.supermarketNameText}>惠康</Text>
-                        <Text style={styles.supermarketNamePrice}>{info.wellcome_price == null ? <Text>--</Text> : <Text>${addZeroes(info.wellcome_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.wellcome_price == null || info.wellcome_price == "0" ? <Text>--</Text> : <Text>${addZeroes(info.wellcome_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#fdbb1b" }]}></View>
                         <Text style={styles.supermarketNameText}>百佳</Text>
-                        <Text style={styles.supermarketNamePrice}>{info.parknshop_price == null ? <Text>--</Text> : <Text>${addZeroes(info.parknshop_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.parknshop_price == null || info.parknshop_price == "0" ? <Text>--</Text> : <Text>${addZeroes(info.parknshop_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#9772ef" }]}></View>
                         <Text style={styles.supermarketNameText}>Market Place by Jasons</Text>
-                        <Text style={styles.supermarketNamePrice}>{info.jasons_price == null ? <Text>--</Text> : <Text>${addZeroes(info.jasons_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.jasons_price == null || info.jasons_price == "0" ? <Text>--</Text> : <Text>${addZeroes(info.jasons_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#fd3b02" }]}></View>
                         <Text style={styles.supermarketNameText}>屈臣氏</Text>
-                        <Text style={styles.supermarketNamePrice}>{info.watsons_price == null ? <Text>--</Text> : <Text>${addZeroes(info.watsons_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.watsons_price == null || info.watsons_price == "0" ? <Text>--</Text> : <Text>${addZeroes(info.watsons_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#93bf03" }]}></View>
                         <Text style={styles.supermarketNameText}>萬寧</Text>
-                        <Text style={styles.supermarketNamePrice}>{info.mannings_price == null ? <Text>--</Text> : <Text>${addZeroes(info.mannings_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.mannings_price == null || info.mannings_price == "0" ? <Text>--</Text> : <Text>${addZeroes(info.mannings_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#ff893d" }]}></View>
                         <Text style={styles.supermarketNameText}>AEON</Text>
-                        <Text style={styles.supermarketNamePrice}>{info.aeon_price == null ? <Text>--</Text> : <Text>${addZeroes(info.aeon_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.aeon_price == null || info.aeon_price == "0" ? <Text>--</Text> : <Text>${addZeroes(info.aeon_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "#035033" }]}></View>
                         <Text style={styles.supermarketNameText}>大昌食品</Text>
-                        <Text style={styles.supermarketNamePrice}>{info.dch_price == null ? <Text>--</Text> : <Text>${addZeroes(info.dch_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.dch_price == null || info.dch_price == "0" ? <Text>--</Text> : <Text>${addZeroes(info.dch_price)}</Text>}</Text>
                     </View>
                     <View style={styles.supermarket}>
                         <View style={[styles.colorDot, { backgroundColor: "grey" }]}></View>
                         <Text style={styles.supermarketNameText}>士多</Text>
-                        <Text style={styles.supermarketNamePrice}>{info.ztore_price == null ? <Text>--</Text> : <Text>${addZeroes(info.ztore_price)}</Text>}</Text>
+                        <Text style={styles.supermarketNamePrice}>{info.ztore_price == null || info.ztore_price == "0" ? <Text>--</Text> : <Text>${addZeroes(info.ztore_price)}</Text>}</Text>
                     </View>
                 </View>
             </View>

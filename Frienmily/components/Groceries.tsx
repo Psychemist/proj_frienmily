@@ -468,6 +468,7 @@ export default function Groceries() {
       justifyContent: "flex-start",
       alignItems: "flex-start",
       flexDirection: "row",
+      flexWrap: 'wrap',
       // width: "100%",
       padding: 10,
       paddingTop: 10,
@@ -609,14 +610,14 @@ export default function Groceries() {
       {isBestSeller == true &&
         <View style={{ backgroundColor: 'white' }}>
 
-          <ScrollView horizontal={true} style={{ backgroundColor: 'white', width: '100%' }}>
+          <ScrollView style={{ backgroundColor: 'white', width: '100%', height: '53%' }}>
             <View style={styles.container2}>
               {top5ProductsInRedux.map((item: any, idx: number) => (
                 <GroceriesTopItems item={item} key={`top_${idx}`} />
               ))}
             </View>
           </ScrollView>
-          <View style={{ minHeight: 500 }}></View>
+          {/* <View style={{ minHeight: 500 }}></View> */}
         </View >}
 
 

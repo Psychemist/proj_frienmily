@@ -14,49 +14,49 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
     const getLowest = () => {
 
         let wellcome_price
-        if (props.item.wellcome_price == null) {
+        if (props.item.wellcome_price == null || props.item.wellcome_price == "0") {
             wellcome_price = null
         } else {
             wellcome_price = parseFloat(props.item.wellcome_price)
         }
         let parknshop_price
-        if (props.item.parknshop_price == null) {
+        if (props.item.parknshop_price == null || props.item.parknshop_price == "0") {
             parknshop_price = null
         } else {
             parknshop_price = parseFloat(props.item.parknshop_price)
         }
         let jasons_price
-        if (props.item.jasons_price == null) {
+        if (props.item.jasons_price == null || props.item.jasons_price == "0") {
             jasons_price = null
         } else {
             jasons_price = parseFloat(props.item.jasons_price)
         }
         let watsons_price
-        if (props.item.watsons_price == null) {
+        if (props.item.watsons_price == null || props.item.watsons_price == "0") {
             watsons_price = null
         } else {
             watsons_price = parseFloat(props.item.watsons_price)
         }
         let mannings_price
-        if (props.item.mannings_price == null) {
+        if (props.item.mannings_price == null || props.item.mannings_price == "0") {
             mannings_price = null
         } else {
             mannings_price = parseFloat(props.item.mannings_price)
         }
         let aeon_price
-        if (props.item.aeon_price == null) {
+        if (props.item.aeon_price == null || props.item.aeon_price == "0") {
             aeon_price = null
         } else {
             aeon_price = parseFloat(props.item.aeon_price)
         }
         let dch_price
-        if (props.item.dch_price == null) {
+        if (props.item.dch_price == null || props.item.dch_price == "0") {
             dch_price = null
         } else {
             dch_price = parseFloat(props.item.dch_price)
         }
         let ztore_price
-        if (props.item.ztore_price == null) {
+        if (props.item.ztore_price == null || props.item.ztore_price == "0") {
             ztore_price = null
         } else {
             ztore_price = parseFloat(props.item.ztore_price)
