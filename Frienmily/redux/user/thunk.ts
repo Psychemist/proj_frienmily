@@ -8,6 +8,7 @@ export const fetchLogin: any = createAsyncThunk("user/fetchLogin", async (params
     password: string
 }, thunkAPI: any) => {
     try {
+        console.log(`${process.env.REACT_APP_API_SERVER}/user/login`) 
         const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
