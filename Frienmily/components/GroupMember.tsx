@@ -83,16 +83,57 @@ export default function Friends() {
         },
         {
           text: 'Yes', onPress: async () => {
-            // dispatch(logout())
-            navigation.navigate('Groups' as never)
+            await deleteEmptyGroup()
           }
         },
       ]
     );
   }
 
+  const deleteEmptyGroup = async () => {
+    try {
+      let res = await fetch(`${REACT_APP_API_SERVER}/groups/deleteEmptyGroup/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          groupID: groupID,
+        }),
+      });
+      let data = [];
+      if (res) {
+        data = await res.json();
+      }
+      if (data.message == "This group is deleted") {
+        console.log("hihihihihi")
+        Alert.alert(
+          'This group is deleted.',
+          '',
+          [
+            {
+              text: 'OK', onPress: async () => {
+                navigation.navigate('HomeTab' as never)
+              }
+            }
+          ]
+        );
+      } else {
+        Alert.alert(
+          'This group cannot be deleted. Please make sure the shopping list and receipt record are empty.',
+          '',
+          [
+            {
+              text: 'OK',
+              onPress: () => console.log('OK Pressed'),
+              style: 'cancel',
+            }
+          ]
+        );
+      }
 
-
+    } catch (error) {
+      console.log('error', error);
+    }
+  }
 
 
 
