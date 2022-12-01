@@ -74,20 +74,21 @@ export default function GroupItem(props: GroupItemProps) {
       alignItems: 'center',
       // padding:5
     },
-    homeIcon: {
+    iconContainer: {
       position: 'absolute',
-      bottom: -5
+      bottom: 0,
+      backgroundColor: 'lightblue',
+      borderRadius: 20,
+      zIndex: 1000,
+      width: 17,
+      height: 17,
+      justifyContent: 'center',
+      alignItems: 'center',
+
     }
   });
 
-  const logPress = (pressType: string) => {
-    console.log(pressType);
-  };
   const navigation = useNavigation();
-
-  if (props.items.is_family_group == true) {
-    console.log("is_family_group")
-  }
 
   return (
     <TouchableOpacity
@@ -104,7 +105,7 @@ export default function GroupItem(props: GroupItemProps) {
       }>
 
       <View style={styles.miniWrapper}>
-        {props.items.is_family_group == true ? <FontAwesome style={styles.homeIcon} name="home" size={15} /> : null}
+        {props.items.is_family_group == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} /></View> : null}
 
         <Image style={styles.groupImage} source={{ uri: props.items.profile_picture }} ></Image>
         <View>
