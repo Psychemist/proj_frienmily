@@ -35,9 +35,9 @@ export default function GroupItem(props: GroupItemProps) {
     },
     groupName: {
       fontSize: 20,
-      paddingRight:"10%",
-      fontWeight:"300",
-      color:"gray",
+      paddingRight: "10%",
+      fontWeight: "300",
+      color: "gray",
       // paddingTop: "5%",
       // paddingBottom:"5%",
     },
@@ -54,15 +54,15 @@ export default function GroupItem(props: GroupItemProps) {
       height: 120,
       padding: 20,
       paddingTop: "5%",
-      paddingBottom:"5%",
+      paddingBottom: "5%",
       backgroundColor: 'white',
       //SHADOW
       borderRadius: 20,
       shadowOpacity: 0.1,
       shadowRadius: 1,
       shadowOffset: {
-          height: 4,
-          width: 2,
+        height: 4,
+        width: 2,
       },
       borderBottomColor: 'grey',
       borderBottomWidth: 0.2,
@@ -74,8 +74,9 @@ export default function GroupItem(props: GroupItemProps) {
       alignItems: 'center',
       // padding:5
     },
-    arrowIcon: {
-
+    homeIcon: {
+      position: 'absolute',
+      bottom: -5
     }
   });
 
@@ -83,6 +84,10 @@ export default function GroupItem(props: GroupItemProps) {
     console.log(pressType);
   };
   const navigation = useNavigation();
+
+  if (props.items.is_family_group == true) {
+    console.log("is_family_group")
+  }
 
   return (
     <TouchableOpacity
@@ -97,8 +102,10 @@ export default function GroupItem(props: GroupItemProps) {
           } as never,
         )
       }>
-      {/* <FontAwesome name="users" size={30} /> */}
+
       <View style={styles.miniWrapper}>
+        {props.items.is_family_group == true ? <FontAwesome style={styles.homeIcon} name="home" size={15} /> : null}
+
         <Image style={styles.groupImage} source={{ uri: props.items.profile_picture }} ></Image>
         <View>
           <Text style={styles.groupName}>{props.items.group_name}</Text>
@@ -109,7 +116,7 @@ export default function GroupItem(props: GroupItemProps) {
 
         {/* <Pressable onPress={()=> navigation.navigate('ShoppingList' as never)}>  */}
         {/* Dummy nav to Groceries first, going to change navigation to 'Group Detail' - Ronson 13Nov2022 17:48 */}
-        <FontAwesome name="angle-right" size={30} color={"#47b4b1"} style={styles.arrowIcon} />
+        <FontAwesome name="angle-right" size={30} color={"#47b4b1"} />
       </View>
       {/* </Pressable> */}
     </TouchableOpacity>
