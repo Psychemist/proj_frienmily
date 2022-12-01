@@ -231,7 +231,6 @@ export default function Groceries() {
 
 
 
-  // FIXME: scroll到頂（  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 4040, "dt": 531, "prevDt": 7823}）
 
 
   useEffect(() => {

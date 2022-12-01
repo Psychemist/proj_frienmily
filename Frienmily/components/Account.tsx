@@ -2,7 +2,7 @@ import React, { useEffect, useInsertionEffect, useState } from "react";
 import { Alert, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, StatusBar } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { fetchUpdateEmail, fetchUpdateGender, fetchUpdateMobileNumber } from "../redux/user/thunk";
@@ -16,8 +16,12 @@ export default function Account() {
     // 在 Redux 取資料
 
     const userStore = useSelector((state: RootState) => state.user)
-    // let { gender, username, email, profilePicture, mobile } = userStore
+    // FIXME: sometimes the profile picture is undefined
     console.log('account userStore : ', userStore)
+
+    // let { gender, username, email, profilePicture, mobile } = userStore
+
+
     // const usernameInRedux = useSelector((state: RootState) => state.user.username)
     // const genderInRedux = useSelector((state: RootState) => state.user.gender)
     // const mobileInRedux = useSelector((state: RootState) => state.user.mobile)
@@ -40,6 +44,12 @@ export default function Account() {
     const [gender, setGender] = useState(0)
     const [mobile, setMobile] = useState('')
     const [email, setEmail] = useState('')
+    // const [username, setUsername] = useState(userStore.username!)
+    // const [gender, setGender] = useState(userStore.gender!)
+    // const [mobile, setMobile] = useState(userStore.mobile!)
+    // const [email, setEmail] = useState(userStore.email!)
+
+    // console.log("################## initial info: ", { username, gender, mobile, email })
 
     const [isGenderEditable, setIsGenderEditable] = useState(false)
     const [isMobileEditable, setIsMobileEditable] = useState(false)
@@ -49,17 +59,20 @@ export default function Account() {
     const dispatch = useDispatch()
 
 
+    // FIXME: cannot edit the value of personal info now
     useEffect(() => {
         console.log('!! i know userstore chanfged')
+
+
+        console.log('No valud in local states')
         setGender(Number(userStore.gender))
         setMobile(userStore.mobile!)
         setEmail(userStore.email!)
+
+
         setUsername(userStore.username!)
 
-    }, [{ ...userStore }])
-
-
-    // TODO: 離開此頁時，如果各個isEditable仍是true，則彈出視窗問用戶是否要放棄更改
+    }, [userStore.email, userStore.username, userStore.userId, userStore.profilePicture])
 
     const enlargeProfilePicture = () => {
         navigation.navigate('UserProfilePicuture' as never)
@@ -67,6 +80,7 @@ export default function Account() {
     const changeGender = async () => {
         if (isGenderEditable == true) {
             try {
+                console.log("@@@@@@@@@@@@ username and gender to be sent to server: ", { username, gender })
                 let updateGenderResult = await dispatch(fetchUpdateGender({ username, gender })).unwrap()
                 console.log('fetchUpdateGender from unwrap = ', updateGenderResult)
             }
@@ -164,6 +178,40 @@ export default function Account() {
             ]
         );
     }
+
+    // TODO: 離開此頁時，如果各個isEditable仍是true，則彈出視窗問用戶是否要放棄更改
+
+    // useEffect(() => {
+    //     const leaveScreen = navigation.addListener('blur', () => {
+    //         // The screen is focused
+    //         console.log("%%%%".repeat(100))
+    //     });
+
+    //     // Return the function to unsubscribe from the event so it gets removed on unmount
+    //     return leaveScreen;
+    // }, [navigation]);
+
+
+
+    // const isFocused = useIsFocused()
+    // useEffect(() => {
+    //     if (!isFocused) {
+    //         console.log("not focused %%%%%%%%%%%%%%%%%%%%%%%%");
+    //     } else {
+    //         console.log("focused %%%%%%%%%%%%%%%%%%%%%%%%");
+    //     }
+    // }, [])
+
+
+
+    // useEffect(
+    //     () => navigation.addListener('blur', () => {
+    //         console.log("%%%%".repeat(100))
+    //     }),
+    //     [navigation]
+    // );
+
+
 
 
     const styles = StyleSheet.create({
@@ -396,7 +444,6 @@ export default function Account() {
                                 <Text style={styles.fieldContentText}>{mobile}</Text>
                                 :
                                 <View>
-                                    <Text style={[styles.fieldContentText, { color: "red" }]}>(Update your mobile number)</Text>
                                 </View>
 
                             )
@@ -430,7 +477,6 @@ export default function Account() {
                                 <Text style={styles.fieldContentText}>{email}</Text>
                                 :
                                 <View>
-                                    <Text style={[styles.fieldContentText, { color: "red" }]}>(Update your email address)</Text>
                                 </View>
                             )
                         }

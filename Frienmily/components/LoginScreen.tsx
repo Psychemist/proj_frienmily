@@ -14,6 +14,7 @@ import {
 import { RootState } from '../redux/store';
 import { fetchLogin } from '../redux/user/thunk';
 import { useNavigation } from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
 
 export default function LoginScreen() {
   const usernameInRedux = useSelector(
@@ -22,6 +23,8 @@ export default function LoginScreen() {
 
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const userState = useSelector((state: RootState) => state.user)
+
   const errMsg = useSelector((state: RootState) => state.user.errMsg);
 
   const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
@@ -43,7 +46,18 @@ export default function LoginScreen() {
       setUsername('');
       setPassword('');
 
-      navigation.navigate('HomeTab' as never);
+      if (!userState.isLoggedOut) {
+        navigation.navigate('HomeTab' as never)
+      } else {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [
+              { name: 'HomeTab' }
+            ],
+          })
+        );
+      }
     } catch (error) {
       console.log('error from unwrap = ', error);
       Alert.alert(`Invalid username or password`, '', [

@@ -16,6 +16,7 @@ export interface UserState {
     gender: string | null,
     profilePicture: string | null,
     errMsg: string | null
+    isLoggedOut: boolean
 }
 
 const initialState: UserState = {
@@ -26,7 +27,8 @@ const initialState: UserState = {
     mobile: null,
     gender: "Others",
     profilePicture: null,
-    errMsg: null
+    errMsg: null,
+    isLoggedOut: false
 }
 
 const prepareInitialState: () => Promise<UserState> = async () => {
@@ -92,6 +94,7 @@ export const userSlice = createSlice({
                 // @ts-ignore
                 state[key] = value
             }
+            state.isLoggedOut = true
             AsyncStorage.removeItem("token")
 
         }
