@@ -2,7 +2,7 @@ import React, { useEffect, useInsertionEffect, useState } from "react";
 import { Alert, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, StatusBar } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { fetchUpdateEmail, fetchUpdateGender, fetchUpdateMobileNumber } from "../redux/user/thunk";
@@ -41,6 +41,7 @@ export default function Account() {
     const [mobile, setMobile] = useState('')
     const [email, setEmail] = useState('')
 
+    // FIXME: cannot edit the value of personal info now
     const [isGenderEditable, setIsGenderEditable] = useState(false)
     const [isMobileEditable, setIsMobileEditable] = useState(false)
     const [isEmailEditable, setIsEmailEditable] = useState(false)
@@ -58,8 +59,6 @@ export default function Account() {
 
     }, [{ ...userStore }])
 
-
-    // TODO: 離開此頁時，如果各個isEditable仍是true，則彈出視窗問用戶是否要放棄更改
 
     const enlargeProfilePicture = () => {
         navigation.navigate('UserProfilePicuture' as never)
@@ -164,6 +163,40 @@ export default function Account() {
             ]
         );
     }
+
+    // TODO: 離開此頁時，如果各個isEditable仍是true，則彈出視窗問用戶是否要放棄更改
+
+    // useEffect(() => {
+    //     const leaveScreen = navigation.addListener('blur', () => {
+    //         // The screen is focused
+    //         console.log("%%%%".repeat(100))
+    //     });
+
+    //     // Return the function to unsubscribe from the event so it gets removed on unmount
+    //     return leaveScreen;
+    // }, [navigation]);
+
+
+
+    // const isFocused = useIsFocused()
+    // useEffect(() => {
+    //     if (!isFocused) {
+    //         console.log("not focused %%%%%%%%%%%%%%%%%%%%%%%%");
+    //     } else {
+    //         console.log("focused %%%%%%%%%%%%%%%%%%%%%%%%");
+    //     }
+    // }, [])
+
+
+
+    // useEffect(
+    //     () => navigation.addListener('blur', () => {
+    //         console.log("%%%%".repeat(100))
+    //     }),
+    //     [navigation]
+    // );
+
+
 
 
     const styles = StyleSheet.create({
@@ -396,7 +429,6 @@ export default function Account() {
                                 <Text style={styles.fieldContentText}>{mobile}</Text>
                                 :
                                 <View>
-                                    <Text style={[styles.fieldContentText, { color: "red" }]}>(Update your mobile number)</Text>
                                 </View>
 
                             )
@@ -430,7 +462,6 @@ export default function Account() {
                                 <Text style={styles.fieldContentText}>{email}</Text>
                                 :
                                 <View>
-                                    <Text style={[styles.fieldContentText, { color: "red" }]}>(Update your email address)</Text>
                                 </View>
                             )
                         }
