@@ -75,16 +75,19 @@ export default function GroceriesRandomItems(props: GroceriesRandomItemsProps) {
 
         // console.log("props.item :", props.item)
 
-
+        interface IPrice {
+            price: number | null
+            shop: string
+        }
+        const iPrices: IPrice = { price: 1.7976931348623157e+308, shop: "Dummy Max" }
 
         let filtered = allPriceArray.filter(function (e) {
             return e.price != null;
         });
         // console.log("filtered :", filtered)
-
-        const lowest = filtered.reduce((previous, current) => {
+        const lowest = filtered.reduce((previous: IPrice, current: IPrice) => {
             return current.price! < previous.price! ? current : previous;
-        });
+        }, iPrices);
         let tempArray = []
         for (let item of filtered) {
             if (item.price == lowest.price) {
