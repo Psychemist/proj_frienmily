@@ -334,7 +334,7 @@ export default function ExpenseReport() {
     },
     tableHeaderFooter: {
       flexDirection: "row",
-      width: "98%",
+      width: "100%",
       height: 40,
       justifyContent: "center",
       alignItems: "center",
@@ -369,7 +369,7 @@ export default function ExpenseReport() {
       height: 20
     },
     amountWrapper: {
-
+      justifyContent: "flex-start",
       marginRight: 0
     },
 
@@ -462,12 +462,12 @@ export default function ExpenseReport() {
           </View>
 
           <View style={styles.tableHeaderFooter}>
-            <View style={[styles.rightWrapper, { width: "52%" }]}></View>
-            <View style={[styles.rightWrapper, { width: "48%" }]}>
-              <View style={[styles.amountWrapper, { marginRight: 20 }]}>
+            <View style={[styles.rightWrapper, { width: "32%" }]}></View>
+            <View style={[styles.rightWrapper, {width: "50%" }]}>
+              <View style={[styles.amountWrapper, { width: "50%"}]}>
                 <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 20 }}>${expenseSum}</Text>
               </View>
-              <View style={styles.amountWrapper}>
+              <View style={[styles.amountWrapper, { width: "50%"}]}>
                 <Text style={{ fontWeight: "bold", color: "#f79f24", textAlign: "right", fontSize: 20 }}>${moneySavedSum}</Text>
               </View>
             </View>
