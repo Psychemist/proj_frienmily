@@ -189,7 +189,7 @@ export default function Cart() {
     header: {
       height: "14%",
       alignItems: "center",
-      marginBottom: "10%",
+      marginBottom: 40,
       width: "100%",
       backgroundColor: "white"
     },
@@ -307,7 +307,7 @@ export default function Cart() {
 
       </View>
 
-      <ScrollView style={{ backgroundColor: 'white', width: "100%" }}>
+      <ScrollView style={{ backgroundColor: 'white', width: "100%", marginTop: '7%' }}>
         {shoppingListArray.map((item: any, idx: number) => (
           <CartItem items={item} reCalculateAmount={reCalculateAmount} key={idx} />
         ))}

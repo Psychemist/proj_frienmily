@@ -295,7 +295,9 @@ export default function GroceriesDetails() {
             justifyContent: "flex-start",
             alignItems: "center",
             width: "100%",
-            padding: 10
+            // paddingTop: 5,
+            paddingLeft: 10,
+            paddingRight: 10,
 
         },
         imageWrapper: {
@@ -327,8 +329,9 @@ export default function GroceriesDetails() {
             }
         },
         supermarketWrapper: {
-            padding: 10,
-            marginTop: "5%",
+            // padding: 10,
+            // paddingTop: 5,
+            // marginTop: "2%",
             flexDirection: "column",
             alignItems: "center",
             width: "100%"
