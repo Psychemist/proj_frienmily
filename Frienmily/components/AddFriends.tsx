@@ -1,6 +1,7 @@
 import {
   Alert,
   Image,
+  Keyboard,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -329,7 +330,7 @@ export default function AddFriends() {
   });
 
   return (
-    <SafeAreaView style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1 }}>
+    <SafeAreaView style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1 }} onTouchStart={() => { Keyboard.dismiss() }}>
       {/* <View style={styles.header}> */}
       <TouchableOpacity
         style={styles.backButton}

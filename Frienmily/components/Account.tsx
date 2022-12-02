@@ -1,5 +1,5 @@
 import React, { useEffect, useInsertionEffect, useState } from "react";
-import { Alert, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, StatusBar } from "react-native";
+import { Alert, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, StatusBar, Keyboard } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
@@ -382,7 +382,7 @@ export default function Account() {
     });
 
     return (
-        <SafeAreaView style={styles.mainPage}>
+        <SafeAreaView style={styles.mainPage} onTouchStart={() => { Keyboard.dismiss() }}>
             <StatusBar barStyle="dark-content" />
             {/* <View style={{ alignItems: "center" }}>
                 <Text style={{ fontSize: 25, paddingBottom: "1%" }}>Account</Text>

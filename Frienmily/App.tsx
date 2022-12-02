@@ -149,7 +149,7 @@ const App = () => {
               component={HomeTab}
             />
             <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} options={{ gestureEnabled: true }} />
             <Stack.Screen
               name="GroceriesTopItems"
               component={GroceriesTopItems}

@@ -12,6 +12,7 @@ import {
   Button,
   ActivityIndicator,
   StatusBar,
+  Keyboard,
 } from 'react-native';
 import FriendItem from './FriendItem';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -94,12 +95,12 @@ export default function Groceries() {
 
   //---------------SEARCH BAR--------------------//
   const [searchKeyword, setSearchKeyword] = useState<string>('')
-  const [isShow, setIsShow] = useState<boolean>(false)
+  const [isShow, setIsShow] = useState<boolean>(true)
   const [searchResult, setSearchResult] = useState([])
-  const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 500)
+  const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 0)
   const textChange = () => {
     // console.log("value: ", debouncedSearchKeyword)
-    if (debouncedSearchKeyword && debouncedSearchKeyword.length >= 2) {
+    if (debouncedSearchKeyword && debouncedSearchKeyword.length >= 1) {
       console.log('i am now searching :', debouncedSearchKeyword)
 
       const loadSearchResult = async () => {
@@ -120,9 +121,10 @@ export default function Groceries() {
           if (response) {
             json = await response.json();
           }
-          // console.log("json :", json.searchResult);
-          setSearchResult(json.searchResult);
           setIsShow(true)
+          console.log("json :", json.searchResult);
+          setSearchResult(json.searchResult);
+          // setIsShow(true)
           if (searchResult.length == 0) {
             setIsShow(false)
           }
@@ -179,9 +181,9 @@ export default function Groceries() {
 
   const fetchData = async (categoryArray: any, page: number, isRenewList: boolean) => {
     try {
-      console.log("@@@@@@@ now fetch data")
-      console.log("@@@@@@@ categoryArray: ", categoryArray)
-      console.log("@@@@@@@ page: ", page)
+      // console.log("@@@@@@@ now fetch data")
+      // console.log("@@@@@@@ categoryArray: ", categoryArray)
+      // console.log("@@@@@@@ page: ", page)
       let fetchResult = await dispatch(fetchProductData({
         categoryArray: categoryArray,
         page: page,
@@ -526,9 +528,9 @@ export default function Groceries() {
 
   return (
     //---------------SEARCH BAR--------------------//
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }} onTouchStart={() => { Keyboard.dismiss() }}>
       <StatusBar barStyle="light-content" />
-      {isShow && searchResult.length != 0 ? <ScrollView style={styles.dropDown}>
+      {isShow && searchResult.length > 0 ? <ScrollView style={styles.dropDown}>
         {searchResult.map((item: any, idx: number) => (
           <SearchBarItem item={item} key={idx} clearSearchBar={clearSearchBar} />
         ))}
