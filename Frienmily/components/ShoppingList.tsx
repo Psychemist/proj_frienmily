@@ -404,7 +404,7 @@ export default function ShoppingList() {
           ))}
         </ScrollView>
         <View style={{ width: "100%" }}>
-          <View>
+          <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end" }}>
             <TouchableOpacity
               style={{ alignItems: 'flex-end', marginTop: 15 }}
               onPress={() => {
@@ -413,7 +413,7 @@ export default function ShoppingList() {
               <Text style={styles.addMoreText}>+ Add more items</Text>
             </TouchableOpacity>
           </View>
-          <View>
+          <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end" }}>
             <Text style={styles.totalText}>Estimate Total: HKD$ {addZeroes(estimatedTotal)}</Text>
           </View>
         </View>
