@@ -82,6 +82,8 @@ export default function LoginScreen() {
       alignItems: 'center',
       backgroundColor: '#F5F5F5',
       flex: 1,
+      position: "relative"
+
     },
     logoWrapper: {
       // position: 'absolute',
@@ -134,7 +136,7 @@ export default function LoginScreen() {
       fontSize: 42,
       fontWeight: "bold",
       color: "#47b4b1",
-      marginTop: "40%",
+      marginTop: "30%",
       maxWidth: "100%"
     },
   });
@@ -148,8 +150,7 @@ export default function LoginScreen() {
 
       <View
         style={{
-          position: 'absolute',
-          marginTop: "90%",
+          marginTop: "18%",
           maxWidth: "100%"
         }}>
         <View style={styles.inputFieldWrapper}>
@@ -193,7 +194,7 @@ export default function LoginScreen() {
 
         <TouchableOpacity
           onPress={onLogin}
-          style={[styles.loginBtn, { marginBottom: "50%" }]}>
+          style={[styles.loginBtn, { marginBottom: "5%" }]}>
           <Text
             style={{
               color: 'white',

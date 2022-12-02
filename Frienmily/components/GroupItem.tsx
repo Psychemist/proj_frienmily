@@ -51,7 +51,7 @@ export default function GroupItem(props: GroupItemProps) {
       flexDirection: 'row',
       margin: "1%",
       width: '98%',
-      height: 120,
+      height: 96,
       padding: 20,
       paddingTop: "5%",
       paddingBottom: "5%",

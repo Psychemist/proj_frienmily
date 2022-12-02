@@ -79,6 +79,7 @@ export default function SignUpScreen() {
       alignItems: 'center',
       backgroundColor: '#F5F5F5',
       flex: 1,
+      position: "relative"
     },
     backBtn: {
       position: 'absolute',
@@ -135,10 +136,12 @@ export default function SignUpScreen() {
       }
     },
     appName: {
+      position: "absolute",
+      top: "20%",
       fontSize: 42,
       fontWeight: "bold",
       color: "#47b4b1",
-      marginTop: "32%",
+      marginTop: "30%",
       maxWidth: "100%"
     },
     backIcon: {
@@ -170,7 +173,7 @@ export default function SignUpScreen() {
           position: 'absolute',
           marginTop: 310,
         }}>
-        <View style={[styles.inputFieldWrapper, { marginTop: 80 }]}>
+        <View style={styles.inputFieldWrapper}>
           <TextInput
             autoCapitalize="none"
             placeholder="Username*"
