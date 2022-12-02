@@ -25,17 +25,17 @@ export default function ExpenseReportItem(props: Props) {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      padding: 10,
+      padding: 5,
       margin: 1,
       marginLeft: "5%",
       shadowOpacity: 1,
       shadowColor: "lightgray",
       shadowRadius: 2,
       shadowOffset: {
-          height: 1,
-          width: 1,
+        height: 1,
+        width: 1,
       },
-      
+
     },
     catIcon: {
       height: 40,

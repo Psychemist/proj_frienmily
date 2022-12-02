@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import ModalDropdown from 'react-native-modal-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { MONTHS, YEARS, MONTHS_MMM } from '../utils/dates';
+import { YEARS_YYYY, MONTHS_MMM } from '../utils/dates';
 import ExpenseReportItem from './ExpenseReportItem';
 import { PieChart } from 'react-native-svg-charts'
 import { Circle, G, Line } from 'react-native-svg'
@@ -36,7 +36,7 @@ export default function ExpenseReport() {
 
 
   const changeYear = (index: number) => {
-    let actualYear = YEARS[index]
+    let actualYear = YEARS_YYYY[index]
     setYear(actualYear)
   }
 
@@ -334,7 +334,7 @@ export default function ExpenseReport() {
     },
     tableHeaderFooter: {
       flexDirection: "row",
-      width: "98%",
+      width: "100%",
       height: 40,
       justifyContent: "center",
       alignItems: "center",
@@ -350,10 +350,10 @@ export default function ExpenseReport() {
     rightWrapper: {
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "flex-start",
+      justifyContent: "center",
       // width: "2%",
       padding: 5,
-      // marginRight: 5
+      // marginRight: 5,
 
     },
     totalExpenseWrapper: {
@@ -369,7 +369,9 @@ export default function ExpenseReport() {
       height: 20
     },
     amountWrapper: {
-
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
       marginRight: 0
     },
 
@@ -392,9 +394,9 @@ export default function ExpenseReport() {
 
       <View style={styles.datePickerWrapper}>
         <View style={{ flexDirection: "row" }}>
-          <ModalDropdown options={MONTHS_MMM} defaultValue={"MMM"} onSelect={(a) => { setMonth(Number(a + 1)) }}
-            style={[styles.inputField, { width: 55 }]} dropdownTextStyle={styles.dropdownText} />
-          <ModalDropdown options={YEARS} defaultValue={"YYYY"} onSelect={(a) => { changeYear(Number(a)) }}
+          <ModalDropdown options={MONTHS_MMM} defaultValue={"Month"} onSelect={(a) => { setMonth(Number(a + 1)) }}
+            style={[styles.inputField, { width: 57 }]} dropdownTextStyle={styles.dropdownText} />
+          <ModalDropdown options={YEARS_YYYY} defaultValue={"Year"} onSelect={(a) => { changeYear(Number(a)) }}
             style={[styles.inputField1, { width: 56 }]} dropdownTextStyle={styles.dropdownText} />
           <TouchableOpacity style={styles.submitBtn}>
             <Text style={{ color: "#FFFFFF", textAlign: "center" }} onPress={getExpenseReport}>Submit</Text>
@@ -462,13 +464,17 @@ export default function ExpenseReport() {
           </View>
 
           <View style={styles.tableHeaderFooter}>
-            <View style={[styles.rightWrapper, { width: "52%" }]}></View>
-            <View style={[styles.rightWrapper, { width: "48%" }]}>
-              <View style={[styles.amountWrapper, { marginRight: 20 }]}>
-                <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 20 }}>${expenseSum}</Text>
+            <View style={[styles.rightWrapper, { width: "45%" }]}>
+              <View style={[styles.amountWrapper, { width: "100%" }]}>
+                <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 18 }}>Expensed :</Text>
+                <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 18 }}>${expenseSum}</Text>
               </View>
-              <View style={styles.amountWrapper}>
-                <Text style={{ fontWeight: "bold", color: "#f79f24", textAlign: "right", fontSize: 20 }}>${moneySavedSum}</Text>
+            </View>
+
+            <View style={[styles.rightWrapper, { width: "38%" }]}>
+              <View style={[styles.amountWrapper, { width: "100%" }]}>
+                <Text style={{ fontWeight: "bold", color: "#f79f24", textAlign: "right", fontSize: 18 }}>Saved :</Text>
+                <Text style={{ fontWeight: "bold", color: "#f79f24", textAlign: "right", fontSize: 18 }}>${moneySavedSum}</Text>
               </View>
             </View>
           </View>
