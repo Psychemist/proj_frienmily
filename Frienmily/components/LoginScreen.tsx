@@ -132,6 +132,11 @@ export default function LoginScreen() {
         width: 1
       }
     },
+    appNameWrapper: {
+      position: "absolute",
+      top: "10%",
+
+    },
     appName: {
       fontSize: 42,
       fontWeight: "bold",
@@ -144,13 +149,14 @@ export default function LoginScreen() {
   return (
     <SafeAreaView style={styles.body}>
       <StatusBar barStyle="dark-content" />
-      <View>
+      <View style={styles.appNameWrapper}>
         <Text style={styles.appName}>Frienmily</Text>
       </View>
 
       <View
         style={{
-          marginTop: "18%",
+          position: 'absolute',
+          marginTop: "55%",
           maxWidth: "100%"
         }}>
         <View style={styles.inputFieldWrapper}>

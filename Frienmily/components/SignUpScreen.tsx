@@ -135,14 +135,17 @@ export default function SignUpScreen() {
         width: 1
       }
     },
-    appName: {
+    appNameWrapper: {
       position: "absolute",
-      top: "20%",
+      top: "10%",
+
+    },
+    appName: {
       fontSize: 42,
       fontWeight: "bold",
       color: "#47b4b1",
       marginTop: "30%",
-      maxWidth: "100%"
+      maxWidth: "100%",
     },
     backIcon: {
       textAlign: "left",
@@ -164,14 +167,14 @@ export default function SignUpScreen() {
         <FontAwesome name='angle-left' size={35} style={styles.backIcon} />
       </TouchableOpacity>
 
-      <View>
+      <View style={styles.appNameWrapper}>
         <Text style={styles.appName}>Frienmily</Text>
       </View>
 
       <View
         style={{
           position: 'absolute',
-          marginTop: 310,
+          marginTop: "55%",
         }}>
         <View style={styles.inputFieldWrapper}>
           <TextInput
