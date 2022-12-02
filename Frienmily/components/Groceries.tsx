@@ -347,6 +347,7 @@ export default function Groceries() {
       // }
     },
     input: {
+      // color: 'red',
       height: 45,
       margin: 12,
       borderWidth: 2.5,
@@ -538,6 +539,7 @@ export default function Groceries() {
             placeholder="Search Products"
             value={searchKeyword}
             // onChangeText={setSearchKeyword}
+            placeholderTextColor='grey'
             style={styles.input}
             clearButtonMode="always"
             onChangeText={(value) => {

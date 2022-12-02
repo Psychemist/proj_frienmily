@@ -357,6 +357,7 @@ export default function AddFriends() {
           value={searchBar}
           onChangeText={setSearchBar}
           style={styles.input}
+          placeholderTextColor='grey'
         />
         <View style={styles.searchClearContainer}>
           <TouchableOpacity

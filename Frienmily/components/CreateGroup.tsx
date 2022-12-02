@@ -477,6 +477,7 @@ export default function CreateGroup() {
             autoCapitalize="none"
             value={groupName}
             onChangeText={setGroupName}
+            placeholderTextColor='grey'
             style={styles.input}
           />
         </View>
@@ -503,6 +504,7 @@ export default function CreateGroup() {
               maxLength={18}
               autoCapitalize="none"
               value={friendSearchBar}
+              placeholderTextColor='grey'
               onChangeText={setFriendSearchBar}
               style={styles.searchUserNameTextBox}
             />
