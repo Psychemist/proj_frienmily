@@ -380,7 +380,7 @@ export default function ShoppingList() {
       </View>
       <ScrollView style={styles.scrollWrapper}>
         {allAssignedItems.map((item: any) => (
-          <ShoppingListItem items={item} key={item.id} reloadPage={reloadPage} />
+          <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} />
         ))}
       </ScrollView>
       <View style={{ width: "100%" }}>
