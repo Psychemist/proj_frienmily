@@ -4,6 +4,7 @@ import {
   Animated,
   Easing,
   Image,
+  Keyboard,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -446,7 +447,7 @@ export default function CreateGroup() {
   });
 
   return (
-    <SafeAreaView style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1, maxHeight: "100%" }}>
+    <SafeAreaView style={{ alignItems: 'center', backgroundColor: '#F5F5F5', flex: 1, maxHeight: "100%" }} onTouchStart={() => { Keyboard.dismiss() }}>
       {/* <View style={styles.header}> */}
       {isShowRealSubmitButton ?
         <TouchableOpacity

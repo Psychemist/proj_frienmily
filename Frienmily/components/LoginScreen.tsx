@@ -3,12 +3,14 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Alert,
+  Keyboard,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { RootState } from '../redux/store';
@@ -140,7 +142,7 @@ export default function LoginScreen() {
   });
 
   return (
-    <SafeAreaView style={styles.body}>
+    <SafeAreaView style={styles.body} onTouchStart={() => { Keyboard.dismiss() }}>
       <StatusBar barStyle="dark-content" />
       <View>
         <Text style={styles.appName}>Frienmily</Text>
@@ -215,6 +217,7 @@ export default function LoginScreen() {
           </Text>
         </TouchableOpacity>
       </View>
+      {/* </TouchableWithoutFeedback> */}
     </SafeAreaView>
   );
 }

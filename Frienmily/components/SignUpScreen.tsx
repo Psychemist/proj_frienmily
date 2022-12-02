@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import {
   Alert,
+  Keyboard,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -156,7 +157,7 @@ export default function SignUpScreen() {
   });
 
   return (
-    <SafeAreaView style={styles.body}>
+    <SafeAreaView style={styles.body} onTouchStart={() => { Keyboard.dismiss() }}>
       <TouchableOpacity style={styles.backIcon} onPress={() => navigation.goBack()}>
         <FontAwesome name='angle-left' size={35} style={styles.backIcon} />
       </TouchableOpacity>

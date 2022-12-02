@@ -12,6 +12,7 @@ import {
   Button,
   ActivityIndicator,
   StatusBar,
+  Keyboard,
 } from 'react-native';
 import FriendItem from './FriendItem';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -526,7 +527,7 @@ export default function Groceries() {
 
   return (
     //---------------SEARCH BAR--------------------//
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }} onTouchStart={() => { Keyboard.dismiss() }}>
       <StatusBar barStyle="light-content" />
       {isShow && searchResult.length != 0 ? <ScrollView style={styles.dropDown}>
         {searchResult.map((item: any, idx: number) => (
