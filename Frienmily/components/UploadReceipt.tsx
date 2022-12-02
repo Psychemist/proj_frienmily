@@ -4,6 +4,7 @@ import {
   Alert,
   Button,
   Image,
+  Keyboard,
   ScrollView,
   StyleSheet,
   Text,
@@ -310,7 +311,7 @@ export default function UploadReceipt() {
   });
 
   return (
-    <View style={{ alignItems: 'center', backgroundColor: 'white', flex: 1 }}>
+    <View style={{ alignItems: 'center', backgroundColor: 'white', flex: 1 }} onTouchStart={() => { Keyboard.dismiss() }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -334,7 +335,7 @@ export default function UploadReceipt() {
           return (
             <TouchableOpacity key={index} onPress={() => addPhoto()}>
               <Image
-                style={{ width: 270, height: 270, borderRadius: 18, marginBottom:"5%"}}
+                style={{ width: 270, height: 270, borderRadius: 18, marginBottom: "5%" }}
                 source={{ uri: item.uri }}></Image>
             </TouchableOpacity>
           );
@@ -348,11 +349,12 @@ export default function UploadReceipt() {
           style={{
             margin: 5,
             fontSize: 20,
-            minWidth:"5%",
-            maxWidth:"60%"
+            minWidth: "5%",
+            maxWidth: "60%"
           }}
           value={number}
           onChangeText={setNumber}
+          placeholderTextColor='grey'
           maxLength={8}
 
         />
@@ -363,11 +365,12 @@ export default function UploadReceipt() {
           style={{
             margin: 5,
             fontSize: 20,
-            minWidth:"5%",
-            maxWidth:"60%"
+            minWidth: "5%",
+            maxWidth: "60%"
           }}
           value={remarks}
           onChangeText={setRemarks}
+          placeholderTextColor='grey'
           maxLength={28}
         />
       </View>
