@@ -195,35 +195,35 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
                 <View style={styles.categoriesItemContainer}>
                     <TouchableOpacity style={styles.categoriesPhotoContainer1} onPress={() => { props.setButton1(!props.button1) }}>
                         <Image source={require('./img/bakery.png')}
-                            style={{ width: 70, height: 70, borderRadius: 15 }} /></TouchableOpacity>
+                            style={{ width: 64, height: 64, borderRadius: 15 }} /></TouchableOpacity>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Bakery & Breakfast</Text></View></View>
 
                 <View style={styles.categoriesItemContainer}>
                     <TouchableOpacity style={styles.categoriesPhotoContainer2} onPress={() => { props.setButton2(!props.button2) }}>
                         <Image source={require('./img/dairy.png')}
-                            style={{ width: 70, height: 70, borderRadius: 15 }} /></TouchableOpacity>
+                            style={{ width: 64, height: 64, borderRadius: 15 }} /></TouchableOpacity>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Dairy Products</Text></View></View>
 
                 <View style={styles.categoriesItemContainer}>
                     <TouchableOpacity style={styles.categoriesPhotoContainer3} onPress={() => { props.setButton3(!props.button3) }}>
                         <Image source={require('./img/snacks.png')}
-                            style={{ width: 70, height: 70, borderRadius: 15 }} /></TouchableOpacity>
+                            style={{ width: 64, height: 64, borderRadius: 15 }} /></TouchableOpacity>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Snacks & Dessert</Text></View></View>
 
                 <View style={styles.categoriesItemContainer}>
                     <TouchableOpacity style={styles.categoriesPhotoContainer4} onPress={() => { props.setButton4(!props.button4) }}>
                         <Image source={require('./img/staples.png')}
-                            style={{ width: 70, height: 70, borderRadius: 15 }} /></TouchableOpacity>
+                            style={{ width: 64, height: 64, borderRadius: 15 }} /></TouchableOpacity>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Staples</Text></View></View>
 
                 <View style={styles.categoriesItemContainer}>
                     <TouchableOpacity style={styles.categoriesPhotoContainer5} onPress={() => { props.setButton5(!props.button5) }}>
                         <Image source={require('./img/noodles.png')}
-                            style={{ width: 70, height: 70, borderRadius: 15 }} /></TouchableOpacity>
+                            style={{ width: 64, height: 64, borderRadius: 15 }} /></TouchableOpacity>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Noodles</Text></View></View>
             </View>
@@ -231,35 +231,35 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
                 <View style={styles.categoriesItemContainer}>
                     <TouchableOpacity style={styles.categoriesPhotoContainer6} onPress={() => { props.setButton6(!props.button6) }}>
                         <Image source={require('./img/beverage.png')}
-                            style={{ width: 70, height: 70, borderRadius: 15 }} /></TouchableOpacity>
+                            style={{ width: 64, height: 64, borderRadius: 15 }} /></TouchableOpacity>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Beverages</Text></View></View>
 
                 <View style={styles.categoriesItemContainer}>
                     <TouchableOpacity style={styles.categoriesPhotoContainer7} onPress={() => { props.setButton7(!props.button7) }}>
                         <Image source={require('./img/alcohol.png')}
-                            style={{ width: 70, height: 70, borderRadius: 15 }} /></TouchableOpacity>
+                            style={{ width: 64, height: 64, borderRadius: 15 }} /></TouchableOpacity>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Alcohol</Text></View></View>
 
                 <View style={styles.categoriesItemContainer}>
                     <TouchableOpacity style={styles.categoriesPhotoContainer8} onPress={() => { props.setButton8(!props.button8) }}>
                         <Image source={require('./img/household.png')}
-                            style={{ width: 70, height: 70, borderRadius: 15 }} /></TouchableOpacity>
+                            style={{ width: 64, height: 64, borderRadius: 15 }} /></TouchableOpacity>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Household</Text></View></View>
 
                 <View style={styles.categoriesItemContainer}>
                     <TouchableOpacity style={styles.categoriesPhotoContainer9} onPress={() => { props.setButton9(!props.button9) }}>
                         <Image source={require('./img/personalcare.png')}
-                            style={{ width: 70, height: 70, borderRadius: 15 }} /></TouchableOpacity>
+                            style={{ width: 64, height: 64, borderRadius: 15 }} /></TouchableOpacity>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Personal Care</Text></View></View>
 
                 <View style={styles.categoriesItemContainer}>
                     <TouchableOpacity style={styles.categoriesPhotoContainer10} onPress={() => { props.setButton10(!props.button10) }}>
                         <Image source={require('./img/fronzen.png')}
-                            style={{ width: 70, height: 70, borderRadius: 15 }} /></TouchableOpacity>
+                            style={{ width: 64, height: 64, borderRadius: 15 }} /></TouchableOpacity>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Frozen Food</Text></View></View>
             </View>
