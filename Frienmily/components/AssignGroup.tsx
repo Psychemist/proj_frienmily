@@ -151,12 +151,26 @@ export default function AssignGroup() {
       height: 60,
       borderRadius: 50,
       backgroundColor: "grey",
-      marginRight: 20
+      // marginRight: 20
     },
     groupName: {
       fontSize: 20,
-      color:"gray",
-      fontWeight:"300"
+      color: "gray",
+      fontWeight: "300",
+      marginLeft: 20
+    },
+    iconContainer: {
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      backgroundColor: 'lightblue',
+      borderRadius: 20,
+      zIndex: 1000,
+      width: 17,
+      height: 17,
+      justifyContent: 'center',
+      alignItems: 'center',
+
     }
   });
 
@@ -233,7 +247,7 @@ export default function AssignGroup() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor:"white" }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: "white" }}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Cart' as never)}>
           <FontAwesome name='angle-left' size={35} />
@@ -272,7 +286,12 @@ export default function AssignGroup() {
           <TouchableOpacity style={styles.itemContainer} key={idx} onPress={() => {
             selectedGroup(item.group_id)
           }}>
-            <View><Image style={styles.groupImage} source={{ uri: item.profile_picture }} ></Image></View>
+            {/* <View><Image style={styles.groupImage} source={{ uri: item.profile_picture }} ></Image></View> */}
+            <View style={{ position: 'relative' }}>
+              {item.is_family_group == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} /></View> : null}
+
+              <Image style={styles.groupImage} source={{ uri: item.profile_picture }} ></Image>
+            </View>
             <Text style={styles.groupName}>{item.group_name}</Text>
           </TouchableOpacity>
         ))}

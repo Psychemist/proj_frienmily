@@ -25,7 +25,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
 
     console.log("cart_id :", props.items.cart_id)
     console.log("isSelected :", isSelected)
-    console.log("props.items.is_completed:", props.items.is_completed)
+    // console.log("props.items.is_completed:", props.items.is_completed)
 
     const selectButton = async () => {
         const response = await fetch(`${REACT_APP_API_SERVER}/goods/changeIsCompleted/`, {
@@ -118,9 +118,9 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
             }
             const initSelectedButton = async () => {
                 // console.log("result :", result);
-                console.log("props.items========== :", props.items)
-                console.log("props.items.is_completed@@@@@@@@@@@@ :", props.items.is_completed)
-                console.log("props.items.cart_id@@@@@@@@@@@@ :", props.items.cart_id)
+                // console.log("props.items========== :", props.items)
+                // console.log("props.items.is_completed@@@@@@@@@@@@ :", props.items.is_completed)
+                // console.log("props.items.cart_id@@@@@@@@@@@@ :", props.items.cart_id)
                 // setIsSelected(props.items.is_completed)
             }
             if (isFocused) {

@@ -144,7 +144,7 @@ const App = () => {
             // initialRouteName="Photo"
             screenOptions={{ headerShown: false, gestureEnabled: false }}>
             <Stack.Screen
-              options={{ headerShown: false, gestureEnabled: true }}
+              options={{ headerShown: false, gestureEnabled: false }}
               name="HomeTab"
               component={HomeTab}
             />
@@ -158,17 +158,17 @@ const App = () => {
               name="GroceriesRandomItems"
               component={GroceriesRandomItems}
             />
-            <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} />
-            <Stack.Screen name="Cart" component={Cart} />
+            <Stack.Screen name="GroceriesDetails" component={GroceriesDetails} options={{ gestureEnabled: true }} />
+            <Stack.Screen name="Cart" component={Cart} options={{ gestureEnabled: true }} />
             <Stack.Screen name="CartItem" component={CartItem} />
-            <Stack.Screen name="AssignGroup" component={AssignGroup} />
+            <Stack.Screen name="AssignGroup" component={AssignGroup} options={{ gestureEnabled: true }} />
             <Stack.Screen
               name="ShoppingList"
               component={ShoppingList}
-              options={{ headerShown: false, gestureEnabled: true }}
+              options={{ headerShown: false, gestureEnabled: false }}
             />
             <Stack.Screen name="ShoppingListItem" component={ShoppingListItem} />
-            <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} />
+            <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} options={{ gestureEnabled: true }} />
             <Stack.Screen
               name="ReceiptRecordItem"
               component={ReceiptRecordItem}
@@ -186,14 +186,14 @@ const App = () => {
               options={{ headerShown: false, gestureEnabled: true }}
             />
             <Stack.Screen name="Loading" component={LoadingScreen} />
-            <Stack.Screen name="Photo" component={Photo} />
+            <Stack.Screen name="Photo" component={Photo} options={{ gestureEnabled: true }} />
             <Stack.Screen name="Account" component={Account} />
-            <Stack.Screen name="UploadReceipt" component={UploadReceipt} />
-            <Stack.Screen name="MoneySettle" component={MoneySettle} />
-            <Stack.Screen name="UserProfilePicuture" component={UserProfilePicuture} />
-            <Stack.Screen name="GroupMember" component={GroupMember} />
+            <Stack.Screen name="UploadReceipt" component={UploadReceipt} options={{ gestureEnabled: true }} />
+            <Stack.Screen name="MoneySettle" component={MoneySettle} options={{ gestureEnabled: true }} />
+            <Stack.Screen name="UserProfilePicuture" component={UserProfilePicuture} options={{ gestureEnabled: true }} />
+            <Stack.Screen name="GroupMember" component={GroupMember} options={{ gestureEnabled: true }} />
             {/* <Stack.Screen name="ReceiptImage" component={ReceiptImage} /> */}
-            <Stack.Screen name="ExpenseReport" component={ExpenseReport} />
+            <Stack.Screen name="ExpenseReport" component={ExpenseReport} options={{ gestureEnabled: true }} />
             <Stack.Screen name="ImagePreview" component={ImagePreview} />
             <Stack.Screen name="GroceriesTest" component={GroceriesTest} />
             <Stack.Screen name="GroupPhotoEdit" component={GroupPhotoEdit} />

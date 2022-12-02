@@ -1,6 +1,6 @@
 import { REACT_APP_API_SERVER } from '@env';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import ModalDropdown from 'react-native-modal-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -14,9 +14,15 @@ import { logout } from '../redux/user/userSlice';
 import ExpenseReportSectorItem from './ExpenseReportSectorItem';
 import { pieSectorColors } from '../utils/color'
 
+
+
+
 export default function ExpenseReport() {
   const navigation = useNavigation();
   const route = useRoute<any>()
+
+  const monthDropdown = useRef(null);
+  const yearDropdown = useRef(null);
   console.log("route:", route)
   let groupId = route.params.groupId
 
@@ -33,8 +39,6 @@ export default function ExpenseReport() {
   const [isChartView, setIsChartView] = useState<boolean>(false)
   const [onClickSubmit, setOnClickSubmit] = useState<boolean>(false)
 
-
-
   const changeYear = (index: number) => {
     let actualYear = YEARS_YYYY[index]
     setYear(actualYear)
@@ -45,8 +49,8 @@ export default function ExpenseReport() {
       setDisplayedMonth(MONTHS_MMM[month - 1])
       setDisplayedYear(year)
       await fetchExpenseReport()
-      setDisplayedMonth(MONTHS_MMM[month - 1])
-      setDisplayedYear(year)
+      setDisplayedMonth(MONTHS_MMM[month - 1]);
+      setDisplayedYear(year);
     }
     fetch()
   }, [onClickSubmit])
@@ -59,7 +63,12 @@ export default function ExpenseReport() {
 
   const getExpenseReport = async () => {
     try {
-      await fetchExpenseReport()
+
+      (monthDropdown!.current! as any).select(-1)
+        ; (yearDropdown!.current! as any).select(-1)
+      await fetchExpenseReport();
+
+      console.log()
       setDisplayedMonth(MONTHS_MMM[month - 1])
       setDisplayedYear(year)
 
@@ -394,9 +403,9 @@ export default function ExpenseReport() {
 
       <View style={styles.datePickerWrapper}>
         <View style={{ flexDirection: "row" }}>
-          <ModalDropdown options={MONTHS_MMM} defaultValue={"Month"} onSelect={(a) => { setMonth(Number(a + 1)) }}
+          <ModalDropdown ref={monthDropdown} options={MONTHS_MMM} defaultValue={"Month"} onSelect={(a) => { setMonth(Number(a + 1)) }}
             style={[styles.inputField, { width: 57 }]} dropdownTextStyle={styles.dropdownText} />
-          <ModalDropdown options={YEARS_YYYY} defaultValue={"Year"} onSelect={(a) => { changeYear(Number(a)) }}
+          <ModalDropdown ref={yearDropdown} options={YEARS_YYYY} defaultValue={"Year"} onSelect={(a) => { changeYear(Number(a)) }}
             style={[styles.inputField1, { width: 56 }]} dropdownTextStyle={styles.dropdownText} />
           <TouchableOpacity style={styles.submitBtn}>
             <Text style={{ color: "#FFFFFF", textAlign: "center" }} onPress={getExpenseReport}>Submit</Text>

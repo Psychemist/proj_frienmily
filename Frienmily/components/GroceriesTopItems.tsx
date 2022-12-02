@@ -70,7 +70,7 @@ export default function GroceriesTopItems(props: GroceriesTopItemsProps) {
             { price: ztore_price, shop: "士多" }
         ]
 
-        console.log("props.item :", props.item)
+        // console.log("props.item :", props.item)
 
 
 

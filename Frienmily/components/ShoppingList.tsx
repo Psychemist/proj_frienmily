@@ -335,7 +335,7 @@ export default function ShoppingList() {
       borderRadius: 50,
       borderColor: "#47b4b1",
       // right: 5,
-      marginRight: "5%",
+      // marginRight: "5%",
       borderWidth: 4,
       postion: "absolute",
       // right: "-20%",
@@ -348,6 +348,19 @@ export default function ShoppingList() {
         width: 0,
       },
     },
+    iconContainer: {
+      position: 'absolute',
+      bottom: 5,
+      right: 2,
+      backgroundColor: 'lightblue',
+      borderRadius: 20,
+      zIndex: 1000,
+      width: 17,
+      height: 17,
+      justifyContent: 'center',
+      alignItems: 'center',
+
+    }
   });
   const navigation = useNavigation();
   return (
@@ -372,10 +385,12 @@ export default function ShoppingList() {
         : <View></View>
       }
       <View style={styles.groupNameWrapper}>
-        <TouchableOpacity onPress={enlargeProfilePicture}>
+        <TouchableOpacity onPress={enlargeProfilePicture} style={{ position: 'relative' }}>
           <Image style={styles.userImage} source={{ uri: groupPic }} ></Image>
+          {isFamilyGroup == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} /></View> : null}
+
         </TouchableOpacity>
-        <View style={{ justifyContent: 'center' }}><Text style={{ fontSize: 23, fontWeight: "300" }}>{groupName}</Text></View>
+        <View style={{ justifyContent: 'center' }}><Text style={{ marginLeft: 20, fontSize: 23, fontWeight: "300" }}>{groupName}</Text></View>
 
       </View>
       <ScrollView style={styles.scrollWrapper}>
