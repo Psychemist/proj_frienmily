@@ -267,7 +267,9 @@ export default function ShoppingList() {
       marginBottom: "2%",
       marginRight: "2%",
       width: "100%",
-      backgroundColor: "white"
+      backgroundColor: "white",
+      position: "relative"
+
     },
 
     reportBtnWrapper: {
@@ -281,6 +283,8 @@ export default function ShoppingList() {
       borderWidth: 1,
       marginBottom: "3%",
       marginTop: "3%",
+      paddingRight: "10%",
+
       // right: 10,
       // bottom: 7,
       // height: 50,
@@ -300,7 +304,8 @@ export default function ShoppingList() {
     reportButtonText: {
       fontWeight: "bold",
       color: "#606467",
-      fontSize: 20
+      fontSize: 20,
+      textAlign: "center",
     },
 
     backButton: {
@@ -316,7 +321,7 @@ export default function ShoppingList() {
     },
     groupNameWrapper: {
       position: "absolute",
-      top: 100,
+      top: "6%",
       padding: '1%',
       flexDirection: "row",
       // marginBottom: 100,
@@ -330,8 +335,8 @@ export default function ShoppingList() {
       paddingRight: 5,
     },
     userImage: {
-      width: 70,
-      height: 70,
+      width: 58,
+      height: 58,
       borderRadius: 50,
       borderColor: "#47b4b1",
       // right: 5,
@@ -365,92 +370,94 @@ export default function ShoppingList() {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: "white" }}>
-      <View style={styles.header}>
+      <View style={{ height: "100%", alignItems: 'center' }}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.navigate('HomeTab' as never)}>
           <FontAwesome name="angle-left" size={35} />
         </TouchableOpacity>
+        <View style={styles.header}>
 
-        <Text style={styles.text}>Shopping List</Text>
+          <Text style={styles.text}>Shopping List</Text>
+        </View>
+
+        {isFamilyGroup ?
+          <TouchableOpacity style={styles.reportBtnWrapper}
+            onPress={loadGroupBuyingRecord}>
+            <Text style={styles.reportButtonText}>Spending Analysis </Text>
+            <FontAwesome name='pie-chart' size={30} color={"#47b4b1"} />
+          </TouchableOpacity>
+          : <View></View>
+        }
+        <View style={styles.groupNameWrapper}>
+          <TouchableOpacity onPress={enlargeProfilePicture} style={{ position: 'relative' }}>
+            <Image style={styles.userImage} source={{ uri: groupPic }} ></Image>
+            {isFamilyGroup == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} /></View> : null}
+
+          </TouchableOpacity>
+          <View style={{ justifyContent: 'center' }}><Text style={{ marginLeft: 20, fontSize: 23, fontWeight: "300" }}>{groupName}</Text></View>
+
+        </View>
+        <ScrollView style={styles.scrollWrapper}>
+          {allAssignedItems.map((item: any) => (
+            <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} />
+          ))}
+        </ScrollView>
+        <View style={{ width: "100%" }}>
+          <View>
+            <TouchableOpacity
+              style={{ alignItems: 'flex-end', marginTop: 15 }}
+              onPress={() => {
+                navigation.navigate('Groceries' as never);
+              }}>
+              <Text style={styles.addMoreText}>+ Add more items</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Text style={styles.totalText}>Estimate Total: HKD$ {addZeroes(estimatedTotal)}</Text>
+          </View>
+        </View>
 
 
-      </View>
-      {isFamilyGroup ?
-        <TouchableOpacity style={styles.reportBtnWrapper}
-          onPress={loadGroupBuyingRecord}>
-          <Text style={styles.reportButtonText}>Spending Analysis </Text>
-          <FontAwesome name='pie-chart' size={30} color={"#47b4b1"} />
-        </TouchableOpacity>
-        : <View></View>
-      }
-      <View style={styles.groupNameWrapper}>
-        <TouchableOpacity onPress={enlargeProfilePicture} style={{ position: 'relative' }}>
-          <Image style={styles.userImage} source={{ uri: groupPic }} ></Image>
-          {isFamilyGroup == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} /></View> : null}
-
-        </TouchableOpacity>
-        <View style={{ justifyContent: 'center' }}><Text style={{ marginLeft: 20, fontSize: 23, fontWeight: "300" }}>{groupName}</Text></View>
-
-      </View>
-      <ScrollView style={styles.scrollWrapper}>
-        {allAssignedItems.map((item: any) => (
-          <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} />
-        ))}
-      </ScrollView>
-      <View style={{ width: "100%" }}>
-        <View>
+        <View style={{
+          flexDirection: "row",
+          width: "90%",
+        }}>
           <TouchableOpacity
-            style={{ alignItems: 'flex-end', marginTop: 15 }}
+            style={styles.receiptBtn}
             onPress={() => {
-              navigation.navigate('Groceries' as never);
+              navigation.navigate(
+                'UploadReceipt' as never,
+                { groupId: groupId } as never,
+              );
             }}>
-            <Text style={styles.addMoreText}>+ Add more items</Text>
+            <Text style={styles.buttonText}>Upload Receipt</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.receiptBtn}
+            onPress={() => {
+              navigation.navigate('ReceiptRecord' as never, { groupId: groupId, groupName: groupName } as never);
+            }}>
+            <Text style={styles.buttonText}>Receipt Record</Text>
           </TouchableOpacity>
         </View>
-        <View>
-          <Text style={styles.totalText}>Estimate Total: HKD$ {addZeroes(estimatedTotal)}</Text>
+
+
+        <View style={{
+          flexDirection: "row",
+          width: "90%",
+        }}>
+          <TouchableOpacity
+            style={styles.membersBtn}
+            onPress={() => {
+              navigation.navigate('GroupMember' as never, { groupId: groupId, groupName: groupName } as never)
+            }}>
+            <Text style={styles.groupMemberButtonText}>Group Settings</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
-
-      <View style={{
-        flexDirection: "row",
-        width: "90%",
-      }}>
-        <TouchableOpacity
-          style={styles.receiptBtn}
-          onPress={() => {
-            navigation.navigate(
-              'UploadReceipt' as never,
-              { groupId: groupId } as never,
-            );
-          }}>
-          <Text style={styles.buttonText}>Upload Receipt</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.receiptBtn}
-          onPress={() => {
-            navigation.navigate('ReceiptRecord' as never, { groupId: groupId, groupName: groupName } as never);
-          }}>
-          <Text style={styles.buttonText}>Receipt Record</Text>
-        </TouchableOpacity>
-      </View>
-
-
-      <View style={{
-        flexDirection: "row",
-        width: "90%",
-      }}>
-        <TouchableOpacity
-          style={styles.membersBtn}
-          onPress={() => {
-            navigation.navigate('GroupMember' as never, { groupId: groupId, groupName: groupName } as never)
-          }}>
-          <Text style={styles.groupMemberButtonText}>Group Settings</Text>
-        </TouchableOpacity>
-      </View>
 
     </SafeAreaView>
   );

@@ -6,7 +6,7 @@ export const fetchProductData: any = createAsyncThunk("product/fetchProductData"
   categoryArray: any, page: number, isRenewList: boolean
 }, thunkAPI: any) => {
   try {
-    const QTY_IN_ONE_BATCH = 30
+    const QTY_IN_ONE_BATCH = 15
 
     console.log("categoryArray received at thunk=", params.categoryArray)
     console.log("isNewList received at thunk=", params.isRenewList)
