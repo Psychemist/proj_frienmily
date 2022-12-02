@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {View, Button, Image, SafeAreaView} from 'react-native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import React, { useState } from 'react';
+import { View, Button, Image, SafeAreaView } from 'react-native';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 const Photo = () => {
   const [imgs, setImgs]: any = useState([]);
 
@@ -39,7 +39,7 @@ const Photo = () => {
 
           formData.append('image', imgs[0]);
 
-          const res = await fetch('http://localhost:8000/file/', {
+          const res = await fetch(`${process.env.REACT_APP_API_SERVER}/file/`, {
             method: 'POST',
             body: formData,
           });
@@ -50,8 +50,8 @@ const Photo = () => {
         return (
           <View key={index}>
             <Image
-              style={{width: 300, height: 300}}
-              source={{uri: item.uri}}></Image>
+              style={{ width: 300, height: 300 }}
+              source={{ uri: item.uri }}></Image>
           </View>
         );
       })}

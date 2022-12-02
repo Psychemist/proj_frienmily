@@ -32,7 +32,7 @@ export default function SignUpScreen() {
   const onSignUp = async () => {
     try {
       console.log({ username, password, mobileNumber, email })
-      const res = await fetch('http://localhost:8000/user/register', {
+      const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -80,6 +80,7 @@ export default function SignUpScreen() {
       alignItems: 'center',
       backgroundColor: '#F5F5F5',
       flex: 1,
+      position: "relative"
     },
     backBtn: {
       position: 'absolute',
@@ -135,12 +136,17 @@ export default function SignUpScreen() {
         width: 1
       }
     },
+    appNameWrapper: {
+      position: "absolute",
+      top: "10%",
+
+    },
     appName: {
       fontSize: 42,
       fontWeight: "bold",
       color: "#47b4b1",
-      marginTop: "32%",
-      maxWidth: "100%"
+      marginTop: "30%",
+      maxWidth: "100%",
     },
     backIcon: {
       textAlign: "left",
@@ -162,16 +168,16 @@ export default function SignUpScreen() {
         <FontAwesome name='angle-left' size={35} style={styles.backIcon} />
       </TouchableOpacity>
 
-      <View>
+      <View style={styles.appNameWrapper}>
         <Text style={styles.appName}>Frienmily</Text>
       </View>
 
       <View
         style={{
           position: 'absolute',
-          marginTop: 310,
+          marginTop: "55%",
         }}>
-        <View style={[styles.inputFieldWrapper, { marginTop: 80 }]}>
+        <View style={styles.inputFieldWrapper}>
           <TextInput
             autoCapitalize="none"
             placeholder="Username*"

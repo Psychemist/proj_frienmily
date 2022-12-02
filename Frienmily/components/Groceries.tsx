@@ -333,7 +333,7 @@ export default function Groceries() {
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
-      width: '100%',
+      width: '95%',
       padding: 20,
       paddingTop: 2,
       paddingBottom: 2,

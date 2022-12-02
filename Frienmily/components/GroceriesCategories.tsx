@@ -182,7 +182,11 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
                 width: props.button10 ? 4 : 0
             }
         },
-
+        catBtn: {
+            width: 70,
+            height: 70,
+            borderRadius: 15
+        }
     })
 
 
