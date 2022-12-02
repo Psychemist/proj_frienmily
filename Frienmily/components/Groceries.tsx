@@ -542,6 +542,7 @@ export default function Groceries() {
             placeholderTextColor='grey'
             style={styles.input}
             clearButtonMode="always"
+            // autoCapitalize="none"
             onChangeText={(value) => {
               console.log('on change value = ', value)
               setSearchKeyword(value)

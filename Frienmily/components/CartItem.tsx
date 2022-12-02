@@ -95,7 +95,7 @@ export default function CartItem(props: CartItemProps) {
             { price: ztore_price, shop: "士多" }
         ]
 
-        console.log("props.items :", props.items)
+        // console.log("props.items :", props.items)
 
 
 
