@@ -158,6 +158,7 @@ export default function LoginScreen() {
             placeholder="Username"
             value={username}
             onChangeText={setUsername}
+            placeholderTextColor='grey'
             style={{
               margin: 5,
               fontSize: 20,
@@ -173,6 +174,7 @@ export default function LoginScreen() {
         <View style={styles.inputFieldWrapper}>
           <TextInput
             secureTextEntry={true}
+            placeholderTextColor='grey'
             autoCapitalize="none"
             placeholder="Password"
             value={password}

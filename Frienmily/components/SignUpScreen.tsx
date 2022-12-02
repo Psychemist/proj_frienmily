@@ -176,6 +176,7 @@ export default function SignUpScreen() {
             placeholder="Username*"
             value={username}
             onChangeText={setUsername}
+            placeholderTextColor='grey'
             maxLength={20}
             style={{
               margin: 5,
@@ -194,6 +195,7 @@ export default function SignUpScreen() {
             secureTextEntry={true}
             autoCapitalize="none"
             placeholder="Password*"
+            placeholderTextColor='grey'
             value={password}
             onChangeText={setPassword}
             maxLength={20}
@@ -234,6 +236,7 @@ export default function SignUpScreen() {
             placeholder="Mobile Number*"
             value={mobileNumber}
             keyboardType='numeric'
+            placeholderTextColor='grey'
             onChangeText={setMobileNumber}
             style={{
               margin: 5,
@@ -252,6 +255,7 @@ export default function SignUpScreen() {
             placeholder="Email*"
             value={email}
             onChangeText={setEmail}
+            placeholderTextColor='grey'
             autoCapitalize="none"
             maxLength={30}
             style={{
