@@ -36,7 +36,7 @@ export default function ReceiptRecord() {
                 if (response) {
                     json = await response.json();
                 }
-                console.log("json :", json);
+                // console.log("json :", json);
                 setReceiptsArray(json);
                 // console.log(json[0].receipt_image);
 
@@ -111,12 +111,12 @@ export default function ReceiptRecord() {
             marginRight: 'auto',
             color: 'white',
             bottomTop: "20%"
-      
+
         },
     })
 
     return (
-        <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: "white"}}>
+        <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: "white" }}>
 
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>

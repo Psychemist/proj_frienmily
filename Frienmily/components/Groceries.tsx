@@ -528,7 +528,10 @@ export default function Groceries() {
 
   return (
     //---------------SEARCH BAR--------------------//
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }} onTouchStart={() => { Keyboard.dismiss() }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }} onTouchStart={() => {
+      // Keyboard.dismiss()
+      // setIsShow(false)
+    }}>
       <StatusBar barStyle="light-content" />
       {isShow && searchResult.length > 0 ? <ScrollView style={styles.dropDown}>
         {searchResult.map((item: any, idx: number) => (
@@ -538,6 +541,42 @@ export default function Groceries() {
       <View style={styles.container}>
         <View style={{ paddingRight: "2%" }} >
           <TextInput
+            onPressIn={() => {
+              if (debouncedSearchKeyword && debouncedSearchKeyword.length >= 1) {
+                console.log('i am now searching :', debouncedSearchKeyword)
+
+                const loadSearchResult = async () => {
+
+                  console.log('Seraching Result...');
+                  const response = await fetch(
+                    `${REACT_APP_API_SERVER}/goods/searchKeyword/`,
+                    {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        name: debouncedSearchKeyword,
+                      }),
+                    },
+                  );
+
+                  let json = [];
+                  if (response) {
+                    json = await response.json();
+                  }
+                  setIsShow(true)
+                  console.log("json :", json.searchResult);
+                  setSearchResult(json.searchResult);
+                  // setIsShow(true)
+                  if (searchResult.length == 0) {
+                    setIsShow(false)
+                  }
+
+                };
+                if (isFocused) {
+                  loadSearchResult();
+                }
+              }
+            }}
             placeholder="Search Products"
             value={searchKeyword}
             // onChangeText={setSearchKeyword}
@@ -567,7 +606,7 @@ export default function Groceries() {
 
 
       {/* Categories Column */}
-      <View style={styles.catergoriesContainer}>
+      <View style={styles.catergoriesContainer} onTouchStart={() => { Keyboard.dismiss(), setIsShow(false) }}>
         <Text>
           <GroceriesCategories
             setButton1={setButton1}
@@ -595,7 +634,7 @@ export default function Groceries() {
         </Text>
       </View>
 
-      <View style={styles.groupTypeButtonContainer}>
+      <View style={styles.groupTypeButtonContainer} onTouchStart={() => { Keyboard.dismiss(), setIsShow(false) }}>
         <TouchableOpacity
           style={styles.bestSellerButton}
           onPress={bestSellerButton}>
@@ -613,7 +652,7 @@ export default function Groceries() {
       {/* Top 5 Column */}
 
       {isBestSeller == true &&
-        <View style={{ backgroundColor: 'white' }}>
+        <View style={{ backgroundColor: 'white' }} onTouchStart={() => { Keyboard.dismiss(), setIsShow(false) }}>
 
           <ScrollView style={{ backgroundColor: 'white', width: '100%', height: '53%' }}>
             <View style={styles.container2}>
@@ -637,6 +676,7 @@ export default function Groceries() {
         // :
 
         <FlatList<any[]>
+          onTouchStart={() => { Keyboard.dismiss() }}
           contentContainerStyle={styles.exploreProductList}
           data={exploreProductsInRedux}
           renderItem={(item: any) => (

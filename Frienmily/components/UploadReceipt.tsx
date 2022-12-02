@@ -18,6 +18,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { REACT_APP_API_SERVER } from '@env';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { response } from 'express';
 
 export default function UploadReceipt() {
   const route = useRoute<any>()
@@ -57,42 +58,53 @@ export default function UploadReceipt() {
   //   };
 
   const submitButton = async () => {
-    if (imgs == undefined || imgs == null) {
-      showAlert();
-      return;
+
+    try {
+      if (imgs == undefined || imgs == null) {
+        showAlert();
+        return;
+      }
+
+
+      if (number == '') {
+        showAlert1();
+        return;
+      }
+
+      function containsOnlyNumbers(str: any) {
+        return /^[0-9]+$/.test(str);
+      }
+      console.log(number)
+
+      if (!containsOnlyNumbers(number)) {
+        // showAlert2()
+        // return
+      }
+
+
+      console.log("HERERERERERERERERE");
+      console.log("imgs[0] :", imgs[0])
+
+      const formData = new FormData();
+      formData.append('image', imgs[0]);
+      formData.append('amount', number);
+      formData.append('userID', userIdInRedux);
+      formData.append('groupID', groupId);
+      formData.append('remarks', remarks);
+      let res = await fetch(`${REACT_APP_API_SERVER}/receipts/`, {
+        method: 'POST',
+        body: formData,
+      });
+      console.log("fetch finish")
+      let result = await res.json()
+      console.log("resultresultresultresultresult: ", result)
+      showAlert3()
+      navigation.goBack()
+    } catch (error) {
+
+      console.log("error!!!", error)
+      showAlert4()
     }
-
-
-    if (number == '') {
-      showAlert1();
-      return;
-    }
-
-    function containsOnlyNumbers(str: any) {
-      return /^[0-9]+$/.test(str);
-    }
-    console.log(number)
-
-    if (!containsOnlyNumbers(number)) {
-      // showAlert2()
-      // return
-    }
-    navigation.goBack()
-
-
-
-
-    showAlert3()
-    const formData = new FormData();
-    formData.append('image', imgs[0]);
-    formData.append('amount', number);
-    formData.append('userID', userIdInRedux);
-    formData.append('groupID', groupId);
-    formData.append('remarks', remarks);
-    await fetch(`${REACT_APP_API_SERVER}/receipts/`, {
-      method: 'POST',
-      body: formData,
-    });
 
   };
 
@@ -116,6 +128,12 @@ export default function UploadReceipt() {
 
   const showAlert3 = () => {
     Alert.alert('Receipt uploaded', '', [
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
+
+  const showAlert4 = () => {
+    Alert.alert('Wrong image format!', '', [
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };

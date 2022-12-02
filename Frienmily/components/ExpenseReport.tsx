@@ -129,12 +129,16 @@ export default function ExpenseReport() {
         const floatPrices: number[] = []
         for (let [key, value] of Object.entries(recordResult)) {
           if (key.includes("_price") && value != null && typeof value == "string") {
-            floatPrices.push(parseFloat(value))
+            if (value != "0") {
+              floatPrices.push(parseFloat(value))
+            }
+
           }
         }
         // calculate the categorySavedMoney and categoryExpense
         let maxPrice = Math.max(...floatPrices)
         let minPrice = Math.min(...floatPrices)
+        console.log("minPrice :", minPrice)
         let moneySaved: number = parseFloat((maxPrice - minPrice).toFixed(2))
         categorySavedMoney = parseFloat((categorySavedMoney + moneySaved).toFixed(2))
         categoryExpense = categoryExpense + minPrice * recordResult.quantity
