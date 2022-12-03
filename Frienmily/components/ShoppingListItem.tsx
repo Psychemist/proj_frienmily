@@ -342,7 +342,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 <View><Text style={styles.text}>{props.items.name}</Text></View>
                 <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
                 <View><Text style={styles.shopText}>Item added by {assigneeName}</Text></View>
-                <View><Text style={styles.shopText}>Brought by {buyerName}</Text></View>
+                <View><Text style={styles.shopText}>Bought by {buyerName}</Text></View>
             </TouchableOpacity>
             <View ><Text style={styles.price}>${addZeroes(getLowest().price! * props.items.quantity)}</Text></View>
             <TouchableOpacity onPress={showAlert}><FontAwesome name="trash-o" size={20} color={"#47b4b1"} /></TouchableOpacity>
