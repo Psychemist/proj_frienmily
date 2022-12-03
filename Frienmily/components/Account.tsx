@@ -295,7 +295,7 @@ export default function Account() {
         deleteBtnText: {
             fontSize: 20,
             paddingLeft: 60,
-            color: "darkorange",
+            color: "white",
             fontWeight: "bold"
         },
 
@@ -328,7 +328,7 @@ export default function Account() {
             fontSize: 22,
             justifyContent: 'center',
             alignItems: 'center',
-            color: "darkorange",
+            color: "rgb(236,64,52)",
         },
 
         logoutBtnWrapper: {
@@ -348,8 +348,8 @@ export default function Account() {
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: 100,
-            borderColor: "#47b4b1",
-            borderWidth: 2,
+            // borderColor: "#47b4b1",
+            // borderWidth: 2,
             marginRight: "9%",
             backgroundColor: 'white',
             // opacity: 1,
@@ -390,9 +390,9 @@ export default function Account() {
             marginBottom: 6,
         },
         deleteGroupItemContainer: {
-            borderColor: '#47b4b1',
-            borderWidth: 2,
-            backgroundColor: "white",
+            // borderColor: '#47b4b1',
+            // borderWidth: 2,
+            backgroundColor: "rgb(236,64,52)",
             height: "50%",
             width: "100%",
             display: 'flex',

@@ -166,13 +166,14 @@ export default function Friends() {
       padding: '1%'
     },
     totalText: {
-      fontWeight: "300",
-      fontSize: 20,
+      fontWeight: "bold",
+      fontSize: 25,
+      marginBottom:"1%"
     },
     deleteGroupBtn: {
-      borderColor: '#47b4b1',
-      borderWidth: 2,
-      backgroundColor: "white",
+      // borderColor: '#47b4b1',
+      // borderWidth: 2,
+      backgroundColor: "rgb(236,64,52)",
       height: 60,
       width: "95%",
       display: 'flex',
@@ -186,7 +187,7 @@ export default function Friends() {
     },
     DeleteGroupBtnText: {
       fontSize: 20,
-      color: 'red',
+      color: 'white',
       // fontWeight: 'bold',
     },
 

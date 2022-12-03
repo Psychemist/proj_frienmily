@@ -357,7 +357,7 @@ export default function ShoppingList() {
       position: 'absolute',
       bottom: 5,
       right: 2,
-      backgroundColor: 'lightblue',
+      backgroundColor: '#47b4b1',
       borderRadius: 20,
       zIndex: 1000,
       width: 17,
@@ -392,7 +392,7 @@ export default function ShoppingList() {
         <View style={styles.groupNameWrapper}>
           <TouchableOpacity onPress={enlargeProfilePicture} style={{ position: 'relative' }}>
             <Image style={styles.userImage} source={{ uri: groupPic }} ></Image>
-            {isFamilyGroup == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} /></View> : null}
+            {isFamilyGroup == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} color={"white"}/></View> : null}
 
           </TouchableOpacity>
           <View style={{ justifyContent: 'center' }}><Text style={{ marginLeft: 20, fontSize: 23, fontWeight: "300" }}>{groupName}</Text></View>
