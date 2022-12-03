@@ -22,7 +22,7 @@ module.exports = {
 Then run:
 npx react-native-asset
 
-So you can use it now:
+So you can use it now: 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'   
 
 <View style={styles.container}>
