@@ -539,7 +539,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.--PRODUCT-NAME-rfc1034identifier-";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.reactjs.native.Frienmily;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = io.tecky.Frienmily;
 				PRODUCT_NAME = Frienmily;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -566,7 +566,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.--PRODUCT-NAME-rfc1034identifier-";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.reactjs.native.Frienmily;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = io.tecky.Frienmily;
 				PRODUCT_NAME = Frienmily;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
