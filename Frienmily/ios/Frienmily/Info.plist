@@ -43,6 +43,8 @@
 	<string></string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Upload receipt image for money spliting</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Upload receipt image for money spliting</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

@@ -15,7 +15,9 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
 
     const styles = StyleSheet.create({
         text: {
-            fontSize: 15,
+            fontSize: 17,
+            fontWeight:"300"
+
         },
         itemContainer: {
             marginTop: "2%",
@@ -69,7 +71,7 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
 
 
             <View >
-                <Text style={styles.text}>HK${props.items.amount}</Text>
+                <Text style={styles.text}>${props.items.amount}</Text>
             </View>
         </View>
     )

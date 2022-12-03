@@ -78,7 +78,7 @@ export default function GroupItem(props: GroupItemProps) {
       position: 'absolute',
       bottom: 0,
       right: 0,
-      backgroundColor: 'lightblue',
+      backgroundColor: '#47b4b1',
       borderRadius: 20,
       zIndex: 1000,
       width: 17,
@@ -107,7 +107,7 @@ export default function GroupItem(props: GroupItemProps) {
 
       <View style={styles.miniWrapper}>
         <View style={{ position: 'relative' }}>
-          {props.items.is_family_group == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} /></View> : null}
+          {props.items.is_family_group == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={12} color={"white"}/></View> : null}
 
           <Image style={styles.groupImage} source={{ uri: props.items.profile_picture }} ></Image>
         </View>
