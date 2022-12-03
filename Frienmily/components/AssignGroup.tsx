@@ -164,7 +164,7 @@ export default function AssignGroup() {
       position: 'absolute',
       bottom: 0,
       right: 0,
-      backgroundColor: 'lightblue',
+      backgroundColor: '#47b4b1',
       borderRadius: 20,
       zIndex: 1000,
       width: 17,
@@ -289,7 +289,7 @@ export default function AssignGroup() {
           }}>
             {/* <View><Image style={styles.groupImage} source={{ uri: item.profile_picture }} ></Image></View> */}
             <View style={{ position: 'relative' }}>
-              {item.is_family_group == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} /></View> : null}
+              {item.is_family_group == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} color={"white"}/></View> : null}
 
               <Image style={styles.groupImage} source={{ uri: item.profile_picture }} ></Image>
             </View>
