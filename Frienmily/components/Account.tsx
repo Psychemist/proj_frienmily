@@ -9,28 +9,14 @@ import { fetchUpdateEmail, fetchUpdateGender, fetchUpdateMobileNumber } from "..
 import ModalDropdown from 'react-native-modal-dropdown';
 import { logout } from "../redux/user/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { REACT_APP_API_SERVER } from "@env";
 
 export const GENDERS = ["Male", "Female", "Others"]
 
 export default function Account() {
-    // 在 Redux 取資料
 
     const userStore = useSelector((state: RootState) => state.user)
-    // FIXME: sometimes the profile picture is undefined
     console.log('account userStore : ', userStore)
-
-    // let { gender, username, email, profilePicture, mobile } = userStore
-
-
-    // const usernameInRedux = useSelector((state: RootState) => state.user.username)
-    // const genderInRedux = useSelector((state: RootState) => state.user.gender)
-    // const mobileInRedux = useSelector((state: RootState) => state.user.mobile)
-    // const emailInRedux = useSelector((state: RootState) => state.user.email)
-    // const profilePictureInRedux = useSelector((state: RootState) => state.user.profilePicture)
-
-    // const genderIndex = GENDERS.indexOf(genderInRedux!)
-
-    // console.log("profilePictureInRedux: ", profilePictureInRedux)
 
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
     if (isLoggedIn == true) {
@@ -39,17 +25,10 @@ export default function Account() {
         console.log("isLoggedIn is false at User Profile Screen")
     }
 
-    // 設定初始值
     const [username, setUsername] = useState('')
     const [gender, setGender] = useState('')
     const [mobile, setMobile] = useState('')
     const [email, setEmail] = useState('')
-    // const [username, setUsername] = useState(userStore.username!)
-    // const [gender, setGender] = useState(userStore.gender!)
-    // const [mobile, setMobile] = useState(userStore.mobile!)
-    // const [email, setEmail] = useState(userStore.email!)
-
-    // console.log("################## initial info: ", { username, gender, mobile, email })
 
     const [isGenderEditable, setIsGenderEditable] = useState(false)
     const [isMobileEditable, setIsMobileEditable] = useState(false)
@@ -178,46 +157,42 @@ export default function Account() {
             ]
         );
     }
+    const onDeleteAccount = async () => {
+        Alert.alert(
+            'Are you sure you want to delete your account?',
+            '',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'Yes', onPress: async () => {
+                        disableAccount()
+                        navigation.navigate('Login' as never)
+                    }
+                },
+            ]
+        );
+    }
 
-    // TODO: 離開此頁時，如果各個isEditable仍是true，則彈出視窗問用戶是否要放棄更改
+    const disableAccount = async () => {
+        await fetch(`${REACT_APP_API_SERVER}/user/disableAccount`, {
+            method: 'POST',
+            body: username,
+        });
+        console.log("successfully disable account")
 
-    // useEffect(() => {
-    //     const leaveScreen = navigation.addListener('blur', () => {
-    //         // The screen is focused
-    //         console.log("%%%%".repeat(100))
-    //     });
-
-    //     // Return the function to unsubscribe from the event so it gets removed on unmount
-    //     return leaveScreen;
-    // }, [navigation]);
-
-
-
-    // const isFocused = useIsFocused()
-    // useEffect(() => {
-    //     if (!isFocused) {
-    //         console.log("not focused %%%%%%%%%%%%%%%%%%%%%%%%");
-    //     } else {
-    //         console.log("focused %%%%%%%%%%%%%%%%%%%%%%%%");
-    //     }
-    // }, [])
-
-
-
-    // useEffect(
-    //     () => navigation.addListener('blur', () => {
-    //         console.log("%%%%".repeat(100))
-    //     }),
-    //     [navigation]
-    // );
-
+    }
 
 
 
     const styles = StyleSheet.create({
         mainPage: {
             flex: 1,
-            backgroundColor: "#F5F5F5"
+            backgroundColor: "#F5F5F5",
+            position: "relative"
         },
         title: {
             padding: 20,
@@ -311,10 +286,16 @@ export default function Account() {
             color: "white",
 
         },
-        BtnText: {
+        logoutBtnText: {
             fontSize: 20,
-            // paddingRight: 10,
+            paddingLeft: 60,
             color: "white",
+            fontWeight: "bold"
+        },
+        deleteBtnText: {
+            fontSize: 20,
+            paddingLeft: 60,
+            color: "darkorange",
             fontWeight: "bold"
         },
 
@@ -343,7 +324,14 @@ export default function Account() {
             color: "darkorange",
         },
 
-        logoutButton: {
+        deleteAccountBtn: {
+            fontSize: 22,
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: "darkorange",
+        },
+
+        logoutBtnWrapper: {
             width: 40,
             height: 40,
             justifyContent: 'center',
@@ -354,9 +342,34 @@ export default function Account() {
             backgroundColor: 'white',
             // opacity: 1,
         },
+        deleteAccountBtnWrapper: {
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 100,
+            borderColor: "#47b4b1",
+            borderWidth: 2,
+            marginRight: "9%",
+            backgroundColor: 'white',
+            // opacity: 1,
+        },
+
+        bottomBtnWrapper: {
+            position: "absolute",
+            bottom: 40,
+            height: "20%",
+            width: "100%",
+            padding: 5,
+            flexDirection: 'row',
+            justifyContent: "center",
+            alignItems: "center",
+            flexWrap: "wrap",
+        },
+
         logoutItemContainer: {
-            width: "96%",
-            height: "17%",
+            width: "100%",
+            height: "50%",
             backgroundColor: "darkorange",
             shadowOffset: {
                 height: 4,
@@ -368,17 +381,30 @@ export default function Account() {
             shadowRadius: 1,
             elevation: 9,
             flexDirection: "row",
-            justifyContent: "space-around",
+            justifyContent: "space-between",
             alignItems: "center",
-            // paddingRight: 20,
-            paddingLeft: "29%",
             paddingTop: "5%",
             paddingBottom: "5%",
             borderRadius: 20,
-            marginTop: 5,
-            marginBottom: 5,
-
-        }
+            marginTop: 6,
+            marginBottom: 6,
+        },
+        deleteGroupItemContainer: {
+            borderColor: '#47b4b1',
+            borderWidth: 2,
+            backgroundColor: "white",
+            height: "50%",
+            width: "100%",
+            display: 'flex',
+            flexDirection: "row",
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            margin: 10,
+            borderRadius: 20,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            color: 'white',
+        },
     });
 
     return (
@@ -502,12 +528,16 @@ export default function Account() {
 
             {/* <Text style={styles.title}>Options</Text> */}
 
-            <View style={{ alignItems: "center" }}>
-                <TouchableOpacity style={[styles.logoutItemContainer, { height: "30%" }]} onPress={onLogout}>
-                    <View ><Text style={styles.BtnText}>Logout</Text></View>
-                    <View style={styles.logoutButton}><Icon name='ios-exit-outline' style={styles.logoutBtn} /></View>
+            <View style={styles.bottomBtnWrapper}>
+                <TouchableOpacity style={[styles.logoutItemContainer]} onPress={onLogout}>
+                    <View ><Text style={styles.logoutBtnText}>Logout</Text></View>
+                    <View style={styles.logoutBtnWrapper}><Icon name='ios-exit-outline' style={styles.logoutBtn} /></View>
                 </TouchableOpacity>
 
+                <TouchableOpacity style={styles.deleteGroupItemContainer} onPress={onDeleteAccount}>
+                    <View ><Text style={styles.deleteBtnText}>Delete Account</Text></View>
+                    <View style={styles.deleteAccountBtnWrapper}><FontAwesome name='remove' style={styles.deleteAccountBtn} /></View>
+                </TouchableOpacity>
             </View>
         </SafeAreaView >
     )
