@@ -318,7 +318,7 @@ export default function GroceriesDetails() {
             width: "100%",
             height: "100%",
             padding: 10,
-            paddingTop: 10,
+            paddingTop: "1%",
             paddingBottom: 20,
             //SHADOW
             shadowOpacity: 0.1,
@@ -331,7 +331,7 @@ export default function GroceriesDetails() {
         supermarketWrapper: {
             // padding: 10,
             // paddingTop: 5,
-            // marginTop: "2%",
+            marginTop: "2%",
             flexDirection: "column",
             alignItems: "center",
             width: "100%"
