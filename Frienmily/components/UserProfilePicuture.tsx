@@ -43,30 +43,39 @@ export default function UserProfilePicuture() {
 
 
   const onSavePicture = async () => {
-    if (imgs == undefined || imgs == null) {
-      emptyImgAlert();
-      return;
+    try {
+      if (imgs == undefined || imgs == null) {
+        emptyImgAlert();
+        return;
+      }
+      let updateProfileResult = await dispatch(fetchUpdateProfilePicture({ userId, imgs })).unwrap()
+      console.log('fetchUpdateGender from unwrap = ', updateProfileResult)
+      Alert.alert(
+        'Your profile page has been updated',
+        '',
+        [
+          {
+            text: 'OK',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          }
+        ]
+      );
+    } catch (error) {
+      console.log("error!!!", error)
+      showAlert4()
     }
 
-    Alert.alert(
-      'Your profile page has been updated',
-      '',
-      [
-        {
-          text: 'OK',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        }
-      ]
-    );
-
-    let updateProfileResult = await dispatch(fetchUpdateProfilePicture({ userId, imgs })).unwrap()
-    console.log('fetchUpdateGender from unwrap = ', updateProfileResult)
 
 
 
 
   }
+  const showAlert4 = () => {
+    Alert.alert('Wrong image format!', '', [
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
 
   const emptyImgAlert = () => {
     Alert.alert('Please upload image', '', [

@@ -82,8 +82,8 @@ export default function UploadReceipt() {
       }
 
 
-      console.log("HERERERERERERERERE");
-      console.log("imgs[0] :", imgs[0])
+      // console.log("HERERERERERERERERE");
+      // console.log("imgs[0] :", imgs[0])
 
       const formData = new FormData();
       formData.append('image', imgs[0]);
@@ -97,7 +97,7 @@ export default function UploadReceipt() {
       });
       console.log("fetch finish")
       let result = await res.json()
-      console.log("resultresultresultresultresult: ", result)
+      // console.log("resultresultresultresultresult: ", result)
       showAlert3()
       navigation.goBack()
     } catch (error) {

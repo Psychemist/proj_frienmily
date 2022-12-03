@@ -123,6 +123,11 @@ export default function CartItem(props: CartItemProps) {
 
     }
 
+    const itemInfo = () => {
+        navigation.navigate('GroceriesDetails' as never, { info: props.items } as never)
+
+    }
+
     const addOneToCounter = () => {
         console.log("getLowest :", getLowest().price!)
         props.reCalculateAmount(getLowest().price!)
@@ -305,10 +310,10 @@ export default function CartItem(props: CartItemProps) {
                                 style={{ width: 50, height: 50, marginRight: "2%" }} /></View>
                         </TouchableOpacity>
                     </TouchableOpacity>
-                    <View style={{ width: 150 }}>
+                    <TouchableOpacity style={{ width: 150 }} onPress={itemInfo}>
                         <View><Text style={styles.text}>{props.items.name}</Text></View>
                         <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.binWrapper}><Text style={styles.price}>${addZeroes(getLowest().price! * initNum)}</Text>
                         <TouchableOpacity onPress={deleteThisItem}><FontAwesome name="trash-o" size={20} color={"#47b4b1"} /></TouchableOpacity>
                     </View>

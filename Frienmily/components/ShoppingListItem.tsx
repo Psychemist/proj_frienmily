@@ -260,6 +260,11 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         ]);
     };
 
+    const itemInfo = () => {
+        navigation.navigate('GroceriesDetails' as never, { info: props.items } as never)
+
+    }
+
 
 
     const styles = StyleSheet.create({
@@ -333,12 +338,12 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 <View><Image source={{ uri: props.items.goods_picture }}
                     style={{ width: 50, height: 50, marginRight: "2%" }} /></View>
             </TouchableOpacity>
-            <View style={{ width: 150 }}>
+            <TouchableOpacity style={{ width: 150 }} onPress={itemInfo}>
                 <View><Text style={styles.text}>{props.items.name}</Text></View>
                 <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
                 <View><Text style={styles.shopText}>Item added by {assigneeName}</Text></View>
                 <View><Text style={styles.shopText}>Brought by {buyerName}</Text></View>
-            </View>
+            </TouchableOpacity>
             <View ><Text style={styles.price}>${addZeroes(getLowest().price! * props.items.quantity)}</Text></View>
             <TouchableOpacity onPress={showAlert}><FontAwesome name="trash-o" size={20} color={"#47b4b1"} /></TouchableOpacity>
         </View >

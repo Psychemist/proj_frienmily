@@ -45,37 +45,47 @@ export default function GroupPhotoEdit() {
 
 
   const onSavePicture = async () => {
-    if (imgs == undefined || imgs == null) {
-      emptyImgAlert();
-      return;
+    try {
+      if (imgs == undefined || imgs == null) {
+        emptyImgAlert();
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', imgs[0]);
+      formData.append('group_id', group_id)
+
+      const res = await fetch(`${REACT_APP_API_SERVER}/groups/editGroupIcon/`, {
+        method: 'POST',
+        body: formData
+      });
+      let result = await res.json();
+      setIsLoadingShow(true)
+      Alert.alert(
+        'Your profile page has been updated',
+        '',
+        [
+          {
+            text: 'OK',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          }
+        ]
+      );
+    } catch (error) {
+      console.log("error!!!", error)
+      showAlert4()
     }
 
-    Alert.alert(
-      'Your profile page has been updated',
-      '',
-      [
-        {
-          text: 'OK',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        }
-      ]
-    );
-
-    const formData = new FormData();
-    formData.append('image', imgs[0]);
-    formData.append('group_id', group_id)
-
-    const res = await fetch(`${REACT_APP_API_SERVER}/groups/editGroupIcon/`, {
-      method: 'POST',
-      body: formData
-    });
-    let result = await res.json();
-    setIsLoadingShow(true)
 
 
 
   }
+  const showAlert4 = () => {
+    Alert.alert('Wrong image format!', '', [
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
 
   const emptyImgAlert = () => {
     Alert.alert('Please upload image', '', [
