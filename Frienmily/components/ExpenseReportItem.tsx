@@ -1,5 +1,6 @@
+import { REACT_APP_API_SERVER } from '@env';
 import React from 'react'
-import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { categoryIcons } from "../utils/categoryIcons"
 
 export interface Props {
@@ -12,6 +13,20 @@ export default function ExpenseReportItem(props: Props) {
   const categoryIcon = props.items.categoryIcon
   const categoryExpense = props.items.categoryExpense
   const categorySavedMoney = props.items.categorySavedMoney
+
+  const showCategoryBuyingHistory = async () => {
+    console.log(">>>>>>>>> items: ", props.items)
+
+    // await fetch(`${REACT_APP_API_SERVER}/groups/`, {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     groupId: 1,
+    //     categoryId: 1
+    //   })
+    // });
+    // console.log("successfully disable account")
+    // return
+  }
 
 
   const styles = StyleSheet.create({
@@ -74,10 +89,10 @@ export default function ExpenseReportItem(props: Props) {
 
   })
   return (
-    <View>
+    <SafeAreaView>
 
 
-      <View style={styles.category}>
+      <TouchableOpacity style={styles.category} onPress={showCategoryBuyingHistory}>
 
         <View style={styles.leftWrapper}>
           <Image source={{ uri: props.items.categoryIcon }} style={styles.catIcon} />
@@ -92,7 +107,7 @@ export default function ExpenseReportItem(props: Props) {
             <Text style={styles.totalSavedMoney}>${categorySavedMoney}</Text>
           </View>
         </View>
-      </View>
-    </View>
+      </TouchableOpacity>
+    </SafeAreaView>
   )
 }
