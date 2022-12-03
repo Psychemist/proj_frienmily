@@ -331,7 +331,7 @@ export default function GroceriesDetails() {
         supermarketWrapper: {
             // padding: 10,
             // paddingTop: 5,
-            marginTop: "2%",
+            marginTop: "10%",
             flexDirection: "column",
             alignItems: "center",
             width: "100%"
