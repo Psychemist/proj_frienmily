@@ -8,7 +8,7 @@ export const fetchLogin: any = createAsyncThunk("user/fetchLogin", async (params
     password: string
 }, thunkAPI: any) => {
     try {
-        console.log(`${process.env.REACT_APP_API_SERVER}/user/login`) 
+        console.log(`${process.env.REACT_APP_API_SERVER}/user/login`)
         const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -121,6 +121,8 @@ export const fetchUpdateEmail: any = createAsyncThunk("user/updateEmail", async 
     username: string, email: string
 }, thunkAPI: any) => {
     try {
+        console.log("the username to be changed email: ", params.username)
+
         const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/updateEmail`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },

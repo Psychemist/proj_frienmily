@@ -91,6 +91,7 @@ export default function Account() {
                     return
                 }
                 console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ready to fetch and change mobile in DB")
+                console.log("username and mobile: ", { username, mobile })
                 let updateMobileNumberResult = await dispatch(fetchUpdateMobileNumber({ username, mobile })).unwrap()
                 console.log('updateMobileNumberResult from unwrap = ', updateMobileNumberResult)
 
@@ -124,6 +125,7 @@ export default function Account() {
                     return
                 }
                 console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ready to fetch and change email address in DB")
+                console.log("username and mobile: ", { username, email })
                 let updateEmailResult = await dispatch(fetchUpdateEmail({ username, email })).unwrap()
                 console.log('updateEmailResult from unwrap = ', updateEmailResult)
 
@@ -178,12 +180,12 @@ export default function Account() {
     }
 
     const disableAccount = async () => {
+        console.log("the username to be disabled: ", username)
         await fetch(`${REACT_APP_API_SERVER}/user/disableAccount`, {
             method: 'POST',
             body: username,
         });
         console.log("successfully disable account")
-
     }
 
 
