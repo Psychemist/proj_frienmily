@@ -138,10 +138,11 @@ export default function ExpenseReport() {
         // calculate the categorySavedMoney and categoryExpense
         let maxPrice = Math.max(...floatPrices)
         let minPrice = Math.min(...floatPrices)
+        recordResult["minPrice"] = minPrice
         console.log("minPrice :", minPrice)
         let moneySaved: number = parseFloat((maxPrice - minPrice).toFixed(2))
         categorySavedMoney = parseFloat((categorySavedMoney + moneySaved).toFixed(2))
-        categoryExpense = categoryExpense + minPrice * recordResult.quantity
+        categoryExpense = parseFloat((categoryExpense + minPrice * recordResult.quantity).toFixed(2))
       }
       record["categorySavedMoney"] = categorySavedMoney
       record["categoryExpense"] = categoryExpense
@@ -472,7 +473,7 @@ export default function ExpenseReport() {
 
           <View style={{ backgroundColor: 'white' }}>
             <Text style={{ fontWeight: "300", color: "gray", fontSize: 14 }}>{expenseRecords.map((item: any) => (
-              <ExpenseReportItem items={item} key={item.categoryId} />
+              <ExpenseReportItem items={item} groupId={groupId} key={item.categoryId} />
             ))}</Text>
           </View>
 

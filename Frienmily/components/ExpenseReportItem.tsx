@@ -1,31 +1,28 @@
 import { REACT_APP_API_SERVER } from '@env';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react'
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { categoryIcons } from "../utils/categoryIcons"
 
 export interface Props {
   items: any;
+  groupId: number;
   key: number;
 
 }
 
 export default function ExpenseReportItem(props: Props) {
+  const navigation = useNavigation()
   const categoryIcon = props.items.categoryIcon
   const categoryExpense = props.items.categoryExpense
   const categorySavedMoney = props.items.categorySavedMoney
 
   const showCategoryBuyingHistory = async () => {
-    console.log(">>>>>>>>> items: ", props.items)
+    const categoryPurchasedDetails = props.items
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ categoryPurchasedDetails: ", props.items)
 
-    // await fetch(`${REACT_APP_API_SERVER}/groups/`, {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     groupId: 1,
-    //     categoryId: 1
-    //   })
-    // });
-    // console.log("successfully disable account")
-    // return
+    navigation.navigate("PurchasedProducts" as never, { categoryPurchasedDetails } as never)
+    return
   }
 
 
