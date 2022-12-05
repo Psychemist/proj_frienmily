@@ -221,7 +221,7 @@ export default function GroceriesDetails() {
             justifyContent: "flex-start",
             alignItems: "center",
             width: "100%",
-            // paddingTop: 5,
+            paddingBottom: "2%",
             paddingLeft: 10,
             paddingRight: 10,
 
@@ -260,7 +260,8 @@ export default function GroceriesDetails() {
             marginTop: "10%",
             flexDirection: "column",
             alignItems: "center",
-            width: "100%"
+            width: "100%",
+            height:"75%"
         },
         supermarket: {
             backgroundColor: "white",
@@ -372,6 +373,7 @@ export default function GroceriesDetails() {
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                     <FontAwesome name='angle-left' size={35} style={styles.shoppingCartIcon} />
                 </TouchableOpacity>
+                {/* //---------------SEARCH BAR--------------------// */}
                 <View>
                     <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
                         <FontAwesome name="shopping-cart" size={26} style={styles.shoppingCartIcon} />

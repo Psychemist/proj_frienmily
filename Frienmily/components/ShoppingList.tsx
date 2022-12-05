@@ -271,7 +271,7 @@ export default function ShoppingList() {
 
     receiptBtn: {
       backgroundColor: '#47b4b1',
-      height: 60,
+      // height: "30%",
       width: "45%",
       display: 'flex',
       justifyContent: 'center',
@@ -284,7 +284,7 @@ export default function ShoppingList() {
     },
     membersBtn: {
       backgroundColor: '#47b4b1',
-      height: 60,
+      // height: "30%",
       width: "95%",
       display: 'flex',
       justifyContent: 'center',
@@ -556,7 +556,7 @@ export default function ShoppingList() {
             </TouchableOpacity>
           </View>
           <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end" }}>
-            <Text style={styles.totalText}>Estimate Total: HK$ {addZeroes(estimatedTotal)}</Text>
+            <Text style={styles.totalText}>Estimate Total: $ {addZeroes(estimatedTotal)}</Text>
           </View>
         </View>
 
@@ -564,6 +564,7 @@ export default function ShoppingList() {
         <View style={{
           flexDirection: "row",
           width: "90%",
+          height:"10%"
         }}>
           <TouchableOpacity
             style={styles.receiptBtn}
@@ -589,6 +590,7 @@ export default function ShoppingList() {
         <View style={{
           flexDirection: "row",
           width: "90%",
+          height:"10%"
         }}>
           <TouchableOpacity
             style={styles.membersBtn}

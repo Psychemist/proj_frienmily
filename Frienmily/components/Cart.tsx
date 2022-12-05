@@ -187,9 +187,9 @@ export default function Cart() {
 
     },
     header: {
-      height: "14%",
+      height: "15%",
       alignItems: "center",
-      marginBottom: 40,
+      // marginBottom: "10%",
       width: "100%",
       backgroundColor: "white"
     },
@@ -208,7 +208,7 @@ export default function Cart() {
     },
     progressBar: {
       position: "absolute",
-      marginTop: 130
+      marginTop: "30%"
 
     },
     line1: {
@@ -266,7 +266,8 @@ export default function Cart() {
       alignItems: "center",
       width: 200,
       marginLeft: "3%",
-      marginBottom: "10%"
+      marginBottom: "2%",
+      // paddingTop:'2%'/
     }
 
   });
@@ -307,7 +308,7 @@ export default function Cart() {
 
       </View>
 
-      <ScrollView style={{ backgroundColor: 'white', width: "100%", marginTop: '7%' }}>
+      <ScrollView style={{ backgroundColor: 'white', width: "100%", marginTop: '10%'}}>
         {shoppingListArray.map((item: any, idx: number) => (
           <CartItem items={item} reCalculateAmount={reCalculateAmount} key={idx} />
         ))}
