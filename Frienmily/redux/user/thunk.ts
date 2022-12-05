@@ -18,9 +18,6 @@ export const fetchLogin: any = createAsyncThunk("user/fetchLogin", async (params
             })
         })
         const data = await res.json()
-        console.log('data from thunk :', data)
-        console.log(res)
-        console.log('ok ?', res.ok)
         if (!res.ok) {
             throw data.msg
         }
@@ -57,9 +54,7 @@ export const fetchUpdateGender: any = createAsyncThunk("user/fetchUpdateGender",
     username: string, gender: number
 }, thunkAPI: any) => {
     try {
-        console.log("gender received at thunk: ", params.gender)
         let genderName = params.gender
-        console.log("gender name: ", genderName)
 
         const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/updateGender`, {
             method: "POST",
@@ -70,9 +65,6 @@ export const fetchUpdateGender: any = createAsyncThunk("user/fetchUpdateGender",
             })
         })
         const data = await res.json()
-        console.log('data from thunk :', data)
-        console.log(res)
-        console.log('ok ?', res.ok)
         if (!res.ok) {
             throw data.msg
         }
@@ -100,9 +92,6 @@ export const fetchUpdateMobileNumber: any = createAsyncThunk("user/fetchUpdateMo
             })
         })
         const data = await res.json()
-        console.log('data from thunk :', data)
-        console.log(res)
-        console.log('ok ?', res.ok)
         if (!res.ok) {
             throw data.msg
         }
@@ -132,9 +121,6 @@ export const fetchUpdateEmail: any = createAsyncThunk("user/updateEmail", async 
             })
         })
         const data = await res.json()
-        console.log('data from thunk :', data)
-        console.log(res)
-        console.log('ok ?', res.ok)
         if (!res.ok) {
             throw data.msg
         }
@@ -164,9 +150,6 @@ export const fetchUpdateProfilePicture: any = createAsyncThunk("user/updateProfi
         });
 
         const data = await res.json()
-        console.log('data from thunk :', data)
-        console.log("res:", res)
-        console.log('ok ?', res.ok)
         if (!res.ok) {
             throw data.msg
         }

@@ -1,14 +1,13 @@
-import React, { useEffect, useInsertionEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, StatusBar, Keyboard } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { fetchUpdateEmail, fetchUpdateGender, fetchUpdateMobileNumber } from "../redux/user/thunk";
 import ModalDropdown from 'react-native-modal-dropdown';
 import { logout } from "../redux/user/userSlice";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { REACT_APP_API_SERVER } from "@env";
 
 export const GENDERS = ["Male", "Female", "Others"]
@@ -16,40 +15,21 @@ export const GENDERS = ["Male", "Female", "Others"]
 export default function Account() {
 
     const userStore = useSelector((state: RootState) => state.user)
-    console.log('account userStore : ', userStore)
-
-    const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
-    if (isLoggedIn == true) {
-        console.log("isLoggedIn is true at User Profile Screen")
-    } else {
-        console.log("isLoggedIn is false at User Profile Screen")
-    }
-
     const [username, setUsername] = useState('')
     const [gender, setGender] = useState('')
     const [mobile, setMobile] = useState('')
     const [email, setEmail] = useState('')
-
     const [isGenderEditable, setIsGenderEditable] = useState(false)
     const [isMobileEditable, setIsMobileEditable] = useState(false)
     const [isEmailEditable, setIsEmailEditable] = useState(false)
-
     const navigation = useNavigation()
     const dispatch = useDispatch()
 
-
     useEffect(() => {
-        console.log('!! i know userstore chanfged')
-
-
-        console.log('No valud in local states')
         setGender(userStore.gender!)
         setMobile(userStore.mobile!)
         setEmail(userStore.email!)
-
-
         setUsername(userStore.username!)
-
     }, [userStore.email, userStore.username, userStore.userId, userStore.profilePicture])
 
     const enlargeProfilePicture = () => {
@@ -58,18 +38,13 @@ export default function Account() {
     const changeGender = async () => {
         if (isGenderEditable == true) {
             try {
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ready to fetch and change gender in DB")
-                console.log("@@@@@@@@@@@@ username and gender to be sent to server: ", { username, gender })
-                let updateGenderResult = await dispatch(fetchUpdateGender({ username, gender })).unwrap()
-                console.log('fetchUpdateGender from unwrap = ', updateGenderResult)
+                await dispatch(fetchUpdateGender({ username, gender })).unwrap()
             }
             catch (error) {
                 console.log('error from unwrap = ', error)
             }
-            console.log("Submitted new gender setting")
         }
         setIsGenderEditable(!isGenderEditable)
-
     }
     const changeMobile = async () => {
 
@@ -90,20 +65,13 @@ export default function Account() {
                     );
                     return
                 }
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ready to fetch and change mobile in DB")
-                console.log("username and mobile: ", { username, mobile })
-                let updateMobileNumberResult = await dispatch(fetchUpdateMobileNumber({ username, mobile })).unwrap()
-                console.log('updateMobileNumberResult from unwrap = ', updateMobileNumberResult)
-
+                await dispatch(fetchUpdateMobileNumber({ username, mobile })).unwrap()
             }
             catch (error) {
                 console.log('error from unwrap = ', error)
             }
-            console.log("Submitted new mobile number")
         }
-
         setIsMobileEditable(!isMobileEditable)
-
     }
     const changeEmail = async () => {
 
@@ -124,20 +92,14 @@ export default function Account() {
 
                     return
                 }
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ready to fetch and change email address in DB")
-                console.log("username and mobile: ", { username, email })
-                let updateEmailResult = await dispatch(fetchUpdateEmail({ username, email })).unwrap()
-                console.log('updateEmailResult from unwrap = ', updateEmailResult)
+                await dispatch(fetchUpdateEmail({ username, email })).unwrap()
 
             }
             catch (error) {
                 console.log('error from unwrap = ', error)
             }
-            console.log("Submitted new email address")
         }
-
         setIsEmailEditable(!isEmailEditable)
-
     }
     const onLogout = async () => {
 
@@ -178,18 +140,12 @@ export default function Account() {
             ]
         );
     }
-
     const disableAccount = async () => {
-        console.log("the username to be disabled: ", username)
         await fetch(`${REACT_APP_API_SERVER}/user/disableAccount`, {
             method: 'POST',
             body: username,
         });
-        console.log("successfully disable account")
     }
-
-
-
     const styles = StyleSheet.create({
         mainPage: {
             flex: 1,
@@ -412,14 +368,8 @@ export default function Account() {
     return (
         <SafeAreaView style={styles.mainPage} onTouchStart={() => { Keyboard.dismiss() }}>
             <StatusBar barStyle="dark-content" />
-            {/* <View style={{ alignItems: "center" }}>
-                <Text style={{ fontSize: 25, paddingBottom: "1%" }}>Account</Text>
-            </View> */}
-
             <Text style={styles.title}>Profile</Text>
-
             <View style={{ alignItems: "center" }}>
-
                 <View style={[styles.itemContainer, { position: "relative" }]}>
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Username</Text>
@@ -428,9 +378,7 @@ export default function Account() {
                     <TouchableOpacity onPress={enlargeProfilePicture}>
                         <Image style={styles.userImage} source={{ uri: userStore.profilePicture! }} ></Image>
                     </TouchableOpacity>
-
                 </View>
-
 
                 <View style={styles.itemContainer}>
                     <View style={styles.leftContainer}>
@@ -458,7 +406,6 @@ export default function Account() {
                         </TouchableOpacity>
                     }
                 </View>
-
 
                 <View style={styles.itemContainer}>
                     <View style={styles.leftContainer}>
@@ -492,7 +439,6 @@ export default function Account() {
                     }
                 </View>
 
-
                 <View style={styles.itemContainer}>
                     <View style={styles.leftContainer}>
                         <Text style={styles.fieldHeader}>Email Address</Text>
@@ -523,12 +469,8 @@ export default function Account() {
                             </Text>
                         </TouchableOpacity>
                     }
-
                 </View>
-
             </View>
-
-            {/* <Text style={styles.title}>Options</Text> */}
 
             <View style={styles.bottomBtnWrapper}>
                 <TouchableOpacity style={[styles.logoutItemContainer]} onPress={onLogout}>
