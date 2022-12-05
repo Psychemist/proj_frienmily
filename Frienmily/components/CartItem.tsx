@@ -302,7 +302,7 @@ export default function CartItem(props: CartItemProps) {
                             <FontAwesome name="plus" size={18} style={styles.minusAndPlusIcon} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={() => navigation.navigate('Groceries' as never)}>
+                    <TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             navigation.navigate('ImagePreview' as never, { image: props.items.goods_picture } as never)
                         }}>
@@ -310,7 +310,7 @@ export default function CartItem(props: CartItemProps) {
                                 style={{ width: 50, height: 50, marginRight: "2%" }} /></View>
                         </TouchableOpacity>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ width: 150 }} onPress={itemInfo}>
+                    <TouchableOpacity style={{ width: 120 }} onPress={itemInfo}>
                         <View><Text style={styles.text}>{props.items.name}</Text></View>
                         <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
                     </TouchableOpacity>

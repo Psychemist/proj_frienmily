@@ -392,7 +392,7 @@ export default function ShoppingList() {
         <View style={styles.groupNameWrapper}>
           <TouchableOpacity onPress={enlargeProfilePicture} style={{ position: 'relative' }}>
             <Image style={styles.userImage} source={{ uri: groupPic }} ></Image>
-            {isFamilyGroup == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} color={"white"}/></View> : null}
+            {isFamilyGroup == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} color={"white"} /></View> : null}
 
           </TouchableOpacity>
           <View style={{ justifyContent: 'center' }}><Text style={{ marginLeft: 20, fontSize: 23, fontWeight: "300" }}>{groupName}</Text></View>
@@ -410,7 +410,7 @@ export default function ShoppingList() {
               onPress={() => {
                 navigation.navigate('Groceries' as never);
               }}>
-              <Text style={styles.addMoreText}>+ Add more items</Text>
+              <Text style={styles.addMoreText}>Back to Shopping</Text>
             </TouchableOpacity>
           </View>
           <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end" }}>
