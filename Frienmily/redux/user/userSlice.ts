@@ -16,19 +16,21 @@ export interface UserState {
     gender: string | null,
     profilePicture: string | null,
     errMsg: string | null
-    isLoggedOut: boolean
+    isLoggedOut: boolean,
+    isGuest: boolean
 }
 
 const initialState: UserState = {
     isLoggedIn: false,
     userId: 0,
-    username: "(none)",
+    username: "",
     email: null,
     mobile: null,
     gender: "Others",
     profilePicture: null,
     errMsg: null,
-    isLoggedOut: false
+    isLoggedOut: false,
+    isGuest: false
 }
 
 const prepareInitialState: () => Promise<UserState> = async () => {
@@ -97,7 +99,11 @@ export const userSlice = createSlice({
             state.isLoggedOut = true
             AsyncStorage.removeItem("token")
 
+        },
+        guestLogin(state: UserState) {
+            state.isGuest = true
         }
+
 
     },
 
@@ -122,7 +128,7 @@ export const userSlice = createSlice({
     }
 })
 
-export const { logout, reLogin } = userSlice.actions
+export const { logout, reLogin, guestLogin } = userSlice.actions
 
 
 
@@ -151,6 +157,8 @@ const login = (state: UserState, action: PayloadAction<{ token: string }>) => {
     console.log("fulfilled : ", state.isLoggedIn)
     console.log("payload: ", payload)
 }
+
+
 
 const updateGender = (state: UserState, action: PayloadAction<{ token: string }>) => {
     const token = action.payload.token
