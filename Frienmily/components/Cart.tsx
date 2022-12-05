@@ -328,7 +328,7 @@ export default function Cart() {
               // navigation.navigate('Groceries' as never);
               navigation.navigate('HomeTab' as never);
             }}>
-            <Text style={styles.addMoreText}>+ Add more items</Text>
+            <Text style={styles.addMoreText}>Back to Shopping</Text>
           </TouchableOpacity>
 
         </View>

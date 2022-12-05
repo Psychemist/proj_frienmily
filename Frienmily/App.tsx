@@ -45,6 +45,8 @@ import ImagePreview from './components/ImagePreview';
 import GroceriesTest from './components/GroceriesTest';
 import ExpenseReport from './components/ExpenseReport';
 import GroupPhotoEdit from './components/GroupPhotoEdit';
+import PurchasedProductsItems from './components/PurchasedProductsItems';
+import PurchasedProducts from './components/PurchasedProducts';
 
 
 const Tab = createBottomTabNavigator();
@@ -197,6 +199,8 @@ const App = () => {
             <Stack.Screen name="ImagePreview" component={ImagePreview} />
             <Stack.Screen name="GroceriesTest" component={GroceriesTest} />
             <Stack.Screen name="GroupPhotoEdit" component={GroupPhotoEdit} />
+            <Stack.Screen name="PurchasedProducts" component={PurchasedProducts} />
+            <Stack.Screen name="PurchasedProductsItems" component={PurchasedProductsItems} />
 
           </Stack.Navigator>
         </NavigationContainer>

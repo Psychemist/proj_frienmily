@@ -15,6 +15,8 @@ import SearchBarItem from './SearchBarItem';
 export default function GroceriesDetails() {
     const route = useRoute<any>()
     let info = route.params.info || ''
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ info : ", info)
+
     const navigation = useNavigation();
     const [groupName, setGroupName] = React.useState("");
     const [initNum, setInitNum] = React.useState<number>(0);
@@ -95,19 +97,23 @@ export default function GroceriesDetails() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         user_id: userIdInRedux,
-                        goods_id: info.id,
+                        goods_id: info.id || info.goods_id,
                         category_id: info.category_id
                     }),
                 });
             };
 
             const getInitNum = async () => {
+                console.log("============== userIdInRedux: ", userIdInRedux)
+                console.log("============== info: ", info)
+                console.log("============== info.id: ", info.id)
+
                 const response = await fetch(`${REACT_APP_API_SERVER}/goods/getInitNum/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         user_id: userIdInRedux,
-                        goods_id: info.id
+                        goods_id: info.id || info.goods_id
                     }),
                 });
                 let json;
@@ -160,7 +166,7 @@ export default function GroceriesDetails() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 user_id: userIdInRedux,
-                goods_id: info.id,
+                goods_id: info.id || info.goods_id,
                 quantity: initNum
             }),
         })
@@ -227,7 +233,7 @@ export default function GroceriesDetails() {
             width: "100%"
         },
         text: {
-            fontSize: 22,
+            fontSize: 20,
             marginRight: 20
         },
         backButton: {
@@ -477,7 +483,7 @@ export default function GroceriesDetails() {
                     </TouchableOpacity>
                     <View style={styles.nameWrapper}>
                         <View >
-                            <Text style={styles.text}>{info.goods_name}</Text>
+                            <Text style={styles.text}>{info.goods_name || info.name}</Text>
                         </View>
                         <View style={styles.counter}>
                             <TouchableOpacity style={styles.minusAndPlusBox} onPress={minusOneToCounter}>
