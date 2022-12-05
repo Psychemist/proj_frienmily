@@ -63,7 +63,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
             alignItems: "center",
             flexDirection: "column",
             width: "20%",
-            paddingBottom: 5,
+            padding: 5,
             //SHADOW
             // shadowOpacity: 1,
             // shadowColor: "#47b4b1",
