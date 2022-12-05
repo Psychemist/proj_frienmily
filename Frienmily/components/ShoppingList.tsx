@@ -503,11 +503,11 @@ export default function ShoppingList() {
         <ScrollView style={styles.scrollWrapper}>
           {isArchivedList ?
             boughtItems.map((item: any) => (
-              <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} />
+              <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} groupId={groupId} />
             ))
             :
             unboughtItems.map((item: any) => (
-              <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} />
+              <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} groupId={groupId} />
             ))
           }
         </ScrollView>
