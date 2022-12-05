@@ -304,12 +304,12 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
 
         },
         text: {
-            fontSize: 16,
+            fontSize: 15,
             color: "grey",
             fontWeight: "bold",
         },
         shopText: {
-            fontSize: 15,
+            fontSize: 14,
             color: "darkgrey",
             // paddingTop:"5%"
         },
@@ -317,7 +317,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
             fontSize: 15,
             // color: "black",
             width: 80,
-            textAlign: 'left',
+            textAlign: 'center',
             fontWeight: "bold",
             color: "#47b4b1",
             // marginLeft:"10%"
