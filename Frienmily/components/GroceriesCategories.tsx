@@ -42,7 +42,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
             flexDirection: "column",
             width: "100%",
             padding: 10,
-            paddingTop: 20,
+            // paddingTop: 20,
             paddingBottom: 5,
             // backgroundColor: "#E2D8CF",
             //SHADOW
