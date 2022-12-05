@@ -385,7 +385,9 @@ export default function Groceries() {
       // flexDirection: 'row',
       // width: '100%',
       // paddingBottom: 5,
+      paddingTop:"1%",
       backgroundColor: 'white',
+      maxHeight:"50%"
     },
 
     randomItemsContainer: {
@@ -462,8 +464,8 @@ export default function Groceries() {
       justifyContent: 'flex-start',
       flexDirection: 'row',
       width: '100%',
-      paddingTop: "1%",
-      paddingBottom: "1%",
+      // paddingTop: 10,
+      // paddingBottom: 10,
       alignItems: 'center',
       backgroundColor: 'white'
     },
@@ -473,10 +475,10 @@ export default function Groceries() {
       flexDirection: "row",
       flexWrap: 'wrap',
       // width: "100%",
-      padding: 10,
-      paddingTop: 10,
-      paddingBottom: 20,
-      marginBottom: 30
+      padding: "1%",
+      // paddingTop: 10,
+      // paddingBottom: 20,
+      // marginBottom: 30
       // backgroundColor: "#E2D8CF",
 
     },
@@ -655,7 +657,7 @@ export default function Groceries() {
       {isBestSeller == true &&
         <View style={{ backgroundColor: 'white' }} onTouchStart={() => { Keyboard.dismiss(), setIsShow(false) }}>
 
-          <ScrollView style={{ backgroundColor: 'white', width: '100%', height: '53%' }}>
+          <ScrollView style={{ backgroundColor: 'white', width: '100%', height: '70%' }}>
             <View style={styles.container2}>
               {top5ProductsInRedux.map((item: any, idx: number) => (
                 <GroceriesTopItems item={item} key={`top_${idx}`} />
