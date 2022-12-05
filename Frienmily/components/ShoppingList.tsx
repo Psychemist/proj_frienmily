@@ -226,7 +226,7 @@ export default function ShoppingList() {
   }
 
   const mergeFromOtherGroups = () => {
-    navigation.navigate('MergeShoppingList' as never)
+    navigation.navigate('MergeGroupList' as never)
 
   }
 

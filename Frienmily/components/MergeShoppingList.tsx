@@ -1,65 +1,23 @@
-import { REACT_APP_API_SERVER } from '@env'
-import { useIsFocused, useNavigation } from '@react-navigation/native'
-import React, { useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { useNavigation } from '@react-navigation/native'
+import React from 'react'
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { useSelector } from 'react-redux'
-import { RootState } from '../redux/store'
-import MergeShoppingListItem from './MergeShoppingListItem'
+import MergeGroupItems from './MergeShoppingListItem'
 
 export default function MergeShoppingList() {
   const navigation = useNavigation()
-  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
-
-
-  const isFocused = useIsFocused();
-  const [groupItemList, setGroupItemList] = useState([]);
-  useEffect(() => {
-    console.log('GGGGG'.repeat(100))
-    const loadGroupList = async () => {
-      try {
-        console.log('loadGroupList...');
-        const response = await fetch(
-          `${REACT_APP_API_SERVER}/groups/getGroups/`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              userID: userIdInRedux,
-            }),
-          },
-        );
-
-        let json = [];
-        if (response) {
-          json = await response.json();
-          console.log("Group list details get from server: ", json)
-        }
-
-        setGroupItemList(json);
-
-      } catch (error) {
-        console.log('error', error);
-      }
-    };
-    if (isFocused) {
-      loadGroupList();
-    }
-  }, [isFocused]);
-
-
-  console.log("groupItemList: ", groupItemList)
 
 
 
   const styles = StyleSheet.create({
     header: {
-      height: '30%',
-      alignItems: 'center',
-      // paddingTop: "1%",
-      marginBottom: 0,
-      width: '100%',
+      height: "12%",
+      alignItems: "center",
+      marginBottom: "2%",
+      marginRight: "2%",
+      width: "100%",
+      backgroundColor: "white",
+      position: "relative"
     },
     backButton: {
       position: 'absolute',
@@ -85,11 +43,10 @@ export default function MergeShoppingList() {
         <Text style={styles.text}>Choose a Group</Text>
       </View>
 
-
-      <ScrollView style={{ backgroundColor: '#F5F5F5' }}>
-        {groupItemList.map((item: any, idx: number) => (
-          <MergeShoppingListItem items={item} key={idx} />
-        ))}
+      <ScrollView style={{ backgroundColor: 'white', width: "100%", marginTop: '7%' }}>
+        {/* {shoppingListArray.map((item: any, idx: number) => (
+          <MergeGroupListItem items={item} key={idx} />
+        ))} */}
       </ScrollView>
     </SafeAreaView>
   )
