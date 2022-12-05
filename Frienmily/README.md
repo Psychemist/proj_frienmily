@@ -20,7 +20,7 @@ module.exports = {
 } 
 
 Then run:
-npx react-native-asset 
+npx react-native-asset
 
 So you can use it now: 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'   
