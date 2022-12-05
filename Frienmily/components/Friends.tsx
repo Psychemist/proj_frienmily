@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
   StatusBar,
+  Alert,
 } from 'react-native';
 import FriendItem from './FriendItem';
 import dotenv from 'dotenv';
@@ -18,9 +19,49 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
 export default function Friends() {
+  const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
+  const userStore = useSelector((state: RootState) => state.user)
+
+  const [isGuest, setIsGuest] = useState(false)
+  console.log("userStore.isGuest: ", userStore.isGuest)
+
+  useEffect(() => {
+    if (isFocused) {
+      setIsGuest(userStore.isGuest)
+    }
+  }, [isFocused]);
 
   const [friendItemList, setFriendItemList] = useState([]);
+
+
+
+  useEffect(() => {
+    const loadFriendList = async () => {
+      try {
+        console.log('loadFriendList...');
+        const response = await fetch(`${REACT_APP_API_SERVER}/friends/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userID: userIdInRedux,
+          }),
+        });
+        let json = [];
+        if (response) {
+          json = await response.json();
+        }
+        console.log("friend list: ", json);
+        setFriendItemList(json);
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
+    if (isFocused) {
+      loadFriendList();
+    }
+  }, [isFocused]);
 
   const styles = StyleSheet.create({
     floatButtonText: {
@@ -51,34 +92,7 @@ export default function Friends() {
 
     }
   });
-  const navigation = useNavigation();
 
-  const isFocused = useIsFocused();
-  useEffect(() => {
-    const loadFriendList = async () => {
-      try {
-        console.log('loadFriendList...');
-        const response = await fetch(`${REACT_APP_API_SERVER}/friends/`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            userID: userIdInRedux,
-          }),
-        });
-        let json = [];
-        if (response) {
-          json = await response.json();
-        }
-        console.log("friend list: ", json);
-        setFriendItemList(json);
-      } catch (error) {
-        console.log('error', error);
-      }
-    };
-    if (isFocused) {
-      loadFriendList();
-    }
-  }, [isFocused]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
@@ -94,7 +108,27 @@ export default function Friends() {
       <TouchableOpacity
         style={styles.circleButton}
         onPress={() => {
-          navigation.navigate('Add friends' as never);
+          if (isGuest) {
+            Alert.alert(
+              'Please login to use this feature.',
+              '',
+              [
+                {
+                  text: 'Continue as Guest',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {
+                  text: 'Login', onPress: async () => {
+                    navigation.navigate('Login' as never)
+                  }
+                },
+              ]
+            );
+          } else {
+            navigation.navigate('Add friends' as never);
+          }
+
         }}>
         <Text style={styles.floatButtonText}>+</Text>
       </TouchableOpacity>

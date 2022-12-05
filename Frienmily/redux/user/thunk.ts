@@ -32,6 +32,30 @@ export const fetchLogin: any = createAsyncThunk("user/fetchLogin", async (params
     }
 })
 
+// export const fetchGuestLogin: any = createAsyncThunk("user/fetchGuestLogin", async (params: { username: string }, thunkAPI: any) => {
+//     try {
+//         const res = await fetch(`${process.env.REACT_APP_API_SERVER}/user/guestLogin`, {
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify({
+//                 username: params.username
+//             })
+//         })
+//         const data = await res.json()
+//         if (!res.ok) {
+//             throw data.msg
+//         }
+
+//         return thunkAPI.fulfillWithValue(data)
+
+//     } catch (e) {
+//         console.log('catch error in thunk ', e)
+//         return thunkAPI.rejectWithValue({
+//             error: "guest login failed"
+//         })
+//     }
+// })
+
 export const getStoredAuth: any = createAsyncThunk("user/getStoredAuth", async (params: never, thunkAPI: any) => {
     try {
 

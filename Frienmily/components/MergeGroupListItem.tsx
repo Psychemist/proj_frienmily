@@ -21,19 +21,24 @@ export default function MergeGroupListItem(props: Props) {
   }
 
   const getAnotherGroupShoppingList = async () => {
-    const response = await fetch(`${REACT_APP_API_SERVER}/goods/getAssignedItems/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        groupId: props.items.group_id,
-      }),
-    });
-    let result;
-    if (response) {
-      result = await response.json();
+    try {
+      const response = await fetch(`${REACT_APP_API_SERVER}/goods/getAssignedItems/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          groupId: props.items.group_id,
+        }),
+      });
+      let result;
+      if (response) {
+        result = await response.json();
+      }
+      console.log("@@@@@@@@@@@ getAnotherGroupShoppingList result:", result)
+      setAnotherGroupShoppingItems(result)
+    } catch (err) {
+      console.log("err", err)
     }
-    console.log("@@@@@@@@@@@ getAnotherGroupShoppingList result:", result)
-    setAnotherGroupShoppingItems(result)
+
   }
 
 
