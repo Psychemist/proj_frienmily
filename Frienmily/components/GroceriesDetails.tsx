@@ -233,7 +233,7 @@ export default function GroceriesDetails() {
             width: "100%"
         },
         text: {
-            fontSize: 22,
+            fontSize: 20,
             marginRight: 20
         },
         backButton: {
@@ -483,7 +483,7 @@ export default function GroceriesDetails() {
                     </TouchableOpacity>
                     <View style={styles.nameWrapper}>
                         <View >
-                            <Text style={styles.text}>{info.goods_name}</Text>
+                            <Text style={styles.text}>{info.goods_name || info.name}</Text>
                         </View>
                         <View style={styles.counter}>
                             <TouchableOpacity style={styles.minusAndPlusBox} onPress={minusOneToCounter}>
