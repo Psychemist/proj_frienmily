@@ -10,6 +10,7 @@ export interface Props {
 export default function PurchasedProductsItems(props: Props) {
   const navigation = useNavigation()
   const { day, month, year, goods_name, quantity, minPrice } = props.items
+  console.log("################## props.items: ", props.items)
   console.log({ day, month, year, goods_name, quantity, minPrice })
 
   const styles = StyleSheet.create({

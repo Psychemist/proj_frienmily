@@ -168,7 +168,7 @@ export default function ExpenseReport() {
 
 
 
-  // console.log("############ expenseRecords after adding expense and moneySaved: ", expenseRecords)
+  console.log("############ expenseRecords after adding expense and moneySaved: ", expenseRecords)
   const coloredCategoryExpenseArray: any[] = []
 
 

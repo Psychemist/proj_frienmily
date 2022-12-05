@@ -10,6 +10,7 @@ export default function PurchasedProducts() {
   const route = useRoute<any>()
   console.log("route.params:", route.params)
   const categoryName = route.params.categoryPurchasedDetails.categoryName
+  const categoryExpense = route.params.categoryPurchasedDetails.categoryExpense
   const purchasedProducts = route.params.categoryPurchasedDetails.result
   console.log("purchasedProducts: ", purchasedProducts)
 
@@ -43,7 +44,7 @@ export default function PurchasedProducts() {
     tableHeaderText: {
       fontWeight: "bold",
       fontSize: 14,
-      color: "gray"
+      color: "#47b4b1"
     },
     tableContainer: {
       width: "92%"
@@ -51,7 +52,9 @@ export default function PurchasedProducts() {
     tableFooter: {
       height: "8%",
       width: "92%",
-      alignItems: "flex-start",
+      alignItems: "flex-end",
+      marginTop: 10,
+      padding: 5
     },
   })
 
@@ -82,9 +85,10 @@ export default function PurchasedProducts() {
         <Text style={{
           color: "#47b4b1",
           fontWeight: "bold",
-          textAlign: "right"
+          textAlign: "right",
+          fontSize: 18
         }}>
-          Expensed: ${ }</Text>
+          Expensed: ${categoryExpense}</Text>
       </View>
     </SafeAreaView>
   )
