@@ -82,7 +82,7 @@ export default function MergeGroupList() {
           onPress={() => navigation.goBack()}>
           <FontAwesome name="angle-left" size={35} />
         </TouchableOpacity>
-        <Text style={styles.text}>Choose a Group</Text>
+        <Text style={styles.text}>Merge from...</Text>
       </View>
 
 

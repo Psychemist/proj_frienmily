@@ -1,5 +1,6 @@
-import { NavigationContainerRefContext, useNavigation } from '@react-navigation/native'
-import React from 'react'
+import { REACT_APP_API_SERVER } from '@env';
+import { useNavigation } from '@react-navigation/native'
+import React, { useState } from 'react'
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
@@ -11,10 +12,32 @@ export interface Props {
 
 export default function MergeGroupListItem(props: Props) {
   const navigation = useNavigation()
-  const mergeListFromGroup = () => {
-    console.log("{{{{{{{{{{{{{ group details: ", props.items)
-    navigation.navigate('MergeGroupItems' as never)
+  const [anotherGroupShoppingItems, setAnotherGroupShoppingItems] = useState([])
+
+  const goToMergingScreen = async () => {
+    await getAnotherGroupShoppingList()
+    navigation.navigate('MergeShoppingList' as never, { products: anotherGroupShoppingItems } as never)
+    console.log("!".repeat(200))
   }
+
+  const getAnotherGroupShoppingList = async () => {
+    const response = await fetch(`${REACT_APP_API_SERVER}/goods/getAssignedItems/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        groupId: props.items.group_id,
+      }),
+    });
+    let result;
+    if (response) {
+      result = await response.json();
+    }
+    console.log("@@@@@@@@@@@ getAnotherGroupShoppingList result:", result)
+    setAnotherGroupShoppingItems(result)
+  }
+
+
+
 
   const styles = StyleSheet.create({
     container: {
@@ -76,7 +99,7 @@ export default function MergeGroupListItem(props: Props) {
   })
 
   return (
-    <TouchableOpacity style={styles.container} onPress={mergeListFromGroup}>
+    <TouchableOpacity style={styles.container} onPress={goToMergingScreen}>
 
       <View style={styles.miniWrapper}>
         <View style={{ position: 'relative' }}>
