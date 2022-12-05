@@ -64,13 +64,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
 
 
         }
-
-
-
-
-
-
-
+        props.reloadPage()
     }
 
     useEffect(() => {
