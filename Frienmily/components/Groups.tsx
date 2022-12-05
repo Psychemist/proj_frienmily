@@ -7,7 +7,8 @@ import {
   Text,
   TouchableOpacity,
   View,
-  StatusBar
+  StatusBar,
+  Alert
 } from 'react-native';
 import GroupItem from './GroupItem';
 import { useIsFocused } from '@react-navigation/native';
@@ -18,51 +19,24 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function Groups() {
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
+  const userStore = useSelector((state: RootState) => state.user)
 
-  const styles = StyleSheet.create({
-    floatButtonText: {
-      fontSize: 50,
-      color: 'white',
-      position: 'absolute',
-      right: 19,
-      bottom: 7,
-    },
-    circleButton: {
-      width: 70,
-      height: 70,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 100,
-      backgroundColor: '#47b4b1',
-      position: 'absolute',
-      right: 30,
-      bottom: 30,
-      opacity: 0.8,
-    },
-    // header: {
-    //   height: '14%',
-    //   alignItems: 'center',
-    //   marginBottom: '10%',
-    //   width: '100%',
-    // },
-    text: {
-      fontSize: 25,
-    },
 
-    title: {
-      padding: 20,
-      borderRadius: 10,
-      fontSize: 30,
-      fontWeight: "bold",
-      marginLeft: 20
-
-    }
-
-  });
   const navigation = useNavigation();
 
   const isFocused = useIsFocused();
   const [groupItemList, setGroupItemList] = useState([]);
+
+  const [isGuest, setIsGuest] = useState(false)
+  console.log("userStore.isGuest: ", userStore.isGuest)
+
+  useEffect(() => {
+    if (isFocused) {
+      setIsGuest(userStore.isGuest)
+    }
+  }, [isFocused]);
+
+
   useEffect(() => {
     console.log('GGGGG'.repeat(100))
     const loadGroupList = async () => {
@@ -118,6 +92,48 @@ export default function Groups() {
     }
   }, [isFocused]);
 
+  const styles = StyleSheet.create({
+    floatButtonText: {
+      fontSize: 50,
+      color: 'white',
+      position: 'absolute',
+      right: 19,
+      bottom: 7,
+    },
+    circleButton: {
+      width: 70,
+      height: 70,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 100,
+      backgroundColor: '#47b4b1',
+      position: 'absolute',
+      right: 30,
+      bottom: 30,
+      opacity: 0.8,
+    },
+    // header: {
+    //   height: '14%',
+    //   alignItems: 'center',
+    //   marginBottom: '10%',
+    //   width: '100%',
+    // },
+    text: {
+      fontSize: 25,
+    },
+
+    title: {
+      padding: 20,
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "bold",
+      marginLeft: 20
+
+    }
+
+  });
+
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
       <StatusBar barStyle="dark-content" />
@@ -133,7 +149,26 @@ export default function Groups() {
       <TouchableOpacity
         style={styles.circleButton}
         onPress={() => {
-          navigation.navigate('Create Group' as never);
+          if (isGuest) {
+            Alert.alert(
+              'Please login to use this feature.',
+              '',
+              [
+                {
+                  text: 'Continue as Guest',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {
+                  text: 'Login', onPress: async () => {
+                    navigation.navigate('Login' as never)
+                  }
+                },
+              ]
+            );
+          } else {
+            navigation.navigate('Create Group' as never);
+          }
         }}>
         <Text style={styles.floatButtonText}>+</Text>
       </TouchableOpacity>

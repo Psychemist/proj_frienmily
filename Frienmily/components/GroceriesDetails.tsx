@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { StatusBar, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StatusBar, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Alert } from "react-native";
 import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { REACT_APP_API_SERVER } from '@env';
@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
 export default function GroceriesDetails() {
+    const userStore = useSelector((state: RootState) => state.user)
     const route = useRoute<any>()
     let info = route.params.info || ''
     const navigation = useNavigation();
@@ -14,6 +15,15 @@ export default function GroceriesDetails() {
     const [shoppingCartNum, setShoppingCartNum] = React.useState<number>(0);
     const userIdInRedux = useSelector((state: RootState) => state.user.userId);
     const isFocused = useIsFocused();
+
+    const [isGuest, setIsGuest] = useState(false)
+    console.log("userStore.isGuest: ", userStore.isGuest)
+
+    useEffect(() => {
+        if (isFocused) {
+            setIsGuest(userStore.isGuest)
+        }
+    }, [isFocused]);
 
     useEffect(() => {
         try {
@@ -261,7 +271,7 @@ export default function GroceriesDetails() {
             flexDirection: "column",
             alignItems: "center",
             width: "100%",
-            height:"75%"
+            height: "75%"
         },
         supermarket: {
             backgroundColor: "white",
@@ -375,7 +385,30 @@ export default function GroceriesDetails() {
                 </TouchableOpacity>
                 {/* //---------------SEARCH BAR--------------------// */}
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
+                    <TouchableOpacity onPress={() => {
+                        if (isGuest) {
+                            Alert.alert(
+                                'Please login to use this feature.',
+                                '',
+                                [
+                                    {
+                                        text: 'Continue as Guest',
+                                        onPress: () => console.log('Cancel Pressed'),
+                                        style: 'cancel',
+                                    },
+                                    {
+                                        text: 'Login', onPress: async () => {
+                                            navigation.navigate('Login' as never)
+                                        }
+                                    },
+                                ]
+                            );
+                        } else {
+                            navigation.navigate('Cart' as never)
+                        }
+                    }}
+
+                        style={{ position: "relative" }}>
                         <FontAwesome name="shopping-cart" size={26} style={styles.shoppingCartIcon} />
                         <View style={styles.cartQty}>
                             <Text style={styles.cartNumText}>{shoppingCartNum}</Text>

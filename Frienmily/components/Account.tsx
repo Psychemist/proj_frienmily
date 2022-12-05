@@ -13,19 +13,19 @@ import { REACT_APP_API_SERVER } from "@env";
 export const GENDERS = ["Male", "Female", "Others"]
 
 export default function Account() {
+    const dispatch = useDispatch()
     const isFocused = useIsFocused();
     const userStore = useSelector((state: RootState) => state.user)
     const [username, setUsername] = useState('')
     const [gender, setGender] = useState('')
     const [mobile, setMobile] = useState('')
     const [email, setEmail] = useState('')
-    const [isGuest, setIsGuest] = useState(false)
     const [isGenderEditable, setIsGenderEditable] = useState(false)
     const [isMobileEditable, setIsMobileEditable] = useState(false)
     const [isEmailEditable, setIsEmailEditable] = useState(false)
     const navigation = useNavigation()
-    const dispatch = useDispatch()
 
+    const [isGuest, setIsGuest] = useState(false)
     console.log("userStore.isGuest: ", userStore.isGuest)
 
     useEffect(() => {
@@ -131,6 +131,28 @@ export default function Account() {
             ]
         );
     }
+
+    const onLogoutGuestMode = async () => {
+
+        Alert.alert(
+            'Are you sure you want to log out Guest Mode?',
+            '',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'Yes', onPress: async () => {
+                        dispatch(logout())
+                        navigation.navigate('Login' as never)
+                    }
+                },
+            ]
+        );
+    }
+
     const onDeleteAccount = async () => {
         Alert.alert(
             'Are you sure you want to delete your account?',
@@ -396,7 +418,8 @@ export default function Account() {
             borderBottomWidth: 0.2,
         },
         isGuestMaskText: {
-            fontSize: 20
+            fontSize: 20,
+            color: "#47b4b1"
         }
     });
 
@@ -516,7 +539,7 @@ export default function Account() {
 
             {isGuest ?
                 <View style={styles.bottomBtnWrapper}>
-                    <TouchableOpacity style={[styles.logoutItemContainer]} onPress={onLogout}>
+                    <TouchableOpacity style={[styles.logoutItemContainer]} onPress={onLogoutGuestMode}>
                         <View ><Text style={styles.logoutBtnText}>Go back to Login Screen</Text></View>
                         <View style={styles.logoutBtnWrapper}><Icon name='ios-exit-outline' style={styles.logoutBtn} /></View>
                     </TouchableOpacity>
