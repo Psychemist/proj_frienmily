@@ -462,8 +462,8 @@ export default function Groceries() {
       justifyContent: 'flex-start',
       flexDirection: 'row',
       width: '100%',
-      paddingTop: 10,
-      paddingBottom: 10,
+      paddingTop: "1%",
+      paddingBottom: "1%",
       alignItems: 'center',
       backgroundColor: 'white'
     },
