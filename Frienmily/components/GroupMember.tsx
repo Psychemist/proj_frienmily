@@ -168,7 +168,7 @@ export default function Friends() {
     totalText: {
       fontWeight: "bold",
       fontSize: 25,
-      marginBottom:"1%"
+      marginBottom: "1%"
     },
     deleteGroupBtn: {
       // borderColor: '#47b4b1',
