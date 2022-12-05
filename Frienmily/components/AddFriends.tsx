@@ -69,8 +69,10 @@ export default function AddFriends() {
   const [buttonIsClicked, setButtonIsClick] = useState(false);
 
   const addFriendButton = async () => {
-    setSearchBar('');
+    console.log('userDetail.id :', userDetail.id);
+    console.log('userIdInRedux :', userIdInRedux);
     setButtonIsClick(true);
+    console.log()
     await fetch(`${REACT_APP_API_SERVER}/friends/addFriend`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

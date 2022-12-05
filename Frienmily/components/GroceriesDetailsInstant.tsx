@@ -1,116 +1,96 @@
-import React, { useEffect } from "react";
-import { StatusBar, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StatusBar, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Pressable, Image } from "react-native";
+import FriendItem from "./FriendItem";
 import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import GroceriesCategories from "./GroceriesCategories";
+import GroceriesDetailsItem from "./GroceriesDetailsItem";
+import NumericInput from "react-native-numeric-input";
 import { REACT_APP_API_SERVER } from '@env';
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import useDebounce from './useDebounce';
+import SearchBarItem from './SearchBarItem';
 
-export default function GroceriesDetails() {
+export default function GroceriesDetailsInstant() {
     const route = useRoute<any>()
     let info = route.params.info || ''
+    let groupId = route.params.groupId || ''
+
     const navigation = useNavigation();
+    const [groupName, setGroupName] = React.useState("");
     const [initNum, setInitNum] = React.useState<number>(0);
-    const [shoppingCartNum, setShoppingCartNum] = React.useState<number>(0);
+    function addZeroes(num: number) {
+        return (Math.round(num * 100) / 100).toFixed(2)
+    }
     const userIdInRedux = useSelector((state: RootState) => state.user.userId);
     const isFocused = useIsFocused();
 
+
     useEffect(() => {
         try {
+            const insertUserLiked = async () => {
+                console.log("Insert User Liked...");
+                await fetch(`${REACT_APP_API_SERVER}/goods/userLiked/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userIdInRedux,
+                        goods_id: info.id || info.goods_id,
+                        category_id: info.category_id
+                    }),
+                });
+            };
+
+
+
             if (isFocused) {
                 insertUserLiked()
-                getInitNum()
-                shoppingCartInitNum()
             }
+
         } catch (error) {
             console.log('error', error);
         }
 
     }, [isFocused]);
 
-    const addZeroes = (num: number) => {
-        return (Math.round(num * 100) / 100).toFixed(2)
-    }
-
-    const insertUserLiked = async () => {
-        await fetch(`${REACT_APP_API_SERVER}/goods/userLiked/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                user_id: userIdInRedux,
-                goods_id: info.id || info.goods_id,
-                category_id: info.category_id
-            }),
-        });
-    };
-
-    const getInitNum = async () => {
-
-        const response = await fetch(`${REACT_APP_API_SERVER}/goods/getInitNum/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                user_id: userIdInRedux,
-                goods_id: info.id || info.goods_id
-            }),
-        });
-        let json;
-        if (response) {
-            json = await response.json();
-        }
-        setInitNum(json.quantity)
-
-    };
-
-    const shoppingCartInitNum = async () => {
-        const quantity = await fetch(`${REACT_APP_API_SERVER}/goods/getShoppingCartInitNum/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                user_id: userIdInRedux
-            }),
-        });
-        let json = await quantity.json()
-        if (json.shoppingCartInit == null) {
-            setShoppingCartNum(0)
-        } else {
-            setShoppingCartNum(json.shoppingCartInit)
-        }
-
-    };
-
-    async function updateCounter(initNum: number) {
-        await fetch(`${REACT_APP_API_SERVER}/goods/addToCart/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                user_id: userIdInRedux,
-                goods_id: info.id || info.goods_id,
-                quantity: initNum
-            }),
-        })
-    }
-
     const addOneToCounter = () => {
-
-
-        setShoppingCartNum((e) => +e + 1)
         setInitNum((e) => {
-            updateCounter(+e + 1)
             return e + 1
         })
 
     }
-
     const minusOneToCounter = () => {
         if (initNum - 1 < 0) {
             return
         }
-        setShoppingCartNum((e) => +e - 1)
         setInitNum((e) => {
-            updateCounter(+e - 1)
             return e - 1
         })
+    }
+
+    const goBackButton = async () => {
+        console.log("@@@@@@test")
+        if (initNum > 0) {
+            console.log("instantly add to shopping list...");
+            console.log("user_id", userIdInRedux)
+            console.log("group_id", groupId)
+            console.log("goods_id", info.id)
+            console.log("quantity", initNum)
+
+            await fetch(`${REACT_APP_API_SERVER}/groups/instantAdd/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: userIdInRedux,
+                    group_id: groupId,
+                    goods_id: info.id,
+                    quantity: initNum,
+
+                }),
+            });
+        }
+        navigation.goBack()
     }
 
     const styles = StyleSheet.create({
@@ -221,7 +201,7 @@ export default function GroceriesDetails() {
             justifyContent: "flex-start",
             alignItems: "center",
             width: "100%",
-            paddingBottom: "2%",
+            // paddingTop: 5,
             paddingLeft: 10,
             paddingRight: 10,
 
@@ -260,8 +240,7 @@ export default function GroceriesDetails() {
             marginTop: "10%",
             flexDirection: "column",
             alignItems: "center",
-            width: "100%",
-            height:"75%"
+            width: "100%"
         },
         supermarket: {
             backgroundColor: "white",
@@ -369,20 +348,13 @@ export default function GroceriesDetails() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#47b4b1', position: "relative" }}>
             <StatusBar barStyle="light-content" />
+
             <View style={styles.searchBarcontainer}>
-                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                <TouchableOpacity style={styles.backButton} onPress={goBackButton}>
                     <FontAwesome name='angle-left' size={35} style={styles.shoppingCartIcon} />
                 </TouchableOpacity>
-                {/* //---------------SEARCH BAR--------------------// */}
-                <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
-                        <FontAwesome name="shopping-cart" size={26} style={styles.shoppingCartIcon} />
-                        <View style={styles.cartQty}>
-                            <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
             </View>
+
             <View style={styles.contentContainer}>
                 <View style={styles.topWrapper}>
                     <TouchableOpacity onPress={() => {
@@ -408,6 +380,7 @@ export default function GroceriesDetails() {
                             </TouchableOpacity>
                         </View>
                     </View>
+
                 </View>
                 <View style={styles.supermarketWrapper}>
                     <View style={styles.supermarket}>
@@ -453,5 +426,6 @@ export default function GroceriesDetails() {
                 </View>
             </View>
         </SafeAreaView>
+
     )
 }

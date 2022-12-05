@@ -23,7 +23,10 @@ export default function ShoppingList() {
   const [groupPic, setGroupPic] = useState();
   const [allAssignedItems, setAllAssignedItems] = useState([]);
   const [estimatedTotal, setEstimatedTotal] = useState(0)
+  const [isArchivedList, setIsArchivedList] = useState(false)
 
+  let boughtItems: any[] = []
+  let unboughtItems: any[] = []
 
   useEffect(() => {
     const getGroupName = async () => {
@@ -88,16 +91,17 @@ export default function ShoppingList() {
 
             return lowest
           }
-          // TODO: 計算 Money Saved （要找出 highest）
 
           console.log(getLowest().price * item.quantity)
           total += getLowest().price * item.quantity
         }
         setEstimatedTotal(total)
+
       } catch (error) {
         console.log('error', error);
       }
     };
+
     const reloadAgain = () => {
       try {
 
@@ -120,6 +124,9 @@ export default function ShoppingList() {
           setGroupPic(groupName.profile_picture)
         }, 1500)
 
+        console.log("############################## reloadAgain is triggered")
+
+
       } catch (error) {
         console.log('error', error);
       }
@@ -129,6 +136,8 @@ export default function ShoppingList() {
       getGroupName();
       getAssignedItems()
       reloadAgain()
+
+
     }
   }, [isFocused]);
 
@@ -197,13 +206,39 @@ export default function ShoppingList() {
 
         return lowest
       }
-      // TODO: 計算 Money Saved （要找出 highest）
 
       console.log(getLowest().price * item.quantity)
       total += getLowest().price * item.quantity
     }
     setEstimatedTotal(total)
   }
+
+  const showToByList = () => {
+    if (isArchivedList == true) {
+      setIsArchivedList(!isArchivedList)
+    }
+  }
+
+  const showArchivedList = () => {
+    if (isArchivedList == false) {
+      setIsArchivedList(!isArchivedList)
+    }
+  }
+
+  const mergeFromOtherGroups = () => {
+    navigation.navigate('MergeShoppingList' as never)
+
+  }
+
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> allAssignedItems: ", allAssignedItems)
+  boughtItems = allAssignedItems.filter((item) => {
+    return (item["is_completed"] == true)
+  })
+  unboughtItems = allAssignedItems.filter((item) => {
+    return (item["is_completed"] == false)
+  })
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> boughtItems: ", boughtItems)
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> unboughtItems: ", unboughtItems)
 
   const styles = StyleSheet.create({
     addMoreText: {
@@ -221,7 +256,6 @@ export default function ShoppingList() {
       fontWeight: "bold",
       color: "gray",
       marginRight: "5%"
-
     },
 
     buttonText: {
@@ -326,6 +360,62 @@ export default function ShoppingList() {
       flexDirection: "row",
       // marginBottom: 100,
     },
+    listTypeButtonContainer: {
+      justifyContent: 'flex-start',
+      flexDirection: 'row',
+      width: '100%',
+      paddingTop: 10,
+      paddingBottom: 10,
+      alignItems: 'center',
+      backgroundColor: 'white'
+    },
+    toBuyListButton: {
+      // margin: 5,
+      // fontSize: 50,
+      backgroundColor: 'white',
+      width: '40%',
+      height: 35,
+      shadowOpacity: 1,
+      shadowColor: isArchivedList ? "lightgray" : "#47b4b1",
+      shadowRadius: 1,
+      shadowOffset: {
+        height: isArchivedList ? -4 : -4,
+        width: isArchivedList ? 4 : 4
+      },
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderTopRightRadius: 20,
+      borderTopLeftRadius: 20,
+      margin: 2
+    },
+    archiveListButton
+
+      : {
+      // margin: 5,
+      // fontSize: 100,
+      backgroundColor: 'white',
+      width: '40%',
+      height: 35,
+      shadowOpacity: 1,
+      shadowColor: isArchivedList ? "#47b4b1" : "lightgray",
+      shadowRadius: 1,
+      shadowOffset: {
+        height: isArchivedList ? -4 : -4,
+        width: isArchivedList ? 4 : 4
+      },
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderTopRightRadius: 20,
+      borderTopLeftRadius: 20,
+      margin: 2
+    },
+
+    listButtonText: {
+      fontSize: isArchivedList ? 20 : 20,
+      fontWeight: "bold",
+      color: "#606467",
+    },
+
     scrollWrapper: {
       // position: "absolute",
       top: 10,
@@ -364,9 +454,29 @@ export default function ShoppingList() {
       height: 17,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    mergeBtn: {
+      borderColor: "#47b4b1",
+      borderWidth: 2,
+      height: 40,
+      width: "95%",
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      marginTop: 20,
+      marginbottom: 30,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      color: 'white',
+    },
+    mergeBtnText: {
+      fontSize: 14,
+      color: '#000000',
+    },
 
-    }
   });
+
   const navigation = useNavigation();
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', position: "relative", backgroundColor: "white" }}>
@@ -384,11 +494,25 @@ export default function ShoppingList() {
         {isFamilyGroup ?
           <TouchableOpacity style={styles.reportBtnWrapper}
             onPress={loadGroupBuyingRecord}>
-            <Text style={styles.reportButtonText}>Spending Analysis </Text>
+            <Text style={styles.reportButtonText}>Expense Analysis </Text>
             <FontAwesome name='pie-chart' size={30} color={"#47b4b1"} />
           </TouchableOpacity>
           : <View></View>
         }
+
+        <View style={styles.listTypeButtonContainer} >
+          <TouchableOpacity
+            style={styles.toBuyListButton}
+            onPress={showToByList}>
+            <Text style={styles.listButtonText}>To Buy</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.archiveListButton}
+            onPress={showArchivedList}>
+            <Text style={styles.listButtonText}>Archived</Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.groupNameWrapper}>
           <TouchableOpacity onPress={enlargeProfilePicture} style={{ position: 'relative' }}>
             <Image style={styles.userImage} source={{ uri: groupPic }} ></Image>
@@ -398,11 +522,29 @@ export default function ShoppingList() {
           <View style={{ justifyContent: 'center' }}><Text style={{ marginLeft: 20, fontSize: 23, fontWeight: "300" }}>{groupName}</Text></View>
 
         </View>
+
         <ScrollView style={styles.scrollWrapper}>
-          {allAssignedItems.map((item: any) => (
-            <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} />
-          ))}
+          {isArchivedList ?
+            boughtItems.map((item: any) => (
+              <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} groupId={groupId} />
+            ))
+            :
+            unboughtItems.map((item: any) => (
+              <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} groupId={groupId} />
+            ))
+          }
+
+          {isArchivedList ?
+            <View></View>
+            :
+            <TouchableOpacity
+              style={styles.mergeBtn}
+              onPress={mergeFromOtherGroups}>
+              <Text style={styles.mergeBtnText}>Merge Shopping List Items from Other Groups</Text>
+            </TouchableOpacity>
+          }
         </ScrollView>
+
         <View style={{ width: "100%" }}>
           <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end" }}>
             <TouchableOpacity
