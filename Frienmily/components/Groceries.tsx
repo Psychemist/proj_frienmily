@@ -476,6 +476,7 @@ export default function Groceries() {
       padding: 10,
       paddingTop: 10,
       paddingBottom: 20,
+      marginBottom: 30
       // backgroundColor: "#E2D8CF",
 
     },

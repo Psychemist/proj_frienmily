@@ -213,14 +213,18 @@ export default function ShoppingList() {
     setEstimatedTotal(total)
   }
 
-  const changeList = () => {
+  const showToByList = () => {
     if (isArchivedList == true) {
-      console.log("Currently in Archived List. Switching to To Buy List")
-    } else {
-      console.log("Currently in To Buy List. Switching to Archived List")
+      setIsArchivedList(!isArchivedList)
     }
-    setIsArchivedList(!isArchivedList)
   }
+
+  const showArchivedList = () => {
+    if (isArchivedList == false) {
+      setIsArchivedList(!isArchivedList)
+    }
+  }
+
   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> allAssignedItems: ", allAssignedItems)
   boughtItems = allAssignedItems.filter((item) => {
     return (item["is_completed"] == true)
@@ -476,12 +480,12 @@ export default function ShoppingList() {
         <View style={styles.listTypeButtonContainer} >
           <TouchableOpacity
             style={styles.toBuyListButton}
-            onPress={changeList}>
+            onPress={showToByList}>
             <Text style={styles.listButtonText}>To Buy</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.archiveListButton}
-            onPress={changeList}>
+            onPress={showArchivedList}>
             <Text style={styles.listButtonText}>Archived</Text>
           </TouchableOpacity>
         </View>
