@@ -13,7 +13,8 @@ import { RootState } from "../redux/store";
 interface ShoppingListItemProps {
     items: any;
     key: number;
-    reloadPage: () => void
+    reloadPage: () => void;
+    groupId: number
 }
 
 export default function ShoppingListItem(props: ShoppingListItemProps) {
@@ -261,7 +262,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
     };
 
     const itemInfo = () => {
-        navigation.navigate('GroceriesDetails' as never, { info: props.items } as never)
+        navigation.navigate('GroceriesDetailsInstant' as never, { info: props.items, groupId: props.groupId } as never)
 
     }
 
