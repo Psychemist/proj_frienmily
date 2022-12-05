@@ -50,8 +50,8 @@ import PurchasedProducts from './components/PurchasedProducts';
 import GroceriesDetailsInstant from './components/GroceriesDetailsInstant';
 import MergeGroupList from './components/MergeGroupList';
 import MergeGroupListItem from './components/MergeGroupListItem';
-import MergeShoppingList from './components/MergeGroupList';
-import MergeShoppingListItem from './components/MergeGroupListItem';
+import MergeShoppingList from './components/MergeShoppingList';
+import MergeShoppingListItem from './components/MergeShoppingListItem';
 
 
 const Tab = createBottomTabNavigator();

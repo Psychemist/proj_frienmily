@@ -15,7 +15,7 @@ export default function MergeShoppingListItem(props: Props) {
     itemContainer: {
       backgroundColor: "white",
       width: "100%",
-      height: 150,
+      height: 80,
       borderWidth: 1,
       borderColor: "#F5F5F5",
       borderRadius: 10,
@@ -42,30 +42,25 @@ export default function MergeShoppingListItem(props: Props) {
       color: "grey",
       fontWeight: "bold",
     },
-    shopText: {
-      fontSize: 15,
-      color: "darkgrey",
-    },
+    // shopText: {
+    //   fontSize: 15,
+    //   color: "darkgrey",
+    // },
   })
 
 
   return (
     <View style={styles.itemContainer}>
-      <View>
-        <Text style={styles.shopText}>x{props.items.quantity}</Text>
-      </View>
       <TouchableOpacity>
         <View><Image source={{ uri: props.items.goods_picture }}
           style={{ width: 50, height: 50, marginRight: "2%" }} /></View>
       </TouchableOpacity>
       <TouchableOpacity style={{ width: 150 }}>
         <View><Text style={styles.text}>{props.items.name}</Text></View>
-        {/* <View><Text style={styles.shopText}>{getLowest().shop}</Text></View> */}
       </TouchableOpacity>
-      {/* <View ><Text style={styles.price}>${addZeroes(getLowest().price! * props.items.quantity)}</Text></View> */}
       <TouchableOpacity>
-        <FontAwesome name="trash-o" size={20} color={"#47b4b1"} />
+        <FontAwesome name="plus" size={20} color={"#47b4b1"} />
       </TouchableOpacity>
-    </View >
+    </View>
   )
 }

@@ -480,7 +480,7 @@ export default function ExpenseReport() {
           <View style={styles.tableHeaderFooter}>
             <View style={[styles.rightWrapper, { width: "45%" }]}>
               <View style={[styles.amountWrapper, { width: "100%" }]}>
-                <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 18 }}>Estimated Expenses :</Text>
+                <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 18 }}>Est. Expenses :</Text>
                 <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 18 }}> ${expenseSum}</Text>
               </View>
             </View>
