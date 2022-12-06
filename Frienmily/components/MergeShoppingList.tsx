@@ -11,8 +11,9 @@ export default function MergeShoppingList() {
   const navigation = useNavigation()
   const route = useRoute<any>()
   const isFocused = useIsFocused();
-  const [anotherGroupShoppingItems, setAnotherGroupShoppingItems] = useState([])
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
+  const [anotherGroupShoppingItems, setAnotherGroupShoppingItems] = useState<any[]>([])
+  const [productIds, setProductIds] = useState<any[]>([])
 
 
   console.log("###################################### route.params.currentGroupId: ", route.params.currentGroupId)
@@ -32,7 +33,6 @@ export default function MergeShoppingList() {
       goToMergingScreen()
     }
   }, [isFocused])
-
 
   const getAnotherGroupShoppingList = async () => {
     try {
@@ -56,6 +56,18 @@ export default function MergeShoppingList() {
       )
 
 
+
+      let productIdsTemp: any[] = []
+      for (let uniqueShopping of uniqueShoppingList) {
+        productIdsTemp.push(
+          uniqueShopping['goods_id']
+        )
+      }
+
+
+      console.log(productIdsTemp);
+
+      setProductIds(productIdsTemp)
       setAnotherGroupShoppingItems(uniqueShoppingList)
 
     } catch (err) {
@@ -65,14 +77,17 @@ export default function MergeShoppingList() {
   }
 
   const addToCurrentGroup = async () => {
-
+    console.log("################################### onPress addItemBtn")
+    console.log("################################### userIdInRedux: ", userIdInRedux)
+    console.log("################################### currentGroupId: ", currentGroupId)
+    console.log("################################### productIds: ", productIds)
     await fetch(`${REACT_APP_API_SERVER}/goods/assignToGroupFromAnother/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         userId: userIdInRedux,
         groupId: currentGroupId,
-        productIds: anotherGroupShoppingItems
+        productIds: productIds
       }),
     });
     // showAlert()
