@@ -109,7 +109,9 @@ export default function ExpenseReport() {
 
   // For loop the 10 categories
   let i = 0
+  console.log("@@__".repeat(200))
   for (let record of expenseRecords) {
+    console.log(expenseRecords)
     let categorySavedMoney: number = 0
     let categoryExpense: number = 0
 
@@ -132,15 +134,18 @@ export default function ExpenseReport() {
             if (value != "0") {
               floatPrices.push(parseFloat(value))
             }
-
           }
         }
+        // get all the supermarket prices of this produce purchase record
+        console.log("################################################ floatPrices: ", floatPrices)
+
+
         // calculate the categorySavedMoney and categoryExpense
         let maxPrice = Math.max(...floatPrices)
         let minPrice = Math.min(...floatPrices)
         recordResult["minPrice"] = minPrice
         console.log("minPrice :", minPrice)
-        let moneySaved: number = parseFloat((maxPrice - minPrice).toFixed(2))
+        let moneySaved: number = parseFloat(((maxPrice - minPrice) * recordResult.quantity).toFixed(2))
         categorySavedMoney = parseFloat((categorySavedMoney + moneySaved).toFixed(2))
         categoryExpense = parseFloat((categoryExpense + minPrice * recordResult.quantity).toFixed(2))
       }
@@ -172,7 +177,7 @@ export default function ExpenseReport() {
   const coloredCategoryExpenseArray: any[] = []
 
 
-  const data = expenseRecords.map((item: any) => {
+  expenseRecords.map((item: any) => {
     let categoryExpense = item.categoryExpense
     let pieSectorColor = item.pieSectorColor
     let categoryId = item.categoryId
@@ -333,11 +338,11 @@ export default function ExpenseReport() {
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      marginRight:"-5%"
+      marginRight: "-5%"
     },
     pieChart: {
-      height: 250,
-      width: 250,
+      height: 235,
+      width: 235,
       marginTop: 20,
       marginBottom: 20,
 
@@ -350,7 +355,7 @@ export default function ExpenseReport() {
     tableHeaderFooter: {
       flexDirection: "row",
       width: "100%",
-      height: 40,
+      height: 30,
       justifyContent: "center",
       alignItems: "center",
       // marginLeft: "%"
@@ -365,16 +370,13 @@ export default function ExpenseReport() {
     rightWrapper: {
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "center",
-      // width: "2%",
+      justifyContent: "space-between",
       padding: 5,
-      // marginRight: 5,
-
     },
     totalExpenseWrapper: {
       alignItems: "center",
       justifyContent: "center",
-      width: 60,
+      width: 68,
       height: 20
     },
     totalSavedMoneyWrapper: {
@@ -442,7 +444,7 @@ export default function ExpenseReport() {
 
 
       {isChartView ?
-        <ScrollView>
+        <ScrollView style={{ padding: 0 }}>
           <View style={styles.chartViewContainer}>
             {pieData.length == 0 ?
               <PieChart style={styles.pieChart} data={emptyPieData} />
@@ -465,11 +467,10 @@ export default function ExpenseReport() {
             </View>
             <View style={styles.rightWrapper}>
               <View style={styles.totalExpenseWrapper}>
-                <Text style={{ fontWeight: "bold", color: "#47b4b1", fontSize: 14 }}>Expense</Text>
+                <Text style={{ fontWeight: "bold", color: "#47b4b1", fontSize: 14 }}>Expensed</Text>
               </View>
               <View style={styles.totalSavedMoneyWrapper}>
-                <Text style={{ fontWeight: "bold", color: "#f79f24", fontSize: 14 }}>Money</Text>
-                <Text style={{ fontWeight: "bold", color: "#f79f24", fontSize: 14 }}>Saved</Text>
+                <Text style={{ fontWeight: "bold", color: "#f79f24", fontSize: 14, paddingLeft: 15 }}>Saved</Text>
               </View>
             </View>
           </View>
