@@ -287,11 +287,12 @@ export default function UploadReceipt() {
     },
     square: {
       width: "80%",
-      height: "43%",
+      height: "35%",
       backgroundColor: 'white',
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 18,
+      paddingTop:"10%"
 
     },
     uploadText: {
@@ -340,7 +341,38 @@ export default function UploadReceipt() {
 
         <Text style={styles.text}>Upload Receipt</Text>
       </View>
+      <View style={styles.inputFieldWrapper}>
+        <TextInput
+          keyboardType="numeric"
+          placeholder="Receipt Amount"
+          style={{
+            margin: 5,
+            fontSize: 18,
+            minWidth: "5%",
+            maxWidth: "60%"
+          }}
+          value={number}
+          onChangeText={setNumber}
+          placeholderTextColor='grey'
+          maxLength={8}
 
+        />
+      </View>
+      <View style={styles.inputFieldWrapper}>
+        <TextInput
+          placeholder="Remarks (Optional)"
+          style={{
+            margin: 5,
+            fontSize: 18,
+            minWidth: "5%",
+            maxWidth: "60%"
+          }}
+          value={remarks}
+          onChangeText={setRemarks}
+          placeholderTextColor='grey'
+          maxLength={28}
+        />
+      </View>
       {imgs == undefined || imgs == null ? (
         <TouchableOpacity onPress={() => addPhoto()}>
           <View style={styles.square}>
@@ -361,38 +393,7 @@ export default function UploadReceipt() {
         })
       )}
 
-      <View style={styles.inputFieldWrapper}>
-        <TextInput
-          keyboardType="numeric"
-          placeholder="Receipt Amount"
-          style={{
-            margin: 5,
-            fontSize: 20,
-            minWidth: "5%",
-            maxWidth: "60%"
-          }}
-          value={number}
-          onChangeText={setNumber}
-          placeholderTextColor='grey'
-          maxLength={8}
-
-        />
-      </View>
-      <View style={styles.inputFieldWrapper}>
-        <TextInput
-          placeholder="Remarks (Optional)"
-          style={{
-            margin: 5,
-            fontSize: 20,
-            minWidth: "5%",
-            maxWidth: "60%"
-          }}
-          value={remarks}
-          onChangeText={setRemarks}
-          placeholderTextColor='grey'
-          maxLength={28}
-        />
-      </View>
+      
       <TouchableOpacity style={styles.searchButton} onPress={submitButton}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
