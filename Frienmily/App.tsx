@@ -204,12 +204,12 @@ const App = () => {
             <Stack.Screen name="ImagePreview" component={ImagePreview} />
             <Stack.Screen name="GroceriesTest" component={GroceriesTest} />
             <Stack.Screen name="GroupPhotoEdit" component={GroupPhotoEdit} options={{ gestureEnabled: true }} />
-            <Stack.Screen name="PurchasedProducts" component={PurchasedProducts} />
+            <Stack.Screen name="PurchasedProducts" component={PurchasedProducts} options={{ gestureEnabled: true }} />
             <Stack.Screen name="PurchasedProductsItems" component={PurchasedProductsItems} />
             <Stack.Screen name="GroceriesDetailsInstant" component={GroceriesDetailsInstant} />
-            <Stack.Screen name="MergeGroupList" component={MergeGroupList} />
+            <Stack.Screen name="MergeGroupList" component={MergeGroupList} options={{ gestureEnabled: true }} />
             <Stack.Screen name="MergeGroupListItem" component={MergeGroupListItem} />
-            <Stack.Screen name="MergeShoppingList" component={MergeShoppingList} />
+            <Stack.Screen name="MergeShoppingList" component={MergeShoppingList} options={{ gestureEnabled: true }} />
             <Stack.Screen name="MergeShoppingListItem" component={MergeShoppingListItem} />
 
           </Stack.Navigator>
