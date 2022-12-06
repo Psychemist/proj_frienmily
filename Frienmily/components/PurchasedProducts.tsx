@@ -77,7 +77,7 @@ export default function PurchasedProducts() {
         </View>
         <ScrollView style={styles.tableContainer}>
           {purchasedProducts.map((item: any) => (
-            <PurchasedProductsItems items={item} key={item.goods_id} />
+            <PurchasedProductsItems items={item} key={item.id} />
           ))}
         </ScrollView>
       </View>

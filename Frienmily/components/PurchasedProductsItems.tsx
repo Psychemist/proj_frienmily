@@ -53,7 +53,7 @@ export default function PurchasedProductsItems(props: Props) {
         <Text>{quantity}</Text>
       </View>
       <View style={{ alignItems: 'flex-end', padding: 2, width: "17%", }}>
-        <Text>${minPrice}</Text>
+        <Text>${minPrice * quantity}</Text>
       </View>
     </TouchableOpacity>
   )

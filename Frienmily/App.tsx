@@ -203,7 +203,7 @@ const App = () => {
             <Stack.Screen name="ExpenseReport" component={ExpenseReport} options={{ gestureEnabled: true }} />
             <Stack.Screen name="ImagePreview" component={ImagePreview} />
             <Stack.Screen name="GroceriesTest" component={GroceriesTest} />
-            <Stack.Screen name="GroupPhotoEdit" component={GroupPhotoEdit} />
+            <Stack.Screen name="GroupPhotoEdit" component={GroupPhotoEdit} options={{ gestureEnabled: true }} />
             <Stack.Screen name="PurchasedProducts" component={PurchasedProducts} />
             <Stack.Screen name="PurchasedProductsItems" component={PurchasedProductsItems} />
             <Stack.Screen name="GroceriesDetailsInstant" component={GroceriesDetailsInstant} />
