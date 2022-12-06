@@ -32,13 +32,14 @@ export default function UserProfilePicuture() {
         mediaType: 'photo', // 'photo' or 'video' or 'mixed'
         selectionLimit: 1, // 1为一张，0不限制数量
         includeBase64: true,
+        maxWidth: 500,
+        maxHeight: 500
+
       },
       res => {
         setImgs(res.assets);
       },
     );
-    console.log('imgs :', imgs);
-    console.log(imgs == undefined);
   };
 
 
@@ -48,18 +49,17 @@ export default function UserProfilePicuture() {
         emptyImgAlert();
         return;
       }
+      // console.log("userId :", userId)
+      // console.log("imgs :", imgs)
       let updateProfileResult = await dispatch(fetchUpdateProfilePicture({ userId, imgs })).unwrap()
       console.log('fetchUpdateGender from unwrap = ', updateProfileResult)
       Alert.alert(
-        'Your profile page has been updated',
-        '',
-        [
-          {
-            text: 'OK',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          }
-        ]
+        'Your profile page has been updated', '', [
+        {
+          text: 'OK', onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        }
+      ]
       );
     } catch (error) {
       console.log("error!!!", error)
@@ -79,11 +79,6 @@ export default function UserProfilePicuture() {
 
   const emptyImgAlert = () => {
     Alert.alert('Please upload image', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };

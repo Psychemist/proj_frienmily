@@ -480,15 +480,15 @@ export default function ExpenseReport() {
           <View style={styles.tableHeaderFooter}>
             <View style={[styles.rightWrapper, { width: "45%" }]}>
               <View style={[styles.amountWrapper, { width: "100%" }]}>
-                <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 18 }}>Est. Expenses :</Text>
-                <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 18 }}> ${expenseSum}</Text>
+                <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 15 }}>Est. Expenses :</Text>
+                <Text style={{ fontWeight: "bold", color: "#47b4b1", textAlign: "right", fontSize: 15 }}> ${expenseSum}</Text>
               </View>
             </View>
 
             <View style={[styles.rightWrapper, { width: "38%" }]}>
               <View style={[styles.amountWrapper, { width: "100%" }]}>
-                <Text style={{ fontWeight: "bold", color: "#f79f24", textAlign: "right", fontSize: 18 }}>Saved :</Text>
-                <Text style={{ fontWeight: "bold", color: "#f79f24", textAlign: "right", fontSize: 18 }}> ${moneySavedSum}</Text>
+                <Text style={{ fontWeight: "bold", color: "#f79f24", textAlign: "right", fontSize: 15 }}>Saved :</Text>
+                <Text style={{ fontWeight: "bold", color: "#f79f24", textAlign: "right", fontSize: 15 }}> ${moneySavedSum}</Text>
               </View>
             </View>
           </View>

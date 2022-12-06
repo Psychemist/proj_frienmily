@@ -1,99 +1,82 @@
 import {
-    Alert,
-    Image,
     SafeAreaView,
     ScrollView,
     StatusBar,
     StyleSheet,
     Text,
-    TextInput,
     TouchableOpacity,
     View,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
-// import AddFriendSearchResult from './AddFriendSearchResult';
-import GroupItem from './GroupItem';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { REACT_APP_API_SERVER } from '@env';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
 
 export default function MoneySettle() {
     const route = useRoute<any>()
     const isFocused = useIsFocused();
-    const [json, setJson] = useState([]);
+    const [notYetSettled, setNotYetSettled] = useState([]);
+    const [settled, setSettled] = useState([]);
     let settleDetails = route.params.settleDetails || ''
     let username = route.params.username || ''
     let thisUserID = route.params.thisUserID || ''
     let friendUserID = route.params.friendUserID || ''
-    console.log(settleDetails);
-    console.log(username);
-    console.log(thisUserID);
-    console.log(friendUserID);
-
     let oweAmount = parseFloat(settleDetails.amount).toFixed(1)
-
-
     const [showResult, setShowResult] = useState(<Text></Text>);
     const [showButton, setShowButton] = useState(<Text></Text>);
 
     useEffect(() => {
-        const loadFriendList = async () => {
-            try {
-                if (settleDetails.case == 1) {
-                    setShowResult(<View style={styles.noTranscationContainer}>
-                        <FontAwesome name="check" size={35} color="white"/>
-                        <Text style={styles.text}>All Settled</Text></View>)
-                    // setShowButton()
-                } else if (settleDetails.case == 2) {
-                    setShowResult(<Text style={styles.text}>{username} owes you ${oweAmount}</Text>)
-                    setShowButton(
-                        <TouchableOpacity style={styles.searchButton} onPress={moneySettle}>
-                            <View style={styles.settledbutton}>
-                                <Text style={styles.settledButtonText}>Press to Settle</Text>
-                            </View>
-                        </TouchableOpacity>
-                    )
-                } else if (settleDetails.case == 3) {
-                    setShowResult(<Text style={styles.text}>You owe {username} ${oweAmount}</Text>)
-                }
-            } catch (error) {
-                console.log('error', error);
-            }
-        };
-        const getAllTxnRecord = async () => {
-            try {
-                const response = await fetch(
-                    `${REACT_APP_API_SERVER}/friends/getAllTxnRecord/`,
-                    {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            user_id: thisUserID,
-                            user_friend_id: friendUserID,
-                        }),
-                    },
-                );
-                let json;
-                if (response) {
-                    json = await response.json();
-                }
-                setJson(json)
-            } catch (error) {
-                console.log('error', error);
-            }
-        }
         if (isFocused) {
             loadFriendList();
             getAllTxnRecord()
         }
     }, [isFocused]);
-
-    const userIdInRedux = useSelector((state: RootState) => state.user.userId);
-
+    const loadFriendList = async () => {
+        try {
+            if (settleDetails.case == 1) {
+                setShowResult(<View style={styles.noTranscationContainer}>
+                    <FontAwesome name="check" size={35} color="white" />
+                    <Text style={styles.text}>All Settled</Text></View>)
+            } else if (settleDetails.case == 2) {
+                setShowResult(<Text style={styles.text}>{username} owes you ${oweAmount}</Text>)
+                setShowButton(
+                    <TouchableOpacity style={styles.searchButton} onPress={moneySettle}>
+                        <View style={styles.settledbutton}>
+                            <Text style={styles.settledButtonText}>Press to Settle</Text>
+                        </View>
+                    </TouchableOpacity>
+                )
+            } else if (settleDetails.case == 3) {
+                setShowResult(<Text style={styles.text}>You owe {username} ${oweAmount}</Text>)
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    };
+    const getAllTxnRecord = async () => {
+        try {
+            const response = await fetch(
+                `${REACT_APP_API_SERVER}/friends/getAllTxnRecord/`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: thisUserID,
+                        user_friend_id: friendUserID,
+                    }),
+                },
+            );
+            let json;
+            if (response) {
+                json = await response.json();
+            }
+            setNotYetSettled(json.notYetSettled)
+            setSettled(json.settled)
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
     const navigation = useNavigation();
-
     const moneySettle = async () => {
         await fetch(`${REACT_APP_API_SERVER}/receipts/settle/`, {
             method: 'POST',
@@ -107,7 +90,6 @@ export default function MoneySettle() {
         setShowButton(<Text></Text>)
 
     };
-
     const amount = (item: any) => {
         if (item.debitor_id == thisUserID) {
             return <View style={styles.txnDetails}>
@@ -118,24 +100,20 @@ export default function MoneySettle() {
         }
 
     }
-
     const styles = StyleSheet.create({
-        pageContainer:{
-             alignItems: 'center',
-             backgroundColor: '#47b4b1',
-             flex: 1,
-             display: "flex",
-             justifyContent: 'center',
-             flexDirection: 'column',
+        pageContainer: {
+            alignItems: 'center',
+            backgroundColor: '#47b4b1',
+            flex: 1,
+            display: "flex",
+            // justifyContent: 'center',
+            flexDirection: 'column',
         },
         searchButton: {
             // margin: 5,
             fontSize: 20,
             backgroundColor: '#47b4b1',
-            // width: 120,
-            // height: 45,
-            // borderRadius: 100,
-            // marginBottom: 20,
+            width: '100%',
         },
         text: {
             padding: 20,
@@ -144,12 +122,12 @@ export default function MoneySettle() {
             marginLeft: 20,
             marginRight: 20,
             color: 'white',
-            fontWeight:"300",
-            fontSize: 35,
+            fontWeight: "300",
+            fontSize: 25,
             // fontWeight: "bold",
             // color: "#47b4b1",
         },
-        oweText:{
+        oweText: {
             paddingBottom: 10,
             borderRadius: 10,
             fontSize: 25,
@@ -166,18 +144,20 @@ export default function MoneySettle() {
             paddingLeft: '10%',
             fontSize: 25,
             // top: "110%",
-            color:"white"
+            color: "white"
         },
         txnDetails: {
             flexDirection: 'row',
             justifyContent: 'space-between',
             width: 300
         },
-        mainContainer:{
+        mainContainer: {
             display: "flex",
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
+            marginTop: 40,
+            width: '80%',
         },
         container: {
             display: "flex",
@@ -189,7 +169,7 @@ export default function MoneySettle() {
             height: 80,
             padding: 20,
             paddingTop: "5%",
-            paddingBottom:"5%",
+            paddingBottom: "5%",
             backgroundColor: 'white',
             //SHADOW
             borderRadius: 10,
@@ -202,9 +182,9 @@ export default function MoneySettle() {
             borderBottomColor: 'grey',
             borderBottomWidth: 0.2,
             fontSize: 40,
-            paddingRight:"10%",
-            fontWeight:"300",
-            color:"gray",
+            paddingRight: "10%",
+            fontWeight: "300",
+            color: "gray",
         },
         settledbutton: {
             display: "flex",
@@ -224,7 +204,7 @@ export default function MoneySettle() {
             // borderTopRightRadius:20,
             // borderBottomLeftRadius:20,
             // borderBottomRightRadius:20,
-            borderRadius:10,
+            borderRadius: 10,
             shadowOpacity: 0.1,
             shadowRadius: 1,
             shadowOffset: {
@@ -235,8 +215,8 @@ export default function MoneySettle() {
             borderBottomWidth: 0.2,
             fontSize: 40,
             // paddingRight:"10%",
-            fontWeight:"300",
-            color:"gray",
+            fontWeight: "300",
+            color: "gray",
         },
         settledButtonText: {
             // padding: 20,
@@ -245,26 +225,24 @@ export default function MoneySettle() {
             // marginLeft: 20,
             // marginRight: 20,
             color: 'white',
-            fontWeight:"bold",
+            fontWeight: "bold",
         },
-        resultContainer:{
+        resultContainer: {
             display: "flex",
             justifyContent: 'center',
             alignItems: 'center',
             flexWrap: "wrap",
-            paddingLeft:"5%",
-            paddingRight:"5%",
+            // paddingLeft: "5%",
+            // paddingRight: "5%",
             paddingBottom: "2%",
-            paddingTop: "10%"
-            
-            // positon: "absolute",
-
-            // height:200
+            // marginTop: "1%",
+            height: '13%',
+            marginBottom: 10,
         },
-        noTranscationContainer:{            
+        noTranscationContainer: {
             display: "flex",
-        justifyContent: 'center',
-        alignItems: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
 
             flexDirection: 'column',
             // marginBottom: "5%",
@@ -288,60 +266,70 @@ export default function MoneySettle() {
         },
         groupName: {
             fontSize: 40,
-            paddingRight:"10%",
-            fontWeight:"300",
-            color:"gray",
+            paddingRight: "10%",
+            fontWeight: "300",
+            color: "gray",
             // paddingTop: "5%",
             // paddingBottom:"5%",
-          },
-          oweGroupName:{
+        },
+        oweGroupName: {
             fontSize: 20,
             // paddingRight:"10%",
-            fontWeight:"300",
-            color:"gray",
-          },
-          youOweRed:{
+            fontWeight: "300",
+            color: "gray",
+        },
+        youOweRed: {
             fontSize: 20,
             // paddingRight:"10%",
-            fontWeight:"300",
-            color:"#F84C27",
-          },
-          oweYouGreen:{
+            fontWeight: "300",
+            color: "#F84C27",
+        },
+        oweYouGreen: {
             fontSize: 20,
             // paddingRight:"10%",
-            fontWeight:"300",
-            color:"#02CD9C",
-          }
+            fontWeight: "300",
+            color: "#02CD9C",
+        },
+        scrollView: {
+            minHeight: notYetSettled.length == 0 ? 500 : 220,
+            maxHeight: notYetSettled.length == 0 ? 500 : 220,
+            marginBottom: 20
+        }
     });
 
     return (
-        
+
         <SafeAreaView style={styles.pageContainer}>
             <StatusBar barStyle="light-content" />
             <TouchableOpacity
-                    style={styles.backButton}
-                    onPress={() => navigation.navigate('Friends' as never)}>
-                    <FontAwesome name="angle-left" size={35} color="white"/>
-                </TouchableOpacity>
-                {/* <Text style={styles.text}>Settlement</Text> */}
+                style={styles.backButton}
+                onPress={() => navigation.navigate('Friends' as never)}>
+                <FontAwesome name="angle-left" size={35} color="white" />
+            </TouchableOpacity>
+            {/* <Text style={styles.text}>Settlement</Text> */}
 
 
 
 
             <View style={styles.mainContainer}>
-            <View style={styles.resultContainer}><Text>{showResult}</Text></View>
+                <View style={styles.resultContainer}><Text>{showResult}</Text></View>
+                <View style={{ width: '100%' }}>{showButton}</View>
+                {notYetSettled.length == 0 ? null :
+                    <ScrollView style={styles.scrollView}>
+                        {notYetSettled.map((item: any, idx: number) => (
+                            <View style={styles.container} key={idx}><Text>{amount(item)}</Text></View>
+                        ))}
+                    </ScrollView>}
 
-            {/* <Image source={require('./img/money.gif')}
-                style={{ width: 250, height: 250, borderRadius: 15 }} /> */}
+                <View style={{ width: '100%' }}><Text style={{ color: 'white', fontSize: 30, textAlign: 'left' }}>Settled history</Text></View>
+                <ScrollView style={styles.scrollView}>
+                    {settled.map((item: any, idx: number) => (
+                        <View style={styles.container} key={idx}><Text>{amount(item)}</Text></View>
+                    ))}
+                    {settled.length == 0 ? <View><Text style={{ color: 'white', fontSize: 17, paddingTop: 20 }}>(No transactions record)</Text></View> : null}
+                </ScrollView>
 
-            <ScrollView style={{ minHeight: 400, maxHeight: "80%" }}>
-            <View>{showButton}</View>   
-                {json.map((item: any, idx: number) => (
-                    <View style={styles.container} key={idx}><Text>{amount(item)}</Text></View>
-                ))}
-            </ScrollView>
-
-        </View>
+            </View>
         </SafeAreaView>
     );
 }
