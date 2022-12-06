@@ -322,7 +322,7 @@ export default function ShoppingList() {
       // right: 10,
       // bottom: 7,
       // height: 50,
-      width: "90%",
+      width: "100%",
       height: 70,
       backgroundColor: 'white',
       shadowOpacity: 1,
