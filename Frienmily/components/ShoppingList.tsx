@@ -364,7 +364,7 @@ export default function ShoppingList() {
       justifyContent: 'flex-start',
       flexDirection: 'row',
       width: '100%',
-      paddingTop: "1%",
+      paddingTop: "2%",
       // paddingBottom: 10,
       alignItems: 'center',
       backgroundColor: 'white'
@@ -459,7 +459,7 @@ export default function ShoppingList() {
       borderColor: "#47b4b1",
       borderWidth: 2,
       height: 50,
-      width: 400,
+      width: 380,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -572,7 +572,7 @@ export default function ShoppingList() {
         <View style={{
           flexDirection: "row",
           width: "90%",
-          height: "10%"
+          height: "8%"
         }}>
           <TouchableOpacity
             style={styles.receiptBtn}
