@@ -32,8 +32,8 @@ export default function UserProfilePicuture() {
         mediaType: 'photo', // 'photo' or 'video' or 'mixed'
         selectionLimit: 1, // 1为一张，0不限制数量
         includeBase64: true,
-        maxWidth: 300,
-        maxHeight: 300
+        maxWidth: 500,
+        maxHeight: 500
 
       },
       res => {

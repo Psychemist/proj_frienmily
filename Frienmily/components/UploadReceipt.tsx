@@ -18,7 +18,6 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { REACT_APP_API_SERVER } from '@env';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { response } from 'express';
 
 export default function UploadReceipt() {
   const route = useRoute<any>()
@@ -38,8 +37,8 @@ export default function UploadReceipt() {
         mediaType: 'photo', // 'photo' or 'video' or 'mixed'
         selectionLimit: 1, // 1为一张，0不限制数量
         includeBase64: true,
-        maxWidth: 300,
-        maxHeight: 300
+        maxWidth: 700,
+        maxHeight: 700
       },
       res => {
         setImgs(res.assets);
@@ -331,7 +330,7 @@ export default function UploadReceipt() {
   });
 
   return (
-    <View style={{ alignItems: 'center', backgroundColor: 'white', flex: 1, maxHeight:"100%"}} onTouchStart={() => { Keyboard.dismiss() }}>
+    <View style={{ alignItems: 'center', backgroundColor: 'white', flex: 1, maxHeight: "100%" }} onTouchStart={() => { Keyboard.dismiss() }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
