@@ -58,7 +58,7 @@ export default function MergeGroupList() {
 
   const styles = StyleSheet.create({
     header: {
-      height: '30%',
+      height: '10%',
       alignItems: 'center',
       // paddingTop: "1%",
       marginBottom: 0,
@@ -75,6 +75,15 @@ export default function MergeGroupList() {
       fontSize: 30,
       fontWeight: "bold",
     },
+    mergeStatementText: {
+      borderRadius: 10,
+      fontSize: 30,
+      fontWeight: "300",
+      width: "90%",
+      paddingLeft: "5%",
+      paddingBottom: "5%",
+      color: "#606467"
+    },
   })
 
   return (
@@ -88,8 +97,9 @@ export default function MergeGroupList() {
         <Text style={styles.text}>Merge from...</Text>
       </View>
 
-
+      <View><Text style={styles.mergeStatementText}>Merge shopping list items from existing groups:</Text></View>
       <ScrollView style={{ backgroundColor: '#F5F5F5' }}>
+        
         {groupItemList.map((item: any, idx: number) => (
           <MergeShoppingListItem items={item} key={idx} currentGroupId={currentGroupId} />
         ))}
