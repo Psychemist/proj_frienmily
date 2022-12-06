@@ -16,26 +16,10 @@ interface Props {
 export default function MergeShoppingListItem(props: Props) {
   const navigation = useNavigation()
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
-  const [isShow, setIsShow] = useState(true)
 
   console.log(">>>>>>>>>>>>>>>>>>>>>>>> props.items: ", props.items)
 
-  const addToCurrentGroup = async () => {
-    setIsShow(false)
 
-    // await fetch(`${REACT_APP_API_SERVER}/goods/assignToGroup/`, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     userId: userIdInRedux,
-    //     groupId: props.currentGroupId,
-    //     item_id: props.items.goods_id
-    //   }),
-    // });
-    // showAlert()
-
-
-  }
 
 
   const styles = StyleSheet.create({
@@ -88,11 +72,11 @@ export default function MergeShoppingListItem(props: Props) {
 
   return (
     <View style={styles.itemContainer}>
-      <View style={styles.lowerWrapper}>
+      {/* <View style={styles.lowerWrapper}>
         <View style={{ width: "20%", alignItems: "center", backgroundColor: "#47b4b1" }}>
           <Text style={styles.dateText}>{props.items.day}-{MONTHS_MMM[props.items.month - 1]}-{props.items.year.slice(2)}</Text>
         </View>
-      </View>
+      </View> */}
 
       <View style={styles.upperWrapper}>
         <View style={{ width: "20%", justifyContent: "center", alignItems: "center" }}>
@@ -101,16 +85,9 @@ export default function MergeShoppingListItem(props: Props) {
               style={{ width: 50, height: 50, marginRight: "2%" }} />
           </View>
         </View>
-        <View style={{ width: "70%" }}>
+        <View style={{ width: "80%" }}>
           <View><Text style={styles.text}>{props.items.goods_name}</Text></View>
         </View>
-        {isShow ?
-          <TouchableOpacity style={{ width: "10%", alignItems: "center" }} onPress={addToCurrentGroup}>
-            <FontAwesome name="plus" size={20} color={"#47b4b1"} />
-          </TouchableOpacity>
-          :
-          <View style={{ width: "10%" }}></View>
-        }
       </View>
 
     </View>

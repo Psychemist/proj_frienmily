@@ -469,11 +469,11 @@ export default function ShoppingList() {
       marginLeft: 'auto',
       marginRight: 'auto',
       color: 'white',
-      paddingLeft:"2%",
-      paddingRight:"2%",
-      paddingBottom:"1%",
+      paddingLeft: "2%",
+      paddingRight: "2%",
+      paddingBottom: "1%",
       backgroundColor: 'white',
-  
+
 
     },
     mergeBtnText: {
@@ -517,7 +517,7 @@ export default function ShoppingList() {
           <TouchableOpacity
             style={styles.archiveListButton}
             onPress={showArchivedList}>
-            <Text style={styles.listButtonText}>Archived</Text>
+            <Text style={styles.listButtonText}>Bought</Text>
           </TouchableOpacity>
         </View>
 
@@ -539,7 +539,7 @@ export default function ShoppingList() {
               style={styles.mergeBtn}
               onPress={mergeFromOtherGroups}>
               <Text style={styles.mergeBtnText}><FontAwesome name="code-fork" size={26} />  Merge Shopping List Items </Text>
-              
+
             </TouchableOpacity>
           }
           {isArchivedList ?

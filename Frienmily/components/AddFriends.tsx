@@ -411,7 +411,7 @@ export default function AddFriends() {
           ) : addFriendStatus == 4 ? (
             <View>
               {userDetail ? (
-                <View style={styles.container2}>
+                <TouchableOpacity onPress={addFriendButton} style={styles.container2}>
                   <View>
                     <Image style={styles.userImage} source={{ uri: userDetail.profile_picture }} ></Image>
                   </View>
@@ -425,14 +425,14 @@ export default function AddFriends() {
                     </Text>
                   </View>
 
-                  <TouchableOpacity onPress={addFriendButton}>
+                  <View>
                     {buttonIsClicked ? (
                       <FontAwesome name="check" size={25} style={styles.checkIcon} />
                     ) : (
                       <Text style={styles.plusButton}>+</Text>
                     )}
-                  </TouchableOpacity>
-                </View>
+                  </View>
+                </TouchableOpacity>
               ) : (
                 <Text></Text>
               )}

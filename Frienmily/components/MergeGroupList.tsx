@@ -65,8 +65,6 @@ export default function MergeGroupList() {
     header: {
       height: '10%',
       alignItems: 'center',
-      // paddingTop: "1%",
-      marginBottom: 0,
       width: '100%',
     },
     backButton: {
@@ -80,14 +78,22 @@ export default function MergeGroupList() {
       fontSize: 30,
       fontWeight: "bold",
     },
+    mergeStatement: {
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      height: "10%",
+      flexWrap: "wrap"
+
+    },
     mergeStatementText: {
       borderRadius: 10,
-      fontSize: 30,
-      fontWeight: "300",
+      fontSize: 24,
+      fontWeight: "bold",
       width: "90%",
       paddingLeft: "5%",
       paddingBottom: "5%",
-      color: "#606467"
+      color: "#606467",
+      textAlign: "left",
     },
   })
 
@@ -102,8 +108,10 @@ export default function MergeGroupList() {
         <Text style={styles.text}>Merge from...</Text>
       </View>
 
-      <View><Text style={styles.mergeStatementText}>Merge shopping list items from existing groups:</Text></View>
-      <ScrollView style={{ backgroundColor: '#F5F5F5' }}>
+      <View style={styles.mergeStatement}>
+        <Text style={styles.mergeStatementText}>Merge shopping list from other existing groups:</Text>
+      </View>
+      <ScrollView style={{ backgroundColor: '#F5F5F5', height: "80%" }}>
         {otherGroupItemList.map((item: any, idx: number) => (
           <MergeShoppingListItem items={item} key={idx} currentGroupId={currentGroupId} />
         ))}
