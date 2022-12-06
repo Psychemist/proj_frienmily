@@ -187,12 +187,12 @@ export default function CartItem(props: CartItemProps) {
 
     const styles = StyleSheet.create({
         text: {
-            fontSize: 16,
+            fontSize: 15,
             color: "grey",
             fontWeight: "bold",
         },
         shopText: {
-            fontSize: 15,
+            fontSize: 14,
             color: "darkgrey",
             paddingTop: "5%"
         },
@@ -208,10 +208,10 @@ export default function CartItem(props: CartItemProps) {
         },
         container: {
             marginTop: "2%",
-            marginLeft: "1%",
+            // marginLeft: "1%",
             backgroundColor: "white",
-            width: "98%",
-            height: 120,
+            width: "100%",
+            height: 150,
             borderWidth: 1,
             borderColor: "#F5F5F5",
             borderRadius: 10,
@@ -227,7 +227,7 @@ export default function CartItem(props: CartItemProps) {
                 height: 1,
                 width: 1,
             },
-            paddingRight: "5%"
+            // paddingRight: "3%"
         },
         counter: {
             flexDirection: "row",
@@ -235,7 +235,7 @@ export default function CartItem(props: CartItemProps) {
             padding: 5,
             fontSize: 20,
             backgroundColor: "white",
-            width: '22%',
+            width: '18%',
             height: 30,
             borderWidth: 0.4,
             borderColor: "lightgray",
@@ -280,7 +280,8 @@ export default function CartItem(props: CartItemProps) {
             alignContent: "center",
             alignItems: "center",
             height: 40,
-            width: 80
+            width: 80,
+            paddingRight:"1%"
         }
     })
 
@@ -307,10 +308,10 @@ export default function CartItem(props: CartItemProps) {
                             navigation.navigate('ImagePreview' as never, { image: props.items.goods_picture } as never)
                         }}>
                             <View><Image source={{ uri: props.items.goods_picture }}
-                                style={{ width: 50, height: 50, marginRight: "2%" }} /></View>
+                                style={{ width: 50, height: 50, marginRight: "3%" }} /></View>
                         </TouchableOpacity>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ width: 120 }} onPress={itemInfo}>
+                    <TouchableOpacity style={{ width: "39%" , paddingRight:"3%"}} onPress={itemInfo}>
                         <View><Text style={styles.text}>{props.items.name}</Text></View>
                         <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
                     </TouchableOpacity>

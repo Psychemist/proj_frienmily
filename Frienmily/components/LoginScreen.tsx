@@ -17,6 +17,8 @@ import { RootState } from '../redux/store';
 import { fetchLogin } from '../redux/user/thunk';
 import { useNavigation } from '@react-navigation/native';
 import { CommonActions } from '@react-navigation/native';
+import { guestLogin } from "../redux/user/userSlice";
+
 
 export default function LoginScreen() {
   const usernameInRedux = useSelector(
@@ -72,6 +74,29 @@ export default function LoginScreen() {
       ]);
     }
   };
+
+  const onGuestLogin = async () => {
+    try {
+      dispatch(guestLogin())
+      setUsername('');
+      setPassword('');
+
+      if (!userState.isLoggedOut) {
+        navigation.navigate('HomeTab' as never)
+      } else {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [
+              { name: 'HomeTab' }
+            ],
+          })
+        );
+      }
+    } catch (error) {
+      console.log('error = ', error);
+    }
+  }
 
 
 
@@ -209,6 +234,18 @@ export default function LoginScreen() {
               fontSize: 20,
             }}>
             Login
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={onGuestLogin}
+          style={[styles.loginBtn, { marginBottom: "5%" }]}>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 20,
+            }}>
+            Login as Guest
           </Text>
         </TouchableOpacity>
 

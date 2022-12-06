@@ -222,7 +222,7 @@ export default function UploadReceipt() {
       height: '14%',
       alignItems: 'center',
       paddingTop: '15%',
-      marginBottom: '35%',
+      marginBottom: '14%',
       width: '100%',
     },
     backButton: {
@@ -287,8 +287,8 @@ export default function UploadReceipt() {
       },
     },
     square: {
-      width: 270,
-      height: 270,
+      width: "80%",
+      height: "43%",
       backgroundColor: 'white',
       alignItems: 'center',
       justifyContent: 'center',
@@ -331,7 +331,7 @@ export default function UploadReceipt() {
   });
 
   return (
-    <View style={{ alignItems: 'center', backgroundColor: 'white', flex: 1 }} onTouchStart={() => { Keyboard.dismiss() }}>
+    <View style={{ alignItems: 'center', backgroundColor: 'white', flex: 1, maxHeight:"100%"}} onTouchStart={() => { Keyboard.dismiss() }}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}

@@ -161,14 +161,14 @@ export default function Friends() {
       fontWeight: "bold",
     },
     groupNameWrapper: {
-      position: "absolute",
-      top: 120,
-      padding: '1%'
+      // position: "absolute",
+      // top: 120,
+      marginBottom: '1%'
     },
     totalText: {
       fontWeight: "bold",
       fontSize: 25,
-      marginBottom:"1%"
+      marginBottom: "1%"
     },
     deleteGroupBtn: {
       // borderColor: '#47b4b1',

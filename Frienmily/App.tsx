@@ -48,6 +48,10 @@ import GroupPhotoEdit from './components/GroupPhotoEdit';
 import PurchasedProductsItems from './components/PurchasedProductsItems';
 import PurchasedProducts from './components/PurchasedProducts';
 import GroceriesDetailsInstant from './components/GroceriesDetailsInstant';
+import MergeGroupList from './components/MergeGroupList';
+import MergeGroupListItem from './components/MergeGroupListItem';
+import MergeShoppingList from './components/MergeShoppingList';
+import MergeShoppingListItem from './components/MergeShoppingListItem';
 
 
 const Tab = createBottomTabNavigator();
@@ -203,6 +207,10 @@ const App = () => {
             <Stack.Screen name="PurchasedProducts" component={PurchasedProducts} />
             <Stack.Screen name="PurchasedProductsItems" component={PurchasedProductsItems} />
             <Stack.Screen name="GroceriesDetailsInstant" component={GroceriesDetailsInstant} />
+            <Stack.Screen name="MergeGroupList" component={MergeGroupList} />
+            <Stack.Screen name="MergeGroupListItem" component={MergeGroupListItem} />
+            <Stack.Screen name="MergeShoppingList" component={MergeShoppingList} />
+            <Stack.Screen name="MergeShoppingListItem" component={MergeShoppingListItem} />
 
           </Stack.Navigator>
         </NavigationContainer>

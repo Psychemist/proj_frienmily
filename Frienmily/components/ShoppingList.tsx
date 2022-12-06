@@ -225,6 +225,11 @@ export default function ShoppingList() {
     }
   }
 
+  const mergeFromOtherGroups = () => {
+    navigation.navigate('MergeGroupList' as never)
+
+  }
+
   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> allAssignedItems: ", allAssignedItems)
   boughtItems = allAssignedItems.filter((item) => {
     return (item["is_completed"] == true)
@@ -251,7 +256,6 @@ export default function ShoppingList() {
       fontWeight: "bold",
       color: "gray",
       marginRight: "5%"
-
     },
 
     buttonText: {
@@ -267,7 +271,7 @@ export default function ShoppingList() {
 
     receiptBtn: {
       backgroundColor: '#47b4b1',
-      height: 60,
+      // height: "30%",
       width: "45%",
       display: 'flex',
       justifyContent: 'center',
@@ -280,7 +284,7 @@ export default function ShoppingList() {
     },
     membersBtn: {
       backgroundColor: '#47b4b1',
-      height: 60,
+      // height: "30%",
       width: "95%",
       display: 'flex',
       justifyContent: 'center',
@@ -450,8 +454,27 @@ export default function ShoppingList() {
       height: 17,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    mergeBtn: {
+      borderColor: "#47b4b1",
+      borderWidth: 2,
+      height: 40,
+      width: "95%",
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      marginTop: 20,
+      marginbottom: 30,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      color: 'white',
+    },
+    mergeBtnText: {
+      fontSize: 14,
+      color: '#000000',
+    },
 
-    }
   });
 
   const navigation = useNavigation();
@@ -471,7 +494,7 @@ export default function ShoppingList() {
         {isFamilyGroup ?
           <TouchableOpacity style={styles.reportBtnWrapper}
             onPress={loadGroupBuyingRecord}>
-            <Text style={styles.reportButtonText}>Spending Analysis </Text>
+            <Text style={styles.reportButtonText}>Expense Analysis </Text>
             <FontAwesome name='pie-chart' size={30} color={"#47b4b1"} />
           </TouchableOpacity>
           : <View></View>
@@ -510,6 +533,16 @@ export default function ShoppingList() {
               <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} groupId={groupId} />
             ))
           }
+
+          {isArchivedList ?
+            <View></View>
+            :
+            <TouchableOpacity
+              style={styles.mergeBtn}
+              onPress={mergeFromOtherGroups}>
+              <Text style={styles.mergeBtnText}>Merge Shopping List Items from Other Groups</Text>
+            </TouchableOpacity>
+          }
         </ScrollView>
 
         <View style={{ width: "100%" }}>
@@ -523,7 +556,7 @@ export default function ShoppingList() {
             </TouchableOpacity>
           </View>
           <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end" }}>
-            <Text style={styles.totalText}>Estimate Total: HKD$ {addZeroes(estimatedTotal)}</Text>
+            <Text style={styles.totalText}>Estimate Total: $ {addZeroes(estimatedTotal)}</Text>
           </View>
         </View>
 
@@ -531,6 +564,7 @@ export default function ShoppingList() {
         <View style={{
           flexDirection: "row",
           width: "90%",
+          height:"10%"
         }}>
           <TouchableOpacity
             style={styles.receiptBtn}
@@ -556,6 +590,7 @@ export default function ShoppingList() {
         <View style={{
           flexDirection: "row",
           width: "90%",
+          height:"10%"
         }}>
           <TouchableOpacity
             style={styles.membersBtn}

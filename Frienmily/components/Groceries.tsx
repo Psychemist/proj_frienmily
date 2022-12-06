@@ -13,6 +13,7 @@ import {
   ActivityIndicator,
   StatusBar,
   Keyboard,
+  Alert,
 } from 'react-native';
 import FriendItem from './FriendItem';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -33,6 +34,7 @@ import SearchBarItem from './SearchBarItem';
 
 export default function Groceries() {
   const navigation = useNavigation();
+  const userStore = useSelector((state: RootState) => state.user)
   const exploreProductsInRedux = useSelector((state: RootState) => state.product.exploreProductData)
   const top5ProductsInRedux = useSelector((state: RootState) => state.product.top5ProductData)
   const isListEnd = useSelector((state: RootState) => state.product.isListEnd)
@@ -61,6 +63,17 @@ export default function Groceries() {
   const [button10, setButton10] = useState(false)
 
   const isFocused = useIsFocused();
+
+
+  const [isGuest, setIsGuest] = useState(false)
+  console.log("userStore.isGuest: ", userStore.isGuest)
+
+  useEffect(() => {
+    if (isFocused) {
+      setIsGuest(userStore.isGuest)
+    }
+  }, [isFocused]);
+
   useEffect(() => {
     try {
       const shoppingCartInitNum = async () => {
@@ -385,7 +398,9 @@ export default function Groceries() {
       // flexDirection: 'row',
       // width: '100%',
       // paddingBottom: 5,
+      paddingTop: "1%",
       backgroundColor: 'white',
+      maxHeight: "50%"
     },
 
     randomItemsContainer: {
@@ -462,8 +477,8 @@ export default function Groceries() {
       justifyContent: 'flex-start',
       flexDirection: 'row',
       width: '100%',
-      paddingTop: 10,
-      paddingBottom: 10,
+      // paddingTop: 10,
+      // paddingBottom: 10,
       alignItems: 'center',
       backgroundColor: 'white'
     },
@@ -473,11 +488,12 @@ export default function Groceries() {
       flexDirection: "row",
       flexWrap: 'wrap',
       // width: "100%",
-      padding: 10,
-      paddingTop: 10,
-      paddingBottom: 20,
-      marginBottom: 30
+      padding: "1%",
+      // paddingTop: 10,
+      // paddingBottom: 20,
+      // marginBottom: 30
       // backgroundColor: "#E2D8CF",
+      marginBottom: 160
 
     },
     container3: {
@@ -594,7 +610,32 @@ export default function Groceries() {
         </View>
         {/* //---------------SEARCH BAR--------------------// */}
         <View>
-          <TouchableOpacity onPress={() => navigation.navigate('Cart' as never)} style={{ position: "relative" }}>
+          <TouchableOpacity onPress={() => {
+            if (isGuest) {
+              Alert.alert(
+                'Please login to use this feature.',
+                '',
+                [
+                  {
+                    text: 'Continue as Guest',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'Login', onPress: async () => {
+                      navigation.navigate('Login' as never)
+                    }
+                  },
+                ]
+              );
+            } else {
+              navigation.navigate('Cart' as never)
+            }
+          }}
+
+
+
+            style={{ position: "relative" }}>
             <FontAwesome name="shopping-cart" size={26} style={styles.shoppingCartIcon} />
             <View style={styles.cartQty}>
               <Text style={styles.cartNumText}>{shoppingCartNum}</Text>
@@ -655,7 +696,7 @@ export default function Groceries() {
       {isBestSeller == true &&
         <View style={{ backgroundColor: 'white' }} onTouchStart={() => { Keyboard.dismiss(), setIsShow(false) }}>
 
-          <ScrollView style={{ backgroundColor: 'white', width: '100%', height: '53%' }}>
+          <ScrollView style={{ backgroundColor: 'white', width: '100%', height: '70%', marginBottom: 30 }}>
             <View style={styles.container2}>
               {top5ProductsInRedux.map((item: any, idx: number) => (
                 <GroceriesTopItems item={item} key={`top_${idx}`} />
