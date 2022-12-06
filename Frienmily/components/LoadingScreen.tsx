@@ -18,35 +18,35 @@ export default function LoadingScreen() {
 
     useEffect(() => {
 
-        console.log('@@_____'.repeat(200))
-
         const checkLogin = async () => {
             const token = await AsyncStorage.getItem('token')
+            setTimeout(() => {
+                if (token) {
+                    console.log('>>>>>>>>>> loading page is log out flag :', userState.isLoggedOut)
+                    if (!userState.isLoggedOut) {
+                        dispatch(reLogin(token))
+                        setIsLoadingScreenRendered(true)
+                        navigation.navigate('HomeTab' as never)
 
+                    } else {
+                        navigation.dispatch(
+                            CommonActions.reset({
+                                index: 1,
+                                routes: [
+                                    { name: 'Groceries' }
+                                ],
+                            })
+                        );
 
-            if (token) {
-                console.log('>>>>>>>>>> loading page is log out flag :', userState.isLoggedOut)
-                if (!userState.isLoggedOut) {
-                    dispatch(reLogin(token))
-                    navigation.navigate('HomeTab' as never)
-                    setIsLoadingScreenRendered(true)
+                    }
+                    console.log("isLoggedIn is true at LoadingScreen. Navigated to Homepage(Groups Page).")
+
                 } else {
-                    navigation.dispatch(
-                        CommonActions.reset({
-                            index: 1,
-                            routes: [
-                                { name: 'Groceries' }
-                            ],
-                        })
-                    );
+                    navigation.navigate('Login' as never)
+                    console.log("isLoggedIn is false at LoadingScreen. Navigated to LoginScreen.")
                 }
-                console.log("isLoggedIn is true at LoadingScreen. Navigated to Homepage(Groups Page).")
-            } else {
-                navigation.navigate('Login' as never)
-                console.log("isLoggedIn is false at LoadingScreen. Navigated to LoginScreen.")
-            }
 
-
+            }, 1300)
         }
         checkLogin()
 
