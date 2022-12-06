@@ -23,20 +23,17 @@ export default function MergeShoppingListItem(props: Props) {
   const addToCurrentGroup = async () => {
     setIsShow(false)
 
-
-    // assign items to group
-    await fetch(`${REACT_APP_API_SERVER}/goods/assignToGroup/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        userId: userIdInRedux,
-        groupId: props.currentGroupId,
-        item_id: props.items.goods_id
-      }),
-    });
+    // await fetch(`${REACT_APP_API_SERVER}/goods/assignToGroup/`, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({
+    //     userId: userIdInRedux,
+    //     groupId: props.currentGroupId,
+    //     item_id: props.items.goods_id
+    //   }),
+    // });
     // showAlert()
 
-    // navigation.navigate('ShoppingList' as never, { groupId: group_id } as never)
 
   }
 
