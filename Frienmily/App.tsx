@@ -174,7 +174,7 @@ const App = () => {
               component={ShoppingList}
               options={{ headerShown: false, gestureEnabled: false }}
             />
-            <Stack.Screen name="ShoppingListItem" component={ShoppingListItem} />
+            <Stack.Screen name="ShoppingListItem" component={ShoppingListItem} options={{ gestureEnabled: true }} />
             <Stack.Screen name="ReceiptRecord" component={ReceiptRecord} options={{ gestureEnabled: true }} />
             <Stack.Screen
               name="ReceiptRecordItem"
