@@ -14,7 +14,9 @@ export default function MergeGroupList() {
   const route = useRoute<any>()
   console.log("route:", route)
   let currentGroupId = route.params.currentGroupId
+  let currentGroupName = route.params.currentGroupName
 
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ route.params: ", route.params)
   console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ currentGroupId: ", currentGroupId)
 
   const isFocused = useIsFocused();
@@ -113,7 +115,7 @@ export default function MergeGroupList() {
       </View>
       <ScrollView style={{ backgroundColor: '#F5F5F5', height: "80%" }}>
         {otherGroupItemList.map((item: any, idx: number) => (
-          <MergeShoppingListItem items={item} key={idx} currentGroupId={currentGroupId} />
+          <MergeShoppingListItem items={item} key={idx} currentGroupId={currentGroupId} currentGroupName={currentGroupName} />
         ))}
       </ScrollView>
     </SafeAreaView>

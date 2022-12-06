@@ -1,7 +1,7 @@
 import { REACT_APP_API_SERVER } from '@env'
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
@@ -16,11 +16,12 @@ export default function MergeShoppingList() {
   const [productIds, setProductIds] = useState<any[]>([])
 
 
-  console.log("###################################### route.params.currentGroupId: ", route.params.currentGroupId)
-  console.log("###################################### route.params.items: ", route.params.items)
+  console.log("###################################### route.params ", route.params)
   // console.log("###################################### route.params.items.group_id: ", route.params.items.group_id)
   const currentGroupId = route.params.currentGroupId
+  const currentGroupName = route.params.currentGroupName
   const groupIdMergeFrom = route.params.items.group_id
+
 
   console.log("currentGroupId: ", currentGroupId)
   console.log("groupIdMergeFrom: ", groupIdMergeFrom)
@@ -77,10 +78,20 @@ export default function MergeShoppingList() {
   }
 
   const addToCurrentGroup = async () => {
-    console.log("################################### onPress addItemBtn")
-    console.log("################################### userIdInRedux: ", userIdInRedux)
-    console.log("################################### currentGroupId: ", currentGroupId)
-    console.log("################################### productIds: ", productIds)
+
+    Alert.alert(
+      `You have successfully added the shopping list items from "${route.params.items.group_name}" to "${currentGroupName}".`,
+      '',
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            navigation.goBack()
+          },
+          style: 'cancel',
+        }
+      ]
+    );
     await fetch(`${REACT_APP_API_SERVER}/goods/assignToGroupFromAnother/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -90,7 +101,8 @@ export default function MergeShoppingList() {
         productIds: productIds
       }),
     });
-    // showAlert()
+
+
   }
 
 
