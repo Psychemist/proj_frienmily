@@ -382,7 +382,7 @@ export default function ExpenseReport() {
     totalSavedMoneyWrapper: {
       alignItems: "center",
       justifyContent: "center",
-      width: 90,
+      width: 80,
       height: 20
     },
     amountWrapper: {
@@ -470,7 +470,7 @@ export default function ExpenseReport() {
                 <Text style={{ fontWeight: "bold", color: "#47b4b1", fontSize: 14 }}>Expensed</Text>
               </View>
               <View style={styles.totalSavedMoneyWrapper}>
-                <Text style={{ fontWeight: "bold", color: "#f79f24", fontSize: 14, paddingLeft: 15 }}>Saved</Text>
+                <Text style={{ fontWeight: "bold", color: "#f79f24", fontSize: 14, paddingLeft: 5 }}>Saved</Text>
               </View>
             </View>
           </View>

@@ -30,7 +30,7 @@ export default function ExpenseReportItem(props: Props) {
     category: {
       backgroundColor: "white",
       width: "92%",
-      height: 50,
+      height: 55,
       borderWidth: 1,
       borderColor: "#F5F5F5",
       borderRadius: 10,
