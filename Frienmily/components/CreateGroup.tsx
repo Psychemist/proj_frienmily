@@ -203,7 +203,7 @@ export default function CreateGroup() {
     input: {
       height: 55,
       // marginLeft: "8%",
-      marginBottom: "8%",
+      marginBottom: "5%",
       borderWidth: 2.5,
       padding: 10,
       minWidth: "70%",
@@ -258,7 +258,7 @@ export default function CreateGroup() {
       flexDirection: 'row',
       width: '100%',
       // paddingTop: 10,
-      paddingBottom: "2%",
+      // paddingBottom: "2%",
       // alignItems: 'center',
       // flexWrap: "wrap",
       // paddingRight: "5%"
@@ -408,7 +408,7 @@ export default function CreateGroup() {
     groupNameAndPhotoContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingTop: '5%',
+      // paddingTop: '5%',
       // paddingBottom: '5%'
     },
     groupMemberContainer: {
