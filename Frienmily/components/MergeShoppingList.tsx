@@ -3,6 +3,8 @@ import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { useSelector } from 'react-redux'
+import { RootState } from '../redux/store'
 import MergeShoppingListItem from './MergeShoppingListItem'
 
 export default function MergeShoppingList() {
@@ -10,12 +12,14 @@ export default function MergeShoppingList() {
   const route = useRoute<any>()
   const isFocused = useIsFocused();
   const [anotherGroupShoppingItems, setAnotherGroupShoppingItems] = useState([])
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
 
-  console.log("###################################### route.params: ", route.params)
+
+  console.log("###################################### route.params.currentGroupId: ", route.params.currentGroupId)
   console.log("###################################### route.params.items: ", route.params.items)
   // console.log("###################################### route.params.items.group_id: ", route.params.items.group_id)
-  const groupIdMergeFrom = route.params.items.group_id
   const currentGroupId = route.params.currentGroupId
+  const groupIdMergeFrom = route.params.items.group_id
 
   console.log("currentGroupId: ", currentGroupId)
   console.log("groupIdMergeFrom: ", groupIdMergeFrom)
@@ -32,7 +36,6 @@ export default function MergeShoppingList() {
 
   const getAnotherGroupShoppingList = async () => {
     try {
-      console.log("Group Id to merge from = ", groupIdMergeFrom)
       const response = await fetch(`${REACT_APP_API_SERVER}/groups/anotherGroupShoppingList/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -45,15 +48,13 @@ export default function MergeShoppingList() {
         result = await response.json();
       }
 
+
       const uniqueShoppingList = result.filter((thing: any, index: any, self: any) =>
         index === self.findIndex((t: any) => (
           JSON.stringify(t) === JSON.stringify(thing)
         ))
       )
-      console.log(result)
-      console.log(uniqueShoppingList);
 
-      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ unique Shopping List Items:", uniqueShoppingList)
 
       setAnotherGroupShoppingItems(uniqueShoppingList)
 
@@ -63,6 +64,24 @@ export default function MergeShoppingList() {
 
   }
 
+  const addToCurrentGroup = async () => {
+
+    await fetch(`${REACT_APP_API_SERVER}/goods/assignToGroupFromAnother/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: userIdInRedux,
+        groupId: currentGroupId,
+        productIds: anotherGroupShoppingItems
+      }),
+    });
+    // showAlert()
+  }
+
+
+
+
+
   const styles = StyleSheet.create({
     header: {
       height: "7%",
@@ -70,7 +89,7 @@ export default function MergeShoppingList() {
       marginBottom: "2%",
       marginRight: "2%",
       width: "100%",
-      position: "relative"
+      position: "relative",
     },
     backButton: {
       position: 'absolute',
@@ -83,11 +102,29 @@ export default function MergeShoppingList() {
       fontSize: 30,
       fontWeight: "bold",
     },
+    addItemRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "5%",
+      backgroundColor: "#FFFFFF",
+
+    },
+    addItemBtn: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      borderWidth: 2,
+      borderColor: "#47b4b1",
+      borderRadius: 100,
+      height: "100%",
+      backgroundColor: "#FFFFFF"
+    },
     listWrapper: {
       backgroundColor: 'white',
       width: "100%",
       marginTop: '0%',
-      height: "93%",
+      height: "88%",
     },
   })
 
@@ -101,6 +138,21 @@ export default function MergeShoppingList() {
         </TouchableOpacity>
         <Text style={styles.text}>Choose items to add...</Text>
       </View>
+
+      <View style={styles.addItemRow}>
+        <TouchableOpacity style={styles.addItemBtn} onPress={addToCurrentGroup}>
+
+          <View style={{ width: "10%", alignItems: "center" }}>
+            <FontAwesome name="plus" size={20} color={"#47b4b1"} />
+          </View>
+
+          <View>
+            <Text>Add Items to Current Group</Text>
+          </View>
+
+        </TouchableOpacity>
+      </View>
+
       <ScrollView style={styles.listWrapper}>
         {anotherGroupShoppingItems.map((item: any, idx: number) => (
           <MergeShoppingListItem items={item} key={idx} currentGroupId={currentGroupId} />

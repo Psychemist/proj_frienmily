@@ -15,6 +15,7 @@ export default function MergeGroupListItem(props: Props) {
   const navigation = useNavigation()
 
   console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ props.currentGroupId: ", props.currentGroupId)
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ the details of this group: ", props.items)
 
 
   const goToMergingScreen = () => {
