@@ -338,7 +338,8 @@ export default function ExpenseReport() {
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      marginRight: "-5%"
+      marginRight: "-5%",
+
     },
     pieChart: {
       height: 235,
@@ -350,7 +351,8 @@ export default function ExpenseReport() {
     sectorItemWrapper: {
       width: "100%",
       flexDirection: "row",
-      flexWrap: "wrap"
+      flexWrap: "wrap",
+      marginTop:"3%"
     },
     tableHeaderFooter: {
       flexDirection: "row",
@@ -358,7 +360,7 @@ export default function ExpenseReport() {
       height: 30,
       justifyContent: "center",
       alignItems: "center",
-      // marginLeft: "%"
+      marginTop: "3%"
 
 
     },
