@@ -226,7 +226,7 @@ export default function ShoppingList() {
   }
 
   const mergeFromOtherGroups = () => {
-    navigation.navigate('MergeGroupList' as never)
+    navigation.navigate('MergeGroupList' as never, { currentGroupId: groupId } as never)
 
   }
 
@@ -564,7 +564,7 @@ export default function ShoppingList() {
         <View style={{
           flexDirection: "row",
           width: "90%",
-          height:"10%"
+          height: "10%"
         }}>
           <TouchableOpacity
             style={styles.receiptBtn}
@@ -590,7 +590,7 @@ export default function ShoppingList() {
         <View style={{
           flexDirection: "row",
           width: "90%",
-          height:"10%"
+          height: "10%"
         }}>
           <TouchableOpacity
             style={styles.membersBtn}

@@ -15,6 +15,9 @@ export default function MergeShoppingList() {
   console.log("###################################### route.params.items: ", route.params.items)
   // console.log("###################################### route.params.items.group_id: ", route.params.items.group_id)
   const groupIdMergeFrom = route.params.items.group_id
+  const currentGroupId = route.params.currentGroupId
+
+  console.log("currentGroupId: ", currentGroupId)
   console.log("groupIdMergeFrom: ", groupIdMergeFrom)
 
   useEffect(() => {
@@ -41,8 +44,18 @@ export default function MergeShoppingList() {
       if (response) {
         result = await response.json();
       }
-      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ getAnotherGroupShoppingList result:", result)
-      setAnotherGroupShoppingItems(result)
+
+      const uniqueShoppingList = result.filter((thing: any, index: any, self: any) =>
+        index === self.findIndex((t: any) => (
+          JSON.stringify(t) === JSON.stringify(thing)
+        ))
+      )
+      console.log(result)
+      console.log(uniqueShoppingList);
+
+      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ unique Shopping List Items:", uniqueShoppingList)
+
+      setAnotherGroupShoppingItems(uniqueShoppingList)
 
     } catch (err) {
       console.log("err", err)

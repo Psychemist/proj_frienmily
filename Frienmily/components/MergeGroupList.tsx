@@ -1,5 +1,5 @@
 import { REACT_APP_API_SERVER } from '@env'
-import { useIsFocused, useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -11,7 +11,11 @@ import MergeShoppingListItem from './MergeGroupListItem'
 export default function MergeGroupList() {
   const navigation = useNavigation()
   const userIdInRedux = useSelector((state: RootState) => state.user.userId);
+  const route = useRoute<any>()
+  console.log("route:", route)
+  let currentGroupId = route.params.currentGroupId
 
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ currentGroupId: ", currentGroupId)
 
   const isFocused = useIsFocused();
   const [groupItemList, setGroupItemList] = useState([]);
@@ -87,7 +91,7 @@ export default function MergeGroupList() {
 
       <ScrollView style={{ backgroundColor: '#F5F5F5' }}>
         {groupItemList.map((item: any, idx: number) => (
-          <MergeShoppingListItem items={item} key={idx} />
+          <MergeShoppingListItem items={item} key={idx} currentGroupId={currentGroupId} />
         ))}
       </ScrollView>
     </SafeAreaView>

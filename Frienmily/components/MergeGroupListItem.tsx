@@ -6,6 +6,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 export interface Props {
   items: any;
+  currentGroupId: number,
   key: number
 }
 
@@ -13,9 +14,11 @@ export interface Props {
 export default function MergeGroupListItem(props: Props) {
   const navigation = useNavigation()
 
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ props.currentGroupId: ", props.currentGroupId)
+
 
   const goToMergingScreen = () => {
-    navigation.navigate('MergeShoppingList' as never, { items: props.items } as never)
+    navigation.navigate('MergeShoppingList' as never, { items: props.items, currentGroupId: props.currentGroupId } as never)
   }
 
 
