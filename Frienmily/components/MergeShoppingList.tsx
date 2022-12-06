@@ -103,7 +103,7 @@ export default function MergeShoppingList() {
       </View>
       <ScrollView style={styles.listWrapper}>
         {anotherGroupShoppingItems.map((item: any, idx: number) => (
-          <MergeShoppingListItem items={item} key={idx} />
+          <MergeShoppingListItem items={item} key={idx} currentGroupId={currentGroupId} />
         ))}
       </ScrollView>
     </SafeAreaView>

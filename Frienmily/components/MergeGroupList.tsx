@@ -18,7 +18,7 @@ export default function MergeGroupList() {
   console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ currentGroupId: ", currentGroupId)
 
   const isFocused = useIsFocused();
-  const [groupItemList, setGroupItemList] = useState([]);
+  const [otherGroupItemList, setOtherGroupItemList] = useState([]);
   useEffect(() => {
     const loadGroupList = async () => {
       try {
@@ -40,7 +40,12 @@ export default function MergeGroupList() {
           console.log("Group list details get from server: ", json)
         }
 
-        setGroupItemList(json);
+        const otherGroupItemList = json.filter(function (item: any) {
+          return item.group_id !== currentGroupId;
+        });
+
+
+        setOtherGroupItemList(otherGroupItemList);
 
       } catch (error) {
         console.log('error', error);
@@ -52,7 +57,7 @@ export default function MergeGroupList() {
   }, [isFocused]);
 
 
-  console.log("groupItemList: ", groupItemList)
+  console.log("groupItemList: ", otherGroupItemList)
 
 
 
@@ -90,7 +95,7 @@ export default function MergeGroupList() {
 
 
       <ScrollView style={{ backgroundColor: '#F5F5F5' }}>
-        {groupItemList.map((item: any, idx: number) => (
+        {otherGroupItemList.map((item: any, idx: number) => (
           <MergeShoppingListItem items={item} key={idx} currentGroupId={currentGroupId} />
         ))}
       </ScrollView>

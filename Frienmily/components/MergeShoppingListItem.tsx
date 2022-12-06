@@ -1,25 +1,29 @@
+import { REACT_APP_API_SERVER } from '@env';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 import { MONTHS_MMM } from '../utils/dates';
 
 interface Props {
   items: any;
+  currentGroupId: number,
   key: number;
 }
 
 export default function MergeShoppingListItem(props: Props) {
   const navigation = useNavigation()
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const [isShow, setIsShow] = useState(true)
 
   console.log(">>>>>>>>>>>>>>>>>>>>>>>> props.items: ", props.items)
 
   const addToCurrentGroup = () => {
     setIsShow(false)
-    // const selectedGroup = async (group_id: number) => {
 
-    //    group_id
+    // const Group = async (group_id: number) => {
 
     //   for (let item of groupItemList) {
     //     if (item["group_id"] == group_id) {
