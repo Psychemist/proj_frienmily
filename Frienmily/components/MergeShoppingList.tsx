@@ -1,5 +1,6 @@
-import { useNavigation, useRoute } from '@react-navigation/native'
-import React from 'react'
+import { REACT_APP_API_SERVER } from '@env'
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MergeShoppingListItem from './MergeShoppingListItem'
@@ -7,10 +8,47 @@ import MergeShoppingListItem from './MergeShoppingListItem'
 export default function MergeShoppingList() {
   const navigation = useNavigation()
   const route = useRoute<any>()
-  let shoppingListItems = route.params.products
-  console.log("###################################### shoppingListItems: ", shoppingListItems)
+  const isFocused = useIsFocused();
+  const [anotherGroupShoppingItems, setAnotherGroupShoppingItems] = useState([])
+
+  console.log("###################################### route.params: ", route.params)
+  console.log("###################################### route.params.items: ", route.params.items)
+  // console.log("###################################### route.params.items.group_id: ", route.params.items.group_id)
+  const groupIdMergeFrom = route.params.items.group_id
+  console.log("groupIdMergeFrom: ", groupIdMergeFrom)
+
+  useEffect(() => {
+    const goToMergingScreen = async () => {
+      await getAnotherGroupShoppingList()
+    }
+    if (isFocused && groupIdMergeFrom) {
+      goToMergingScreen()
+    }
+  }, [isFocused])
 
 
+  const getAnotherGroupShoppingList = async () => {
+    try {
+      console.log("Group Id to merge from = ", groupIdMergeFrom)
+      const response = await fetch(`${REACT_APP_API_SERVER}/groups/anotherGroupShoppingList/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          groupId: groupIdMergeFrom,
+        }),
+      });
+      let result;
+      if (response) {
+        result = await response.json();
+      }
+      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ getAnotherGroupShoppingList result:", result)
+      setAnotherGroupShoppingItems(result)
+
+    } catch (err) {
+      console.log("err", err)
+    }
+
+  }
 
   const styles = StyleSheet.create({
     header: {
@@ -50,9 +88,8 @@ export default function MergeShoppingList() {
         </TouchableOpacity>
         <Text style={styles.text}>Choose items to add...</Text>
       </View>
-
       <ScrollView style={styles.listWrapper}>
-        {shoppingListItems.map((item: any, idx: number) => (
+        {anotherGroupShoppingItems.map((item: any, idx: number) => (
           <MergeShoppingListItem items={item} key={idx} />
         ))}
       </ScrollView>
