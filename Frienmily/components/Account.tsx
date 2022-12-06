@@ -424,15 +424,15 @@ export default function Account() {
     });
 
     return (
-        <SafeAreaView style={styles.mainPage} onTouchStart={() => { Keyboard.dismiss() }}>
+        <SafeAreaView style={styles.mainPage}>
             <StatusBar barStyle="dark-content" />
             <Text style={styles.title}>Profile</Text>
             {isGuest ?
-                <View style={styles.isGuestMask}>
+                <View style={styles.isGuestMask} onTouchStart={() => { Keyboard.dismiss() }}>
                     <Text style={styles.isGuestMaskText}>Please Login to use this feature.</Text>
                 </View>
                 :
-                <View style={{ alignItems: "center" }}>
+                <View style={{ alignItems: "center" }} onTouchStart={() => { Keyboard.dismiss() }}>
                     <View style={[styles.itemContainer, { position: "relative" }]}>
                         <View style={styles.leftContainer}>
                             <Text style={styles.fieldHeader}>Username</Text>
@@ -538,14 +538,14 @@ export default function Account() {
 
 
             {isGuest ?
-                <View style={styles.bottomBtnWrapper}>
+                <View style={styles.bottomBtnWrapper} onTouchStart={() => { Keyboard.dismiss() }}>
                     <TouchableOpacity style={[styles.logoutItemContainer]} onPress={onLogoutGuestMode}>
                         <View ><Text style={styles.logoutBtnText}>Go back to Login Screen</Text></View>
                         <View style={styles.logoutBtnWrapper}><Icon name='ios-exit-outline' style={styles.logoutBtn} /></View>
                     </TouchableOpacity>
                 </View>
                 :
-                <View style={styles.bottomBtnWrapper}>
+                <View style={styles.bottomBtnWrapper} onTouchStart={() => { Keyboard.dismiss() }}>
                     <TouchableOpacity style={[styles.logoutItemContainer]} onPress={onLogout}>
                         <View ><Text style={styles.logoutBtnText}>Logout</Text></View>
                         <View style={styles.logoutBtnWrapper}><Icon name='ios-exit-outline' style={styles.logoutBtn} /></View>
