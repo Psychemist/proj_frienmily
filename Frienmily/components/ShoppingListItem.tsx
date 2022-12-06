@@ -266,7 +266,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
 
         itemContainer: {
             backgroundColor: "white",
-            width: "100%",
+            width: "95%",
             height: 150,
             borderWidth: 1,
             borderColor: "#F5F5F5",
@@ -283,6 +283,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 height: 1,
                 width: 1,
             },
+            marginLeft:"2%"
         },
         selectButton: {
             // margin: 5,

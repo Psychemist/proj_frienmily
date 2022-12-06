@@ -483,7 +483,7 @@ export default function ShoppingList() {
       borderColor: "#47b4b1",
       borderWidth: 2,
       height: 50,
-      width: 380,
+      width: 330,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
