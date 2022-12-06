@@ -1,6 +1,7 @@
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
+  Alert,
   Image,
   SafeAreaView,
   ScrollView,
@@ -239,6 +240,29 @@ export default function ShoppingList() {
   })
   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> boughtItems: ", boughtItems)
   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> unboughtItems: ", unboughtItems)
+
+  const deleteItemAlert = () => {
+    Alert.alert('Are you sure to delete all in To Buy?', '', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: () => deleteAllToBuy() },
+    ]);
+  }
+
+  const deleteAllToBuy = async () => {
+
+    await fetch(`${REACT_APP_API_SERVER}/groups/deleteAllToBuy/`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        group_id: groupId,
+      }),
+    });
+    reloadPage()
+  }
 
   const styles = StyleSheet.create({
     addMoreText: {
@@ -482,6 +506,13 @@ export default function ShoppingList() {
       fontSize: 17,
       textAlign: "center",
     },
+    clearCartText: {
+      fontSize: 16,
+      padding: 5,
+      color: '#47b4b1',
+      fontWeight: "300",
+      marginLeft: '4%'
+    },
 
   });
 
@@ -552,8 +583,14 @@ export default function ShoppingList() {
             ))
           }
         </ScrollView>
-
         <View style={{ width: "100%" }}>
+          {isArchivedList ? null :
+            <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-start" }}>
+              <TouchableOpacity>
+                <Text onPress={deleteItemAlert} style={styles.clearCartText}><FontAwesome name="trash-o" size={15} color={"#47b4b1"} />  Clear Cart</Text>
+              </TouchableOpacity>
+            </View>}
+
           <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end" }}>
             <TouchableOpacity
               style={{ alignItems: 'flex-end', marginTop: 15 }}
