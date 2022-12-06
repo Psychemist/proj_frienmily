@@ -321,7 +321,7 @@ export default function MoneySettle() {
                         ))}
                     </ScrollView>}
 
-                <View style={{ width: '100%' }}><Text style={{ color: 'white', fontSize: 30, textAlign: 'left' }}>Settled history</Text></View>
+                <View style={{ width: '100%' }}><Text style={{ color: 'white', fontSize: 30, textAlign: 'center' }}>Settled history</Text></View>
                 <ScrollView style={styles.scrollView}>
                     {settled.map((item: any, idx: number) => (
                         <View style={styles.container} key={idx}><Text>{amount(item)}</Text></View>
