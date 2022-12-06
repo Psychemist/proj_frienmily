@@ -287,7 +287,7 @@ export default function UploadReceipt() {
     },
     square: {
       width: "80%",
-      height: "43%",
+      height: "40%",
       backgroundColor: 'white',
       alignItems: 'center',
       justifyContent: 'center',
@@ -340,27 +340,6 @@ export default function UploadReceipt() {
 
         <Text style={styles.text}>Upload Receipt</Text>
       </View>
-
-      {imgs == undefined || imgs == null ? (
-        <TouchableOpacity onPress={() => addPhoto()}>
-          <View style={styles.square}>
-            <FontAwesome name="plus" size={30} />
-            <Text> </Text>
-            <Text style={styles.uploadText}>Click Here to Upload</Text>
-          </View>
-        </TouchableOpacity>
-      ) : (
-        imgs.map((item: any, index: number) => {
-          return (
-            <TouchableOpacity key={index} onPress={() => addPhoto()}>
-              <Image
-                style={{ width: 270, height: 270, borderRadius: 18, marginBottom: "5%" }}
-                source={{ uri: item.uri }}></Image>
-            </TouchableOpacity>
-          );
-        })
-      )}
-
       <View style={styles.inputFieldWrapper}>
         <TextInput
           keyboardType="numeric"
@@ -393,6 +372,27 @@ export default function UploadReceipt() {
           maxLength={28}
         />
       </View>
+      {imgs == undefined || imgs == null ? (
+        <TouchableOpacity onPress={() => addPhoto()}>
+          <View style={styles.square}>
+            <FontAwesome name="plus" size={30} />
+            <Text> </Text>
+            <Text style={styles.uploadText}>Click Here to Upload</Text>
+          </View>
+        </TouchableOpacity>
+      ) : (
+        imgs.map((item: any, index: number) => {
+          return (
+            <TouchableOpacity key={index} onPress={() => addPhoto()}>
+              <Image
+                style={{ width: 270, height: 270, borderRadius: 18, marginBottom: "5%" }}
+                source={{ uri: item.uri }}></Image>
+            </TouchableOpacity>
+          );
+        })
+      )}
+
+      
       <TouchableOpacity style={styles.searchButton} onPress={submitButton}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
