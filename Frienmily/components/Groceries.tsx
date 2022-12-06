@@ -397,10 +397,11 @@ export default function Groceries() {
       // alignItems: 'center',
       // flexDirection: 'row',
       // width: '100%',
-      // paddingBottom: 5,
+      paddingLeft: "2%",
+      paddingRight: "2%",
       paddingTop: "1%",
       backgroundColor: 'white',
-      maxHeight: "50%"
+      maxHeight: "38%"
     },
 
     randomItemsContainer: {
@@ -488,7 +489,7 @@ export default function Groceries() {
       flexDirection: "row",
       flexWrap: 'wrap',
       // width: "100%",
-      padding: "1%",
+      // padding: "1%",
       // paddingTop: 10,
       // paddingBottom: 20,
       // marginBottom: 30

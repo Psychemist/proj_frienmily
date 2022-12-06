@@ -99,7 +99,7 @@ export default function GroceriesTopItems(props: GroceriesTopItemsProps) {
     }
     const styles = StyleSheet.create({
         text: {
-            fontSize: 16,
+            fontSize: 15,
             color: "grey",
             fontWeight: "bold",
         },
