@@ -322,7 +322,7 @@ export default function ShoppingList() {
       // right: 10,
       // bottom: 7,
       // height: 50,
-      width: "90%",
+      width: "100%",
       height: 70,
       backgroundColor: 'white',
       shadowOpacity: 1,
@@ -355,7 +355,7 @@ export default function ShoppingList() {
     },
     groupNameWrapper: {
       position: "absolute",
-      top: "6%",
+      top: "5%",
       padding: '1%',
       flexDirection: "row",
       // marginBottom: 100,
@@ -364,8 +364,8 @@ export default function ShoppingList() {
       justifyContent: 'flex-start',
       flexDirection: 'row',
       width: '100%',
-      paddingTop: 10,
-      paddingBottom: 10,
+      paddingTop: "2%",
+      // paddingBottom: 10,
       alignItems: 'center',
       backgroundColor: 'white'
     },
@@ -418,11 +418,11 @@ export default function ShoppingList() {
 
     scrollWrapper: {
       // position: "absolute",
-      top: 10,
+      // top: 10,
       width: "100%",
-      height: 500,
-      paddingLeft: 5,
-      paddingRight: 5,
+      height: 1000,
+      paddingLeft: "1%",
+      paddingRight: "1%",
     },
     userImage: {
       width: 58,
@@ -458,21 +458,29 @@ export default function ShoppingList() {
     mergeBtn: {
       borderColor: "#47b4b1",
       borderWidth: 2,
-      height: 40,
-      width: "95%",
+      height: 50,
+      width: 380,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 10,
-      marginTop: 20,
+      borderRadius: 30,
+      marginTop: "1%",
       marginbottom: 30,
       marginLeft: 'auto',
       marginRight: 'auto',
       color: 'white',
+      paddingLeft:"2%",
+      paddingRight:"2%",
+      paddingBottom:"1%",
+      backgroundColor: 'white',
+  
+
     },
     mergeBtnText: {
-      fontSize: 14,
-      color: '#000000',
+      fontWeight: "300",
+      color: "#606467",
+      fontSize: 17,
+      textAlign: "center",
     },
 
   });
@@ -494,7 +502,7 @@ export default function ShoppingList() {
         {isFamilyGroup ?
           <TouchableOpacity style={styles.reportBtnWrapper}
             onPress={loadGroupBuyingRecord}>
-            <Text style={styles.reportButtonText}>Expense Analysis </Text>
+            <Text style={styles.reportButtonText}>Expense Analysis  </Text>
             <FontAwesome name='pie-chart' size={30} color={"#47b4b1"} />
           </TouchableOpacity>
           : <View></View>
@@ -525,6 +533,16 @@ export default function ShoppingList() {
 
         <ScrollView style={styles.scrollWrapper}>
           {isArchivedList ?
+            <View></View>
+            :
+            <TouchableOpacity
+              style={styles.mergeBtn}
+              onPress={mergeFromOtherGroups}>
+              <Text style={styles.mergeBtnText}><FontAwesome name="code-fork" size={26} />  Merge Shopping List Items </Text>
+              
+            </TouchableOpacity>
+          }
+          {isArchivedList ?
             boughtItems.map((item: any) => (
               <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} groupId={groupId} />
             ))
@@ -532,16 +550,6 @@ export default function ShoppingList() {
             unboughtItems.map((item: any) => (
               <ShoppingListItem items={item} key={item.cart_id} reloadPage={reloadPage} groupId={groupId} />
             ))
-          }
-
-          {isArchivedList ?
-            <View></View>
-            :
-            <TouchableOpacity
-              style={styles.mergeBtn}
-              onPress={mergeFromOtherGroups}>
-              <Text style={styles.mergeBtnText}>Merge Shopping List Items from Other Groups</Text>
-            </TouchableOpacity>
           }
         </ScrollView>
 
@@ -564,7 +572,7 @@ export default function ShoppingList() {
         <View style={{
           flexDirection: "row",
           width: "90%",
-          height: "10%"
+          height: "8%"
         }}>
           <TouchableOpacity
             style={styles.receiptBtn}

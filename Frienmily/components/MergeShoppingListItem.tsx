@@ -1,46 +1,40 @@
+import { REACT_APP_API_SERVER } from '@env';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 import { MONTHS_MMM } from '../utils/dates';
 
 interface Props {
   items: any;
+  currentGroupId: number,
   key: number;
 }
 
 export default function MergeShoppingListItem(props: Props) {
   const navigation = useNavigation()
+  const userIdInRedux = useSelector((state: RootState) => state.user.userId);
   const [isShow, setIsShow] = useState(true)
 
   console.log(">>>>>>>>>>>>>>>>>>>>>>>> props.items: ", props.items)
 
-  const addToCurrentGroup = () => {
+  const addToCurrentGroup = async () => {
     setIsShow(false)
-    // const selectedGroup = async (group_id: number) => {
 
-    //    group_id
+    // await fetch(`${REACT_APP_API_SERVER}/goods/assignToGroup/`, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({
+    //     userId: userIdInRedux,
+    //     groupId: props.currentGroupId,
+    //     item_id: props.items.goods_id
+    //   }),
+    // });
+    // showAlert()
 
-    //   for (let item of groupItemList) {
-    //     if (item["group_id"] == group_id) {
-    //       isSelectGroupFamilyGroup = item["is_family_group"]
-    //     }
-    //   }
 
-
-    //   // assign items to group
-    //   await fetch(`${REACT_APP_API_SERVER}/goods/assignToGroup/`, {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({
-    //       userId: userIdInRedux,
-    //       groupId: group_id
-    //     }),
-    //   });
-    //   showAlert()
-
-    //   // navigation.navigate('ShoppingList' as never, { groupId: group_id } as never)
-    // }
   }
 
 

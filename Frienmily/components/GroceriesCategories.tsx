@@ -41,7 +41,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
         container: {
             flexDirection: "column",
             width: "100%",
-            paddingBottom: "1%",
+            // paddingBottom: "1%",r
             maxHeight:"98%",
             // paddingTop: 20,
             // paddingBottom: 5,
@@ -64,7 +64,9 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
             alignItems: "center",
             flexDirection: "column",
             width: "20%",
-            padding: "2%",
+            paddingTop:"3%",
+            paddingLeft: "2%",
+            paddingRight:"2%",
             //SHADOW
             // shadowOpacity: 1,
             // shadowColor: "#47b4b1",
@@ -77,12 +79,14 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
         },
         textContainer: {
             flexDirection: "column",
-            maxWidth: 80,
-            height: 25,
+            width: 80,
+            height: 24,
+            alignContent: "center",
+            alignItems:"center"
 
         },
         categoriesPhotoContainer1: {
-            height: 80,
+            height: 70,
             width: "100%",
             shadowOpacity: props.button1 ? 1 : 0,
             shadowColor: props.button1 ? "#47b4b1" : "",
@@ -94,7 +98,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
             
         },
         categoriesPhotoContainer2: {
-            height: 80,
+            height: 70,
             width: "100%",
             shadowOpacity: props.button2 ? 1 : 0,
             shadowColor: props.button2 ? "#47b4b1" : "",
@@ -105,7 +109,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
             }
         },
         categoriesPhotoContainer3: {
-            height: 80,
+            height: 70,
             width: "100%",
             shadowOpacity: props.button3 ? 1 : 0,
             shadowColor: props.button3 ? "#47b4b1" : "",
@@ -115,7 +119,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
                 width: props.button3 ? 4 : 0
             }
         }, categoriesPhotoContainer4: {
-            height: 80,
+            height: 70,
             width: "100%",
             shadowOpacity: props.button4 ? 1 : 0,
             shadowColor: props.button4 ? "#47b4b1" : "",
@@ -125,7 +129,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
                 width: props.button4 ? 4 : 0
             }
         }, categoriesPhotoContainer5: {
-            height: 80,
+            height: 70,
             width: "100%",
             shadowOpacity: props.button5 ? 1 : 0,
             shadowColor: props.button5 ? "#47b4b1" : "",
@@ -135,7 +139,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
                 width: props.button5 ? 4 : 0
             }
         }, categoriesPhotoContainer6: {
-            height: 80,
+            height: 70,
             width: "100%",
             shadowOpacity: props.button6 ? 1 : 0,
             shadowColor: props.button6 ? "#47b4b1" : "",
@@ -145,7 +149,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
                 width: props.button6 ? 4 : 0
             }
         }, categoriesPhotoContainer7: {
-            height: 80,
+            height: 70,
             width: "100%",
             shadowOpacity: props.button7 ? 1 : 0,
             shadowColor: props.button7 ? "#47b4b1" : "",
@@ -155,7 +159,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
                 width: props.button7 ? 4 : 0
             }
         }, categoriesPhotoContainer8: {
-            height: 80,
+            height: 70,
             width: "100%",
             shadowOpacity: props.button8 ? 1 : 0,
             shadowColor: props.button8 ? "#47b4b1" : "",
@@ -165,7 +169,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
                 width: props.button8 ? 4 : 0
             }
         }, categoriesPhotoContainer9: {
-            height: 80,
+            height: 70,
             width: "100%",
             shadowOpacity: props.button9 ? 1 : 0,
             shadowColor: props.button9 ? "#47b4b1" : "",
@@ -175,7 +179,7 @@ export default function GroceriesCategories(props: GroceriesCategoriesProps) {
                 width: props.button9 ? 4 : 0
             }
         }, categoriesPhotoContainer10: {
-            height: 80,
+            height: 70,
             width: "100%",
             shadowOpacity: props.button10 ? 1 : 0,
             shadowColor: props.button10 ? "#47b4b1" : "",
