@@ -226,7 +226,7 @@ export default function ShoppingList() {
   }
 
   const mergeFromOtherGroups = () => {
-    navigation.navigate('MergeGroupList' as never, { currentGroupId: groupId } as never)
+    navigation.navigate('MergeGroupList' as never, { currentGroupId: groupId, currentGroupName: groupName } as never)
 
   }
 
