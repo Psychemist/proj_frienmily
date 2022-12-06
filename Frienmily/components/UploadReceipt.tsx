@@ -287,11 +287,12 @@ export default function UploadReceipt() {
     },
     square: {
       width: "80%",
-      height: "40%",
+      height: "35%",
       backgroundColor: 'white',
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 18,
+      paddingTop:"10%"
 
     },
     uploadText: {
@@ -346,7 +347,7 @@ export default function UploadReceipt() {
           placeholder="Receipt Amount"
           style={{
             margin: 5,
-            fontSize: 20,
+            fontSize: 18,
             minWidth: "5%",
             maxWidth: "60%"
           }}
@@ -362,7 +363,7 @@ export default function UploadReceipt() {
           placeholder="Remarks (Optional)"
           style={{
             margin: 5,
-            fontSize: 20,
+            fontSize: 18,
             minWidth: "5%",
             maxWidth: "60%"
           }}
