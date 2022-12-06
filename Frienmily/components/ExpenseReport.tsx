@@ -332,7 +332,8 @@ export default function ExpenseReport() {
     chartViewContainer: {
       flexDirection: "column",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      marginRight:"-5%"
     },
     pieChart: {
       height: 250,
@@ -342,7 +343,7 @@ export default function ExpenseReport() {
 
     },
     sectorItemWrapper: {
-      width: "98%",
+      width: "100%",
       flexDirection: "row",
       flexWrap: "wrap"
     },
@@ -441,21 +442,23 @@ export default function ExpenseReport() {
 
 
       {isChartView ?
-        <View style={styles.chartViewContainer}>
-          {pieData.length == 0 ?
-            <PieChart style={styles.pieChart} data={emptyPieData} />
-            :
-            <PieChart style={styles.pieChart} data={pieData} />
-          }
+        <ScrollView>
+          <View style={styles.chartViewContainer}>
+            {pieData.length == 0 ?
+              <PieChart style={styles.pieChart} data={emptyPieData} />
+              :
+              <PieChart style={styles.pieChart} data={pieData} />
+            }
 
-          <View style={styles.sectorItemWrapper}>
-            {coloredCategoryExpenseArray.map((item: any) => (
-              <ExpenseReportSectorItem items={item} key={item.categoryId} />
-            ))}
+            <View style={styles.sectorItemWrapper}>
+              {coloredCategoryExpenseArray.map((item: any) => (
+                <ExpenseReportSectorItem items={item} key={item.categoryId} />
+              ))}
+            </View>
           </View>
-        </View>
+        </ScrollView>
         :
-        <View>
+        <ScrollView>
           <View style={styles.tableHeaderFooter}>
             <View style={styles.leftWrapper}>
               <Text style={{ fontWeight: "bold", fontSize: 14, color: "gray" }}>Categories</Text>
@@ -492,7 +495,7 @@ export default function ExpenseReport() {
               </View>
             </View>
           </View>
-        </View>
+        </ScrollView>
       }
 
 

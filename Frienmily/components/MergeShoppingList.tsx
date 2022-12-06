@@ -110,6 +110,10 @@ export default function MergeShoppingList() {
 
 
   const styles = StyleSheet.create({
+    page: {
+      backgroundColor: "#FFFFFF",
+   
+    },
     header: {
       height: "7%",
       alignItems: "center",
@@ -135,17 +139,27 @@ export default function MergeShoppingList() {
       justifyContent: "center",
       height: "5%",
       backgroundColor: "#FFFFFF",
+      marginBottom:"1%"
 
     },
     addItemBtn: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      borderWidth: 2,
       borderColor: "#47b4b1",
-      borderRadius: 100,
-      height: "100%",
-      backgroundColor: "#FFFFFF"
+      borderWidth: 2,
+      height: 40,
+      width: 380,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 30,
+      marginTop: "1%",
+      marginbottom:"3%",
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      color: 'white',
+      paddingLeft: "2%",
+      paddingRight: "2%",
+      paddingBottom: "1%",
+      backgroundColor: 'white',
     },
     listWrapper: {
       backgroundColor: 'white',
@@ -153,10 +167,17 @@ export default function MergeShoppingList() {
       marginTop: '0%',
       height: "88%",
     },
+    mergeBtnText: {
+      fontWeight: "300",
+      color: "#606467",
+      fontSize: 18,
+      textAlign: "center",
+    },
+
   })
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.page}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -168,15 +189,9 @@ export default function MergeShoppingList() {
 
       <View style={styles.addItemRow}>
         <TouchableOpacity style={styles.addItemBtn} onPress={addToCurrentGroup}>
-
           <View style={{ width: "10%", alignItems: "center" }}>
-            <FontAwesome name="plus" size={20} color={"#47b4b1"} />
           </View>
-
-          <View>
-            <Text>Add Items to Current Group</Text>
-          </View>
-
+          <Text style={styles.mergeBtnText}> <FontAwesome name="plus" size={20} color={"#47b4b1"} />  Add All Items to Current Group</Text>
         </TouchableOpacity>
       </View>
 

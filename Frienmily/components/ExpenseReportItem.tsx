@@ -64,7 +64,7 @@ export default function ExpenseReportItem(props: Props) {
       position: 'relative',
       alignItems: "center",
       justifyContent: "space-between",
-      width: "45%",
+      width: "47%",
       padding: 5
     },
     amountWrapper: {
