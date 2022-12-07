@@ -292,7 +292,7 @@ export default function UploadReceipt() {
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 18,
-      paddingTop:"10%"
+      paddingTop: "10%"
 
     },
     uploadText: {
@@ -393,7 +393,7 @@ export default function UploadReceipt() {
         })
       )}
 
-      
+
       <TouchableOpacity style={styles.searchButton} onPress={submitButton}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>

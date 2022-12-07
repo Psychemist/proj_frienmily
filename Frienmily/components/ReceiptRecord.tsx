@@ -21,35 +21,32 @@ export default function ReceiptRecord() {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const loadFriendList = async () => {
-            try {
-                console.log('loadReceiptsList...');
-
-                const response = await fetch(`${REACT_APP_API_SERVER}/receipts/getAllReceipts/`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        groupID: groupId,
-                    }),
-                });
-                let json = [];
-                if (response) {
-                    json = await response.json();
-                }
-                // console.log("json :", json);
-                setReceiptsArray(json);
-                // console.log(json[0].receipt_image);
-
-
-
-            } catch (error) {
-                console.log('error', error);
-            }
-        };
         if (isFocused) {
             loadFriendList();
         }
     }, [isFocused]);
+
+    const loadFriendList = async () => {
+        try {
+            console.log('loadReceiptsList...');
+
+            const response = await fetch(`${REACT_APP_API_SERVER}/receipts/getAllReceipts/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    groupID: groupId,
+                }),
+            });
+            let json = [];
+            if (response) {
+                json = await response.json();
+            }
+            setReceiptsArray(json);
+
+        } catch (error) {
+            console.log('error', error);
+        }
+    };
 
 
 
@@ -131,7 +128,7 @@ export default function ReceiptRecord() {
 
             <ScrollView style={styles.scrollWrapper}>
                 {receiptsArray.map((item: any, idx: number) => (
-                    <ReceiptRecordItem items={item} key={idx} />
+                    <ReceiptRecordItem items={item} key={idx} loadFriendList={loadFriendList} />
                 ))}
             </ScrollView>
 

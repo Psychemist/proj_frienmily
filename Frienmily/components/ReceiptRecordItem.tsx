@@ -1,23 +1,25 @@
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Pressable } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native";
 import React from 'react';
 import { useNavigation } from "@react-navigation/native";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Button, Icon } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import NumericInput from 'react-native-numeric-input'
+import { REACT_APP_API_SERVER } from "@env";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 interface ReceiptRecordItemProps {
     items: any;
     key: number;
+    loadFriendList: () => void;
 }
 
 export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
+    const userIdInRedux = useSelector((state: RootState) => state.user.userId);
 
     const styles = StyleSheet.create({
         text: {
             fontSize: 17,
-            fontWeight:"300"
-
+            fontWeight: "300",
+            marginRight: 15
         },
         itemContainer: {
             marginTop: "2%",
@@ -40,7 +42,7 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
                 height: 1,
                 width: 1,
             },
-            paddingRight:"5%"
+            paddingRight: "5%"
         },
 
     })
@@ -53,6 +55,46 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
     }
     const navigation = useNavigation()
 
+    const showAlert = () => {
+        if (userIdInRedux != props.items.user_id) {
+            console.log("userIdInRedux :", userIdInRedux);
+
+            Alert.alert('Only the receipt owner can delete', '', [
+                {
+                    text: 'OK', onPress: () => console.log("ok")
+                },
+            ]);
+            return
+        } else {
+
+            Alert.alert('Are you sure to delete', '', [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                { text: 'OK', onPress: () => deleteItem() },
+            ]);
+        }
+    };
+
+    const deleteItem = async () => {
+
+        console.log("DELETE ITEM :", props.items.id)
+        await fetch(`${REACT_APP_API_SERVER}/receipts/deleteReceipt/`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                receipt_id: props.items.id,
+            }),
+        });
+
+        props.loadFriendList()
+
+
+
+
+    }
     return (
         <View style={styles.itemContainer}>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
@@ -70,9 +112,11 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
             </View>
 
 
-            <View >
+            <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.text}>${props.items.amount}</Text>
+                <TouchableOpacity onPress={showAlert}><FontAwesome name="trash-o" size={20} color={"#47b4b1"} /></TouchableOpacity>
             </View>
+            {/* <View></View> */}
         </View>
     )
 }
