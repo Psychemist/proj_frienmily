@@ -55,7 +55,7 @@ export default function Friends() {
         let count: number = 0
         for (let j of json) {
           if (j.paid != null) {
-            count += parseInt(j.paid)
+            count += parseFloat((j.paid).toFixed(2))
           }
         }
         setTotalAmount(count)

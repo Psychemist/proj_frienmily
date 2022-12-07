@@ -88,6 +88,7 @@ export const userSlice = createSlice({
             state.mobile = payload.mobile
             state.email = payload.email
             state.profilePicture = payload.profilePicture
+            state.isGuest = false
         },
         logout(state: UserState) {
             for (let key in initialState) {
@@ -152,6 +153,8 @@ const login = (state: UserState, action: PayloadAction<{ token: string }>) => {
     state.mobile = payload.mobile
     state.email = payload.email
     state.profilePicture = payload.profilePicture
+    state.isGuest = false
+
 
 
     console.log("fulfilled : ", state.isLoggedIn)
@@ -243,6 +246,8 @@ const updateAuth = (state: any, action: any) => {
         state[key] = action.payload[key]
     }
     state.isLoggedIn = true
+    state.isGuest = false
+
 }
 
 export default userSlice.reducer
