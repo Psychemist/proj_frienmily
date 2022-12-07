@@ -283,7 +283,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 height: 1,
                 width: 1,
             },
-            marginLeft:"2%"
+            marginLeft: "2%"
         },
         selectButton: {
             // margin: 5,
@@ -338,7 +338,8 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
                 <View><Text style={styles.text}>{props.items.name}</Text></View>
                 <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
                 <View><Text style={styles.shopText}>Item added by {assigneeName}</Text></View>
-                <View><Text style={styles.shopText}>Bought by {buyerName}</Text></View>
+                {buyerName ? <View><Text style={styles.shopText}>Bought by {buyerName}</Text></View> : null}
+
             </TouchableOpacity>
             <View ><Text style={styles.price}>${addZeroes(getLowest().price! * props.items.quantity)}</Text></View>
             <TouchableOpacity onPress={showAlert}><FontAwesome name="trash-o" size={20} color={"#47b4b1"} /></TouchableOpacity>

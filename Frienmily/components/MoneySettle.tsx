@@ -86,8 +86,11 @@ export default function MoneySettle() {
                 payerID: friendUserID,
             }),
         });
+        loadFriendList()
+        getAllTxnRecord()
         setShowResult(<Text style={styles.text}>Transactions Settled!</Text>)
         setShowButton(<Text></Text>)
+
 
     };
     const amount = (item: any) => {
