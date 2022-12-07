@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -26,6 +27,7 @@ export default function ShoppingList() {
   const [allAssignedToBuyItems, setAllAssignedToBuyItems] = useState([]);
   const [estimatedTotal, setEstimatedTotal] = useState(0)
   const [isArchivedList, setIsArchivedList] = useState(false)
+  const [isGroupNameEditable, setIsGroupNameEditable] = useState(false)
 
   let boughtItems: any[] = []
   let unboughtItems: any[] = []
@@ -272,6 +274,30 @@ export default function ShoppingList() {
     reloadPage()
   }
 
+  const changeGroupName = async () => {
+
+    if (isGroupNameEditable == true) {
+      try {
+        console.log(groupName);
+        console.log(groupId);
+        await fetch(`${REACT_APP_API_SERVER}/groups/changeGroupName/`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            groupName: groupName,
+            groupId: groupId
+          }),
+        });
+
+
+      }
+      catch (error) {
+        console.log('error from unwrap = ', error)
+      }
+    }
+    setIsGroupNameEditable(!isGroupNameEditable)
+  }
+
   const styles = StyleSheet.create({
     addMoreText: {
       fontSize: 16,
@@ -390,6 +416,8 @@ export default function ShoppingList() {
       top: "5%",
       padding: '1%',
       flexDirection: "row",
+      alignItems: 'center',
+      justifyContent: 'space-between',
       // marginBottom: 100,
     },
     listTypeButtonContainer: {
@@ -521,6 +549,29 @@ export default function ShoppingList() {
       fontWeight: "300",
       marginLeft: '4%'
     },
+    editTickButton: {
+      width: 30,
+      height: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 100,
+      backgroundColor: '#47b4b1',
+      opacity: 1,
+    },
+    tickBtn: {
+      fontSize: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+      color: "white",
+
+    },
+    editBtn: {
+      fontSize: 15,
+      justifyContent: 'center',
+      alignItems: 'center',
+      color: "white",
+
+    },
 
   });
 
@@ -566,7 +617,26 @@ export default function ShoppingList() {
             {isFamilyGroup == true ? <View style={styles.iconContainer}><FontAwesome name="home" size={14} color={"white"} /></View> : null}
 
           </TouchableOpacity>
-          <View style={{ justifyContent: 'center' }}><Text style={{ marginLeft: 20, fontSize: 23, fontWeight: "300" }}>{groupName}</Text></View>
+          <View style={{ justifyContent: 'center' }}>
+            {isGroupNameEditable ?
+              <TextInput maxLength={20} style={{ marginLeft: 10, fontSize: 23, fontWeight: "300", marginRight: 10, backgroundColor: "rgba(71, 180, 177, 0.3)", padding: 3, borderRadius: 8 }} value={groupName!} onChangeText={setGroupName} />
+              :
+              <Text style={{ marginLeft: 10, fontSize: 23, fontWeight: "300", marginRight: 10, padding: 3 }}>{groupName}</Text>
+            }
+          </View>
+          {isGroupNameEditable ?
+            <TouchableOpacity style={styles.editTickButton} onPress={changeGroupName}>
+              <Text>
+                <FontAwesome name='check' style={styles.tickBtn} />
+              </Text>
+            </TouchableOpacity>
+            :
+            <TouchableOpacity style={styles.editTickButton} onPress={changeGroupName}>
+              <Text>
+                <FontAwesome name='pencil' style={styles.editBtn} />
+              </Text>
+            </TouchableOpacity>
+          }
 
         </View>
 
