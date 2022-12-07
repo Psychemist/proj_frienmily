@@ -23,6 +23,7 @@ export default function ShoppingList() {
   const [groupName, setGroupName] = useState();
   const [groupPic, setGroupPic] = useState();
   const [allAssignedItems, setAllAssignedItems] = useState([]);
+  const [allAssignedToBuyItems, setAllAssignedToBuyItems] = useState([]);
   const [estimatedTotal, setEstimatedTotal] = useState(0)
   const [isArchivedList, setIsArchivedList] = useState(false)
 
@@ -64,10 +65,13 @@ export default function ShoppingList() {
         if (response) {
           result = await response.json();
         }
-        console.log("@@@@@@@@@@@@@2 result:", result)
-        setAllAssignedItems(result);
+        console.log("@@__".repeat(200))
+        console.log("getAssignedItems result: ", result)
+        console.log("@@@@@@@@@@@@@2 result.goodsDetailsArray:", result.goodsDetailsArray)
+        setAllAssignedItems(result.goodsDetailsArray);
+        setAllAssignedToBuyItems(result.notYetCompleteArray);
         let total = 0
-        for (let item of result) {
+        for (let item of result.notYetCompleteArray) {
           const getLowest = () => {
             let allPriceArray = [
               { price: +(item.wellcome_price) || 999, shop: "惠康" },
@@ -175,10 +179,14 @@ export default function ShoppingList() {
     if (response) {
       result = await response.json();
     }
-    console.log("@@@@@@@@@@@@@3 result:", result)
-    setAllAssignedItems(result);
+
+    console.log("@@__".repeat(200))
+    console.log("getAssignedItems result: ", result)
+    console.log("@@@@@@@@@@@@@3 result.goodsDetailsArray:", result.goodsDetailsArray)
+    setAllAssignedItems(result.goodsDetailsArray);
+    setAllAssignedToBuyItems(result.notYetCompleteArray);
     let total = 0
-    for (let item of result) {
+    for (let item of result.notYetCompleteArray) {
       const getLowest = () => {
         let allPriceArray = [
           { price: +(item.wellcome_price) || 999, shop: "惠康" },
@@ -601,7 +609,7 @@ export default function ShoppingList() {
             </TouchableOpacity>
           </View>
           <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end" }}>
-            <Text style={styles.totalText}>Estimate Total: $ {addZeroes(estimatedTotal)}</Text>
+            <Text style={styles.totalText}>Est. Total: $ {addZeroes(estimatedTotal)}</Text>
           </View>
         </View>
 
