@@ -304,7 +304,7 @@ export default function ShoppingList() {
       padding: 5,
       color: '#47b4b1',
       fontWeight: "300",
-      marginRight: '7%'
+      marginRight: '12%'
     },
 
     totalText: {
@@ -670,6 +670,14 @@ export default function ShoppingList() {
             </View>}
 
           <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end" }}>
+            {isArchivedList ?
+              <Text></Text>
+              :
+              <Text style={styles.totalText}>Est. Total: $ {addZeroes(estimatedTotal)}</Text>
+            }
+          </View>
+
+          <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end" }}>
             <TouchableOpacity
               style={{ alignItems: 'flex-end', marginTop: 15 }}
               onPress={() => {
@@ -677,9 +685,6 @@ export default function ShoppingList() {
               }}>
               <Text style={styles.addMoreText}>Back to Shopping</Text>
             </TouchableOpacity>
-          </View>
-          <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end" }}>
-            <Text style={styles.totalText}>Est. Total: $ {addZeroes(estimatedTotal)}</Text>
           </View>
         </View>
 
