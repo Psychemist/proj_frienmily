@@ -110,7 +110,7 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
                     <View><Image source={{ uri: props.items.receipt_image }}
                         style={{ width: 70, height: 70, marginRight: 20 }} /></View>
                 </TouchableOpacity>
-                <View >
+                <View>
                     <View><Text style={styles.text}>Payer: {props.items.userName}</Text></View>
                     <View style={styles.remarkField}><Text style={styles.text}>Remarks: {remarks()}</Text></View>
                 </View>
