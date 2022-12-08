@@ -11,6 +11,7 @@ import {
   Text,
   useColorScheme,
   View,
+  LogBox
 } from 'react-native';
 import LoadingScreen from './components/LoadingScreen';
 import LoginScreen from './components/LoginScreen';
@@ -52,7 +53,7 @@ import MergeGroupList from './components/MergeGroupList';
 import MergeGroupListItem from './components/MergeGroupListItem';
 import MergeShoppingList from './components/MergeShoppingList';
 import MergeShoppingListItem from './components/MergeShoppingListItem';
-
+LogBox.ignoreAllLogs();
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
