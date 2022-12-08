@@ -61,7 +61,7 @@ export default function Account() {
         if (isMobileEditable == true) {
             try {
                 const normalMobileNumberLength = 8
-                if (!mobile || mobile.length != normalMobileNumberLength) {
+                if (!mobile || mobile.length != normalMobileNumberLength || isNaN(parseInt(mobile))) {
                     Alert.alert(
                         'Invalid mobile number. Please input again.',
                         '',
