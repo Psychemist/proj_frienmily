@@ -15,37 +15,7 @@ interface ReceiptRecordItemProps {
 export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
     const userIdInRedux = useSelector((state: RootState) => state.user.userId);
 
-    const styles = StyleSheet.create({
-        text: {
-            fontSize: 17,
-            fontWeight: "300",
-            marginRight: 15
-        },
-        itemContainer: {
-            marginTop: "2%",
-            marginLeft: "1%",
-            backgroundColor: "white",
-            width: "98%",
-            height: 120,
-            borderWidth: 1,
-            borderColor: "#F5F5F5",
-            borderRadius: 10,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: 10,
-            // margin: 5,
-            shadowOpacity: 1,
-            shadowColor: "lightgray",
-            shadowRadius: 2,
-            shadowOffset: {
-                height: 1,
-                width: 1,
-            },
-            paddingRight: "5%"
-        },
 
-    })
 
     const remarks = () => {
         if (props.items.remarks == "undefined") {
@@ -91,28 +61,63 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
 
         props.loadFriendList()
 
-
-
-
     }
+
+    const styles = StyleSheet.create({
+        text: {
+            fontSize: 17,
+            fontWeight: "300",
+            marginRight: 15
+        },
+        remarkField: {
+            flexDirection: "row",
+            flexWrap: "wrap"
+        },
+        itemContainer: {
+            marginTop: "2%",
+            marginLeft: "1%",
+            backgroundColor: "white",
+            width: "98%",
+            height: 120,
+            borderWidth: 1,
+            borderColor: "#F5F5F5",
+            borderRadius: 10,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: 10,
+            // margin: 5,
+            shadowOpacity: 1,
+            shadowColor: "lightgray",
+            shadowRadius: 2,
+            shadowOffset: {
+                height: 1,
+                width: 1,
+            },
+            paddingRight: "5%"
+        },
+
+    })
+
     return (
         <View style={styles.itemContainer}>
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                <TouchableOpacity onPress={() => {
-                    navigation.navigate('ImagePreview' as never, { image: props.items.receipt_image } as never)
+            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", width: "60%", backgroundColor: "cyan" }}
+                onPress={() => {
+                    navigation.navigate('ImagePreview' as never, { image: props.items.receipt_image, remarks: props.items.remarks } as never)
                 }}>
+                <TouchableOpacity >
                     {/* change navigation to product details */}
                     <View><Image source={{ uri: props.items.receipt_image }}
                         style={{ width: 70, height: 70, marginRight: 20 }} /></View>
                 </TouchableOpacity>
                 <View >
                     <View><Text style={styles.text}>Payer: {props.items.userName}</Text></View>
-                    <View><Text style={styles.text}>Remarks: {remarks()}</Text></View>
+                    <View style={styles.remarkField}><Text style={styles.text}>Remarks: {remarks()}</Text></View>
                 </View>
-            </View>
+            </TouchableOpacity>
 
 
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "center", width: "40%", backgroundColor: "pink" }}>
                 <Text style={styles.text}>${props.items.amount}</Text>
                 <TouchableOpacity onPress={showAlert}><FontAwesome name="trash-o" size={20} color={"#47b4b1"} /></TouchableOpacity>
             </View>
