@@ -478,6 +478,7 @@ export default function CreateGroup() {
             autoCapitalize="none"
             value={groupName}
             onChangeText={setGroupName}
+            maxLength={20}
             placeholderTextColor='grey'
             style={styles.input}
           />
