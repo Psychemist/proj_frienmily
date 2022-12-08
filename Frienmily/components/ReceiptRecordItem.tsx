@@ -103,7 +103,7 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
         <View style={styles.itemContainer}>
             <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", width: "60%", backgroundColor: "cyan" }}
                 onPress={() => {
-                    navigation.navigate('ImagePreview' as never, { image: props.items.receipt_image, remarks: props.items.remarks } as never)
+                    navigation.navigate('ReceiptPreview' as never, { image: props.items.receipt_image, remarks: props.items.remarks } as never)
                 }}>
                 <TouchableOpacity >
                     {/* change navigation to product details */}
