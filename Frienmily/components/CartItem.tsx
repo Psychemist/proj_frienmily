@@ -95,30 +95,31 @@ export default function CartItem(props: CartItemProps) {
             { price: ztore_price, shop: "士多" }
         ]
 
-        // console.log("props.items :", props.items)
-
-
+        interface IPrice {
+            price: number | null
+            shop: string
+        }
+        const iPrices: IPrice = { price: 1.7976931348623157e+308, shop: "Dummy Max" }
 
         let filtered = allPriceArray.filter(function (e) {
             return e.price != null;
         });
-        console.log("filtered :", filtered)
-
-        const lowest = filtered.reduce((previous, current) => {
+        // console.log("filtered :", filtered)
+        const lowest = filtered.reduce((previous: IPrice, current: IPrice) => {
             return current.price! < previous.price! ? current : previous;
-        });
+        }, iPrices);
         let tempArray = []
         for (let item of filtered) {
             if (item.price == lowest.price) {
                 tempArray.push(item)
             }
         }
-        console.log(tempArray)
+        // console.log(tempArray)
         if (tempArray.length > 1) {
             // console.log({ "price": lowest.price, "shop": "多間同價" })
             return { "price": lowest.price, "shop": "多間同價" }
         }
-        console.log("lowest :", lowest)
+        // console.log("lowest :", lowest)
         return lowest
 
     }
@@ -281,7 +282,7 @@ export default function CartItem(props: CartItemProps) {
             alignItems: "center",
             height: 40,
             width: 80,
-            paddingRight:"1%"
+            paddingRight: "1%"
         }
     })
 
@@ -311,7 +312,7 @@ export default function CartItem(props: CartItemProps) {
                                 style={{ width: 50, height: 50, marginRight: "3%" }} /></View>
                         </TouchableOpacity>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ width: "39%" , paddingRight:"3%"}} onPress={itemInfo}>
+                    <TouchableOpacity style={{ width: "39%", paddingRight: "3%" }} onPress={itemInfo}>
                         <View><Text style={styles.text}>{props.items.name}</Text></View>
                         <View><Text style={styles.shopText}>{getLowest().shop}</Text></View>
                     </TouchableOpacity>
