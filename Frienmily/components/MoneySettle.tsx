@@ -86,24 +86,31 @@ export default function MoneySettle() {
                 payerID: friendUserID,
             }),
         });
-        loadFriendList()
-        getAllTxnRecord()
         setShowResult(<Text style={styles.text}>Transactions Settled!</Text>)
         setShowButton(<Text></Text>)
-
 
     };
     const amount = (item: any) => {
         if (item.debitor_id == thisUserID) {
             return <View style={styles.txnDetails}>
-                <Text style={styles.youOweRed}>-${item.transcations_amount}</Text><Text style={styles.oweGroupName}>{item.group_name}</Text></View>
+                <View><Text style={styles.youOweRed}>-${item.transcations_amount}</Text></View>
+                <View style={styles.oweGroupNameWrapper}><Text style={styles.oweGroupName}>{item.group_name}</Text></View>
+                </View>
         } else {
             return <View style={styles.txnDetails}>
-                <Text style={styles.oweYouGreen}>+${item.transcations_amount}</Text><Text style={styles.oweGroupName}>{item.group_name}</Text></View>
+                <View><Text style={styles.oweYouGreen}>+${item.transcations_amount}</Text></View>
+                <View style={styles.oweGroupNameWrapper}><Text style={styles.oweGroupName}>{item.group_name}</Text></View>
+                </View>
         }
 
     }
     const styles = StyleSheet.create({
+        oweGroupNameWrapper:{
+            // marginLeft:"20%",
+            width:"60%",
+            alignItems: 'flex-start',
+            // flexDirection: 'row',
+        },
         pageContainer: {
             alignItems: 'center',
             backgroundColor: '#47b4b1',
@@ -125,7 +132,7 @@ export default function MoneySettle() {
             marginLeft: 20,
             marginRight: 20,
             color: 'white',
-            fontWeight: "300",
+            fontWeight: "bold",
             fontSize: 25,
             // fontWeight: "bold",
             // color: "#47b4b1",
@@ -150,29 +157,16 @@ export default function MoneySettle() {
             color: "white"
         },
         txnDetails: {
-            flexDirection: 'row',
             justifyContent: 'space-between',
-            width: 300
-        },
-        mainContainer: {
-            display: "flex",
-            justifyContent: 'center',
             alignItems: 'center',
-            flexDirection: 'column',
-            marginTop: 40,
-            width: '80%',
-        },
-        container: {
-            display: "flex",
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
-            marginTop: "1%",
-            width: '100%',
+            flexDirection: 'row',
+            margin: "2%",
+            width: '98%',
             height: 80,
             padding: 20,
+            // paddingRight: 20,
             paddingTop: "5%",
-            paddingBottom: "5%",
+            paddingBottom:"5%",
             backgroundColor: 'white',
             //SHADOW
             borderRadius: 10,
@@ -184,10 +178,41 @@ export default function MoneySettle() {
             },
             borderBottomColor: 'grey',
             borderBottomWidth: 0.2,
-            fontSize: 40,
-            paddingRight: "10%",
-            fontWeight: "300",
-            color: "gray",
+        },
+        mainContainer: {
+            display: "flex",
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            marginTop: 40,
+            width: '80%',
+        },
+        container: {
+            // display: "flex",
+            // justifyContent: 'space-between',
+            // alignItems: 'center',
+            // flexDirection: 'row',
+            marginTop: "1%",
+            // width: 350,
+            // height: 80,
+            // padding: 20,
+            // paddingTop: "5%",
+            // paddingBottom: "5%",
+            // backgroundColor: 'white',
+            // //SHADOW
+            // // borderRadius: 10,
+            // shadowOpacity: 0.1,
+            // shadowRadius: 1,
+            // shadowOffset: {
+            //     height: 4,
+            //     width: 2,
+            // },
+            // borderBottomColor: 'grey',
+            // borderBottomWidth: 0.2,
+            // fontSize: 40,
+            // paddingRight: "10%",
+            // fontWeight: "300",
+            // color: "gray",
         },
         settledbutton: {
             display: "flex",
@@ -272,6 +297,7 @@ export default function MoneySettle() {
             paddingRight: "10%",
             fontWeight: "300",
             color: "gray",
+            marginRight:"2%"
             // paddingTop: "5%",
             // paddingBottom:"5%",
         },
@@ -280,6 +306,10 @@ export default function MoneySettle() {
             // paddingRight:"10%",
             fontWeight: "300",
             color: "gray",
+            maxWidth:"100%",
+            // height: 50,
+            marginRight:"5%"
+            
         },
         youOweRed: {
             fontSize: 20,
@@ -324,7 +354,7 @@ export default function MoneySettle() {
                         ))}
                     </ScrollView>}
 
-                <View style={{ width: '100%' }}><Text style={{ color: 'white', fontSize: 30, textAlign: 'center' }}>Settled history</Text></View>
+                <View style={{ width: '100%', backgroundColor: "lightgrey", borderRadius: 10, height:50, display: "flex", justifyContent: 'center',alignItems:"center"}}><Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>Settled History</Text></View>
                 <ScrollView style={styles.scrollView}>
                     {settled.map((item: any, idx: number) => (
                         <View style={styles.container} key={idx}><Text>{amount(item)}</Text></View>
