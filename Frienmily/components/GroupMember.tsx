@@ -118,7 +118,7 @@ export default function Friends() {
         );
       } else {
         Alert.alert(
-          'This group cannot be deleted. Please make sure the shopping list and receipt record are empty.',
+          'This group cannot be deleted. Please make sure the shopping list, receipt record are empty, and all outstanding transactions are settled. ',
           '',
           [
             {
