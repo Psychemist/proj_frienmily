@@ -278,7 +278,7 @@ export default function MoneySettle() {
             // width: '100%',
             // height: '80%',
             // padding: 20,
-            // paddingTop: "5%",
+            paddingTop: "15%",
             // paddingBottom:"5%",
             //SHADOW
             borderRadius: 10,
