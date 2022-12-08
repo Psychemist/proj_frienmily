@@ -70,18 +70,19 @@ export default function GroceriesTopItems(props: GroceriesTopItemsProps) {
             { price: ztore_price, shop: "士多" }
         ]
 
-        // console.log("props.item :", props.item)
-
-
+        interface IPrice {
+            price: number | null
+            shop: string
+        }
+        const iPrices: IPrice = { price: 999, shop: "N/A" }
 
         let filtered = allPriceArray.filter(function (e) {
             return e.price != null;
         });
         // console.log("filtered :", filtered)
-
-        const lowest = filtered.reduce((previous, current) => {
+        const lowest = filtered.reduce((previous: IPrice, current: IPrice) => {
             return current.price! < previous.price! ? current : previous;
-        });
+        }, iPrices);
         let tempArray = []
         for (let item of filtered) {
             if (item.price == lowest.price) {
