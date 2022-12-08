@@ -53,6 +53,7 @@ import MergeGroupList from './components/MergeGroupList';
 import MergeGroupListItem from './components/MergeGroupListItem';
 import MergeShoppingList from './components/MergeShoppingList';
 import MergeShoppingListItem from './components/MergeShoppingListItem';
+import ReceiptPreview from './components/ReceiptPreview';
 LogBox.ignoreAllLogs();
 
 const Tab = createBottomTabNavigator();
@@ -212,6 +213,7 @@ const App = () => {
             <Stack.Screen name="MergeGroupListItem" component={MergeGroupListItem} />
             <Stack.Screen name="MergeShoppingList" component={MergeShoppingList} options={{ gestureEnabled: true }} />
             <Stack.Screen name="MergeShoppingListItem" component={MergeShoppingListItem} />
+            <Stack.Screen name="ReceiptPreview" component={ReceiptPreview} />
 
           </Stack.Navigator>
         </NavigationContainer>
