@@ -66,8 +66,9 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
     const styles = StyleSheet.create({
         text: {
             fontSize: 17,
-            fontWeight: "300",
-            marginRight: 15,
+            fontWeight: "400",
+            marginRight: 10,
+            color: "grey"
         },
         fieldContainer: {
             flexDirection: "row",
@@ -147,11 +148,11 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
 
 
             <View style={styles.rightWrapper}>
-                <View style={{ width: "80%", alignItems: "flex-end" }}>
+                <View style={{ width: "100%", height:20, alignItems: "flex-end" }}>
                     <Text style={styles.text}>${props.items.amount}</Text>
                 </View>
-                <TouchableOpacity style={{ width: "20%" }} onPress={showAlert}>
-                    <FontAwesome name="trash-o" size={20} color={"#47b4b1"} />
+                <TouchableOpacity style={{ width: "20%", marginRight: "10%"}} onPress={showAlert}>
+                    <FontAwesome name="trash-o" size={20} color={"#47b4b1"} /> 
                 </TouchableOpacity>
             </View>
             {/* <View></View> */}

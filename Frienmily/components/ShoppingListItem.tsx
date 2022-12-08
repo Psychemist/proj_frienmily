@@ -193,13 +193,19 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
             { price: ztore_price, shop: "士多" }
         ]
 
+        interface IPrice {
+            price: number | null
+            shop: string
+        }
+        const iPrices: IPrice = { price: 1.7976931348623157e+308, shop: "Dummy Max" }
+
         let filtered = allPriceArray.filter(function (e) {
             return e.price != null;
         });
-
-        const lowest = filtered.reduce((previous, current) => {
+        // console.log("filtered :", filtered)
+        const lowest = filtered.reduce((previous: IPrice, current: IPrice) => {
             return current.price! < previous.price! ? current : previous;
-        });
+        }, iPrices);
         let tempArray = []
         for (let item of filtered) {
             if (item.price == lowest.price) {
@@ -208,6 +214,7 @@ export default function ShoppingListItem(props: ShoppingListItemProps) {
         }
         // console.log(tempArray)
         if (tempArray.length > 1) {
+            // console.log({ "price": lowest.price, "shop": "多間同價" })
             return { "price": lowest.price, "shop": "多間同價" }
         }
         // console.log("lowest :", lowest)
