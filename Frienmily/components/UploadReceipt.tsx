@@ -370,7 +370,7 @@ export default function UploadReceipt() {
           value={remarks}
           onChangeText={setRemarks}
           placeholderTextColor='grey'
-          maxLength={28}
+          maxLength={100}
         />
       </View>
       {imgs == undefined || imgs == null ? (

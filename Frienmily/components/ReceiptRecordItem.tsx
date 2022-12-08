@@ -67,11 +67,26 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
         text: {
             fontSize: 17,
             fontWeight: "300",
-            marginRight: 15
+            marginRight: 15,
+        },
+        fieldContainer: {
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            flexWrap: "wrap"
+        },
+        payerField: {
+            flexDirection: "row",
+            flexWrap: "wrap",
+            height: "40%",
+            width: "100%"
         },
         remarkField: {
             flexDirection: "row",
-            flexWrap: "wrap"
+            flexWrap: "wrap",
+            height: "60%",
+            width: "100%",
+            maxWidth: "100%"
         },
         itemContainer: {
             marginTop: "2%",
@@ -94,32 +109,50 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
                 height: 1,
                 width: 1,
             },
-            paddingRight: "5%"
+        },
+        leftWrapper: {
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "75%",
+        },
+        rightWrapper: {
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "25%",
         },
 
     })
 
     return (
         <View style={styles.itemContainer}>
-            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", width: "60%", backgroundColor: "cyan" }}
+            <TouchableOpacity style={styles.leftWrapper}
                 onPress={() => {
                     navigation.navigate('ImagePreview' as never, { image: props.items.receipt_image, remarks: props.items.remarks } as never)
                 }}>
-                <TouchableOpacity >
-                    {/* change navigation to product details */}
-                    <View><Image source={{ uri: props.items.receipt_image }}
-                        style={{ width: 70, height: 70, marginRight: 20 }} /></View>
-                </TouchableOpacity>
-                <View>
-                    <View><Text style={styles.text}>Payer: {props.items.userName}</Text></View>
-                    <View style={styles.remarkField}><Text style={styles.text}>Remarks: {remarks()}</Text></View>
+                <View style={{ width: "30%" }}>
+                    <Image source={{ uri: props.items.receipt_image }}
+                        style={{ width: 70, height: 70, marginRight: 20 }} />
+                </View>
+                <View style={styles.fieldContainer}>
+                    <View style={styles.payerField}>
+                        <Text style={styles.text}>Payer: {props.items.userName}</Text>
+                    </View>
+                    <View style={styles.remarkField}>
+                        <Text style={[styles.text, { maxWidth: "55%", maxHeight: "80%" }]}>Remarks: {remarks()}</Text>
+                    </View>
                 </View>
             </TouchableOpacity>
 
 
-            <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "center", width: "40%", backgroundColor: "pink" }}>
-                <Text style={styles.text}>${props.items.amount}</Text>
-                <TouchableOpacity onPress={showAlert}><FontAwesome name="trash-o" size={20} color={"#47b4b1"} /></TouchableOpacity>
+            <View style={styles.rightWrapper}>
+                <View style={{ width: "80%", alignItems: "flex-end" }}>
+                    <Text style={styles.text}>${props.items.amount}</Text>
+                </View>
+                <TouchableOpacity style={{ width: "20%" }} onPress={showAlert}>
+                    <FontAwesome name="trash-o" size={20} color={"#47b4b1"} />
+                </TouchableOpacity>
             </View>
             {/* <View></View> */}
         </View>
