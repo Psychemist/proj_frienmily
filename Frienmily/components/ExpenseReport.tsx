@@ -417,8 +417,8 @@ export default function ExpenseReport() {
             style={[styles.inputField, { width: 57 }]} dropdownTextStyle={styles.dropdownText} />
           <ModalDropdown ref={yearDropdown} options={YEARS_YYYY} defaultValue={"Year"} onSelect={(a) => { changeYear(Number(a)) }}
             style={[styles.inputField1, { width: 56 }]} dropdownTextStyle={styles.dropdownText} />
-          <TouchableOpacity style={styles.submitBtn}>
-            <Text style={{ color: "#FFFFFF", textAlign: "center" }} onPress={getExpenseReport}>Submit</Text>
+          <TouchableOpacity style={styles.submitBtn} onPress={getExpenseReport}>
+            <Text style={{ color: "#FFFFFF", textAlign: "center" }} >Submit</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.thisMonthBtn, { width: "40%" }]} onPress={setToThisMonth}>
             <Text style={{ color: "#FFFFFF", textAlign: "center" }}>Current Month</Text>

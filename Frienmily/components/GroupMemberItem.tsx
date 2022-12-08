@@ -76,15 +76,6 @@ export default function GroupMemberItem(props: FriendItemProps) {
             borderColor: "#47b4b1",
             borderWidth: 3,
             postion: "absolute",
-            // right: "-20%",
-            // top: "-20%",
-            shadowOpacity: 0.8,
-            shadowColor: "#47b4b1",
-            shadowRadius: 2,
-            shadowOffset: {
-                height: 10,
-                width: 10,
-            },
 
         },
         arrowIcon: {
