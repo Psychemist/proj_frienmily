@@ -19,14 +19,15 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
         text: {
             fontSize: 17,
             fontWeight: "300",
-            marginRight: 15
+            // marginRight: 15,
+            maxWidth:"80%"
         },
         itemContainer: {
             marginTop: "2%",
             marginLeft: "1%",
             backgroundColor: "white",
             width: "98%",
-            height: 120,
+            height: 180,
             borderWidth: 1,
             borderColor: "#F5F5F5",
             borderRadius: 10,
@@ -44,6 +45,9 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
             },
             paddingRight: "5%"
         },
+        PayerRemarksWrapper:{
+            maxWidth: "80%"
+        }
 
     })
 
@@ -97,7 +101,7 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
     }
     return (
         <View style={styles.itemContainer}>
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent:"space-between" }}>
                 <TouchableOpacity onPress={() => {
                     navigation.navigate('ImagePreview' as never, { image: props.items.receipt_image } as never)
                 }}>
@@ -105,7 +109,7 @@ export default function ReceiptRecordItem(props: ReceiptRecordItemProps) {
                     <View><Image source={{ uri: props.items.receipt_image }}
                         style={{ width: 70, height: 70, marginRight: 20 }} /></View>
                 </TouchableOpacity>
-                <View >
+                <View style={styles.PayerRemarksWrapper}>
                     <View><Text style={styles.text}>Payer: {props.items.userName}</Text></View>
                     <View><Text style={styles.text}>Remarks: {remarks()}</Text></View>
                 </View>

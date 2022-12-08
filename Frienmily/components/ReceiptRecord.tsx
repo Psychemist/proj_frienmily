@@ -70,7 +70,8 @@ export default function ReceiptRecord() {
         },
         groupNameWrapper: {
             position: "absolute",
-            top: 120,
+            top: "10%",
+            maxWidth:"80%",
             padding: '1%'
         },
         addMoreText: {
